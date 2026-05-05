@@ -451,7 +451,7 @@ export default {
         ...(variantInfo || {})
       }
 
-      nextInfo.type = hasUsableTypes(variantInfo?.type) ? variantInfo.type : (base.type || [])
+      nextInfo.type = base.type || []
       nextInfo.img = this.currentVariantImage
       nextInfo.trait = String(variantInfo?.trait || '').trim() || base.trait || ''
       nextInfo.traitImage = resolveAssetPath(variantInfo?.traitImage || base.traitImage || '')

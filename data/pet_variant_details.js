@@ -7695,8 +7695,7 @@ export const petVariantDetails = {
   "13": {
     "/static/pets/013_咔咔壳（本来的样子）.png": {
       "type": [
-        "火",
-        "地"
+        "水"
       ],
       "race": {
         "hp": 90,
@@ -8605,8 +8604,7 @@ export const petVariantDetails = {
     },
     "/static/pets/013_咔咔壳（蜕皮时的样子）.png": {
       "type": [
-        "火",
-        "地"
+        "水"
       ],
       "race": {
         "hp": 117,
@@ -9517,8 +9515,7 @@ export const petVariantDetails = {
   "14": {
     "/static/pets/014_水泡壳（本来的样子）.png": {
       "type": [
-        "火",
-        "地"
+        "水"
       ],
       "race": {
         "hp": 112,
@@ -10427,8 +10424,7 @@ export const petVariantDetails = {
     },
     "/static/pets/014_水泡壳（蜕皮时的样子）.png": {
       "type": [
-        "火",
-        "地"
+        "水"
       ],
       "race": {
         "hp": 146,

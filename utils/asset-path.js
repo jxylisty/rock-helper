@@ -13,9 +13,17 @@ export const REMOTE_ASSET_BASES = [
 ]
 
 function shouldPreferLocalStatic() {
-  if (typeof window === 'undefined' || !window.location) return false
+  // Desktop/browser dev preview and APP-PLUS packaged runtime should use
+  // local static assets first when available. Remote hosts remain as fallbacks.
+  if (typeof plus !== 'undefined') return true
+  if (typeof window === 'undefined' || !window.location) return true
+
   const host = String(window.location.host || '').toLowerCase()
-  return host.includes('localhost') || host.includes('127.0.0.1')
+  if (!host) return true
+  if (host.includes('localhost') || host.includes('127.0.0.1')) return true
+  if (/^\d{1,3}(\.\d{1,3}){3}(:\d+)?$/.test(host)) return true
+  if (host.includes('devtools') || host.includes('hbuilder') || host.includes('local')) return true
+  return false
 }
 
 function getWebAssetBase() {
@@ -30,6 +38,7 @@ export function isLocalStaticAsset(src = '') {
 export function resolveAssetPath(src = '') {
   const value = normalizePath(src)
   if (!value) return ''
+
   if (isLocalStaticAsset(value)) {
     const webBase = getWebAssetBase() || REMOTE_ASSET_BASES[0]
     if (webBase) {
@@ -39,18 +48,31 @@ export function resolveAssetPath(src = '') {
       }
       return webBase + encodeURI(relative)
     }
+
     if (/%[0-9A-Fa-f]{2}/.test(value)) {
       return value
     }
     return encodeURI(value)
   }
+
   return value
 }
 
 export function getAssetCandidateUrls(src = '') {
   const value = normalizePath(src)
   if (!value) return []
-  if (!isLocalStaticAsset(value)) return [value]
+
+  if (!isLocalStaticAsset(value)) {
+    const matchedBase = REMOTE_ASSET_BASES.find((base) => value.startsWith(base))
+    if (!matchedBase) return [value]
+
+    const relative = value.slice(matchedBase.length)
+    if (!relative.startsWith('static/')) return [value]
+
+    const localValue = '/' + relative
+    const remoteCandidates = REMOTE_ASSET_BASES.map((base) => base + relative)
+    return shouldPreferLocalStatic() ? [localValue, ...remoteCandidates] : [...remoteCandidates, localValue]
+  }
 
   const relative = value.replace(/^\//, '')
   const encoded = /%[0-9A-Fa-f]{2}/.test(relative) ? relative : encodeURI(relative)

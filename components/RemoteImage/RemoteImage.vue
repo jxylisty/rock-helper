@@ -1,8 +1,9 @@
 <template>
-  <view class="remote-image-wrap">
+  <view class="remote-image-wrap" :class="wrapperClass" :style="wrapperStyle">
     <image
       v-if="!showFailureHint && !showCompactFallback"
-      v-bind="$attrs"
+      class="remote-image-el"
+      v-bind="imageAttrs"
       :src="displaySrc"
       :mode="mode"
       @error="onImageError"
@@ -40,11 +41,23 @@ export default {
     }
   },
   computed: {
+    wrapperClass() {
+      return this.$attrs.class
+    },
+    wrapperStyle() {
+      return this.$attrs.style
+    },
+    imageAttrs() {
+      const attrs = { ...this.$attrs }
+      delete attrs.class
+      delete attrs.style
+      return attrs
+    },
     fallbackTitle() {
       return '\u56fe\u7247\u672a\u663e\u793a'
     },
     compactHint() {
-      const value = String(this.$attrs.class || '')
+      const value = String(this.wrapperClass || '')
       return /icon|badge|type-icon|skill-icon/i.test(value)
     },
     originalSource() {
@@ -88,10 +101,11 @@ export default {
       this.failed = false
       this.lastFailedSrc = ''
 
-      this.candidates = getAssetCandidateUrls(this.src)
+      const originalSource = String(this.src || '').trim()
+      this.candidates = getAssetCandidateUrls(originalSource)
       this.candidateIndex = 0
 
-      const resolved = this.candidates[0] || resolveAssetPath(this.src)
+      const resolved = this.candidates[0] || resolveAssetPath(originalSource)
       this.displaySrc = resolved || ''
       if (!resolved) {
         this.failed = true
@@ -147,8 +161,14 @@ export default {
 
 <style scoped>
 .remote-image-wrap {
+  display: block;
+  flex-shrink: 0;
+}
+
+.remote-image-el {
   width: 100%;
   height: 100%;
+  display: block;
 }
 
 .image-fallback {

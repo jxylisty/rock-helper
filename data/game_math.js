@@ -468,7 +468,7 @@ export function getSpeedRankEntries(allPets = [], petSpeedMap = {}, allPetVarian
           variantName: detail.fullName || detail.name || pet.name,
           name: detail.fullName || detail.name || pet.name,
           img: detail.img || image || pet.img,
-          type: Array.isArray(detail.type) && detail.type.length ? detail.type : pet.type,
+          type: pet.type,
           speed,
           isVariant: true
         };
