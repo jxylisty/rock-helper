@@ -38,7 +38,7 @@
             class="tile"
             :style="tile.style"
           >
-            <image class="tile-img" :src="tile.src" mode="scaleToFill" />
+            <RemoteImage class="tile-img" :src="tile.src" mode="scaleToFill" />
           </view>
         </view>
 

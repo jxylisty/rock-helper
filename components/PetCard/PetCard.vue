@@ -1,7 +1,7 @@
 <template>
   <view class="pet-card" :class="{ compact }" @click="$emit('click')">
     <view class="img-wrap" :class="{ empty: !img }">
-      <image v-if="img" class="img" :src="resolvedImg" mode="aspectFit" />
+      <RemoteImage v-if="img" class="img" :src="resolvedImg" mode="aspectFit" />
     </view>
     <view class="body">
       <text class="name">{{ name }}</text>

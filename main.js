@@ -1,9 +1,11 @@
 import App from './App'
+import RemoteImage from './components/RemoteImage/RemoteImage.vue'
 
 // #ifndef VUE3
 import Vue from 'vue'
 import './uni.promisify.adaptor'
 Vue.config.productionTip = false
+Vue.component('RemoteImage', RemoteImage)
 App.mpType = 'app'
 const app = new Vue({
   ...App
@@ -15,6 +17,7 @@ app.$mount()
 import { createSSRApp } from 'vue'
 export function createApp() {
   const app = createSSRApp(App)
+  app.component('RemoteImage', RemoteImage)
   return {
     app
   }

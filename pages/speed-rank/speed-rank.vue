@@ -24,7 +24,7 @@
               class="pet-item"
               @click="goDetail(pet)"
             >
-              <image class="pet-image" :src="resolvePetImage(pet.img)" mode="aspectFit" />
+              <RemoteImage class="pet-image" :src="resolvePetImage(pet.img)" mode="aspectFit" />
               <text class="pet-name">{{ pet.name }}</text>
               <view class="pet-types">
                 <TypeBadge

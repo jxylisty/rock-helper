@@ -24,7 +24,7 @@
           :class="{ active: currentSkill && currentSkill.name === skill.name }"
           @click="selectSkill(skill)"
         >
-          <image class="skill-icon" :src="getSkillIcon(skill.name)" mode="aspectFit" />
+          <RemoteImage class="skill-icon" :src="getSkillIcon(skill.name)" mode="aspectFit" />
           <view class="skill-meta">
             <text class="skill-name">{{ skill.name }}</text>
             <view class="skill-sub">

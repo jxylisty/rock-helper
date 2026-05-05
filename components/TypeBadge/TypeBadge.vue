@@ -1,6 +1,6 @@
 <template>
   <view class="badge" :class="{ compact }" :style="badgeStyle">
-    <image class="icon" :src="iconSrc" mode="aspectFit" />
+    <RemoteImage class="icon" :src="iconSrc" mode="aspectFit" />
     <text v-if="!compact && label" class="text">{{ label }}</text>
   </view>
 </template>

@@ -7,7 +7,7 @@
 
     <view v-else class="filled-state">
       <view class="pet-cover">
-        <image class="pet-image" :src="resolvedImage" mode="aspectFit" />
+        <RemoteImage class="pet-image" :src="resolvedImage" mode="aspectFit" />
       </view>
 
       <text class="pet-name">{{ slotData.petName }}</text>

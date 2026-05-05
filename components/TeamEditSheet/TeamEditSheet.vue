@@ -68,7 +68,7 @@
               :class="{ active: draft.petId === pet.id }"
               @click="selectPet(pet)"
             >
-              <image class="pet-card-image" :src="resolvePetImage(pet.img)" mode="aspectFit" />
+              <RemoteImage class="pet-card-image" :src="resolvePetImage(pet.img)" mode="aspectFit" />
               <text class="pet-card-name">{{ pet.name }}</text>
               <view class="pet-card-types">
                 <TypeBadge
@@ -86,7 +86,7 @@
 
       <view v-else class="sheet-body edit-body">
         <view class="selected-card">
-          <image class="selected-image" :src="resolvePetImage(selectedPet?.img)" mode="aspectFit" />
+          <RemoteImage class="selected-image" :src="resolvePetImage(selectedPet?.img)" mode="aspectFit" />
           <view class="selected-info">
             <text class="selected-name">{{ selectedPet?.name || '未选择精灵' }}</text>
             <text class="selected-type">{{ formatTypes(selectedPet?.types || []) }}</text>
@@ -122,7 +122,7 @@
                     <text class="picked-slot">技能{{ index + 1 }}</text>
                     <text class="picked-clear" @click.stop="clearSkillSlot(index)">清空</text>
                   </view>
-                  <image v-if="skill.icon" class="picked-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
+                  <RemoteImage v-if="skill.icon" class="picked-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
                   <view v-else class="picked-icon empty-icon"></view>
                   <text class="picked-name">{{ skill.name || '点击选择技能' }}</text>
                 </view>
@@ -166,7 +166,7 @@
                   ]"
                   @click="selectSkillCard(skill)"
                 >
-                  <image v-if="skill.icon" class="skill-option-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
+                  <RemoteImage v-if="skill.icon" class="skill-option-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
                   <view v-else class="skill-option-icon empty-icon"></view>
                   <text class="skill-option-name">{{ skill.name }}</text>
                   <text class="skill-option-desc">{{ skill.describe || '暂无描述' }}</text>

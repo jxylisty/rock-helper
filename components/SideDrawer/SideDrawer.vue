@@ -3,7 +3,7 @@
     <view v-if="visible" class="mask" @click="$emit('close')"></view>
     <view class="drawer" :class="{ open: visible }">
       <view class="profile">
-        <image class="avatar" :src="logoSrc" mode="aspectFit" />
+        <RemoteImage class="avatar" :src="logoSrc" mode="aspectFit" />
         <view class="profile-info">
           <text class="name">测试用户</text>
           <text class="sub">本地离线助手</text>

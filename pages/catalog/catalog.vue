@@ -15,6 +15,9 @@
           <view class="mini-btn" :class="{ active: selectedTypes.length === 0 }" @click="clearTypes">
             全部
           </view>
+          <view class="mini-btn" :class="{ active: onlyLeaderForms }" @click="onlyLeaderForms = !onlyLeaderForms">
+            {{ leaderFilterLabel }}
+          </view>
           <view class="mini-btn" :class="{ active: onlyFinalForms }" @click="onlyFinalForms = !onlyFinalForms">
             只看最高形态
           </view>
@@ -77,7 +80,8 @@
           </template>
           <template #extra>
             <view class="pet-meta">
-              <view v-if="hasVariants(pet.id)" class="variant-badge">多形态</view>
+              <view v-if="hasLeaderForm(pet.id)" class="variant-badge leader-badge">{{ leaderBadgeLabel }}</view>
+              <view v-else-if="hasVariants(pet.id)" class="variant-badge">{{ variantBadgeLabel }}</view>
               <view class="pet-id">#{{ String(pet.id).padStart(3, '0') }}</view>
             </view>
           </template>
@@ -104,6 +108,7 @@ import PetCard from '@/components/PetCard/PetCard.vue'
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import { pets, petTypes } from '@/data/pets.js'
 import { petVariants } from '@/data/pet_variants.js'
+import { hasLeaderFormPetId, leaderFormPetIdSet } from '@/data/leader_forms.js'
 import finalFormMap from '@/data/final_form_map.json'
 
 const typeOptions = petTypes
@@ -133,6 +138,10 @@ export default {
       pets,
       keyword: '',
       selectedTypes: [],
+      leaderBadgeLabel: '\u9996\u9886\u5316',
+      variantBadgeLabel: '\u591a\u5f62\u6001',
+      leaderFilterLabel: '\u53ea\u770b\u9996\u9886\u5f62\u6001',
+      onlyLeaderForms: false,
       onlyFinalForms: false,
       typeOptions,
       renderCount: INITIAL_RENDER_COUNT
@@ -140,10 +149,14 @@ export default {
   },
   computed: {
     finalPets() {
-      if (!this.onlyFinalForms) {
-        return this.pets
+      let list = this.pets
+      if (this.onlyLeaderForms) {
+        list = list.filter((pet) => leaderFormPetIdSet.has(Number(pet.id)))
       }
-      return this.pets.filter((pet) => highestPetIdSet.has(Number(pet.id)))
+      if (!this.onlyFinalForms) {
+        return list
+      }
+      return list.filter((pet) => highestPetIdSet.has(Number(pet.id)))
     },
     filteredPets() {
       const kw = this.keyword.trim().toLowerCase()
@@ -169,6 +182,9 @@ export default {
       handler() {
         this.resetRenderCount()
       }
+    },
+    onlyLeaderForms() {
+      this.resetRenderCount()
     },
     onlyFinalForms() {
       this.resetRenderCount()
@@ -205,6 +221,9 @@ export default {
     },
     hasVariants(id) {
       return Array.isArray(petVariants[String(id)]) && petVariants[String(id)].length > 1
+    },
+    hasLeaderForm(id) {
+      return hasLeaderFormPetId(id)
     },
     goToDetail(id) {
       uni.navigateTo({ url: '/pages/detail/detail?id=' + id })
@@ -386,6 +405,11 @@ export default {
   color: #4a66c2;
   font-size: 18rpx;
   font-weight: 700;
+}
+
+.leader-badge {
+  background: rgba(255, 178, 35, 0.16);
+  color: #b76b00;
 }
 
 .empty {

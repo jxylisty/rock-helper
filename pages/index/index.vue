@@ -66,7 +66,7 @@
                 <view v-if="slot" class="card-main">
                   <view class="pet-art">
                     <view class="pet-glow"></view>
-                    <image class="pet-image" :src="resolvePetImage(slot.image)" mode="aspectFit" />
+                    <RemoteImage class="pet-image" :src="resolvePetImage(slot.image)" mode="aspectFit" />
                   </view>
 
                   <view class="pet-side">
@@ -105,7 +105,7 @@
                         class="skill-slot"
                         :class="{ empty: !skill.name }"
                       >
-                        <image v-if="skill.icon" class="skill-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
+                        <RemoteImage v-if="skill.icon" class="skill-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
                         <view v-else class="skill-fallback" :style="{ background: getSkillFallbackColor(skill) }">
                           <text class="skill-fallback-text">{{ getSkillShortName(skill.name) }}</text>
                         </view>
@@ -190,7 +190,7 @@
                   <view v-if="slot" class="card-main">
                     <view class="pet-art">
                       <view class="pet-glow"></view>
-                      <image class="pet-image" :src="resolvePetImage(slot.image)" mode="aspectFit" />
+                      <RemoteImage class="pet-image" :src="resolvePetImage(slot.image)" mode="aspectFit" />
                     </view>
 
                     <view class="pet-side">
@@ -229,7 +229,7 @@
                           class="skill-slot"
                           :class="{ empty: !skill.name }"
                         >
-                          <image v-if="skill.icon" class="skill-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
+                          <RemoteImage v-if="skill.icon" class="skill-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
                           <view v-else class="skill-fallback" :style="{ background: getSkillFallbackColor(skill) }">
                             <text class="skill-fallback-text">{{ getSkillShortName(skill.name) }}</text>
                           </view>

@@ -2,7 +2,7 @@
   <view class="detail-container">
     <view class="header">
       <view class="image-wrapper">
-        <image class="pet-image" :src="currentVariantImage" mode="aspectFit" @error="onImageError"></image>
+        <RemoteImage class="pet-image" :src="currentVariantImage" mode="aspectFit" @error="onImageError"></RemoteImage>
         <view class="yise-nav" v-if="hasYise">
           <view class="nav-btn" :class="{active: !showYise}" @click="showYise = false">原皮</view>
           <view class="nav-btn" :class="{active: showYise}" @click="showYise = true">异色</view>
@@ -16,7 +16,7 @@
             :key="index"
             class="type-pill"
           >
-            <image
+            <RemoteImage
               class="type-icon"
               :src="getTypeIconPath(type)"
               mode="aspectFit"
@@ -172,7 +172,7 @@
     <view class="section" v-if="petInfo.trait">
       <view class="section-title">特性</view>
       <view class="trait-panel">
-        <image
+        <RemoteImage
           v-if="petInfo.traitImage"
           class="trait-image"
           :src="petInfo.traitImage"
@@ -200,11 +200,11 @@
       </view>
       <view class="skills-grid">
         <view class="skill-grid-item" v-for="(skill, index) in filteredSkills" :key="index" @click="showSkillDetail(skill)">
-          <image class="skill-grid-icon" :src="getSkillIcon(skill.name)" mode="aspectFit"></image>
+          <RemoteImage class="skill-grid-icon" :src="getSkillIcon(skill.name)" mode="aspectFit"></RemoteImage>
           <view class="skill-grid-info">
             <view class="skill-grid-header">
               <text class="skill-grid-name">{{ skill.name }}</text>
-              <image class="skill-attr-icon" :src="getTypeIconPath(skill.attr)" mode="aspectFit" v-if="skill.attr"></image>
+              <RemoteImage class="skill-attr-icon" :src="getTypeIconPath(skill.attr)" mode="aspectFit" v-if="skill.attr"></RemoteImage>
             </view>
             <text class="skill-grid-power">威力: {{ skill.power || '-' }} 能耗: {{ skill.consume || '-' }} 类型: {{ skill.type || '-' }}</text>
             <text class="skill-grid-desc">{{ skill.describe || '暂无描述' }}</text>
@@ -216,7 +216,7 @@
     <view class="skill-detail-modal" v-if="showSkillModal" @click="closeSkillModal">
       <view class="skill-detail-content" @click.stop>
         <view class="skill-detail-header">
-          <image class="skill-detail-icon" :src="currentSkillIcon" mode="aspectFit"></image>
+          <RemoteImage class="skill-detail-icon" :src="currentSkillIcon" mode="aspectFit"></RemoteImage>
           <view class="skill-detail-title">
             <text class="skill-detail-name">{{ currentSkillDetail.name }}</text>
             <view class="skill-detail-tags">
@@ -254,10 +254,35 @@ import { petVariants } from '@/data/pet_variants.js'
 import { petVariantDetails } from '@/data/pet_variant_details.js'
 import { petYise } from '@/data/pet_yise.js'
 import { petTraitImages } from '@/data/pet_trait_images.js'
+import { hasLeaderFormPetId } from '@/data/leader_forms.js'
 import { skillIcons } from '@/data/skill_icons.js'
 import { skillsData } from '@/data/skills.js'
 import { safeBack } from '@/utils/nav.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
+
+function hasCompleteRace(race) {
+  if (!race || typeof race !== 'object') return false
+  const keys = ['hp', 'attack', 'mattack', 'defense', 'mdefense', 'speed', 'total']
+  return keys.every((key) => Number.isFinite(Number(race[key])))
+}
+
+function hasUsableSkills(skills) {
+  return Array.isArray(skills) && skills.some((skill) => String(skill?.name || '').trim())
+}
+
+function hasUsableTypes(types) {
+  return Array.isArray(types) && types.some((type) => String(type || '').trim())
+}
+
+function buildSkillTypes(skills = []) {
+  return skills.reduce((acc, skill) => {
+    const key = String(skill?.skill_type || '').trim()
+    if (!key) return acc
+    if (!acc[key]) acc[key] = []
+    acc[key].push(skill)
+    return acc
+  }, {})
+}
 
 export default {
   data() {
@@ -297,7 +322,7 @@ export default {
       if (!this.variants.length) return []
       return this.variants.map((image) => ({
         image,
-        name: this.extractVariantName(image) || '默认'
+        name: this.getVariantDisplayName(image)
       }))
     },
     currentVariantImage() {
@@ -380,8 +405,40 @@ export default {
       }
     },
     extractVariantName(imagePath) {
-      const match = String(imagePath || '').match(/（([^）]+)）/)
-      return match ? match[1] : ''
+      const variantInfo = petVariantDetails[String(this.petId)]?.[imagePath]
+      const variantName = String(variantInfo?.variantName || '').trim()
+      if (variantName) return variantName
+
+      const fileName = String(imagePath || '').split('/').pop() || ''
+      const title = fileName.replace(/^\d+_/, '').replace(/\.png$/i, '').trim()
+      const match = title.match(/（([^）]+)）/)
+      if (match) return match[1].trim()
+      return title
+    },
+    getVariantDisplayName(imagePath) {
+      const rawName = String(this.extractVariantName(imagePath) || '').trim()
+      const baseName = String(this.basePet?.name || '').trim()
+      const fileName = String(imagePath || '').split('/').pop() || ''
+      const title = fileName.replace(/^\d+_/, '').replace(/\.png$/i, '').trim()
+      const isBaseVariant = !rawName || rawName === '默认' || rawName === '本来的样子' || rawName === baseName || title === baseName
+      const isNamedLeaderVariant = hasLeaderFormPetId(this.petId) && !title.includes('（') && title !== baseName
+
+      if (hasLeaderFormPetId(this.petId)) {
+        if (isBaseVariant) {
+          return '基础形态'
+        }
+        if (isNamedLeaderVariant) {
+          return '首领化形态'
+        }
+      }
+
+      if (!rawName || rawName === '默认') {
+        return baseName || '基础形态'
+      }
+      if (rawName === '本来的样子') {
+        return '基础形态'
+      }
+      return rawName
     },
     applyCurrentVariantData() {
       const base = this.baseDetailInfo || {}
@@ -394,12 +451,15 @@ export default {
         ...(variantInfo || {})
       }
 
-      nextInfo.type = base.type || []
+      nextInfo.type = hasUsableTypes(variantInfo?.type) ? variantInfo.type : (base.type || [])
       nextInfo.img = this.currentVariantImage
+      nextInfo.trait = String(variantInfo?.trait || '').trim() || base.trait || ''
       nextInfo.traitImage = resolveAssetPath(variantInfo?.traitImage || base.traitImage || '')
-      nextInfo.race = nextInfo.race || base.race || null
-      nextInfo.skills = nextInfo.skills || base.skills || []
-      nextInfo.skill_types = nextInfo.skill_types || base.skill_types || {}
+      nextInfo.race = hasCompleteRace(variantInfo?.race) ? variantInfo.race : (base.race || null)
+      nextInfo.skills = hasUsableSkills(variantInfo?.skills) ? variantInfo.skills : (base.skills || [])
+      nextInfo.skill_types = Object.keys(buildSkillTypes(nextInfo.skills)).length
+        ? buildSkillTypes(nextInfo.skills)
+        : (base.skill_types || {})
       this.petInfo = nextInfo
 
       if (!this.petInfo.skill_types?.[this.selectedSkillType]?.length) {
