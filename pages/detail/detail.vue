@@ -445,6 +445,11 @@ export default {
       const variantMap = petVariantDetails[String(this.petId)] || {}
       const imageKey = this.variants[this.currentVariantIndex] || ''
       const variantInfo = imageKey ? variantMap[imageKey] : null
+      const fallbackVariantTraitImage = Object.values(variantMap).find((detail) => {
+        const path = String(detail?.traitImage || '').trim()
+        const name = String(detail?.variantName || '').trim()
+        return path && (name === '默认' || name === '本来的样子')
+      })?.traitImage || ''
 
       const nextInfo = {
         ...base,
@@ -454,7 +459,7 @@ export default {
       nextInfo.type = base.type || []
       nextInfo.img = this.currentVariantImage
       nextInfo.trait = String(variantInfo?.trait || '').trim() || base.trait || ''
-      nextInfo.traitImage = resolveAssetPath(variantInfo?.traitImage || base.traitImage || '')
+      nextInfo.traitImage = resolveAssetPath(fallbackVariantTraitImage || base.traitImage || '')
       nextInfo.race = hasCompleteRace(variantInfo?.race) ? variantInfo.race : (base.race || null)
       nextInfo.skills = hasUsableSkills(variantInfo?.skills) ? variantInfo.skills : (base.skills || [])
       nextInfo.skill_types = Object.keys(buildSkillTypes(nextInfo.skills)).length

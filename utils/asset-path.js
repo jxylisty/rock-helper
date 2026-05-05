@@ -12,10 +12,12 @@ export const REMOTE_ASSET_BASES = [
   'https://raw.githubusercontent.com/jxylisty/rock-helper/clean-main/'
 ]
 
+const LOCAL_WEB_STATIC_PREFIX = '/static/web/'
+
 function shouldPreferLocalStatic() {
-  // Desktop/browser dev preview and APP-PLUS packaged runtime should use
-  // local static assets first when available. Remote hosts remain as fallbacks.
-  if (typeof plus !== 'undefined') return true
+  // Desktop/browser dev preview should use local web-only assets first.
+  // APP-PLUS runtime should prefer remote hosted assets first.
+  if (typeof plus !== 'undefined') return false
   if (typeof window === 'undefined' || !window.location) return true
 
   const host = String(window.location.host || '').toLowerCase()
@@ -40,6 +42,11 @@ export function resolveAssetPath(src = '') {
   if (!value) return ''
 
   if (isLocalStaticAsset(value)) {
+    if (shouldPreferLocalStatic()) {
+      const relative = value.replace(/^\/static\//, '')
+      return encodeURI(`${LOCAL_WEB_STATIC_PREFIX}${relative}`)
+    }
+
     const webBase = getWebAssetBase() || REMOTE_ASSET_BASES[0]
     if (webBase) {
       const relative = value.replace(/^\//, '')
@@ -48,11 +55,6 @@ export function resolveAssetPath(src = '') {
       }
       return webBase + encodeURI(relative)
     }
-
-    if (/%[0-9A-Fa-f]{2}/.test(value)) {
-      return value
-    }
-    return encodeURI(value)
   }
 
   return value
@@ -69,7 +71,7 @@ export function getAssetCandidateUrls(src = '') {
     const relative = value.slice(matchedBase.length)
     if (!relative.startsWith('static/')) return [value]
 
-    const localValue = '/' + relative
+    const localValue = encodeURI(`${LOCAL_WEB_STATIC_PREFIX}${relative.replace(/^static\//, '')}`)
     const remoteCandidates = REMOTE_ASSET_BASES.map((base) => base + relative)
     return shouldPreferLocalStatic() ? [localValue, ...remoteCandidates] : [...remoteCandidates, localValue]
   }
@@ -77,5 +79,6 @@ export function getAssetCandidateUrls(src = '') {
   const relative = value.replace(/^\//, '')
   const encoded = /%[0-9A-Fa-f]{2}/.test(relative) ? relative : encodeURI(relative)
   const remoteCandidates = REMOTE_ASSET_BASES.map((base) => base + encoded)
-  return shouldPreferLocalStatic() ? [value, ...remoteCandidates] : [...remoteCandidates, value]
+  const localValue = encodeURI(`${LOCAL_WEB_STATIC_PREFIX}${relative.replace(/^static\//, '')}`)
+  return shouldPreferLocalStatic() ? [localValue, ...remoteCandidates] : [...remoteCandidates, localValue]
 }

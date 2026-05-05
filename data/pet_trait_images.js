@@ -211,6 +211,7 @@ export const petTraitImages = {
   "256": "/static/traits/base/256.png",
   "257": "/static/traits/base/257.png",
   "261": "/static/traits/base/261.png",
+  "262": "/static/traits/base/262.png",
   "263": "/static/traits/base/263.png",
   "264": "/static/traits/base/264.png",
   "265": "/static/traits/base/265.png",

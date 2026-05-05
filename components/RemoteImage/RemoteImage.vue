@@ -20,7 +20,6 @@
 
 <script>
 import { getAssetCandidateUrls, isLocalStaticAsset, resolveAssetPath } from '@/utils/asset-path.js'
-import { ensureCachedRemoteImage } from '@/utils/image-cache.js'
 
 export default {
   name: 'RemoteImage',
@@ -111,18 +110,6 @@ export default {
         this.failed = true
         return
       }
-
-      // #ifdef APP-PLUS
-      if (/^https?:\/\//i.test(resolved)) {
-        try {
-          const cached = await ensureCachedRemoteImage(resolved, resolved)
-          if (this.requestId === nextRequestId && cached) {
-            this.displaySrc = cached
-          }
-        } catch (error) {
-        }
-      }
-      // #endif
     },
     onImageLoad(event) {
       this.failed = false
@@ -135,19 +122,6 @@ export default {
         this.candidateIndex += 1
         const nextSrc = this.candidates[this.candidateIndex]
         this.displaySrc = nextSrc
-
-        // #ifdef APP-PLUS
-        if (/^https?:\/\//i.test(nextSrc)) {
-          try {
-            const cached = await ensureCachedRemoteImage(nextSrc, nextSrc)
-            if (cached) {
-              this.displaySrc = cached
-              return
-            }
-          } catch (error) {
-          }
-        }
-        // #endif
         return
       }
 
