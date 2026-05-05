@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "iconv-lite": "^0.7.2"
+  },
+  "name": "luokewangguo",
+  "version": "1.0.0",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.5",
+    "vite": "^8.0.8"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
