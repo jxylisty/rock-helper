@@ -204,7 +204,7 @@
           <view class="skill-grid-info">
             <view class="skill-grid-header">
               <text class="skill-grid-name">{{ skill.name }}</text>
-              <image class="skill-attr-icon" :src="'/static/icons/' + skill.attr + '.png'" mode="aspectFit" v-if="skill.attr"></image>
+              <image class="skill-attr-icon" :src="getTypeIconPath(skill.attr)" mode="aspectFit" v-if="skill.attr"></image>
             </view>
             <text class="skill-grid-power">威力: {{ skill.power || '-' }} 能耗: {{ skill.consume || '-' }} 类型: {{ skill.type || '-' }}</text>
             <text class="skill-grid-desc">{{ skill.describe || '暂无描述' }}</text>

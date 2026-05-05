@@ -3,3 +3,5 @@ unpackage/
 .hbuilderx/
 .DS_Store
 static/map_z8_v3.png
+staging/remote_static_backup/
+staging/full_map_backup/

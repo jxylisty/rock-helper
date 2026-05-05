@@ -53,6 +53,7 @@
 <script>
 import AppHeader from '@/components/AppHeader/AppHeader.vue'
 import mapRectPyramid from '@/data/map_rect_pyramid.json'
+import { resolveAssetPath } from '@/utils/asset-path.js'
 
 export default {
   components: {
@@ -130,7 +131,7 @@ export default {
         for (let col = startCol; col <= endCol; col += 1) {
           tiles.push({
             key: `${this.currentLevel}_${col}_${row}`,
-            src: `/static/${level.dir}/tile-${col}_${row}.png`,
+            src: resolveAssetPath(`/static/${level.dir}/tile-${col}_${row}.png`),
             style: {
               left: col * tileWorldSize + 'px',
               top: row * tileWorldSize + 'px',
