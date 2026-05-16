@@ -349,6 +349,7 @@ export default {
   computed: {
     shortcuts() {
       return [
+        { title: '属性值计算', sub: '攻守双模式工具页', action: this.goAttributeCalculator },
         { title: '技能查询', sub: '按技能查精灵', action: this.goSkillSearch },
         { title: '速度排行', sub: '按速度种族值看', action: this.goSpeedRank },
         { title: '属性克制', sub: '看倍率和例子', action: this.goRestriction },
@@ -549,9 +550,9 @@ export default {
       return [
         this.makeStatItem('hp', '生命', panel.hp, ivs.hp),
         this.makeStatItem('attack', '物攻', panel.attack, ivs.attack),
-        this.makeStatItem('mattack', '魔攻', panel.mattack, ivs.magicAttack ?? ivs.mattack),
+        this.makeStatItem('mattack', '魔攻', panel.mattack, ivs.mattack),
         this.makeStatItem('defense', '物防', panel.defense, ivs.defense),
-        this.makeStatItem('mdefense', '魔防', panel.mdefense, ivs.magicDefense ?? ivs.mdefense),
+        this.makeStatItem('mdefense', '魔防', panel.mdefense, ivs.mdefense),
         this.makeStatItem('speed', '速度', panel.speed, ivs.speed)
       ]
     },
@@ -633,6 +634,9 @@ export default {
     },
     goSkillSearch() {
       uni.navigateTo({ url: '/pages/skill-search/skill-search' })
+    },
+    goAttributeCalculator() {
+      uni.navigateTo({ url: '/pages/pvp-breakpoint/pvp-breakpoint' })
     },
     goSpeedRank() {
       uni.navigateTo({ url: '/pages/speed-rank/speed-rank' })

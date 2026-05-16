@@ -17,6 +17,21 @@
         </view>
       </view>
 
+      <view class="decision-mode-strip">
+        <text class="decision-mode-label">AI 阵容诊断模式</text>
+        <view class="decision-mode-group">
+          <view
+            v-for="option in decisionModeOptions"
+            :key="option.value"
+            class="decision-mode-btn"
+            :class="{ active: decisionMode === option.value }"
+            @click="setDecisionMode(option.value)"
+          >
+            <text class="decision-mode-btn-text">{{ option.label }}</text>
+          </view>
+        </view>
+      </view>
+
       <view class="team-grid">
         <view v-for="(slot, index) in team" :key="`slot-${index}`" class="team-card-wrap">
           <view v-if="!slot" class="team-card empty-card" @click="openAddSelector(index)">
@@ -36,22 +51,22 @@
 
               <view class="pet-side">
                 <view class="title-row">
-                  <view class="title-main">
-                    <text class="pet-name">{{ slot.petName }}</text>
-                    <view class="type-row">
-                      <TypeBadge
-                        v-for="type in slot.types"
-                        :key="`${slot.petId}-${type}`"
-                        :label="type"
-                        :color="getTypeColor(type)"
-                        compact
-                      />
+                      <view class="title-main">
+                        <text class="pet-name">{{ slot.petName }}</text>
+                        <view class="type-row">
+                          <TypeBadge
+                            v-for="type in slot.types"
+                            :key="`${slot.petId}-${type}`"
+                            :label="type"
+                            :color="getTypeColor(type)"
+                            compact
+                          />
+                        </view>
+                      </view>
+                      <view class="panel-btn" @click="togglePanel(index)">
+                        {{ panelExpandedIndexes.includes(index) ? '收起面板' : '查看面板' }}
+                      </view>
                     </view>
-                  </view>
-                  <view class="panel-btn" @click="togglePanel(index)">
-                    {{ panelExpandedIndexes.includes(index) ? '收起面板' : '查看面板' }}
-                  </view>
-                </view>
 
                 <view class="info-row">
                   <text class="info-label">性格</text>
@@ -98,9 +113,193 @@
       </view>
 
       <view class="analysis-grid">
+        <view class="analysis-card ai-diagnosis-card">
+          <view class="ai-card-head">
+            <view>
+              <text class="analysis-title">AI 阵容诊断</text>
+              <text class="analysis-sub">只展示推荐结果，不会自动修改阵容</text>
+            </view>
+            <view v-if="activeTeamSlots.length" class="ai-score-pill">
+              <text class="ai-score-label">评分</text>
+              <text class="ai-score-value">{{ getDecisionScore(teamDecision) }}</text>
+            </view>
+          </view>
+
+          <view v-if="!activeTeamSlots.length" class="analysis-empty ai-empty">
+            请选择至少 1 只精灵后生成阵容诊断。
+          </view>
+
+          <template v-else>
+            <view class="ai-summary-grid">
+              <view class="ai-summary-item">
+                <text class="ai-summary-label">推荐模式</text>
+                <text class="ai-summary-value">{{ getDecisionModeLabel(decisionMode) }}</text>
+              </view>
+              <view class="ai-summary-item">
+                <text class="ai-summary-label">置信度</text>
+                <text class="ai-summary-value">{{ formatPercent(teamDecision && teamDecision.confidence) }}</text>
+              </view>
+              <view class="ai-summary-item">
+                <text class="ai-summary-label">阵容规模</text>
+                <text class="ai-summary-value">{{ activeTeamSlots.length }}/6</text>
+              </view>
+            </view>
+
+            <view class="ai-section">
+              <text class="ai-section-title">阵容主要短板</text>
+              <view class="ai-chip-row">
+                <view
+                  v-for="(item, index) in decisionShortboards"
+                  :key="`short-${index}`"
+                  class="ai-chip ai-chip-soft"
+                >
+                  <text class="ai-chip-text">{{ item }}</text>
+                </view>
+                <text v-if="!decisionShortboards.length" class="analysis-empty inline-empty">暂无明显短板</text>
+              </view>
+            </view>
+
+            <view class="ai-section">
+              <text class="ai-section-title">缺少打击面</text>
+              <view class="analysis-tags">
+                <view
+                  v-for="item in decisionMissingCoverage"
+                  :key="`missing-${item.type}`"
+                  class="type-tag neutral"
+                >
+                  <TypeBadge :label="item.type" :color="getTypeColor(item.type)" compact />
+                  <text class="tag-text">{{ item.type }}</text>
+                </view>
+                <text v-if="!decisionMissingCoverage.length" class="analysis-empty inline-empty">覆盖面较完整</text>
+              </view>
+            </view>
+
+            <view class="ai-section">
+              <text class="ai-section-title">危险属性</text>
+              <view class="analysis-tags">
+                <view
+                  v-for="item in decisionDangerAlerts"
+                  :key="`danger-${item.type}`"
+                  class="type-tag warning ai-danger-tag"
+                >
+                  <TypeBadge :label="item.type" :color="getTypeColor(item.type)" compact />
+                  <text class="tag-text">{{ item.type }}</text>
+                  <text class="tag-note">{{ item.threatenedCount }}/{{ activeTeamSlots.length }}</text>
+                </view>
+                <text v-if="!decisionDangerAlerts.length" class="analysis-empty inline-empty">暂无明显危险属性</text>
+              </view>
+            </view>
+
+            <view class="ai-section">
+              <text class="ai-section-title">阵容结构提醒</text>
+              <view class="ai-chip-row">
+                <view
+                  v-for="(item, index) in decisionStructureNotes"
+                  :key="`structure-${index}`"
+                  class="ai-chip ai-chip-outline"
+                >
+                  <text class="ai-chip-text">{{ item }}</text>
+                </view>
+                <text v-if="!decisionStructureNotes.length" class="analysis-empty inline-empty">结构较均衡</text>
+              </view>
+            </view>
+
+            <view v-if="getConfidenceHint(teamDecision)" class="ai-confidence-tip">
+              {{ getConfidenceHint(teamDecision) }}
+            </view>
+
+            <view class="ai-recommendation-block">
+              <view v-if="activeTeamSlots.length < 6">
+                <view class="ai-section-head">
+                  <text class="ai-section-title">推荐补位 Top 3</text>
+                </view>
+                <view v-if="complementRecommendations.length" class="ai-rec-list">
+                  <view v-for="item in complementRecommendations" :key="`comp-${item.petId}`" class="ai-rec-card">
+                    <view class="ai-rec-top">
+                      <RemoteImage class="ai-rec-avatar" :src="resolvePetImage(item.image)" mode="aspectFit" />
+                      <view class="ai-rec-main">
+                        <text class="ai-rec-name">{{ item.petName || '未知精灵' }}</text>
+                        <view class="ai-rec-type-row">
+                          <TypeBadge
+                            v-for="type in safeTypes(item.types)"
+                            :key="`comp-type-${item.petId}-${type}`"
+                            :label="type"
+                            :color="getTypeColor(type)"
+                            compact
+                          />
+                        </view>
+                      </view>
+                      <view class="ai-score-pill compact">
+                        <text class="ai-score-label">分</text>
+                        <text class="ai-score-value">{{ formatScore(item.score) }}</text>
+                      </view>
+                    </view>
+                    <view class="ai-rec-meta">
+                      <text class="ai-rec-meta-text">confidence {{ formatPercent(item.confidence) }}</text>
+                      <text v-if="getConfidenceHint(item)" class="ai-rec-meta-note">仅供参考</text>
+                    </view>
+                    <view class="ai-rec-reasons">
+                      <text
+                        v-for="(reason, reasonIndex) in getReasonPreview(item.reasons)"
+                        :key="`comp-reason-${item.petId}-${reasonIndex}`"
+                        class="ai-rec-reason clamp-2"
+                      >
+                        {{ reason }}
+                      </text>
+                      <text v-if="!getReasonPreview(item.reasons).length" class="ai-rec-reason clamp-2">
+                        基于阵容短板和属性覆盖综合推荐
+                      </text>
+                    </view>
+                  </view>
+                </view>
+                <text v-else class="analysis-empty">暂时没有可用的补位建议。</text>
+              </view>
+
+              <view v-else>
+                <view class="ai-section-head">
+                  <text class="ai-section-title">替换建议 Top 3</text>
+                </view>
+                <view v-if="replacementRecommendations.length" class="ai-rec-list">
+                  <view v-for="item in replacementRecommendations" :key="`rep-${item.current.petId}-${item.petName}`" class="ai-rec-card">
+                    <view class="ai-swap-row">
+                      <view class="ai-swap-box">
+                        <text class="ai-swap-label">替换谁</text>
+                        <text class="ai-swap-value">{{ item.current.petName || '未知精灵' }}</text>
+                      </view>
+                      <view class="ai-swap-arrow">→</view>
+                      <view class="ai-swap-box">
+                        <text class="ai-swap-label">换成谁</text>
+                        <text class="ai-swap-value">{{ item.petName || '未知精灵' }}</text>
+                      </view>
+                    </view>
+                    <view class="ai-rec-meta">
+                      <text class="ai-rec-meta-text">评分提升 +{{ formatScore(item.gain) }}</text>
+                      <text class="ai-rec-meta-text">confidence {{ formatPercent(item.confidence) }}</text>
+                      <text v-if="getConfidenceHint(item)" class="ai-rec-meta-note">仅供参考</text>
+                    </view>
+                    <view class="ai-rec-reasons">
+                      <text
+                        v-for="(reason, reasonIndex) in getReasonPreview(item.reasons)"
+                        :key="`rep-reason-${item.current.petId}-${reasonIndex}`"
+                        class="ai-rec-reason clamp-2"
+                      >
+                        {{ reason }}
+                      </text>
+                      <text v-if="!getReasonPreview(item.reasons).length" class="ai-rec-reason clamp-2">
+                        基于阵容短板和属性覆盖综合推荐
+                      </text>
+                    </view>
+                  </view>
+                </view>
+                <text v-else class="analysis-empty">当前队伍暂时没有明显替换目标。</text>
+              </view>
+            </view>
+          </template>
+        </view>
+
         <view class="analysis-card">
-          <text class="analysis-title">克制打击面不足</text>
-          <text class="analysis-sub">这些属性目前缺少明显克制手段</text>
+          <text class="analysis-title">技能打击面不足</text>
+          <text class="analysis-sub">按当前携带的攻击技能属性计算，看看还缺哪些克制面</text>
           <view v-if="coverageSummary.memberCount" class="analysis-tags">
             <view
               v-for="item in missingCoveragePreview"
@@ -116,8 +315,8 @@
         </view>
 
         <view class="analysis-card">
-          <text class="analysis-title">属性预警</text>
-          <text class="analysis-sub">这些属性会克制队伍里大部分精灵</text>
+          <text class="analysis-title">队伍易被克制</text>
+          <text class="analysis-sub">这里仍然按精灵自身属性看，方便你找出整体弱点</text>
           <view v-if="coverageSummary.memberCount" class="analysis-tags">
             <view
               v-for="item in alertThreatPreview"
@@ -133,6 +332,7 @@
           </view>
           <text v-else class="analysis-empty">阵容为空时无法判断危险属性。</text>
         </view>
+
       </view>
 
       <view class="footer-space"></view>
@@ -160,6 +360,7 @@ import { pets, petTypes } from '@/data/pets.js'
 import { petsDetail } from '@/data/pets_detail.js'
 import { skillIcons } from '@/data/skill_icons.js'
 import { analyzeTeamTypeCoverage, calculatePetPanel, getHighestFormPets } from '@/data/game_math.js'
+import { analyzeTeamDecision, recommendTeamComplements, recommendTeamReplacements } from '@/data/decision_engine.js'
 import { readStorage, writeStorage } from '@/utils/nav.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
 
@@ -190,6 +391,13 @@ const TYPE_COLOR_MAP = petTypes.reduce((acc, item) => {
   if (item && item.key && !acc[item.key]) acc[item.key] = item.color
   return acc
 }, {})
+
+const DECISION_MODE_OPTIONS = [
+  { value: 'general', label: '通用' },
+  { value: 'pve', label: 'PVE' },
+  { value: 'pvp', label: 'PVP' },
+  { value: 'newbie', label: '新手' }
+]
 
 function createEmptyTeamSlots() {
   return Array.from({ length: 6 }, () => null)
@@ -242,6 +450,10 @@ function clampIv(value) {
   return Math.max(0, Math.min(10, Math.round(number)))
 }
 
+function safeArray(value) {
+  return Array.isArray(value) ? value : []
+}
+
 export default {
   components: {
     AppHeader,
@@ -256,12 +468,17 @@ export default {
       sheetVisible: false,
       sheetMode: 'add',
       editingIndex: -1,
+      decisionMode: 'general',
       petChoices: [],
       petMap: {},
-      detailMap: petsDetail
+      detailMap: petsDetail,
+      decisionModeOptions: DECISION_MODE_OPTIONS
     }
   },
   computed: {
+    activeTeamSlots() {
+      return safeArray(this.team).filter((slot) => !!slot && !!slot.petId)
+    },
     currentEditData() {
       if (this.editingIndex < 0) return null
       return this.team[this.editingIndex] || createDefaultEditorData()
@@ -279,6 +496,54 @@ export default {
     },
     alertThreatPreview() {
       return this.coverageSummary.alerts.slice(0, 6)
+    },
+    teamDecision() {
+      if (!this.activeTeamSlots.length) return null
+      try {
+        return analyzeTeamDecision(this.activeTeamSlots, pets, petsDetail, this.decisionMode)
+      } catch (error) {
+        return null
+      }
+    },
+    complementRecommendations() {
+      if (!this.activeTeamSlots.length || this.activeTeamSlots.length >= 6) return []
+      try {
+        const result = recommendTeamComplements(this.activeTeamSlots, pets, petsDetail, this.decisionMode)
+        return safeArray(result?.items).slice(0, 3)
+      } catch (error) {
+        return []
+      }
+    },
+    replacementRecommendations() {
+      if (this.activeTeamSlots.length < 6) return []
+      try {
+        const result = recommendTeamReplacements(this.activeTeamSlots, pets, petsDetail, this.decisionMode)
+        return safeArray(result?.items).slice(0, 3)
+      } catch (error) {
+        return []
+      }
+    },
+    decisionShortboards() {
+      return safeArray(this.teamDecision?.summary?.weaknesses).slice(0, 3)
+    },
+    decisionMissingCoverage() {
+      return safeArray(this.teamDecision?.summary?.teamCoverage?.missingCoverage).slice(0, 4)
+    },
+    decisionDangerAlerts() {
+      return safeArray(this.teamDecision?.summary?.teamCoverage?.alerts).slice(0, 4)
+    },
+    decisionStructureNotes() {
+      const summary = this.teamDecision?.summary || {}
+      const roleCounts = summary.roleCounts || {}
+      const notes = []
+
+      if (roleCounts.support === 0) notes.push('缺少辅助位')
+      if (roleCounts.control === 0 && this.decisionMode === 'pvp') notes.push('PVP 建议补控制')
+      if ((roleCounts.physical || 0) + (roleCounts.magic || 0) + (roleCounts.mixed || 0) <= 2) notes.push('输出点偏少')
+      if (summary.memberAvgSpeed && summary.memberAvgSpeed < 90 && this.decisionMode === 'pvp') notes.push('平均速度偏慢')
+      if (summary.memberAvgBulk && summary.memberAvgBulk < 260 && this.decisionMode !== 'pvp') notes.push('整体站场偏薄')
+
+      return notes.slice(0, 3)
     }
   },
   onLoad() {
@@ -292,6 +557,7 @@ export default {
         name: pet.name,
         img: pet.img,
         types: Array.isArray(pet.type) ? [...pet.type] : [],
+        race: this.detailMap[String(pet.id)]?.race || null,
         colors: (pet.type || []).map((type) => TYPE_COLOR_MAP[type] || '#5b7cf5')
       }))
       this.petMap = this.petChoices.reduce((acc, pet) => {
@@ -533,6 +799,42 @@ export default {
     getTypeColor(type) {
       return TYPE_COLOR_MAP[type] || '#5b7cf5'
     },
+    setDecisionMode(mode) {
+      const allowed = new Set(DECISION_MODE_OPTIONS.map((item) => item.value))
+      if (!allowed.has(mode)) return
+      this.decisionMode = mode
+    },
+    getDecisionModeLabel(mode) {
+      return DECISION_MODE_OPTIONS.find((item) => item.value === mode)?.label || '通用'
+    },
+    getDecisionScore(teamDecision) {
+      if (!teamDecision) return '--'
+      const score = Number(teamDecision.score ?? Math.round((Number(teamDecision.confidence) || 0) * 100))
+      if (!Number.isFinite(score)) return '--'
+      return Math.max(0, Math.min(100, Math.round(score)))
+    },
+    formatScore(value) {
+      const number = Number(value)
+      if (!Number.isFinite(number)) return '0'
+      return String(Math.max(0, Math.round(number)))
+    },
+    formatPercent(value) {
+      const number = Number(value)
+      if (!Number.isFinite(number)) return '--'
+      const clamped = Math.max(0, Math.min(1, number))
+      return `${Math.round(clamped * 100)}%`
+    },
+    getConfidenceHint(item) {
+      const confidence = Number(item?.confidence)
+      if (!Number.isFinite(confidence) || confidence < 0.55) return '仅供参考'
+      return ''
+    },
+    getReasonPreview(reasons) {
+      return safeArray(reasons).filter(Boolean).slice(0, 2)
+    },
+    safeTypes(types) {
+      return safeArray(types).filter(Boolean)
+    },
     resolvePetImage(src) {
       return resolveAssetPath(src)
     },
@@ -576,7 +878,7 @@ export default {
         普通: '#9aa4b2'
       }
       return colorMap[skill?.attr] || '#8b95a5'
-    }
+    },
   }
 }
 </script>
@@ -1000,6 +1302,317 @@ export default {
   margin-top: 14rpx;
   font-size: 22rpx;
   color: #a1927a;
+}
+
+.decision-mode-strip {
+  margin: 18rpx 24rpx 0;
+  padding: 16rpx 18rpx;
+  border-radius: 22rpx;
+  background: rgba(255, 252, 244, 0.84);
+  border: 1rpx solid rgba(229, 220, 198, 0.82);
+  box-shadow: 0 10rpx 24rpx rgba(85, 67, 36, 0.05);
+}
+
+.decision-mode-label {
+  display: block;
+  font-size: 20rpx;
+  font-weight: 800;
+  color: #7a6a50;
+}
+
+.decision-mode-group {
+  margin-top: 10rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.decision-mode-btn {
+  min-width: 102rpx;
+  height: 52rpx;
+  padding: 0 14rpx;
+  border-radius: 999rpx;
+  background: #f3eadb;
+  border: 1rpx solid rgba(165, 140, 105, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.decision-mode-btn.active {
+  background: linear-gradient(135deg, #5b7cf5 0%, #38bdf8 100%);
+  border-color: transparent;
+}
+
+.decision-mode-btn-text {
+  font-size: 20rpx;
+  font-weight: 800;
+  color: #5f4b2b;
+}
+
+.decision-mode-btn.active .decision-mode-btn-text {
+  color: #fff;
+}
+
+.ai-diagnosis-card {
+  overflow: hidden;
+}
+
+.ai-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12rpx;
+}
+
+.ai-score-pill {
+  min-width: 92rpx;
+  padding: 10rpx 14rpx;
+  border-radius: 18rpx;
+  background: linear-gradient(135deg, #5b7cf5 0%, #38bdf8 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rpx;
+}
+
+.ai-score-pill.compact {
+  min-width: 78rpx;
+  padding: 8rpx 12rpx;
+}
+
+.ai-score-label {
+  font-size: 18rpx;
+  line-height: 1;
+  opacity: 0.92;
+  font-weight: 700;
+}
+
+.ai-score-value {
+  font-size: 28rpx;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.ai-summary-grid {
+  margin-top: 14rpx;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10rpx;
+}
+
+.ai-summary-item {
+  padding: 12rpx;
+  border-radius: 16rpx;
+  background: #f7f0e2;
+}
+
+.ai-summary-label {
+  display: block;
+  font-size: 18rpx;
+  color: #8d7a59;
+  font-weight: 700;
+}
+
+.ai-summary-value {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: #2f2618;
+  font-weight: 900;
+}
+
+.ai-section {
+  margin-top: 14rpx;
+}
+
+.ai-section-title {
+  display: block;
+  font-size: 22rpx;
+  font-weight: 900;
+  color: #2f2618;
+}
+
+.ai-chip-row {
+  margin-top: 10rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.ai-chip {
+  max-width: 100%;
+  padding: 8rpx 12rpx;
+  border-radius: 14rpx;
+}
+
+.ai-chip-soft {
+  background: #f4eadc;
+}
+
+.ai-chip-outline {
+  background: rgba(91, 124, 245, 0.08);
+  border: 1rpx solid rgba(91, 124, 245, 0.18);
+}
+
+.ai-chip-text {
+  font-size: 20rpx;
+  color: #4a3b25;
+  font-weight: 700;
+}
+
+.inline-empty {
+  display: inline-block;
+  margin-top: 0;
+  font-size: 20rpx;
+}
+
+.ai-danger-tag {
+  border: 1rpx solid rgba(220, 38, 38, 0.16);
+}
+
+.ai-confidence-tip {
+  margin-top: 12rpx;
+  padding: 10rpx 12rpx;
+  border-radius: 14rpx;
+  background: rgba(245, 158, 11, 0.12);
+  color: #8c5a14;
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
+.ai-recommendation-block {
+  margin-top: 16rpx;
+  padding-top: 14rpx;
+  border-top: 1rpx dashed rgba(165, 140, 105, 0.22);
+}
+
+.ai-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ai-rec-list {
+  margin-top: 10rpx;
+  display: grid;
+  gap: 12rpx;
+}
+
+.ai-rec-card {
+  padding: 14rpx;
+  border-radius: 18rpx;
+  background: #fffaf1;
+  border: 1rpx solid rgba(229, 220, 198, 0.82);
+}
+
+.ai-rec-top {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.ai-rec-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  background: #f4ecdd;
+}
+
+.ai-rec-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-rec-name {
+  display: block;
+  font-size: 24rpx;
+  font-weight: 900;
+  color: #1f1a12;
+}
+
+.ai-rec-type-row {
+  margin-top: 6rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6rpx;
+}
+
+.ai-rec-meta {
+  margin-top: 8rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  align-items: center;
+}
+
+.ai-rec-meta-text,
+.ai-rec-meta-note {
+  font-size: 18rpx;
+  color: #7a6a50;
+}
+
+.ai-rec-meta-note {
+  color: #c2410c;
+  font-weight: 700;
+}
+
+.ai-rec-reasons {
+  margin-top: 8rpx;
+  display: grid;
+  gap: 4rpx;
+}
+
+.ai-rec-reason {
+  font-size: 18rpx;
+  line-height: 1.45;
+  color: #5e4e38;
+}
+
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.ai-swap-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.ai-swap-box {
+  flex: 1;
+  min-width: 0;
+  padding: 10rpx 12rpx;
+  border-radius: 14rpx;
+  background: rgba(91, 124, 245, 0.08);
+}
+
+.ai-swap-label {
+  display: block;
+  font-size: 18rpx;
+  color: #7a6a50;
+  font-weight: 700;
+}
+
+.ai-swap-value {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  font-weight: 900;
+  color: #1f1a12;
+  word-break: break-all;
+}
+
+.ai-swap-arrow {
+  flex-shrink: 0;
+  font-size: 28rpx;
+  color: #5b7cf5;
+  font-weight: 900;
 }
 
 .footer-space {

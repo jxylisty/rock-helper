@@ -90,7 +90,7 @@
           <view class="selected-info">
             <text class="selected-name">{{ selectedPet?.name || '未选择精灵' }}</text>
             <text class="selected-type">{{ formatTypes(selectedPet?.types || []) }}</text>
-            <text class="selected-note">等级 60 / 星级 5 固定。技能优先编辑，个体值和性格单独一页。</text>
+            <text class="selected-note">等级 60 / 星级 5 固定。攻击技能看属性克制，血脉技能只允许一项。</text>
           </view>
         </view>
 
@@ -169,6 +169,11 @@
                   <RemoteImage v-if="skill.icon" class="skill-option-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
                   <view v-else class="skill-option-icon empty-icon"></view>
                   <text class="skill-option-name">{{ skill.name }}</text>
+                  <view class="skill-option-meta">
+                    <text class="skill-option-tag">{{ skill.type }}</text>
+                    <TypeBadge v-if="skill.attr && skill.attr !== '-'" :label="skill.attr" :color="getTypeColor(skill.attr)" compact />
+                    <text class="skill-option-tag muted">{{ skill.skillTypeLabel }}</text>
+                  </view>
                   <text class="skill-option-desc">{{ skill.describe || '暂无描述' }}</text>
                 </view>
               </view>
@@ -204,6 +209,7 @@
                 <text v-else class="iv-summary-empty">默认全为 0，未增加任何个体值</text>
               </view>
               <text class="iv-rule-tip">规则：每项只能填 1-10，最多只能提升 3 项，其余保持 0。</text>
+              <text class="iv-rule-tip">默认策略：性格增益优先 +10，减益保持 0，并按种族值自动补满另外两项。</text>
               <text v-if="ivWarning" class="field-warning">{{ ivWarning }}</text>
               <view class="iv-grid">
                 <view
@@ -237,9 +243,9 @@ import { resolveAssetPath } from '@/utils/asset-path.js'
 const IV_FIELDS = [
   { key: 'hp', label: '生命' },
   { key: 'attack', label: '物攻' },
-  { key: 'magicAttack', label: '魔攻' },
+  { key: 'mattack', label: '魔攻' },
   { key: 'defense', label: '物防' },
-  { key: 'magicDefense', label: '魔防' },
+  { key: 'mdefense', label: '魔防' },
   { key: 'speed', label: '速度' }
 ]
 
@@ -247,9 +253,9 @@ const NATURE_OPTIONS = [
   { value: 'none', label: '无' },
   { value: 'hp', label: '生命' },
   { value: 'attack', label: '物攻' },
-  { value: 'magicAttack', label: '魔攻' },
+  { value: 'mattack', label: '魔攻' },
   { value: 'defense', label: '物防' },
-  { value: 'magicDefense', label: '魔防' },
+  { value: 'mdefense', label: '魔防' },
   { value: 'speed', label: '速度' }
 ]
 
@@ -301,6 +307,56 @@ function createEmptySkill() {
     skillType: '',
     skillTypeLabel: '空槽'
   }
+}
+
+function getRaceNumber(race, key) {
+  const value = Number(race?.[key] ?? 0)
+  return Number.isFinite(value) ? value : 0
+}
+
+function buildSuggestedIvs(race = {}, natureUp = 'none', natureDown = 'none') {
+  const next = {
+    hp: 0,
+    attack: 0,
+    magicAttack: 0,
+    defense: 0,
+    magicDefense: 0,
+    speed: 0
+  }
+
+  const blocked = new Set()
+  if (natureDown && natureDown !== 'none') blocked.add(natureDown)
+
+  const offenseKey = getRaceNumber(race, 'attack') >= getRaceNumber(race, 'mattack') ? 'attack' : 'magicAttack'
+  const defenseKey = getRaceNumber(race, 'defense') >= getRaceNumber(race, 'mdefense') ? 'defense' : 'magicDefense'
+  const speedValue = getRaceNumber(race, 'speed')
+  const speedPriority = speedValue >= 95 ? 'high' : speedValue <= 70 ? 'low' : 'mid'
+
+  const candidates = []
+  const pushCandidate = (key) => {
+    if (!key || key === 'none' || blocked.has(key) || candidates.includes(key)) return
+    candidates.push(key)
+  }
+
+  pushCandidate(natureUp)
+  pushCandidate(offenseKey)
+  if (speedPriority === 'high') pushCandidate('speed')
+  pushCandidate('hp')
+  if (speedPriority === 'mid') pushCandidate('speed')
+  pushCandidate(defenseKey)
+
+  candidates.slice(0, 3).forEach((key) => {
+    next[key] = 10
+  })
+
+  if (natureUp && natureUp !== 'none' && !blocked.has(natureUp)) {
+    next[natureUp] = 10
+  }
+  if (natureDown && natureDown !== 'none') {
+    next[natureDown] = 0
+  }
+
+  return next
 }
 
 export default {
@@ -374,6 +430,9 @@ export default {
     },
     selectedPet() {
       return this.pets.find((pet) => pet.id === this.draft.petId) || null
+    },
+    selectedRace() {
+      return this.selectedPet?.race || null
     },
     skillSlots() {
       return Array.from({ length: 4 }, (_, index) => this.draft.skills[index] || createEmptySkill())
@@ -477,6 +536,7 @@ export default {
       this.draft.petName = pet.name
       this.draft.image = resolveAssetPath(pet.img)
       this.draft.types = [...(pet.types || [])]
+      this.applySuggestedBuild()
     },
     onNatureChange(kind, event) {
       const option = NATURE_OPTIONS[Number(event.detail.value)] || NATURE_OPTIONS[0]
@@ -491,6 +551,11 @@ export default {
           this.draft.natureUp = 'none'
         }
       }
+      this.applySuggestedBuild()
+    },
+    applySuggestedBuild() {
+      if (!this.selectedRace) return
+      this.draft.ivs = buildSuggestedIvs(this.selectedRace, this.draft.natureUp, this.draft.natureDown)
     },
     clearSkillSlot(index) {
       const nextSkills = this.skillSlots.slice(0, 4).map((item) => ({ ...item }))
@@ -1001,6 +1066,32 @@ export default {
   color: #14213d;
   line-height: 1.35;
   text-align: center;
+}
+
+.skill-option-meta {
+  margin-top: 8rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.skill-option-tag {
+  height: 34rpx;
+  padding: 0 10rpx;
+  border-radius: 999rpx;
+  background: #e8eef8;
+  color: #44516a;
+  font-size: 18rpx;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+}
+
+.skill-option-tag.muted {
+  background: #f3f6fb;
+  color: #7a879d;
 }
 
 .skill-option-desc {

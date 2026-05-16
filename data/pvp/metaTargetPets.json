@@ -1,0 +1,41 @@
+[
+  {
+    "id": "4",
+    "key": "pet:4",
+    "name": "魔力猫",
+    "variantName": "默认",
+    "role": ["魔攻输出", "热门对手"],
+    "commonSkills": [],
+    "defaultBuild": "魔攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": ["热门", "输出检测"],
+    "note": "数据后续人工维护"
+  },
+  {
+    "id": "7",
+    "key": "pet:7",
+    "name": "火神",
+    "variantName": "默认",
+    "role": ["物攻输出", "高速压制"],
+    "commonSkills": ["火云车", "火焰切割"],
+    "defaultBuild": "物攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": ["热门", "输出检测", "速度线"],
+    "note": "数据后续人工维护"
+  },
+  {
+    "id": "1",
+    "key": "pet:1",
+    "name": "迪莫",
+    "variantName": "默认",
+    "role": ["综合输出"],
+    "commonSkills": [],
+    "defaultBuild": "魔攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": ["热门"],
+    "note": "数据后续人工维护"
+  }
+]

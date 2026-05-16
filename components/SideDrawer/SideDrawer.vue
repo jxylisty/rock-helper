@@ -37,7 +37,8 @@ export default {
         { title: '属性克制', sub: '克制倍率计算', url: '/pages/restriction/restriction' },
         { title: '技能查询', sub: '按技能找精灵', url: '/pages/skill-search/skill-search' },
         { title: '速度排行', sub: '按速度种族值查找', url: '/pages/speed-rank/speed-rank' },
-        { title: '阵容编辑', sub: '保存你的队伍', url: '/pages/team-editor/team-editor' }
+        { title: '阵容编辑', sub: '保存你的队伍', url: '/pages/team-editor/team-editor' },
+        { title: '愿力冲击', sub: '血脉与克制建议', url: '/pages/bloodline-guide/bloodline-guide' }
       ]
     }
   },

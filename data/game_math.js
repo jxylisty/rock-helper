@@ -200,20 +200,74 @@ export function getSingleTypeSummary(type) {
   };
 }
 
+export function getTypeList() {
+  return Object.keys(typeEffectChart).map(normalizeAttr).filter(Boolean);
+}
+
+const ATTACK_SKILL_TYPES = new Set(['物攻', '魔攻']);
+
+export function isAttackSkill(skill) {
+  return !!skill && ATTACK_SKILL_TYPES.has(String(skill.type || '').trim());
+}
+
+export function getSkillBattleAttr(skill) {
+  if (!isAttackSkill(skill)) return '';
+  return normalizeAttr(skill.attr);
+}
+
+export function getTeamAttackAttrs(teamSlots = []) {
+  return (teamSlots || []).map((slot) => {
+    const skills = Array.isArray(slot?.skills) ? slot.skills : [];
+    const attrs = [];
+    const seen = new Set();
+
+    skills.forEach((skill) => {
+      const attr = getSkillBattleAttr(skill);
+      if (!attr || seen.has(attr)) return;
+      seen.add(attr);
+      attrs.push(attr);
+    });
+
+    return {
+      ...slot,
+      attackAttrs: attrs,
+      attackSkillCount: attrs.length
+    };
+  });
+}
+
+export function getTeamBloodlineSkill(teamSlots = []) {
+  return (teamSlots || []).map((slot) => {
+    const skills = Array.isArray(slot?.skills) ? slot.skills : [];
+    const bloodlineSkill = skills.find((skill) => String(skill?.skillType || '').trim() === '血脉技能' && getSkillBattleAttr(skill));
+    return {
+      ...slot,
+      bloodlineSkill: bloodlineSkill
+        ? {
+            name: bloodlineSkill.name || '',
+            attr: getSkillBattleAttr(bloodlineSkill),
+            type: String(bloodlineSkill.type || '').trim(),
+            power: Number(bloodlineSkill.power) || 0
+          }
+        : null
+    };
+  });
+}
+
 export function analyzeTeamTypeCoverage(teamSlots = []) {
-  const members = (teamSlots || [])
+  const members = getTeamAttackAttrs(teamSlots)
     .filter((slot) => slot && slot.petId && Array.isArray(slot.types) && slot.types.length)
     .map((slot) => ({
       ...slot,
       normalizedTypes: normalizeTypeList(slot.types)
     }));
 
-  const typeList = Object.keys(typeEffectChart).map(normalizeAttr).filter(Boolean);
+  const typeList = getTypeList();
 
   const missingCoverage = typeList
     .map((targetType) => {
       const bestMultiplier = members.reduce((best, member) => {
-        const memberBest = getBestAttackMatchup(member.normalizedTypes, [targetType]).multiplier;
+        const memberBest = getBestAttackMatchup(member.attackAttrs, [targetType]).multiplier;
         return Math.max(best, memberBest);
       }, 1);
 
@@ -270,6 +324,210 @@ export function analyzeTeamTypeCoverage(teamSlots = []) {
     missingCoverage,
     threatTypes,
     alerts
+  };
+}
+
+function scoreBloodlineOption(slot, bloodlineAttr, context) {
+  const normalizedBloodlineAttr = normalizeAttr(bloodlineAttr);
+  const chart = typeEffectChart[normalizedBloodlineAttr];
+  if (!normalizedBloodlineAttr || !chart) {
+    return null;
+  }
+
+  const threatTypes = Array.isArray(slot.threatTypes) ? slot.threatTypes : [];
+  const teamGapTypes = Array.isArray(context.teamGapTypes) ? context.teamGapTypes : [];
+  const offensiveAttrs = Array.isArray(slot.attackAttrs) ? slot.attackAttrs : [];
+  const attackPanel = Number(slot.panel?.attack) || 0;
+  const magicAttackPanel = Number(slot.panel?.mattack) || 0;
+  const bestAttackPanel = Math.max(attackPanel, magicAttackPanel, 1);
+  const attackMode = attackPanel >= magicAttackPanel ? '物理' : '魔法';
+  const currentBloodlineAttr = normalizeAttr(slot.bloodlineSkill?.attr || '');
+  const usedAttrs = context.usedAttrs || new Set();
+
+  let threatScore = 0;
+  let teamGapScore = 0;
+  let coverageTypes = [];
+  let counterTypes = [];
+
+  threatTypes.forEach((type) => {
+    const multiplier = getAttrMultiplier(normalizedBloodlineAttr, [type]);
+    if (multiplier > 1) {
+      threatScore += multiplier === 3 ? 4 : 2;
+      coverageTypes.push(type);
+    }
+  });
+
+  teamGapTypes.forEach((type) => {
+    const multiplier = getAttrMultiplier(normalizedBloodlineAttr, [type]);
+    if (multiplier > 1) {
+      teamGapScore += multiplier === 3 ? 2 : 1;
+      counterTypes.push(type);
+    }
+  });
+
+  const offenseDiversityBonus = offensiveAttrs.includes(normalizedBloodlineAttr) ? 0 : 0.6;
+  const statScore = bestAttackPanel / Math.max(context.teamBestAttackPanel || bestAttackPanel, 1);
+  const currentBonus = currentBloodlineAttr === normalizedBloodlineAttr ? 0.9 : 0;
+  const duplicatePenalty = usedAttrs.has(normalizedBloodlineAttr) && currentBloodlineAttr !== normalizedBloodlineAttr ? 2.6 : 0;
+
+  const score =
+    threatScore * 2.4 +
+    teamGapScore * 1.5 +
+    statScore * 2.2 +
+    offenseDiversityBonus +
+    currentBonus -
+    duplicatePenalty;
+
+  return {
+    attr: normalizedBloodlineAttr,
+    score,
+    attackMode,
+    threatScore,
+    teamGapScore,
+    statScore,
+    coverageTypes: [...new Set(coverageTypes)],
+    counterTypes: [...new Set(counterTypes)],
+    currentBloodlineAttr
+  };
+}
+
+export function recommendBloodlines(teamSlots = []) {
+  const members = getTeamBloodlineSkill(getTeamAttackAttrs(teamSlots))
+    .filter((slot) => slot && slot.petId && Array.isArray(slot.types) && slot.types.length)
+    .map((slot) => {
+      const normalizedTypes = normalizeTypeList(slot.types);
+      const threatTypes = getTypeList().filter((type) => getAttrMultiplier(type, normalizedTypes) > 1);
+      return {
+        ...slot,
+        normalizedTypes,
+        threatTypes
+      };
+    });
+
+  const teamAttackAttrs = members.flatMap((slot) => slot.attackAttrs || []);
+  const missingCoverage = getTypeList().filter((targetType) => {
+    return members.every((member) => getBestAttackMatchup(member.attackAttrs, [targetType]).multiplier <= 1);
+  });
+
+  const teamBestAttackPanel = members.reduce((best, slot) => {
+    const slotBest = Math.max(Number(slot.panel?.attack) || 0, Number(slot.panel?.mattack) || 0);
+    return Math.max(best, slotBest);
+  }, 0);
+
+  const sortedMembers = [...members].sort((a, b) => {
+    const aWeakCount = a.threatTypes.length;
+    const bWeakCount = b.threatTypes.length;
+    if (bWeakCount !== aWeakCount) return bWeakCount - aWeakCount;
+    const aBest = Math.max(Number(a.panel?.attack) || 0, Number(a.panel?.mattack) || 0);
+    const bBest = Math.max(Number(b.panel?.attack) || 0, Number(b.panel?.mattack) || 0);
+    return bBest - aBest;
+  });
+
+  const candidateAttrs = getTypeList();
+  const beamWidth = 24;
+  let states = [
+    {
+      score: 0,
+      usedAttrs: new Set(),
+      assignments: []
+    }
+  ];
+
+  sortedMembers.forEach((slot) => {
+    const scoredCandidates = candidateAttrs
+      .map((attr) =>
+        scoreBloodlineOption(slot, attr, {
+          teamGapTypes: missingCoverage,
+          usedAttrs: new Set(),
+          teamBestAttackPanel
+        })
+      )
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 6);
+
+    const nextStates = [];
+
+    states.forEach((state) => {
+      scoredCandidates.forEach((candidate) => {
+        if (state.usedAttrs.has(candidate.attr)) return;
+        const adjusted = scoreBloodlineOption(slot, candidate.attr, {
+          teamGapTypes: missingCoverage,
+          usedAttrs: state.usedAttrs,
+          teamBestAttackPanel
+        });
+        if (!adjusted) return;
+
+        const nextUsedAttrs = new Set(state.usedAttrs);
+        nextUsedAttrs.add(candidate.attr);
+
+        nextStates.push({
+          score: state.score + adjusted.score,
+          usedAttrs: nextUsedAttrs,
+          assignments: [
+            ...state.assignments,
+            {
+              petId: slot.petId,
+              petName: slot.petName,
+              attr: candidate.attr,
+              score: adjusted.score,
+              attackMode: adjusted.attackMode,
+              threatTypes: adjusted.coverageTypes,
+              counterTypes: adjusted.counterTypes,
+              currentBloodlineAttr: adjusted.currentBloodlineAttr,
+              bestAttackPanel: Math.max(Number(slot.panel?.attack) || 0, Number(slot.panel?.mattack) || 0)
+            }
+          ]
+        });
+      });
+    });
+
+    nextStates.sort((a, b) => b.score - a.score);
+    states = nextStates.slice(0, beamWidth);
+  });
+
+  const bestState = states[0] || { assignments: [] };
+  const assignedMap = new Map(bestState.assignments.map((item) => [String(item.petId), item]));
+
+  const results = members.map((slot) => {
+    const picked = assignedMap.get(String(slot.petId));
+    const candidates = candidateAttrs
+      .map((attr) =>
+        scoreBloodlineOption(slot, attr, {
+          teamGapTypes: missingCoverage,
+          usedAttrs: new Set(),
+          teamBestAttackPanel
+        })
+      )
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3);
+
+    return {
+      petId: slot.petId,
+      petName: slot.petName,
+      currentBloodlineAttr: slot.bloodlineSkill?.attr || '',
+      recommendedAttr: picked?.attr || candidates[0]?.attr || '',
+      recommendedMode: picked?.attackMode || candidates[0]?.attackMode || '物理',
+      bestAttackPanel: Math.max(Number(slot.panel?.attack) || 0, Number(slot.panel?.mattack) || 0),
+      weakTypes: slot.threatTypes,
+      candidates,
+      counterTypes: picked?.counterTypes || [],
+      score: picked?.score || candidates[0]?.score || 0
+    };
+  });
+
+  const selectedAttrs = results.map((item) => item.recommendedAttr).filter(Boolean);
+  const uniqueAttrCount = new Set(selectedAttrs).size;
+
+  return {
+    memberCount: members.length,
+    assignedCount: results.filter((item) => item.recommendedAttr).length,
+    uniqueAttrCount,
+    duplicateCount: Math.max(0, selectedAttrs.length - uniqueAttrCount),
+    teamGapTypes: missingCoverage,
+    teamAttackAttrs,
+    plan: results
   };
 }
 

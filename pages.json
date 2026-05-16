@@ -1,83 +1,91 @@
 {
-	"pages": [
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "洛克王国助手",
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
-			"path": "pages/catalog/catalog",
-			"style": {
-				"navigationBarTitleText": "图鉴",
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
-			"path": "pages/egg/egg",
-			"style": {
-				"navigationBarTitleText": "孵蛋预测",
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
-			"path": "pages/detail/detail",
-			"style": {
-				"navigationBarTitleText": "精灵详情",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black"
-			}
-		},
-		{
-			"path": "pages/map/map",
-			"style": {
-				"navigationBarTitleText": "世界地图",
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
-			"path": "pages/restriction/restriction",
-			"style": {
-				"navigationBarTitleText": "属性克制",
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
-			"path": "pages/skill-search/skill-search",
-			"style": {
-				"navigationBarTitleText": "技能查询",
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
-			"path": "pages/speed-rank/speed-rank",
-			"style": {
-				"navigationBarTitleText": "速度排行",
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
-			"path": "pages/team-editor/team-editor",
-			"style": {
-				"navigationBarTitleText": "阵容编辑",
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "洛克王国助手",
-		"navigationBarBackgroundColor": "#1a1a2e",
-		"backgroundColor": "#16213e"
-	},
-	"uniIdRouter": {}
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "洛克王国助手",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/catalog/catalog",
+      "style": {
+        "navigationBarTitleText": "图鉴",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/egg/egg",
+      "style": {
+        "navigationBarTitleText": "孵蛋预测",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/detail/detail",
+      "style": {
+        "navigationBarTitleText": "精灵详情",
+        "navigationBarBackgroundColor": "#ffffff",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/map/map",
+      "style": {
+        "navigationBarTitleText": "世界地图",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/restriction/restriction",
+      "style": {
+        "navigationBarTitleText": "属性克制",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/skill-search/skill-search",
+      "style": {
+        "navigationBarTitleText": "技能查询",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/speed-rank/speed-rank",
+      "style": {
+        "navigationBarTitleText": "速度排行",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/pvp-breakpoint/pvp-breakpoint",
+      "style": {
+        "navigationBarTitleText": "属性值计算",
+        "navigationBarBackgroundColor": "#ffffff",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/team-editor/team-editor",
+      "style": {
+        "navigationBarTitleText": "阵容编辑",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "洛克王国助手",
+    "navigationBarBackgroundColor": "#1a1a2e",
+    "backgroundColor": "#16213e"
+  },
+  "uniIdRouter": {}
 }

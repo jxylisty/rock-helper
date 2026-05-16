@@ -1,3 +1,5 @@
+import { PRIMARY_ASSET_BASE, FALLBACK_ASSET_BASES } from '@/data/asset_config.js'
+
 function normalizePath(src = '') {
   const value = String(src || '').trim()
   if (!value) return ''
@@ -6,17 +8,60 @@ function normalizePath(src = '') {
   return value
 }
 
+function normalizeWebStaticPath(src = '') {
+  const value = normalizePath(src)
+  if (!value) return ''
+  if (!value.startsWith('/static/')) return value
+  if (value.startsWith('/static/web/')) return value
+  return value.replace(/^\/static\//, '/static/web/')
+}
+
+function uniqueUrls(list = []) {
+  return Array.from(new Set(list.filter(Boolean)))
+}
+
+function buildLocalStaticCandidates(src = '') {
+  const value = normalizePath(src)
+  if (!value || !value.startsWith('/static/')) return []
+
+  const originalValue = /%[0-9A-Fa-f]{2}/.test(value) ? value : encodeURI(value)
+  const webValue = normalizeWebStaticPath(value)
+  const encodedWebValue = /%[0-9A-Fa-f]{2}/.test(webValue) ? webValue : encodeURI(webValue)
+
+  if (typeof plus !== 'undefined') {
+    return uniqueUrls([originalValue, encodedWebValue])
+  }
+
+  return uniqueUrls([encodedWebValue, originalValue])
+}
+
+function buildRemoteStaticCandidates(relativePath = '') {
+  const relative = String(relativePath || '').replace(/^\/+/, '')
+  if (!relative) return []
+
+  const webRelative = relative.startsWith('static/web/')
+    ? relative
+    : relative.replace(/^static\//, 'static/web/')
+  const originalRelative = relative.startsWith('static/web/')
+    ? relative.replace(/^static\/web\//, 'static/')
+    : relative
+
+  return uniqueUrls(
+    REMOTE_ASSET_BASES.flatMap((base) => [
+      base + webRelative,
+      base + originalRelative
+    ])
+  )
+}
+
 export const REMOTE_ASSET_BASES = [
-  'https://rock-helper.pages.dev/',
-  'https://jxylisty.github.io/rock-helper/',
-  'https://raw.githubusercontent.com/jxylisty/rock-helper/clean-main/'
+  PRIMARY_ASSET_BASE,
+  ...FALLBACK_ASSET_BASES
 ]
 
-const LOCAL_WEB_STATIC_PREFIX = '/static/web/'
-
 function shouldPreferLocalStatic() {
-  // Desktop/browser dev preview should use local web-only assets first.
-  // APP-PLUS runtime should prefer remote hosted assets first.
+  // Static images are shipped in static/web, so local packaged assets are the
+  // safest first choice everywhere; remote URLs only act as fallback.
   if (typeof plus !== 'undefined') return false
   if (typeof window === 'undefined' || !window.location) return true
 
@@ -42,19 +87,7 @@ export function resolveAssetPath(src = '') {
   if (!value) return ''
 
   if (isLocalStaticAsset(value)) {
-    if (shouldPreferLocalStatic()) {
-      const relative = value.replace(/^\/static\//, '')
-      return encodeURI(`${LOCAL_WEB_STATIC_PREFIX}${relative}`)
-    }
-
-    const webBase = getWebAssetBase() || REMOTE_ASSET_BASES[0]
-    if (webBase) {
-      const relative = value.replace(/^\//, '')
-      if (/%[0-9A-Fa-f]{2}/.test(relative)) {
-        return webBase + relative
-      }
-      return webBase + encodeURI(relative)
-    }
+    return buildLocalStaticCandidates(value)[0] || ''
   }
 
   return value
@@ -70,15 +103,12 @@ export function getAssetCandidateUrls(src = '') {
 
     const relative = value.slice(matchedBase.length)
     if (!relative.startsWith('static/')) return [value]
-
-    const localValue = encodeURI(`${LOCAL_WEB_STATIC_PREFIX}${relative.replace(/^static\//, '')}`)
-    const remoteCandidates = REMOTE_ASSET_BASES.map((base) => base + relative)
-    return shouldPreferLocalStatic() ? [localValue, ...remoteCandidates] : [...remoteCandidates, localValue]
+    const localCandidates = buildLocalStaticCandidates('/' + relative)
+    const remoteCandidates = buildRemoteStaticCandidates(relative)
+    return uniqueUrls([...localCandidates, ...remoteCandidates])
   }
 
-  const relative = value.replace(/^\//, '')
-  const encoded = /%[0-9A-Fa-f]{2}/.test(relative) ? relative : encodeURI(relative)
-  const remoteCandidates = REMOTE_ASSET_BASES.map((base) => base + encoded)
-  const localValue = encodeURI(`${LOCAL_WEB_STATIC_PREFIX}${relative.replace(/^static\//, '')}`)
-  return shouldPreferLocalStatic() ? [localValue, ...remoteCandidates] : [...remoteCandidates, localValue]
+  const localCandidates = buildLocalStaticCandidates(value)
+  const remoteCandidates = buildRemoteStaticCandidates(value.replace(/^\//, ''))
+  return uniqueUrls([...localCandidates, ...remoteCandidates])
 }

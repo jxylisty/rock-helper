@@ -1,0 +1,17 @@
+{
+  "default": {
+    "minEffectivePower": 80,
+    "maxDisplaySkills": 8,
+    "sortBy": ["effectivePower", "stab", "consume"]
+  },
+  "petOverrides": {
+    "火神": {
+      "preferredSkills": ["火云车", "火焰切割"],
+      "minEffectivePower": 80
+    },
+    "岚鸟": {
+      "preferredSkills": ["先发制人", "龙卷风"],
+      "minEffectivePower": 80
+    }
+  }
+}
