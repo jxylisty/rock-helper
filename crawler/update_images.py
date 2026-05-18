@@ -26,7 +26,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CRAWLER_DIR = PROJECT_ROOT / "crawler"
 
 
@@ -245,8 +245,8 @@ def main() -> None:
     log_step(f"所有图片已保存到: {staging_dir}", "ok")
     log_step("对比检查本地和 staging 目录的差异", "info")
 
-    # 对比本地 static 目录
-    local_static = PROJECT_ROOT / "static"
+    # 对比本地 static/web 目录
+    local_static = PROJECT_ROOT / "static" / "web"
     
     print()
     log_step("本地 vs staging 目录对比:", "info")

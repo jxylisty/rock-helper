@@ -28,11 +28,14 @@ function buildLocalStaticCandidates(src = '') {
   const webValue = normalizeWebStaticPath(value)
   const encodedWebValue = /%[0-9A-Fa-f]{2}/.test(webValue) ? webValue : encodeURI(webValue)
 
+  const webpValue = encodedWebValue.replace(/\.(png|jpg|jpeg|gif)$/i, '.webp')
+  const webpOriginal = originalValue.replace(/\.(png|jpg|jpeg|gif)$/i, '.webp')
+
   if (typeof plus !== 'undefined') {
-    return uniqueUrls([originalValue, encodedWebValue])
+    return uniqueUrls([webpValue, webpOriginal, encodedWebValue, originalValue])
   }
 
-  return uniqueUrls([encodedWebValue, originalValue])
+  return uniqueUrls([webpValue, webpOriginal, encodedWebValue, originalValue])
 }
 
 function buildRemoteStaticCandidates(relativePath = '') {
@@ -46,8 +49,13 @@ function buildRemoteStaticCandidates(relativePath = '') {
     ? relative.replace(/^static\/web\//, 'static/')
     : relative
 
+  const webpRelative = webRelative.replace(/\.(png|jpg|jpeg|gif)$/i, '.webp')
+  const webpOriginal = originalRelative.replace(/\.(png|jpg|jpeg|gif)$/i, '.webp')
+
   return uniqueUrls(
     REMOTE_ASSET_BASES.flatMap((base) => [
+      base + webpRelative,
+      base + webpOriginal,
       base + webRelative,
       base + originalRelative
     ])
@@ -60,17 +68,7 @@ export const REMOTE_ASSET_BASES = [
 ]
 
 function shouldPreferLocalStatic() {
-  // Static images are shipped in static/web, so local packaged assets are the
-  // safest first choice everywhere; remote URLs only act as fallback.
-  if (typeof plus !== 'undefined') return false
-  if (typeof window === 'undefined' || !window.location) return true
-
-  const host = String(window.location.host || '').toLowerCase()
-  if (!host) return true
-  if (host.includes('localhost') || host.includes('127.0.0.1')) return true
-  if (/^\d{1,3}(\.\d{1,3}){3}(:\d+)?$/.test(host)) return true
-  if (host.includes('devtools') || host.includes('hbuilder') || host.includes('local')) return true
-  return false
+  return true
 }
 
 function getWebAssetBase() {

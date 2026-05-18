@@ -27,7 +27,7 @@ from pathlib import Path
 from datetime import datetime
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CRAWLER_DIR = PROJECT_ROOT / "crawler"
 SCRIPTS_DIR = PROJECT_ROOT / "scripts"
 
@@ -89,9 +89,11 @@ def run_python_script(script_path: Path, args: list[str] = None) -> bool:
 
 def run_node_script(script_path: Path) -> bool:
     """运行 Node 脚本"""
-    cmd = ["node", str(script_path)]
+    # 从项目根目录运行，使用相对路径
+    rel_path = script_path.relative_to(PROJECT_ROOT).as_posix()
+    cmd = ["node", rel_path]
     
-    success, error = run_command(cmd, cwd=script_path.parent)
+    success, error = run_command(cmd, cwd=PROJECT_ROOT)
     if success:
         log_step(f"{script_path.name} 完成", "ok")
     else:

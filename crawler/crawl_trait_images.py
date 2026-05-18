@@ -86,8 +86,11 @@ def main() -> None:
         pet_id = int(pet["id"])
         name = str(pet["name"])
         if str(pet_id) in output:
-            print(f"[{pet_id}] {name} (skip)")
-            continue
+            img_file = trait_dir / f"{pet_id}.png"
+            if img_file.exists():
+                print(f"[{pet_id}] {name} (skip)")
+                continue
+            del output[str(pet_id)]
         print(f"[{pet_id}] {name}")
         try:
             response = session.get(WIKI_BASE + quote(name), timeout=20)

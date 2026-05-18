@@ -353,7 +353,6 @@ export default {
         { title: '技能查询', sub: '按技能查精灵', action: this.goSkillSearch },
         { title: '速度排行', sub: '按速度种族值看', action: this.goSpeedRank },
         { title: '属性克制', sub: '看倍率和例子', action: this.goRestriction },
-        { title: '地图', sub: '本地地图', action: this.goMap },
         { title: '孵蛋', sub: '预测可能精灵', action: this.goEgg },
         { title: '图鉴', sub: '查看全部精灵', action: this.goCatalog }
       ]
@@ -643,9 +642,6 @@ export default {
     },
     goRestriction() {
       uni.navigateTo({ url: '/pages/restriction/restriction' })
-    },
-    goMap() {
-      uni.navigateTo({ url: '/pages/map/map' })
     },
     goEgg() {
       uni.navigateTo({ url: '/pages/egg/egg' })

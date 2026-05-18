@@ -9,7 +9,7 @@
         </view>
       </view>
       <view class="pet-basic">
-        <text class="pet-name">{{ petInfo.name }}</text>
+        <text class="pet-name">{{  petInfo.name }}</text>
         <view class="pet-types">
           <view
             v-for="(type, index) in petInfo.type"
@@ -414,6 +414,7 @@ export default {
           type: this.basePet ? this.basePet.type : [],
           rarity: this.basePet ? this.basePet.rarity : '普通',
           img: this.basePet ? this.basePet.img : '',
+          name: this.basePet?.name || '',
           traitImage: resolveAssetPath(petTraitImages[String(this.petId)] || '')
         }
         this.loadVariants()
