@@ -359,6 +359,7 @@ import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import { pets, petTypes } from '@/data/pets.js'
 import { petsDetail } from '@/data/pets_detail_light.js'
 import { petsDetail as petsDetailFull } from '@/data/pets_detail.js'
+import { variantPets, variantPetMap } from '@/data/pet_variants_list.js'
 import { skillsData } from '@/data/skills.js'
 import { skillIcons } from '@/data/skill_icons.js'
 import { analyzeTeamTypeCoverage, calculatePetPanel, getHighestFormPets } from '@/data/game_math.js'
@@ -554,14 +555,30 @@ export default {
   },
   methods: {
     preparePetChoices() {
-      this.petChoices = getHighestFormPets(pets, petsDetail).map((pet) => ({
+      const basePets = getHighestFormPets(pets, petsDetail).map((pet) => ({
         id: pet.id,
         name: pet.name,
         img: pet.img,
         types: Array.isArray(pet.type) ? [...pet.type] : [],
         race: this.detailMap[String(pet.id)]?.race || null,
-        colors: (pet.type || []).map((type) => TYPE_COLOR_MAP[type] || '#5b7cf5')
+        colors: (pet.type || []).map((type) => TYPE_COLOR_MAP[type] || '#5b7cf5'),
+        isVariant: false
       }))
+      
+      const variantChoices = variantPets.map((vPet) => ({
+        id: vPet.id,
+        name: vPet.fullName,
+        img: vPet.img,
+        types: Array.isArray(vPet.type) ? [...vPet.type] : [],
+        race: vPet.race,
+        colors: (vPet.type || []).map((type) => TYPE_COLOR_MAP[type] || '#5b7cf5'),
+        isVariant: true,
+        baseId: vPet.baseId,
+        variantName: vPet.variantName
+      }))
+      
+      this.petChoices = [...basePets, ...variantChoices]
+      
       this.petMap = this.petChoices.reduce((acc, pet) => {
         acc[String(pet.id)] = pet
         return acc
@@ -653,7 +670,12 @@ export default {
     calculatePanel(slotLike) {
       const pet = this.petMap[String(slotLike.petId)]
       if (!pet) return null
-      const race = this.detailMap[String(pet.id)]?.race || {}
+      
+      let race = this.detailMap[String(pet.id)]?.race || {}
+      if (pet.isVariant && pet.race) {
+        race = pet.race
+      }
+      
       const ivs = {
         hp: clampIv(slotLike.ivs?.hp),
         attack: clampIv(slotLike.ivs?.attack),
@@ -726,7 +748,16 @@ export default {
       this.panelExpandedIndexes = [...this.panelExpandedIndexes, index]
     },
     buildSkillOptions(petId) {
-      const skills = Array.isArray(this.detailMap[String(petId)]?.skills) ? this.detailMap[String(petId)].skills : []
+      const pet = this.petMap[String(petId)]
+      let skills = []
+      
+      if (pet?.isVariant) {
+        const variantPet = variantPetMap[petId]
+        skills = variantPet?.skills || []
+      } else {
+        skills = Array.isArray(this.detailMap[String(petId)]?.skills) ? this.detailMap[String(petId)].skills : []
+      }
+      
       const seen = new Set()
       return skills
         .map((skill) => {

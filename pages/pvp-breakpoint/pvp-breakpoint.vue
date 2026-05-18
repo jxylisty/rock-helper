@@ -344,6 +344,7 @@ import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import DamageHpCompareBar from '@/components/pvp/DamageHpCompareBar.vue'
 import { petTypes, pets } from '@/data/pets.js'
 import { petsDetail } from '@/data/pets_detail_light.js'
+import { variantPets, variantPetMap } from '@/data/pet_variants_list.js'
 import { skillsData } from '@/data/skills.js'
 import { skillIcons } from '@/data/skill_icons.js'
 import commonSkillPresets from '@/data/pvp/commonSkillPresets.json'
@@ -497,13 +498,21 @@ function getSkillIcon(skill = {}) { const name = repairText(skill && (skill.name
 
 function buildPetList() {
   const detailMap = petsDetail || {}
-  return getHighestFormPets(pets, petsDetail)
+  const basePets = getHighestFormPets(pets, petsDetail)
     .map((pet) => {
       const detail = detailMap[String(pet.id)] || {}
       return normalizePet(pet, detail)
     })
+  
+  const variantPetList = variantPets.map((vPet) => {
+    return normalizePet(vPet, { race: vPet.race, skills: vPet.skills, trait: vPet.trait })
+  })
+  
+  const allPets = [...basePets, ...variantPetList]
+  
+  return allPets
     .sort((a, b) => {
-      if (a.id !== b.id) return a.id - b.id
+      if (a.id !== b.id) return String(a.id).localeCompare(String(b.id))
       return String(a.name || '').localeCompare(String(b.name || ''))
     })
 }
