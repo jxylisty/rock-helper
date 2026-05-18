@@ -19,18 +19,46 @@ if (!petsMatch) {
 const pets = eval('(' + petsMatch[1] + ')');
 const variantDetails = JSON.parse(variantMatch);
 
+const isBossVariant = (name) => {
+  if (!name) return false;
+  const bossKeywords = ['国王', '王子', '公主', '领主', '首领', '王者', '领袖', '王', '帝', '神'];
+  return bossKeywords.some(kw => name.includes(kw));
+};
+
+const isValidVariant = (name) => {
+  if (!name) return false;
+  if (name === '默认') return false;
+  if (isBossVariant(name)) return false;
+  if (name.includes('的样子')) return false;
+  if (name.includes('形态')) return false;
+  if (name.includes('口味')) return false;
+  if (name.includes('饰品')) return false;
+  return true;
+};
+
 const variantPets = [];
 const variantPetMap = {};
+const addedFullNames = new Set();
+let variantIndex = 0;
 
 Object.entries(variantDetails).forEach(([baseId, variants]) => {
   const basePet = pets.find(p => String(p.id) === String(baseId));
   
-  Object.entries(variants).forEach(([variantPath, detail], variantIndex) => {
+  Object.entries(variants).forEach(([variantPath, detail]) => {
     if (!detail.race) return;
     
     const variantName = detail.variantName || '';
+    
+    if (!isValidVariant(variantName)) return;
+    
     const fileName = variantPath.split('/').pop() || '';
     const displayName = variantName || fileName.replace(/^\d+_/, '').replace(/\.png$/i, '');
+    const fullName = basePet ? `${basePet.name}·${displayName}` : displayName;
+    
+    if (addedFullNames.has(fullName)) return;
+    addedFullNames.add(fullName);
+    
+    variantIndex++;
     
     const variantId = `${baseId}_variant_${variantIndex}`;
     
@@ -39,7 +67,7 @@ Object.entries(variantDetails).forEach(([baseId, variants]) => {
       baseId: parseInt(baseId),
       name: basePet ? basePet.name : '未知',
       variantName: displayName,
-      fullName: basePet ? `${basePet.name}·${displayName}` : displayName,
+      fullName: fullName,
       type: basePet ? basePet.type : [],
       rarity: basePet ? basePet.rarity : '普通',
       img: variantPath,
