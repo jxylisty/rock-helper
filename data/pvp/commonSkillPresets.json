@@ -2,7 +2,7 @@
   "default": {
     "minEffectivePower": 80,
     "maxDisplaySkills": 8,
-    "sortBy": ["effectivePower", "stab", "consume"]
+    "sortBy": ["power", "stab", "consume"]
   },
   "petOverrides": {
     "火神": {

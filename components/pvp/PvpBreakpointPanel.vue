@@ -85,9 +85,12 @@
                 <text class="skill-name">{{ skill.name }}</text>
                 <text class="skill-meta-line">{{ skill.type }}｜{{ skill.attr || '无属性' }}｜{{ skill.skillTypeLabel }}</text>
               </view>
-              <text class="skill-summary">威力 {{ formatValue(skill.power) }}｜有效 {{ formatValue(skill.effectivePower) }}｜{{ formatValue(skill.consume) }}能耗</text>
+              <text class="skill-summary">威力 {{ formatValue(skill.power) }}｜连击 {{ formatValue(skill.baseHits || 1) }}｜{{ formatValue(skill.consume) }}能耗</text>
               <view v-if="skill.mechanicTags.length" class="tag-row">
                 <view v-for="tag in skill.mechanicTags" :key="`${skill.key}-${tag}`" class="tag-chip">{{ tag }}</view>
+              </view>
+              <view v-if="skill.isDynamic" class="dynamic-hint">
+                <text class="dynamic-hint-text">⚠️ 动态威力</text>
               </view>
             </view>
             <view class="skill-actions">
@@ -221,9 +224,12 @@
                 <text class="skill-name">{{ skill.name }}</text>
                 <text class="skill-meta-line">{{ skill.type }}｜{{ skill.attr || '无属性' }}｜{{ skill.skillTypeLabel }}</text>
               </view>
-              <text class="skill-summary">威力 {{ formatValue(skill.power) }}｜有效 {{ formatValue(skill.effectivePower) }}｜{{ formatValue(skill.consume) }}能耗</text>
+              <text class="skill-summary">威力 {{ formatValue(skill.power) }}｜连击 {{ formatValue(skill.baseHits || 1) }}｜{{ formatValue(skill.consume) }}能耗</text>
               <view v-if="skill.mechanicTags.length" class="tag-row">
                 <view v-for="tag in skill.mechanicTags" :key="`${skill.key}-${tag}`" class="tag-chip">{{ tag }}</view>
+              </view>
+              <view v-if="skill.isDynamic" class="dynamic-hint">
+                <text class="dynamic-hint-text">⚠️ 动态威力</text>
               </view>
             </view>
             <view class="skill-actions">
@@ -323,11 +329,14 @@
         <text class="detail-line">属性：{{ detailSkill?.attr || '无属性' }}</text>
         <text class="detail-line">类型：{{ detailSkill?.type || '-' }}</text>
         <text class="detail-line">威力：{{ formatValue(detailSkill?.power) }}</text>
-        <text class="detail-line">有效威力：{{ formatValue(detailSkill?.effectivePower) }}（{{ formatValue(detailSkill?.power) }} × {{ formatValue(detailSkill?.baseHits) }}）</text>
+        <text class="detail-line">连击次数：{{ formatValue(detailSkill?.baseHits || 1) }}</text>
         <text class="detail-line">能耗：{{ formatValue(detailSkill?.consume) }}</text>
         <text class="detail-line">技能来源：{{ detailSkill?.skillTypeLabel || '精灵技能' }}</text>
         <text class="detail-line">完整描述：{{ detailSkill?.describe || '无' }}</text>
         <text class="detail-line">机制标签：{{ (detailSkill?.mechanicTags || []).join(' / ') || '无' }}</text>
+        <view v-if="detailSkill?.isDynamic" class="detail-dynamic-hint">
+          <text class="detail-dynamic-text">⚠️ 该技能为动态威力技能，实际威力可能随战斗状态变化</text>
+        </view>
         <text v-if="detailSkill?.isQuick" class="detail-line">迅捷：主动切换精灵时可触发，不等同于先手。</text>
       </view>
     </view>
@@ -430,7 +439,7 @@ function getCommonSkillConfig(petName = '') {
   return {
     minEffectivePower: Number(override.minEffectivePower ?? defaultConfig.minEffectivePower ?? 80),
     maxDisplaySkills: Number(defaultConfig.maxDisplaySkills ?? 8),
-    sortBy: Array.isArray(defaultConfig.sortBy) ? defaultConfig.sortBy : ['effectivePower', 'stab', 'consume'],
+    sortBy: Array.isArray(defaultConfig.sortBy) ? defaultConfig.sortBy : ['power', 'stab', 'consume'],
     preferredSkills: Array.isArray(override.preferredSkills) ? override.preferredSkills : []
   }
 }
@@ -454,7 +463,7 @@ function sortDamageSkills(skills = [], petAttrs = [], petName = '') {
     .filter((skill) => skill.isDamageSkill)
     .sort((a, b) => {
       if (a.preferredIndex !== b.preferredIndex) return a.preferredIndex - b.preferredIndex
-      if (b.effectivePower !== a.effectivePower) return b.effectivePower - a.effectivePower
+      if (b.power !== a.power) return b.power - a.power
       if (a.sameType !== b.sameType) return a.sameType ? -1 : 1
       if (a.consume !== b.consume) return a.consume - b.consume
       return a.name.localeCompare(b.name, 'zh-Hans-CN')
@@ -567,7 +576,7 @@ export default {
       const threshold = Number(this.targetSkillConfig.minEffectivePower || 80)
       const list = this.defenseSkillMode === 'all'
         ? this.defenseAllSkills
-        : this.defenseAllSkills.filter((skill) => Number(skill.effectivePower || 0) >= threshold)
+        : this.defenseAllSkills.filter((skill) => Number(skill.power || 0) >= threshold)
       const limited = this.defenseSkillMode === 'all' ? list : list.slice(0, Number(this.targetSkillConfig.maxDisplaySkills || 8))
       return limited
     },
@@ -659,7 +668,7 @@ export default {
           key: skill.key,
           skill,
           title: skill.name,
-          summary: `${skill.name}｜${skill.attr || '无属性'}｜${skill.type}｜威力${this.formatValue(skill.power)}｜有效${this.formatValue(skill.effectivePower)}｜${this.formatValue(skill.consume)}能耗`,
+          summary: `${skill.name}｜${skill.attr || '无属性'}｜${skill.type}｜威力${this.formatValue(skill.power)}｜连击${this.formatValue(skill.baseHits || 1)}｜${this.formatValue(skill.consume)}能耗`,
           barTitle: '基础受到伤害',
           damage: base.damage,
           hp: base.hp,
@@ -895,6 +904,8 @@ export default {
 .skill-name { font-size: 26rpx; font-weight: 700; color: #2f2a23; }
 .skill-meta-line, .skill-summary, .preset-row-meta, .preset-row-note { display: block; font-size: 22rpx; line-height: 1.55; color: #705f49; }
 .skill-summary { margin-top: 8rpx; }
+.dynamic-hint { margin-top: 10rpx; }
+.dynamic-hint-text { font-size: 20rpx; color: #d97706; font-weight: 600; }
 .skill-actions { flex-shrink: 0; }
 .skill-detail-btn { min-height: 48rpx; padding: 0 16rpx; font-size: 20rpx; background: #fff; border-color: #ef9a5a; }
 .preset-row { display: flex; flex-direction: column; gap: 6rpx; }
@@ -914,4 +925,6 @@ export default {
 .detail-card { width: 100%; max-width: 640rpx; max-height: 80vh; overflow-y: auto; background: #fffdf7; border-radius: 28rpx; border: 1rpx solid #f0e4d1; padding: 28rpx; box-sizing: border-box; }
 .detail-head { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; }
 .detail-close { width: 52rpx; height: 52rpx; border-radius: 999rpx; background: #f7ebda; color: #7b5c39; display: flex; align-items: center; justify-content: center; font-size: 30rpx; font-weight: 700; flex-shrink: 0; }
+.detail-dynamic-hint { margin-top: 16rpx; padding: 14rpx 18rpx; background: #fff8e6; border-radius: 12rpx; border: 2rpx solid #f0d080; }
+.detail-dynamic-text { font-size: 20rpx; color: #a06820; line-height: 1.5; }
 </style>

@@ -236,7 +236,7 @@ import PetCard from '@/components/PetCard/PetCard.vue'
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import TypeGraph from '@/components/TypeGraph/TypeGraph.vue'
 import { pets, petTypes } from '@/data/pets.js'
-import { petsDetail } from '@/data/pets_detail.js'
+import { petsDetail } from '@/data/pets_detail_light.js'
 import { getAttrMultiplier, getBestAttackMatchup, getHighestFormPets, normalizeAttr, typeEffectChart } from '@/data/game_math.js'
 import { getTypeList } from '@/utils/typeGraph.js'
 

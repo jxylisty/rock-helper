@@ -205,6 +205,46 @@ function parseBaseHits(describe = '') {
   return match ? Math.max(1, Number(match[1] || 1)) : 1
 }
 
+const DYNAMIC_POWER_KEYWORDS = [
+  '连击', '连续攻击', '2连击', '3连击', '4连击', '5连击', '6连击', '10连击',
+  '威力提升', '威力增加', '威力提高',
+  '根据', '基于',
+  '速度', '双防', '双攻', '攻击', '防御', '魔攻', '魔防',
+  '越高', '越低', '越多',
+  '追加', '随机', '随机威力',
+  '每次', '永久', '叠加', '递增',
+  '生命', 'HP', '血量',
+  '条件威力', '条件增伤'
+]
+
+export function isDynamicPowerSkill(skill = {}) {
+  const describe = repairText(skill?.describe || '')
+  const powerText = String(skill?.power || '')
+  const name = repairText(skill?.name || '')
+
+  if (DYNAMIC_POWER_KEYWORDS.some((kw) => describe.includes(kw))) {
+    return true
+  }
+
+  if (/(?:^|[^\d])([2-9]|10)连击/.test(describe)) {
+    return true
+  }
+
+  if (/(?:先于|若|如果|当).*?威力/.test(describe)) {
+    return true
+  }
+
+  if (/^\d+技能威力/.test(powerText) && !/^\d+$/.test(powerText.replace('技能威力', ''))) {
+    return true
+  }
+
+  if (name && /(?:扫尾|撕裂|贯穿|暴击)/.test(name)) {
+    return true
+  }
+
+  return false
+}
+
 function parsePriority(describe = '') {
   const text = repairText(describe || '')
   const directMatch = text.match(/(?:先手|先制)\s*([+-]\d+)/)
@@ -271,11 +311,11 @@ export function normalizeBattleSkill(skill = {}) {
   const describe = repairText(skill?.describe || '')
   const skillType = repairText(skill?.skillType || skill?.skill_type || skill?.skilltype || '')
   const baseHits = parseBaseHits(describe)
-  const effectivePower = power * baseHits
   const priority = parsePriority(describe)
   const isQuick = /迅捷/.test(describe)
   const damageSkill = DAMAGE_SKILL_TYPES.includes(type) && power > 0
   const mechanicTags = []
+  const isDynamic = isDynamicPowerSkill(skill)
 
   if (/连击/.test(describe)) mechanicTags.push('连击')
   if (/(?:先手|先制)\s*[+-]?\d+/.test(describe)) mechanicTags.push('先手')
@@ -298,9 +338,9 @@ export function normalizeBattleSkill(skill = {}) {
     describe,
     skillType,
     baseHits,
-    effectivePower,
     priority,
     isQuick,
+    isDynamic,
     isDamageSkill: damageSkill,
     mechanicTags: Array.from(new Set(mechanicTags)),
     conditionalEffects: parseConditionalEffects(describe)

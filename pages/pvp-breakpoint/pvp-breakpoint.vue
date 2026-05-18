@@ -98,9 +98,22 @@
               <text class="skill-meta">能量 {{ selectedSkill.consume || 0 }}</text>
             </view>
             <view class="skill-meta-row">
-              <text class="skill-meta">威力 {{ selectedSkill.power || 0 }}</text>
+              <text class="skill-meta">基础威力 {{ selectedSkill.power || 0 }}</text>
               <text class="skill-dot">｜</text>
-              <text class="skill-meta">有效威力 {{ selectedSkill.effectivePower || 0 }}</text>
+              <view class="power-input-row">
+                <text class="skill-meta">当前计算威力：</text>
+                <input
+                  class="power-input"
+                  type="number"
+                  :value="customSkillPower"
+                  @input="onCustomPowerInput"
+                  @click.stop
+                  placeholder="0"
+                />
+              </view>
+            </view>
+            <view v-if="selectedSkill.isDynamic" class="dynamic-hint">
+              <text class="dynamic-hint-text">⚠️ 该技能实际威力可能随战斗状态变化，请手动调整计算威力</text>
             </view>
             <text class="skill-desc">{{ skillShortDesc }}</text>
           </view>
@@ -314,10 +327,13 @@
         </view>
         <view class="detail-list">
           <view class="detail-row"><text class="detail-label">威力</text><text class="detail-value">{{ detailSkill.power || 0 }}</text></view>
-          <view class="detail-row"><text class="detail-label">有效威力</text><text class="detail-value">{{ detailSkill.effectivePower || 0 }}</text></view>
+          <view class="detail-row"><text class="detail-label">连击次数</text><text class="detail-value">{{ detailSkill.baseHits || 1 }}</text></view>
           <view class="detail-row"><text class="detail-label">技能来源</text><text class="detail-value">{{ detailSkillSource }}</text></view>
           <view class="detail-row detail-desc-row"><text class="detail-label">完整描述</text><text class="detail-value desc">{{ detailSkill.describe || '暂无描述' }}</text></view>
           <view class="detail-row detail-tags-row"><text class="detail-label">机制标签</text><view class="tag-wrap"><text v-for="tag in detailSkillTags" :key="tag" class="mini-tag">{{ tag }}</text></view></view>
+          <view v-if="detailSkill.isDynamic" class="detail-dynamic-hint">
+            <text class="detail-dynamic-text">⚠️ 该技能为动态威力技能，实际威力可能随战斗状态变化，请手动调整计算威力</text>
+          </view>
         </view>
       </view>
     </view>
@@ -327,7 +343,7 @@
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import DamageHpCompareBar from '@/components/pvp/DamageHpCompareBar.vue'
 import { petTypes, pets } from '@/data/pets.js'
-import { petsDetail } from '@/data/pets_detail.js'
+import { petsDetail } from '@/data/pets_detail_light.js'
 import { skillsData } from '@/data/skills.js'
 import { skillIcons } from '@/data/skill_icons.js'
 import commonSkillPresets from '@/data/pvp/commonSkillPresets.json'
@@ -540,7 +556,7 @@ function buildSkillList(skills = [], attackTypes = [], petNames = []) {
       const aPreferredRank = aPreferred === -1 ? 999 : aPreferred
       const bPreferredRank = bPreferred === -1 ? 999 : bPreferred
       if (aPreferredRank !== bPreferredRank) return aPreferredRank - bPreferredRank
-      if ((b.effectivePower || 0) !== (a.effectivePower || 0)) return (b.effectivePower || 0) - (a.effectivePower || 0)
+      if ((b.power || 0) !== (a.power || 0)) return (b.power || 0) - (a.power || 0)
       if (a.stab !== b.stab) return a.stab ? -1 : 1
       return (a.consume || 0) - (b.consume || 0)
     })
@@ -572,6 +588,7 @@ export default {
       detailSkill: {},
       selectedSkillName: '',
       skillFilter: 'all',
+      customSkillPower: 0,
       resultState: { value: '0 伤害', subtitle: '', note: '' }
     }
   },
@@ -656,6 +673,8 @@ export default {
         this.defenseSide.petId = this.petOptions.find((item) => item.id !== matched.id)?.id || matched.id
       }
     }
+    this.applyPetConfig(this.attackSide)
+    this.applyPetConfig(this.defenseSide)
     this.syncSelectedSkill()
     this.calculateDamage()
   },
@@ -682,6 +701,15 @@ export default {
       if (!pet) return
       const side = this.petSelectorSide === 'defense' ? this.defenseSide : this.attackSide
       side.petId = pet.id
+      this.applyPetConfig(side)
+      this.petSelectorVisible = false
+      this.syncSelectedSkill()
+      this.calculateDamage()
+    },
+    applyPetConfig(side) {
+      if (!side || !side.petId) return
+      const pet = this.petOptions.find((p) => p.id === side.petId)
+      if (!pet) return
       const cached = loadPetConfig(pet.id)
       if (cached && cached.ivs) {
         side.ivs = { ...cached.ivs }
@@ -693,9 +721,6 @@ export default {
         const race = pet.detail?.race || pet.race || {}
         side.ivs = buildSuggestedIvs(race, side.natureUp, side.natureDown)
       }
-      this.petSelectorVisible = false
-      this.syncSelectedSkill()
-      this.calculateDamage()
     },
     togglePetType(type) {
       if (!type) return
@@ -770,7 +795,13 @@ export default {
     selectSkill(skill) {
       if (!skill) return
       this.selectedSkillName = skill.name
+      this.customSkillPower = Number(skill.power) || 0
       this.closeSkillSelector()
+      this.calculateDamage()
+    },
+    onCustomPowerInput(e) {
+      const value = Number(e?.detail?.value || e?.target?.value || 0)
+      this.customSkillPower = value
       this.calculateDamage()
     },
     openSkillDetail(skill) { if (!skill) return; this.detailSkill = this.normalizeSkill(skill); this.skillDetailVisible = true },
@@ -785,7 +816,8 @@ export default {
         this.resultState = { value: '该技能不造成直接伤害', subtitle: '', note: '该技能属于变化类或威力为 0，当前只展示其效果信息。', damage: 0, hp: Math.max(1, Math.round(Number(this.defensePanel.hp) || 0)) }
         return
       }
-      const result = calculateDamageFull({ attackerPanel: this.attackPanel, defenderPanel: this.defensePanel, skillPower: skill.power, skillType: skill.type, skillAttr: skill.attr, attackerAttrs: this.attackTypes, defenderAttrs: this.defenseTypes, hits: skill.baseHits })
+      const customPower = this.customSkillPower || skill.power
+      const result = calculateDamageFull({ attackerPanel: this.attackPanel, defenderPanel: this.defensePanel, skillPower: customPower, skillType: skill.type, skillAttr: skill.attr, attackerAttrs: this.attackTypes, defenderAttrs: this.defenseTypes })
       const damage = Math.max(1, Math.round(result.damage || 0))
       const hp = Math.max(1, Math.round(Number(this.defensePanel.hp) || 0))
       const percent = Math.round((damage / hp) * 100)
@@ -1234,6 +1266,38 @@ export default {
   font-size: 20rpx;
   line-height: 1.5;
   color: #7c7262;
+}
+
+.power-input-row {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.power-input {
+  width: 100rpx;
+  height: 40rpx;
+  padding: 4rpx 12rpx;
+  border: 2rpx solid #d4c4a8;
+  border-radius: 8rpx;
+  background: #fff;
+  font-size: 20rpx;
+  text-align: center;
+  color: #5a4a32;
+}
+
+.dynamic-hint {
+  margin-top: 12rpx;
+  padding: 12rpx 16rpx;
+  background: #fff8e6;
+  border-radius: 10rpx;
+  border: 2rpx solid #f0d080;
+}
+
+.dynamic-hint-text {
+  font-size: 20rpx;
+  color: #a06820;
+  line-height: 1.4;
 }
 
 .result-bar {
@@ -1897,6 +1961,20 @@ export default {
   font-weight: 700;
   display: inline-flex;
   align-items: center;
+}
+
+.detail-dynamic-hint {
+  margin-top: 16rpx;
+  padding: 14rpx 18rpx;
+  background: #fff8e6;
+  border-radius: 12rpx;
+  border: 2rpx solid #f0d080;
+}
+
+.detail-dynamic-text {
+  font-size: 20rpx;
+  color: #a06820;
+  line-height: 1.5;
 }
 
 .bottom-space {

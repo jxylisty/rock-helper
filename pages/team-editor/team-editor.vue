@@ -357,7 +357,9 @@ import StatPanel from '@/components/StatPanel/StatPanel.vue'
 import TeamEditSheet from '@/components/TeamEditSheet/TeamEditSheet.vue'
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import { pets, petTypes } from '@/data/pets.js'
-import { petsDetail } from '@/data/pets_detail.js'
+import { petsDetail } from '@/data/pets_detail_light.js'
+import { petsDetail as petsDetailFull } from '@/data/pets_detail.js'
+import { skillsData } from '@/data/skills.js'
 import { skillIcons } from '@/data/skill_icons.js'
 import { analyzeTeamTypeCoverage, calculatePetPanel, getHighestFormPets } from '@/data/game_math.js'
 import { analyzeTeamDecision, recommendTeamComplements, recommendTeamReplacements } from '@/data/decision_engine.js'
@@ -732,12 +734,15 @@ export default {
           const key = `${skill.name}|${skill.skill_type || '精灵技能'}`
           if (seen.has(key)) return null
           seen.add(key)
+          const skillData = skillsData[skill.name] || {}
+          const fullSkillList = petsDetailFull[String(petId)]?.skills || []
+          const fullSkill = fullSkillList.find(s => s.name === skill.name) || {}
           return {
             name: skill.name,
-            type: skill.type || '-',
-            attr: skill.attr || '-',
-            consume: `${Number(skill.consume ?? 0)}耗能`,
-            describe: skill.describe || '',
+            type: skillData.type || fullSkill.type || '-',
+            attr: skillData.attr || fullSkill.attr || '-',
+            consume: skillData.consume ? `${Number(skillData.consume)}耗能` : (fullSkill.consume ? `${Number(fullSkill.consume)}耗能` : '-'),
+            describe: skillData.describe || fullSkill.describe || '',
             icon: resolveAssetPath(skillIcons[skill.name] || ''),
             skillType: skill.skill_type || '精灵技能',
             skillTypeLabel: skill.skill_type || '精灵技能'
