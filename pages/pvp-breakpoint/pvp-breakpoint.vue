@@ -278,13 +278,19 @@
       <view class="modal-sheet" @click.stop>
         <view class="modal-head"><text class="modal-title">选择技能</text><view class="modal-close" hover-class="touch-active" @click="closeSkillSelector">关闭</view></view>
         <view class="search-row"><input v-model.trim="skillKeyword" class="search-input" placeholder="搜索技能名称" placeholder-class="search-placeholder" /></view>
-        <scroll-view scroll-y class="modal-scroll skill-scroll" :style="{ height: '58vh' }">
-          <view v-for="skill in filteredSkillOptions" :key="skill.name" class="skill-option" :class="{ active: selectedSkill.name === skill.name }" hover-class="touch-active" @click="selectSkill(skill)">
-            <RemoteImage class="skill-option-icon" :src="skill.icon || getSkillIcon(skill.name)" mode="aspectFit" />
-            <view class="skill-option-main">
-              <view class="skill-option-head"><text class="skill-option-name">{{ skill.name }}</text><view class="detail-btn small" hover-class="touch-active" @click.stop="openSkillDetail(skill)">详情</view></view>
-              <text class="skill-option-meta">{{ skill.attr || '无属性' }}｜{{ skill.displayType || skill.type || '-' }}｜威力 {{ skill.power || 0 }}｜有效威力 {{ skill.effectivePower || 0 }}｜能量 {{ skill.consume || 0 }}</text>
-              <text class="skill-option-desc">{{ skill.shortDesc }}</text>
+        <view class="skill-filter-row">
+          <view v-for="opt in skillFilterOptions" :key="opt.value" class="filter-chip" :class="{ active: skillFilter === opt.value }" hover-class="touch-active" @click="skillFilter = opt.value">{{ opt.label }}</view>
+        </view>
+        <scroll-view scroll-y class="modal-scroll skill-scroll" :style="{ height: '54vh' }">
+          <view class="skill-grid">
+            <view v-for="skill in filteredSkillOptions" :key="skill.name + '-' + skill.skill_type" class="skill-card" :class="{ active: selectedSkill.name === skill.name }" hover-class="touch-active" @click="selectSkill(skill)">
+              <view class="skill-card-icon-wrap" hover-class="touch-active" @click.stop="openSkillDetail(skill)">
+                <RemoteImage class="skill-card-icon" :src="skill.icon || getSkillIcon(skill.name)" mode="aspectFit" />
+              </view>
+              <view class="skill-card-info">
+                <text class="skill-card-name">{{ skill.name }}</text>
+                <text class="skill-card-power">威力 {{ skill.power || 0 }}</text>
+              </view>
             </view>
           </view>
           <view v-if="!filteredSkillOptions.length" class="empty-tip">没有找到符合条件的技能</view>
@@ -328,6 +334,8 @@ import commonSkillPresets from '@/data/pvp/commonSkillPresets.json'
 import { calculatePetPanel, getHighestFormPets } from '@/data/game_math.js'
 import { calculateDamageFull, normalizeBattleSkill, repairText } from '@/utils/pvpDamageEngine.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
+import { buildSuggestedIvs } from '@/utils/buildSuggestedIvs.js'
+import { savePetConfig, loadPetConfig } from '@/utils/petConfigCache.js'
 
 const STAT_FIELDS = [
   { key: 'hp', label: '生命', theme: 'pink' },
@@ -563,6 +571,7 @@ export default {
       skillDetailVisible: false,
       detailSkill: {},
       selectedSkillName: '',
+      skillFilter: 'all',
       resultState: { value: '0 伤害', subtitle: '', note: '' }
     }
   },
@@ -602,10 +611,23 @@ export default {
       const petNames = [pet.name, pet.baseName, pet.fullName].filter(Boolean)
       return buildSkillList(skillList, this.attackTypes, petNames).filter((skill) => skill.isDamageSkill)
     },
+    skillFilterOptions() {
+      return [
+        { value: 'all', label: '全部' },
+        { value: '精灵技能', label: '初始技能' },
+        { value: '血脉技能', label: '血脉技能' },
+        { value: '可学技能石', label: '技能石' }
+      ]
+    },
     filteredSkillOptions() {
       const keyword = String(this.skillKeyword || '').trim().toLowerCase()
-      if (!keyword) return this.attackSkillOptions
-      return this.attackSkillOptions.filter((skill) => String(skill.searchText || '').includes(keyword))
+      const filter = this.skillFilter
+      let list = this.attackSkillOptions
+      if (filter && filter !== 'all') {
+        list = list.filter((skill) => skill.sourceType === filter)
+      }
+      if (!keyword) return list
+      return list.filter((skill) => String(skill.searchText || '').includes(keyword))
     },
     selectedSkill() {
       if (!this.attackSkillOptions.length) return this.normalizeSkill({})
@@ -658,8 +680,19 @@ export default {
     closePetSelector() { this.petSelectorVisible = false },
     selectPet(pet) {
       if (!pet) return
-      if (this.petSelectorSide === 'defense') this.defenseSide.petId = pet.id
-      else this.attackSide.petId = pet.id
+      const side = this.petSelectorSide === 'defense' ? this.defenseSide : this.attackSide
+      side.petId = pet.id
+      const cached = loadPetConfig(pet.id)
+      if (cached && cached.ivs) {
+        side.ivs = { ...cached.ivs }
+        if (cached.natureUp) side.natureUp = cached.natureUp
+        if (cached.natureDown) side.natureDown = cached.natureDown
+        if (cached.star !== undefined) side.star = cached.star
+        if (cached.level !== undefined) side.level = cached.level
+      } else {
+        const race = pet.detail?.race || pet.race || {}
+        side.ivs = buildSuggestedIvs(race, side.natureUp, side.natureDown)
+      }
       this.petSelectorVisible = false
       this.syncSelectedSkill()
       this.calculateDamage()
@@ -683,38 +716,31 @@ export default {
     onParamIvInput(key, event) {
       const value = Number(event?.detail?.value || 0)
       this.paramDraft.ivs = { ...this.paramDraft.ivs, [key]: Number.isFinite(value) ? value : 0 }
+      this.saveParamConfig()
     },
     applyRecommendedIvs() {
-      this.paramDraft.ivs = this.buildSuggestedIvs(this.paramPet?.detail?.race || this.paramPet?.race || {}, this.paramDraft.natureUp, this.paramDraft.natureDown)
+      this.paramDraft.ivs = buildSuggestedIvs(this.paramPet?.detail?.race || this.paramPet?.race || {}, this.paramDraft.natureUp, this.paramDraft.natureDown)
+      this.saveParamConfig()
     },
-    buildSuggestedIvs(race = {}, natureUp = '无', natureDown = '无') {
-      const next = { hp: 0, attack: 0, mattack: 0, defense: 0, mdefense: 0, speed: 0 }
-      const blocked = new Set()
-      if (natureDown && natureDown !== '无') blocked.add(natureDown)
-      const attackRace = Number(race.attack ?? 0)
-      const magicRace = Number(race.mattack ?? 0)
-      const defenseRace = Number(race.defense ?? 0)
-      const magicDefenseRace = Number(race.mdefense ?? 0)
-      const speedRace = Number(race.speed ?? 0)
-      const offenseKey = attackRace >= magicRace ? 'attack' : 'mattack'
-      const defenseKey = defenseRace >= magicDefenseRace ? 'defense' : 'mdefense'
-      const candidates = []
-      const pushCandidate = (key) => {
-        if (!key || blocked.has(key) || candidates.includes(key)) return
-        candidates.push(key)
-      }
-      pushCandidate(natureUp)
-      pushCandidate(offenseKey)
-      pushCandidate(speedRace >= 95 ? 'speed' : 'hp')
-      pushCandidate(speedRace >= 95 ? 'hp' : 'speed')
-      pushCandidate(defenseKey)
-      candidates.slice(0, 3).forEach((key) => { next[key] = 10 })
-      if (natureUp && !blocked.has(natureUp)) next[natureUp] = 10
-      if (natureDown && natureDown !== '无') next[natureDown] = 0
-      return next
+    onNatureUpChange(event) {
+      this.paramDraft.natureUp = NATURE_OPTIONS[Number(event && event.detail ? event.detail.value : 0)] || NATURE_OPTIONS[0]
+      this.saveParamConfig()
     },
-    onNatureUpChange(event) { this.paramDraft.natureUp = NATURE_OPTIONS[Number(event && event.detail ? event.detail.value : 0)] || NATURE_OPTIONS[0] },
-    onNatureDownChange(event) { this.paramDraft.natureDown = NATURE_OPTIONS[Number(event && event.detail ? event.detail.value : 0)] || NATURE_OPTIONS[0] },
+    onNatureDownChange(event) {
+      this.paramDraft.natureDown = NATURE_OPTIONS[Number(event && event.detail ? event.detail.value : 0)] || NATURE_OPTIONS[0]
+      this.saveParamConfig()
+    },
+    saveParamConfig() {
+      const petId = this.paramSide === 'defense' ? this.defenseSide.petId : this.attackSide.petId
+      if (!petId) return
+      savePetConfig(petId, {
+        ivs: this.paramDraft.ivs,
+        natureUp: this.paramDraft.natureUp,
+        natureDown: this.paramDraft.natureDown,
+        star: this.paramDraft.star,
+        level: this.paramDraft.level
+      })
+    },
     confirmParamSetting() {
       const next = {
         level: toNumber(this.paramDraft.level, 60),
@@ -722,6 +748,16 @@ export default {
         natureUp: this.paramDraft.natureUp || '无',
         natureDown: this.paramDraft.natureDown || '无',
         ivs: cloneIvs(this.paramDraft.ivs)
+      }
+      const petId = this.paramSide === 'defense' ? this.defenseSide.petId : this.attackSide.petId
+      if (petId) {
+        savePetConfig(petId, {
+          ivs: next.ivs,
+          natureUp: next.natureUp,
+          natureDown: next.natureDown,
+          star: next.star,
+          level: next.level
+        })
       }
       if (this.paramSide === 'defense') this.defenseSide = { ...this.defenseSide, ...next }
       else this.attackSide = { ...this.attackSide, ...next }
@@ -1678,62 +1714,88 @@ export default {
   color: #fff;
 }
 
-.skill-option {
+.skill-filter-row {
   display: flex;
   gap: 12rpx;
-  align-items: flex-start;
-  padding: 14rpx;
-  border-radius: 22rpx;
-  background: #f8fafc;
-  margin-bottom: 12rpx;
+  padding: 0 16rpx 12rpx;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  background: #f1f5f9;
+  font-size: 22rpx;
+  color: #64748b;
   border: 1rpx solid transparent;
 }
 
-.skill-option.active {
-  border-color: rgba(74, 163, 255, 0.28);
+.filter-chip.active {
+  background: #e0f2fe;
+  color: #0284c7;
+  border-color: #0284c7;
+}
+
+.skill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  padding: 0 8rpx;
+}
+
+.skill-card {
+  width: calc(50% - 6rpx);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rpx 10rpx;
+  border-radius: 16rpx;
+  background: #f8fafc;
+  border: 1rpx solid transparent;
+  box-sizing: border-box;
+}
+
+.skill-card.active {
+  border-color: rgba(74, 163, 255, 0.4);
   background: #f1f6ff;
 }
 
-.skill-option-icon {
-  width: 74rpx;
-  height: 74rpx;
-  border-radius: 16rpx;
+.skill-card-icon-wrap {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 14rpx;
   background: #fff;
-  flex-shrink: 0;
-}
-
-.skill-option-main {
-  min-width: 0;
-  flex: 1;
-}
-
-.skill-option-head {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10rpx;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8rpx;
 }
 
-.skill-option-name {
-  font-size: 24rpx;
-  font-weight: 800;
+.skill-card-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.skill-card-info {
+  text-align: center;
+  width: 100%;
+}
+
+.skill-card-name {
+  display: block;
+  font-size: 22rpx;
+  font-weight: 700;
   color: #2d2a24;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.skill-option-meta {
+.skill-card-power {
   display: block;
-  margin-top: 6rpx;
-  font-size: 18rpx;
+  font-size: 20rpx;
   color: #6f675d;
-}
-
-.skill-option-desc {
-  display: block;
-  margin-top: 6rpx;
-  font-size: 18rpx;
-  color: #85796a;
-  line-height: 1.45;
-  word-break: break-all;
+  margin-top: 4rpx;
 }
 
 .skill-detail-top {

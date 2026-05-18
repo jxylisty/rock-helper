@@ -239,6 +239,8 @@
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import { petTypes } from '@/data/pets.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
+import { buildSuggestedIvs } from '@/utils/buildSuggestedIvs.js'
+import { savePetConfig, loadPetConfig } from '@/utils/petConfigCache.js'
 
 const IV_FIELDS = [
   { key: 'hp', label: '生命' },
@@ -250,7 +252,7 @@ const IV_FIELDS = [
 ]
 
 const NATURE_OPTIONS = [
-  { value: 'none', label: '无' },
+  { value: '无', label: '无' },
   { value: 'hp', label: '生命' },
   { value: 'attack', label: '物攻' },
   { value: 'mattack', label: '魔攻' },
@@ -285,14 +287,14 @@ function createDraft(data = null) {
     ivs: {
       hp: Number(data?.ivs?.hp ?? 0),
       attack: Number(data?.ivs?.attack ?? 0),
-      magicAttack: Number(data?.ivs?.magicAttack ?? 0),
+      mattack: Number(data?.ivs?.mattack ?? 0),
       defense: Number(data?.ivs?.defense ?? 0),
-      magicDefense: Number(data?.ivs?.magicDefense ?? 0),
+      mdefense: Number(data?.ivs?.mdefense ?? 0),
       speed: Number(data?.ivs?.speed ?? 0)
     },
     skills: Array.isArray(data?.skills) ? data.skills.slice(0, 4) : [],
-    natureUp: data?.natureUp || 'none',
-    natureDown: data?.natureDown || 'none'
+    natureUp: data?.natureUp || '无',
+    natureDown: data?.natureDown || '无'
   }
 }
 
@@ -307,56 +309,6 @@ function createEmptySkill() {
     skillType: '',
     skillTypeLabel: '空槽'
   }
-}
-
-function getRaceNumber(race, key) {
-  const value = Number(race?.[key] ?? 0)
-  return Number.isFinite(value) ? value : 0
-}
-
-function buildSuggestedIvs(race = {}, natureUp = 'none', natureDown = 'none') {
-  const next = {
-    hp: 0,
-    attack: 0,
-    magicAttack: 0,
-    defense: 0,
-    magicDefense: 0,
-    speed: 0
-  }
-
-  const blocked = new Set()
-  if (natureDown && natureDown !== 'none') blocked.add(natureDown)
-
-  const offenseKey = getRaceNumber(race, 'attack') >= getRaceNumber(race, 'mattack') ? 'attack' : 'magicAttack'
-  const defenseKey = getRaceNumber(race, 'defense') >= getRaceNumber(race, 'mdefense') ? 'defense' : 'magicDefense'
-  const speedValue = getRaceNumber(race, 'speed')
-  const speedPriority = speedValue >= 95 ? 'high' : speedValue <= 70 ? 'low' : 'mid'
-
-  const candidates = []
-  const pushCandidate = (key) => {
-    if (!key || key === 'none' || blocked.has(key) || candidates.includes(key)) return
-    candidates.push(key)
-  }
-
-  pushCandidate(natureUp)
-  pushCandidate(offenseKey)
-  if (speedPriority === 'high') pushCandidate('speed')
-  pushCandidate('hp')
-  if (speedPriority === 'mid') pushCandidate('speed')
-  pushCandidate(defenseKey)
-
-  candidates.slice(0, 3).forEach((key) => {
-    next[key] = 10
-  })
-
-  if (natureUp && natureUp !== 'none' && !blocked.has(natureUp)) {
-    next[natureUp] = 10
-  }
-  if (natureDown && natureDown !== 'none') {
-    next[natureDown] = 0
-  }
-
-  return next
 }
 
 export default {
@@ -454,7 +406,7 @@ export default {
       return ''
     },
     natureWarning() {
-      if (this.draft.natureUp !== 'none' && this.draft.natureUp === this.draft.natureDown) {
+      if (this.draft.natureUp !== '无' && this.draft.natureUp === this.draft.natureDown) {
         return '增益和减益不能选择同一项'
       }
       return ''
@@ -536,26 +488,46 @@ export default {
       this.draft.petName = pet.name
       this.draft.image = resolveAssetPath(pet.img)
       this.draft.types = [...(pet.types || [])]
-      this.applySuggestedBuild()
+      const cached = loadPetConfig(pet.id)
+      if (cached && cached.ivs) {
+        this.draft.ivs = { ...cached.ivs }
+        if (cached.natureUp) this.draft.natureUp = cached.natureUp
+        if (cached.natureDown) this.draft.natureDown = cached.natureDown
+        if (cached.star !== undefined) this.draft.star = cached.star
+        if (cached.level !== undefined) this.draft.level = cached.level
+      } else {
+        this.applySuggestedBuild()
+      }
     },
     onNatureChange(kind, event) {
       const option = NATURE_OPTIONS[Number(event.detail.value)] || NATURE_OPTIONS[0]
       if (kind === 'up') {
         this.draft.natureUp = option.value
-        if (this.draft.natureUp !== 'none' && this.draft.natureUp === this.draft.natureDown) {
-          this.draft.natureDown = 'none'
+        if (this.draft.natureUp !== '无' && this.draft.natureUp === this.draft.natureDown) {
+          this.draft.natureDown = '无'
         }
       } else {
         this.draft.natureDown = option.value
-        if (this.draft.natureDown !== 'none' && this.draft.natureDown === this.draft.natureUp) {
-          this.draft.natureUp = 'none'
+        if (this.draft.natureDown !== '无' && this.draft.natureDown === this.draft.natureUp) {
+          this.draft.natureUp = '无'
         }
       }
       this.applySuggestedBuild()
+      this.saveCurrentConfig()
     },
     applySuggestedBuild() {
       if (!this.selectedRace) return
       this.draft.ivs = buildSuggestedIvs(this.selectedRace, this.draft.natureUp, this.draft.natureDown)
+    },
+    saveCurrentConfig() {
+      if (!this.draft.petId) return
+      savePetConfig(this.draft.petId, {
+        ivs: this.draft.ivs,
+        natureUp: this.draft.natureUp,
+        natureDown: this.draft.natureDown,
+        star: this.draft.star,
+        level: this.draft.level
+      })
     },
     clearSkillSlot(index) {
       const nextSkills = this.skillSlots.slice(0, 4).map((item) => ({ ...item }))
@@ -610,6 +582,7 @@ export default {
       const raw = Number(event.detail.value)
       const value = Number.isFinite(raw) ? Math.max(0, Math.min(10, Math.round(raw))) : 0
       this.$set(this.draft.ivs, key, value)
+      this.saveCurrentConfig()
     },
     getNatureLabel(value) {
       return NATURE_OPTIONS.find((item) => item.value === value)?.label || '无'
@@ -650,7 +623,15 @@ export default {
         uni.showToast({ title: this.skillWarning, icon: 'none' })
         return
       }
-      this.$emit('save', this.sanitizeDraft())
+      const data = this.sanitizeDraft()
+      savePetConfig(this.draft.petId, {
+        ivs: data.ivs,
+        natureUp: data.natureUp,
+        natureDown: data.natureDown,
+        star: data.star,
+        level: data.level
+      })
+      this.$emit('save', data)
     }
   }
 }

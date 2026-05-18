@@ -577,9 +577,9 @@ export default {
       const labels = {
         hp: '生命',
         attack: '物攻',
-        magicAttack: '魔攻',
+        mattack: '魔攻',
         defense: '物防',
-        magicDefense: '魔防',
+        mdefense: '魔防',
         speed: '速度'
       }
       const active = Object.keys(labels)

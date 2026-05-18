@@ -561,6 +561,14 @@ const natureAttrAliasMap = {
   '速度': '速度'
 };
 
+function bankerRound(x) {
+  const f = Math.floor(x);
+  const r = x - f;
+  if (r < 0.5) return f;
+  if (r > 0.5) return f + 1;
+  return f % 2 === 0 ? f : f + 1;
+}
+
 export function calculatePanelValue(raceValue, ivValue, level, star, attrKey, natureUp, natureDown) {
   const iv = Math.max(0, Math.min(10, Number(ivValue) || 0)) * (star + 1);
   const lv = Math.max(1, Number(level) || 1);
@@ -578,10 +586,12 @@ export function calculatePanelValue(raceValue, ivValue, level, star, attrKey, na
   }
 
   const starBonus = attrKey === 'hp' ? star * 20 : star * 10;
-  panel = panel * natureMod + starBonus;
+  let preNaturePanel = Math.floor(panel);
+  let postNaturePanel = Math.round(preNaturePanel * natureMod + 0.0000001);
+  let finalPanel = postNaturePanel + starBonus;
 
   return {
-    value: Math.round(panel),
+    value: finalPanel,
     growth: Math.round(perLevelGrowth * 100) / 100
   };
 }

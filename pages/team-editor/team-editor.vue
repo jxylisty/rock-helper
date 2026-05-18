@@ -369,21 +369,21 @@ const DEFAULT_LEVEL = 60
 const DEFAULT_STAR = 5
 
 const NATURE_LABEL_MAP = {
-  none: '无',
+  '无': '无',
   hp: '生命',
   attack: '物攻',
-  magicAttack: '魔攻',
+  mattack: '魔攻',
   defense: '物防',
-  magicDefense: '魔防',
+  mdefense: '魔防',
   speed: '速度'
 }
 
 const IV_LABEL_MAP = {
   hp: '生命',
   attack: '物攻',
-  magicAttack: '魔攻',
+  mattack: '魔攻',
   defense: '物防',
-  magicDefense: '魔防',
+  mdefense: '魔防',
   speed: '速度'
 }
 
@@ -415,13 +415,13 @@ function createDefaultEditorData() {
     ivs: {
       hp: 0,
       attack: 0,
-      magicAttack: 0,
+      mattack: 0,
       defense: 0,
-      magicDefense: 0,
+      mdefense: 0,
       speed: 0
     },
-    natureUp: 'none',
-    natureDown: 'none'
+    natureUp: '无',
+    natureDown: '无'
   }
 }
 
@@ -655,9 +655,9 @@ export default {
       const ivs = {
         hp: clampIv(slotLike.ivs?.hp),
         attack: clampIv(slotLike.ivs?.attack),
-        magicAttack: clampIv(slotLike.ivs?.magicAttack),
+        mattack: clampIv(slotLike.ivs?.mattack),
         defense: clampIv(slotLike.ivs?.defense),
-        magicDefense: clampIv(slotLike.ivs?.magicDefense),
+        mdefense: clampIv(slotLike.ivs?.mdefense),
         speed: clampIv(slotLike.ivs?.speed)
       }
 
@@ -686,9 +686,9 @@ export default {
         ivs: {
           hp: clampIv(draft.ivs?.hp),
           attack: clampIv(draft.ivs?.attack),
-          magicAttack: clampIv(draft.ivs?.magicAttack),
+          mattack: clampIv(draft.ivs?.mattack),
           defense: clampIv(draft.ivs?.defense),
-          magicDefense: clampIv(draft.ivs?.magicDefense),
+          mdefense: clampIv(draft.ivs?.mdefense),
           speed: clampIv(draft.ivs?.speed)
         },
         natureUp: draft.natureUp,
