@@ -141,7 +141,6 @@ export default {
       leaderBadgeLabel: '\u9996\u9886\u5316',
       variantBadgeLabel: '\u591a\u5f62\u6001',
       leaderFilterLabel: '\u53ea\u770b\u9996\u9886\u5f62\u6001',
-      useDetail2: false,
       onlyLeaderForms: false,
       onlyFinalForms: false,
       typeOptions,
@@ -192,11 +191,6 @@ export default {
     }
   },
   methods: {
-    onLoad(options) {
-      if (options && options.v2 === '1') {
-        this.useDetail2 = true
-      }
-    },
     resetRenderCount() {
       this.renderCount = INITIAL_RENDER_COUNT
     },
@@ -232,8 +226,7 @@ export default {
       return hasLeaderFormPetId(id)
     },
     goToDetail(id) {
-      const detailPage = this.useDetail2 ? '/pages/detail2/detail2' : '/pages/detail/detail'
-      uni.navigateTo({ url: detailPage + '?id=' + id })
+      uni.navigateTo({ url: '/pages/detail/detail?id=' + id })
     }
   }
 }

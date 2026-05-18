@@ -33,14 +33,6 @@
       }
     },
     {
-      "path": "pages/detail2/detail2",
-      "style": {
-        "navigationBarTitleText": "精灵详情",
-        "navigationBarBackgroundColor": "#ffffff",
-        "navigationBarTextStyle": "black"
-      }
-    },
-    {
       "path": "pages/map/map",
       "style": {
         "navigationBarTitleText": "世界地图",

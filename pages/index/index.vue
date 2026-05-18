@@ -355,8 +355,7 @@ export default {
         { title: '属性克制', sub: '看倍率和例子', action: this.goRestriction },
         { title: '地图', sub: '本地地图', action: this.goMap },
         { title: '孵蛋', sub: '预测可能精灵', action: this.goEgg },
-        { title: '图鉴', sub: '查看全部精灵', action: this.goCatalog },
-        { title: '图鉴2', sub: '精简版详情页', action: this.goCatalog2 }
+        { title: '图鉴', sub: '查看全部精灵', action: this.goCatalog }
       ]
     },
     currentDraftSlots() {
@@ -653,9 +652,6 @@ export default {
     },
     goCatalog() {
       uni.navigateTo({ url: '/pages/catalog/catalog' })
-    },
-    goCatalog2() {
-      uni.navigateTo({ url: '/pages/catalog/catalog' + '?v2=1' })
     }
   }
 }
