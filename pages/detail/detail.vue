@@ -249,7 +249,8 @@
 
 <script>
 import { pets, petTypes, rarityColors, typeRestriction, typeIconMap } from '@/data/pets.js'
-import { petsDetail } from '@/data/pets_detail.js'
+import { petsDetail } from '@/data/pets_detail_light.js'
+import { petsDetail as petsDetailFull } from '@/data/pets_detail.js'
 import { petVariants } from '@/data/pet_variants.js'
 import { petVariantDetails } from '@/data/pet_variant_details.js'
 import { petYise } from '@/data/pet_yise.js'
@@ -314,7 +315,8 @@ export default {
       calcResult: null,
       starLevel: 0,
       starOptions: ['0星', '1星', '2星', '3星', '4星', '5星'],
-      baseDetailInfo: null
+      baseDetailInfo: null,
+      loadedFullSkills: {}
     }
   },
   computed: {
@@ -362,7 +364,23 @@ export default {
     filteredSkills() {
       const skillTypeData = this.petInfo.skill_types?.[this.selectedSkillType]
       if (skillTypeData && Array.isArray(skillTypeData)) {
-        return skillTypeData
+        return skillTypeData.map(skill => {
+          if (this.loadedFullSkills[skill.name]) {
+            return this.loadedFullSkills[skill.name]
+          }
+          const skillData = skillsData[skill.name] || {}
+          const fullPetDetail = petsDetailFull[this.petId] || {}
+          const fullSkillList = fullPetDetail.skills || []
+          const fullSkill = fullSkillList.find(s => s.name === skill.name) || {}
+          return {
+            ...skill,
+            type: skillData.type || skill.type || fullSkill.type || '-',
+            attr: skillData.attr || skill.attr || fullSkill.attr || '-',
+            consume: skillData.consume ?? skill.consume ?? fullSkill.consume ?? '-',
+            power: skillData.power ?? skill.power ?? fullSkill.power ?? '-',
+            describe: skillData.describe || skill.describe || fullSkill.describe || ''
+          }
+        })
       }
       return []
     }
@@ -466,6 +484,7 @@ export default {
         ? buildSkillTypes(nextInfo.skills)
         : (base.skill_types || {})
       this.petInfo = nextInfo
+      this.loadedFullSkills = {}
 
       if (!this.petInfo.skill_types?.[this.selectedSkillType]?.length) {
         const firstType = ['精灵技能', '血脉技能', '可学技能石'].find((key) => this.petInfo.skill_types?.[key]?.length)
@@ -499,14 +518,21 @@ export default {
       return resolveAssetPath(skillIcons[skillName] || '')
     },
     showSkillDetail(skill) {
-      this.currentSkillDetail = skillsData[skill.name] || {
-        name: skill.name,
-        type: skill.type || '-',
-        attr: '-',
-        consume: '-',
-        power: skill.power ? skill.power + '技能威力' : '-',
-        describe: ''
+      if (!this.loadedFullSkills[skill.name]) {
+        const skillData = skillsData[skill.name] || {}
+        const fullPetDetail = petsDetailFull[this.petId] || {}
+        const fullSkillList = fullPetDetail.skills || []
+        const fullSkill = fullSkillList.find(s => s.name === skill.name) || {}
+        this.loadedFullSkills[skill.name] = {
+          ...skill,
+          type: skillData.type || skill.type || fullSkill.type || '-',
+          attr: skillData.attr || skill.attr || fullSkill.attr || '-',
+          consume: skillData.consume ?? skill.consume ?? fullSkill.consume ?? '-',
+          power: skillData.power ?? skill.power ?? fullSkill.power ?? '-',
+          describe: skillData.describe || skill.describe || fullSkill.describe || '暂无描述'
+        }
       }
+      this.currentSkillDetail = this.loadedFullSkills[skill.name]
       this.currentSkillIcon = resolveAssetPath(skillIcons[skill.name] || '')
       this.showSkillModal = true
     },
