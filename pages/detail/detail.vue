@@ -252,7 +252,8 @@ import { pets, petTypes, rarityColors, typeRestriction, typeIconMap } from '@/da
 import { petsDetail } from '@/data/pets_detail_light.js'
 import { petsDetail as petsDetailFull } from '@/data/pets_detail.js'
 import { petVariants } from '@/data/pet_variants.js'
-import { petVariantDetails } from '@/data/pet_variant_details.js'
+import { petVariantDetails } from '@/data/pet_variant_details_light.js'
+import { petVariantDetails as petVariantDetailsFull } from '@/data/pet_variant_details.js'
 import { petYise } from '@/data/pet_yise.js'
 import { petTraitImages } from '@/data/pet_trait_images.js'
 import { hasLeaderFormPetId } from '@/data/leader_forms.js'
@@ -371,7 +372,19 @@ export default {
           const skillData = skillsData[skill.name] || {}
           const fullPetDetail = petsDetailFull[this.petId] || {}
           const fullSkillList = fullPetDetail.skills || []
-          const fullSkill = fullSkillList.find(s => s.name === skill.name) || {}
+          let fullSkill = fullSkillList.find(s => s.name === skill.name) || {}
+          if (!fullSkill.describe) {
+            const variantDetails = petVariantDetailsFull[String(this.petId)] || {}
+            const variantKeys = Object.keys(variantDetails)
+            for (const key of variantKeys) {
+              const vSkills = variantDetails[key]?.skills || []
+              const vSkill = vSkills.find(s => s.name === skill.name)
+              if (vSkill && vSkill.describe) {
+                fullSkill = vSkill
+                break
+              }
+            }
+          }
           return {
             ...skill,
             type: skillData.type || skill.type || fullSkill.type || '-',
@@ -522,7 +535,19 @@ export default {
         const skillData = skillsData[skill.name] || {}
         const fullPetDetail = petsDetailFull[this.petId] || {}
         const fullSkillList = fullPetDetail.skills || []
-        const fullSkill = fullSkillList.find(s => s.name === skill.name) || {}
+        let fullSkill = fullSkillList.find(s => s.name === skill.name) || {}
+        if (!fullSkill.describe) {
+          const variantDetails = petVariantDetailsFull[String(this.petId)] || {}
+          const variantKeys = Object.keys(variantDetails)
+          for (const key of variantKeys) {
+            const vSkills = variantDetails[key]?.skills || []
+            const vSkill = vSkills.find(s => s.name === skill.name)
+            if (vSkill && vSkill.describe) {
+              fullSkill = vSkill
+              break
+            }
+          }
+        }
         this.loadedFullSkills[skill.name] = {
           ...skill,
           type: skillData.type || skill.type || fullSkill.type || '-',
