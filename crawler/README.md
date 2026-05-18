@@ -84,6 +84,41 @@ pip install requests beautifulsoup4
 | `build_pet_variant_details_light.js` | 生成变体精简版 |
 | `build_pet_variants_list.js` | 生成变体精灵列表 |
 
+## 图片更新
+
+### 统一图片更新脚本
+
+```bash
+# 下载图片并转换为 WebP（输出到 staging 目录）
+python crawler/update_images.py
+
+# 仅下载 PNG，不转换 WebP
+python crawler/update_images.py --no-webp
+
+# 指定输出目录
+python crawler/update_images.py --staging ./my-images
+
+# 测试模式
+python crawler/update_images.py --dry-run
+```
+
+### WebP 质量设置
+
+```bash
+# 设置 WebP 质量 (1-100，默认 85)
+python crawler/update_images.py --quality 90
+```
+
+### 图片对比
+
+运行脚本后会自动对比 staging 目录和本地 static 目录的差异。
+
+### Python 依赖（图片）
+
+```bash
+pip install requests beautifulsoup4 pillow
+```
+
 ## 常见问题
 
 ### Q: 爬虫失败，提示 cookie 过期
