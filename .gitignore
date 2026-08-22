@@ -11,3 +11,5 @@ all_pets_official.json
 *.bak
 static/static-png/
 static-png
+static/static-web/
+static/web/

@@ -43,7 +43,7 @@ luokewangguo/
 │       ├── asset_config.js # 静态资源配置
 │       └── eggData.js      # 孵蛋数据
 │
-├── static/static-web/      # 静态资源（WebP格式）
+├── static/static-web/      # 静态资源（WebP格式，素材不入库，见下文）
 │   ├── pets/               # 精灵立绘（含异色）
 │   ├── skills/             # 技能图标
 │   ├── traits/             # 特性图标
@@ -103,6 +103,20 @@ npm run build:float-data
 API Key 读取顺序：环境变量 `ROCO_API_KEY` > `crawler_official_api/api_key.local`（已 gitignore）。
 
 旧的 B站Wiki 爬虫（crawler/）与官方 API 试验脚本已废弃删除。
+
+## 静态素材说明（不入库）
+
+以下素材目录已加入 `.gitignore`，**克隆仓库后不包含**，需按下述方式生成/获取：
+
+| 目录 | 内容 | 获取方式 |
+|------|------|----------|
+| `static/static-web/pets/` | 精灵立绘 webp | `python crawler_official_api/update_data.py fetch-pet-images --all` |
+| `static/static-web/skills/` | 技能图标 webp | `python crawler_official_api/update_data.py fetch-skill-icons` |
+| `static/static-web/traits/` `icons/` | 特性/属性图标 | 官方 API 手动获取 |
+| `static/web/` | 地图瓦片（z5~z8 金字塔切片） | 由原始大图 `static/map_z8_v3.png` 切片生成 |
+| `static/static-png/` | PNG 源材料（转换中间产物） | 可由 API 重新生成 |
+
+素材生成完成后，可运行 `python crawler_official_api/verify_pet_images.py` 校验立绘完整性。
 
 ## 开发规范
 
