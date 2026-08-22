@@ -1,4 +1,4 @@
-import { typeEffectChart, normalizeAttr, getAttrMultiplier } from '@/data/game_math.js'
+import { typeEffectChart, normalizeAttr, getAttrMultiplier } from '@/data/config/game_math.js'
 
 function uniq(list) {
   return Array.from(new Set(list))

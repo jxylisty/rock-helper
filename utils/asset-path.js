@@ -1,4 +1,4 @@
-import { PRIMARY_ASSET_BASE, FALLBACK_ASSET_BASES } from '@/data/asset_config.js'
+import { PRIMARY_ASSET_BASE, FALLBACK_ASSET_BASES } from '@/data/config/asset_config.js'
 
 function normalizePath(src = '') {
   const value = String(src || '').trim()
@@ -12,8 +12,8 @@ function normalizeWebStaticPath(src = '') {
   const value = normalizePath(src)
   if (!value) return ''
   if (!value.startsWith('/static/')) return value
-  if (value.startsWith('/static/web/')) return value
-  return value.replace(/^\/static\//, '/static/web/')
+  if (value.startsWith('/static/static-web/')) return value
+  return value.replace(/^\/static\//, '/static/static-web/')
 }
 
 function uniqueUrls(list = []) {
@@ -42,10 +42,10 @@ function buildRemoteStaticCandidates(relativePath = '') {
   const relative = String(relativePath || '').replace(/^\/+/, '')
   if (!relative) return []
 
-  const webRelative = relative.startsWith('static/web/')
+  const webRelative = relative.startsWith('static/static-web/')
     ? relative
-    : relative.replace(/^static\//, 'static/web/')
-  const originalRelative = relative.startsWith('static/web/')
+    : relative.replace(/^static\//, 'static/static-web/')
+  const originalRelative = relative.startsWith('static/static-web/')
     ? relative.replace(/^static\/web\//, 'static/')
     : relative
 

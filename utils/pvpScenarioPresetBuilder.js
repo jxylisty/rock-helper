@@ -219,7 +219,7 @@ function parseCurrentPetPresets(pet = {}, selectedSkill = null, mode = 'offense'
     customPresets,
     selectedSkillName,
     selectedSkill: normalizedSelectedSkill,
-    traitText: text
+    traitText: String(pet?.trait || '')
   }
 }
 

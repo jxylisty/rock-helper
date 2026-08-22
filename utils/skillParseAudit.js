@@ -10,7 +10,7 @@ export function auditSkillMechanics(skillsData) {
   parsedSkills.forEach((parsed, index) => {
     const normalized = normalizeSkill(rawSkills[index])
     if (!normalized.description) emptySkills.push(parsed)
-    (parsed.tags || []).forEach((tag) => {
+    ;(parsed.tags || []).forEach((tag) => {
       tagCount[tag] = (tagCount[tag] || 0) + 1
     })
     if (parsed.confidence === 'low') lowConfidenceSkills.push(parsed)

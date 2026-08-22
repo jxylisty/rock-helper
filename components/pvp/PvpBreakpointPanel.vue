@@ -71,7 +71,7 @@
 
       <view class="skill-card">
         <text class="sub-title">我方技能</text>
-        <text class="sub-note">默认只显示摘要。点技能行本身选择技能，点右侧详情按钮打开弹层。</text>
+        <text class="sub-note">点击技能行选择，右侧详情展开</text>
         <view v-if="offenseSkills.length" class="skill-list">
           <view
             v-for="skill in offenseSkills"
@@ -85,7 +85,7 @@
                 <text class="skill-name">{{ skill.name }}</text>
                 <text class="skill-meta-line">{{ skill.type }}｜{{ skill.attr || '无属性' }}｜{{ skill.skillTypeLabel }}</text>
               </view>
-              <text class="skill-summary">威力 {{ formatValue(skill.power) }}｜连击 {{ formatValue(skill.baseHits || 1) }}｜{{ formatValue(skill.consume) }}能耗</text>
+              <text class="skill-summary">威力 <text class="mono">{{ formatValue(skill.power) }}</text>｜连击 <text class="mono">{{ formatValue(skill.baseHits || 1) }}</text>｜<text class="mono">{{ formatValue(skill.consume) }}</text>能耗</text>
               <view v-if="skill.mechanicTags.length" class="tag-row">
                 <view v-for="tag in skill.mechanicTags" :key="`${skill.key}-${tag}`" class="tag-chip">{{ tag }}</view>
               </view>
@@ -135,8 +135,12 @@
             <input v-model="customScenario.matkBuff" class="manual-input" type="number" />
           </view>
           <view class="manual-item">
-            <text class="manual-label">威力加成 %</text>
-            <input v-model="customScenario.powerBuffPercent" class="manual-input" type="number" />
+            <text class="manual-label">威力加成</text>
+            <view class="manual-input-row">
+              <input v-model="customScenario.powerBuffPercent" class="manual-input" type="number" placeholder="留空用公式算" />
+              <view class="auto-calc-btn" @click="autoCalcEffectivePower">计算面板威力</view>
+            </view>
+            <text v-if="effectivePowerHint" class="manual-hint">{{ effectivePowerHint }}</text>
           </view>
           <view class="manual-item">
             <text class="manual-label">速度固定加成</text>
@@ -210,7 +214,7 @@
 
       <view class="skill-card">
         <text class="sub-title">敌方输出技能</text>
-        <text class="sub-note">默认按常见有效威力阈值筛选，点技能行选择，点右侧详情按钮打开弹层。</text>
+        <text class="sub-note">按常见威力阈值筛选，点击技能行选择</text>
         <view v-if="defenseVisibleSkills.length" class="skill-list">
           <view
             v-for="skill in defenseVisibleSkills"
@@ -224,7 +228,7 @@
                 <text class="skill-name">{{ skill.name }}</text>
                 <text class="skill-meta-line">{{ skill.type }}｜{{ skill.attr || '无属性' }}｜{{ skill.skillTypeLabel }}</text>
               </view>
-              <text class="skill-summary">威力 {{ formatValue(skill.power) }}｜连击 {{ formatValue(skill.baseHits || 1) }}｜{{ formatValue(skill.consume) }}能耗</text>
+              <text class="skill-summary">威力 <text class="mono">{{ formatValue(skill.power) }}</text>｜连击 <text class="mono">{{ formatValue(skill.baseHits || 1) }}</text>｜<text class="mono">{{ formatValue(skill.consume) }}</text>能耗</text>
               <view v-if="skill.mechanicTags.length" class="tag-row">
                 <view v-for="tag in skill.mechanicTags" :key="`${skill.key}-${tag}`" class="tag-chip">{{ tag }}</view>
               </view>
@@ -344,10 +348,11 @@
 </template>
 
 <script>
-import commonSkillPresets from '@/src/data/pvp/commonSkillPresets.json'
+import commonSkillPresets from '@/data/pvp/commonSkillPresets.json'
 import DamageHpCompareBar from './DamageHpCompareBar.vue'
-import { calculateAllPanels, calculateDamageFull, canActBeforeEnemy, normalizeAttrList, normalizeBattleSkill, repairText } from '@/utils/pvpDamageEngine.js'
+import { calculateAllPanels, calculateDamageFull, canActBeforeEnemy, normalizeAttrList, normalizeAttr, normalizeBattleSkill, repairText, getAttrMultiplier } from '@/utils/pvpDamageEngine.js'
 import { buildAvailableScenarioPresets, resolveBattleScenario } from '@/utils/pvpScenarioPresetBuilder.js'
+import { PVP_RULES } from '@/config/pvpRuleConfig.js'
 
 const MODE_OPTIONS = [
   { key: 'offense', label: '我打谁' },
@@ -619,13 +624,32 @@ export default {
       return this.enabledDefensePresetIds.map((id) => this.defensePresetOptions.find((item) => item.id === id)).filter(Boolean)
     },
     offenseManualScenario() {
-      const powerPercent = Number(this.customScenario.powerBuffPercent || 0)
+      const raw = this.customScenario.powerBuffPercent
+      const hasManualPower = raw !== '' && raw !== null && raw !== undefined
       return {
         atkBuff: this.customScenario.atkBuff,
         matkBuff: this.customScenario.matkBuff,
-        powerBuff: powerPercent ? 1 + powerPercent / 100 : '',
+        powerBuff: hasManualPower ? '' : '',
+        skillPowerOverride: hasManualPower ? Number(raw) : null,
         speedFlat: this.customScenario.speedFlat
       }
+    },
+    effectivePowerHint() {
+      const skill = this.selectedOffenseSkill
+      if (!skill || !this.selectedTarget) return ''
+      const basePower = Number(skill.power || 0)
+      if (!basePower) return ''
+      const attrMultiplier = getAttrMultiplier(normalizeAttr(skill.attr), normalizeAttrList(this.selectedTarget.attrs || []))
+      const normalizedSkillAttr = normalizeAttr(skill.attr)
+      const petAttrs = normalizeAttrList(this.pet?.attrs || [])
+      const isStab = petAttrs.includes(normalizedSkillAttr)
+      const stabBonus = isStab ? PVP_RULES.damage.sameTypeBonus : 1
+      const effective = Math.round(basePower * attrMultiplier * stabBonus)
+      const parts = [`威力${basePower}`]
+      if (attrMultiplier !== 1) parts.push(`克制${attrMultiplier}x`)
+      if (isStab) parts.push(`本系${stabBonus}`)
+      parts.push(`= ${effective}`)
+      return parts.join(' × ')
     },
     defenseManualScenario() {
       const reductionPercent = Number(this.customScenario.defenseReductionPercent || 0)
@@ -830,13 +854,26 @@ export default {
       this.skillDetailVisible = false
       this.detailSkill = null
     },
+    autoCalcEffectivePower() {
+      const skill = this.selectedOffenseSkill
+      if (!skill || !this.selectedTarget) return
+      const basePower = Number(skill.power || 0)
+      if (!basePower) return
+      const attrMultiplier = getAttrMultiplier(normalizeAttr(skill.attr), normalizeAttrList(this.selectedTarget.attrs || []))
+      const normalizedSkillAttr = normalizeAttr(skill.attr)
+      const petAttrs = normalizeAttrList(this.pet?.attrs || [])
+      const isStab = petAttrs.includes(normalizedSkillAttr)
+      const stabBonus = isStab ? PVP_RULES.damage.sameTypeBonus : 1
+      this.customScenario.powerBuffPercent = String(Math.round(basePower * attrMultiplier * stabBonus))
+    },
     computeOffenseResult(baseAttackerPanel, skill, targetPet, defenderPanel, scenario) {
       const activeScenario = scenario || resolveBattleScenario({})
       const attackerPanel = applyScenarioToPanel(baseAttackerPanel, activeScenario, 'attacker')
+      const hasManualOverride = activeScenario.skillPowerOverride !== null && activeScenario.skillPowerOverride !== undefined
       const result = calculateDamageFull({
         attackerPanel,
         defenderPanel,
-        skillPower: activeScenario.skillPowerOverride ?? Number(skill?.power || 0),
+        skillPower: hasManualOverride ? activeScenario.skillPowerOverride : (activeScenario.skillPowerOverride ?? Number(skill?.power || 0)),
         skillType: skill?.type,
         skillAttr: activeScenario.attrOverride || skill?.attr,
         attackerAttrs: this.pet?.attrs || [],
@@ -846,7 +883,8 @@ export default {
         defenseReduction: activeScenario.defenseReduction ?? 0,
         atkLevel: activeScenario.atkLevel ?? 0,
         defLevel: activeScenario.defLevel ?? 0,
-        hits: activeScenario.hitsOverride ?? skill?.baseHits ?? 1
+        hits: activeScenario.hitsOverride ?? skill?.baseHits ?? 1,
+        skipAttrAndStab: hasManualOverride
       })
       const hp = Number(defenderPanel?.hp || 0)
       return { damage: result.damage, hp, percent: hp ? (result.damage / hp) * 100 : 0, diff: result.damage - hp }
@@ -880,51 +918,319 @@ export default {
 </script>
 
 <style scoped>
-.pvp-panel { display: flex; flex-direction: column; gap: 20rpx; }
-.hero-card, .section-card, .profile-card, .skill-card, .preset-card, .manual-card, .result-card, .recommend-card { padding: 24rpx; border-radius: 24rpx; background: #fffdf7; border: 1rpx solid #f0e4d1; }
-.hero-title, .section-title, .sub-title, .preset-title, .result-title, .recommend-card-title, .detail-title { display: block; color: #32281d; }
-.hero-title { font-size: 30rpx; font-weight: 700; }
-.section-title, .sub-title, .preset-title, .result-title, .recommend-card-title, .detail-title { font-size: 28rpx; font-weight: 600; }
-.hero-meta, .hero-note, .note-text, .preset-note, .sub-note, .empty-tip, .result-hint, .recommend-line, .detail-line { display: block; margin-top: 10rpx; font-size: 22rpx; line-height: 1.6; color: #7f715b; }
-.hero-note { color: #a36a37; }
-.tab-row, .build-chip-row, .profile-chip-row, .tag-row { margin-top: 18rpx; display: flex; flex-wrap: wrap; gap: 10rpx; }
-.tab-chip, .build-chip, .profile-chip, .tag-chip, .skill-detail-btn { min-height: 56rpx; padding: 10rpx 18rpx; border-radius: 999rpx; background: #f7ebda; color: #7b5c39; display: inline-flex; align-items: center; justify-content: center; font-size: 22rpx; font-weight: 700; border: 1rpx solid transparent; box-sizing: border-box; }
-.tab-chip.active, .build-chip.active, .profile-chip.active, .preset-row.active, .skill-item.active { background: #fff1de; border-color: #ef9a5a; }
-.panel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14rpx; margin-top: 18rpx; }
-.panel-item { padding: 16rpx; border-radius: 18rpx; background: #f8f2e7; }
-.panel-label { display: block; font-size: 20rpx; color: #7b6f5a; }
-.panel-value { display: block; margin-top: 8rpx; font-size: 30rpx; font-weight: 600; color: #2f2a23; }
-.picker-stack { margin-top: 16rpx; display: grid; gap: 12rpx; }
-.picker-box { min-height: 76rpx; border-radius: 18rpx; background: #f8f2e7; padding: 0 18rpx; display: flex; align-items: center; justify-content: space-between; font-size: 22rpx; color: #334155; }
-.skill-list, .preset-list, .recommend-stack, .result-list { display: flex; flex-direction: column; gap: 14rpx; margin-top: 14rpx; }
-.skill-item, .preset-row, .result-item { padding: 18rpx; border-radius: 18rpx; background: #f8f2e7; border: 1rpx solid transparent; }
-.skill-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 12rpx; }
+.pvp-panel { display: flex; flex-direction: column; gap: 14rpx; }
+
+.hero-card, .section-card, .profile-card, .skill-card, .preset-card, .manual-card, .result-card, .recommend-card {
+  padding: 14rpx;
+  border-radius: 16rpx;
+  background: #FFFFFF;
+  box-shadow: 0 4rpx 12rpx rgba(61, 52, 43, 0.05);
+}
+
+.hero-title, .section-title, .sub-title, .preset-title, .result-title, .recommend-card-title, .detail-title {
+  display: block;
+  color: #1E293B;
+}
+
+.hero-title { font-size: 26rpx; font-weight: 700; }
+.section-title, .sub-title, .preset-title, .result-title, .recommend-card-title, .detail-title { font-size: 24rpx; font-weight: 600; }
+
+.hero-meta, .hero-note, .note-text, .preset-note, .sub-note, .empty-tip, .result-hint, .recommend-line, .detail-line {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 20rpx;
+  line-height: 1.5;
+  color: #64748B;
+}
+
+.hero-note { color: #22C55E; }
+
+.mono {
+  font-family: Monaco, Consolas, 'Courier New', monospace;
+}
+
+.tab-row, .build-chip-row, .profile-chip-row, .tag-row {
+  margin-top: 12rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
+
+.tab-chip, .build-chip, .profile-chip, .tag-chip, .skill-detail-btn {
+  min-height: 40rpx;
+  padding: 6rpx 14rpx;
+  border-radius: 8rpx;
+  background: #F8FAFC;
+  color: #64748B;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+  font-weight: 600;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-chip.active, .build-chip.active, .profile-chip.active {
+  background: rgba(246, 185, 59, 0.08);
+  border-color: #22C55E;
+  color: #22C55E;
+}
+
+.preset-row.active, .skill-item.active {
+  background: rgba(246, 185, 59, 0.04);
+  border-color: #22C55E;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8rpx;
+  margin-top: 12rpx;
+}
+
+.panel-item {
+  padding: 10rpx;
+  border-radius: 8rpx;
+  background: #F8FAFC;
+}
+
+.panel-label {
+  display: block;
+  font-size: 18rpx;
+  color: #64748B;
+}
+
+.panel-value {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #1E293B;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
+}
+
+.picker-stack { margin-top: 12rpx; display: grid; gap: 8rpx; }
+
+.picker-box {
+  min-height: 52rpx;
+  border-radius: 8rpx;
+  background: #F8FAFC;
+  padding: 0 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20rpx;
+  color: #1E293B;
+}
+
+.skill-list, .preset-list, .recommend-stack, .result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  margin-top: 10rpx;
+}
+
+.skill-item, .preset-row, .result-item {
+  padding: 12rpx;
+  border-radius: 8rpx;
+  background: #F8FAFC;
+  border: 1px solid transparent;
+}
+
+.skill-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10rpx;
+}
+
 .skill-main { flex: 1; min-width: 0; }
-.skill-head { display: flex; flex-direction: column; gap: 6rpx; }
-.skill-name { font-size: 26rpx; font-weight: 700; color: #2f2a23; }
-.skill-meta-line, .skill-summary, .preset-row-meta, .preset-row-note { display: block; font-size: 22rpx; line-height: 1.55; color: #705f49; }
-.skill-summary { margin-top: 8rpx; }
-.dynamic-hint { margin-top: 10rpx; }
-.dynamic-hint-text { font-size: 20rpx; color: #d97706; font-weight: 600; }
+.skill-head { display: flex; flex-direction: column; gap: 4rpx; }
+
+.skill-name {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.skill-meta-line, .skill-summary, .preset-row-meta, .preset-row-note {
+  display: block;
+  font-size: 18rpx;
+  line-height: 1.5;
+  color: #94A3B8;
+}
+
+.skill-summary { margin-top: 6rpx; }
+
+.dynamic-hint { margin-top: 8rpx; }
+
+.dynamic-hint-text {
+  font-size: 18rpx;
+  color: #22C55E;
+  font-weight: 600;
+}
+
 .skill-actions { flex-shrink: 0; }
-.skill-detail-btn { min-height: 48rpx; padding: 0 16rpx; font-size: 20rpx; background: #fff; border-color: #ef9a5a; }
-.preset-row { display: flex; flex-direction: column; gap: 6rpx; }
-.preset-row-main { display: flex; flex-direction: column; gap: 4rpx; }
-.preset-row-name { font-size: 24rpx; font-weight: 700; color: #2f2a23; }
-.preset-row-note { color: #8a785f; }
-.manual-grid { margin-top: 16rpx; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12rpx; }
-.manual-item { padding: 14rpx; border-radius: 18rpx; background: #f8f2e7; }
-.manual-label { display: block; font-size: 20rpx; color: #7b6f5a; }
-.manual-input { margin-top: 10rpx; height: 64rpx; border-radius: 14rpx; background: #fff; padding: 0 16rpx; font-size: 24rpx; color: #14213d; }
-.result-card { margin-top: 16rpx; }
-.result-item-head { display: flex; align-items: center; justify-content: space-between; gap: 12rpx; }
-.result-item-title { font-size: 24rpx; font-weight: 700; color: #2f2a23; }
-.recommend-card { margin-top: 16rpx; }
-.recommend-line.note { color: #5f4a31; }
-.detail-mask { position: fixed; inset: 0; z-index: 1000; background: rgba(18, 24, 40, 0.56); display: flex; align-items: center; justify-content: center; padding: 32rpx; box-sizing: border-box; }
-.detail-card { width: 100%; max-width: 640rpx; max-height: 80vh; overflow-y: auto; background: #fffdf7; border-radius: 28rpx; border: 1rpx solid #f0e4d1; padding: 28rpx; box-sizing: border-box; }
-.detail-head { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; }
-.detail-close { width: 52rpx; height: 52rpx; border-radius: 999rpx; background: #f7ebda; color: #7b5c39; display: flex; align-items: center; justify-content: center; font-size: 30rpx; font-weight: 700; flex-shrink: 0; }
-.detail-dynamic-hint { margin-top: 16rpx; padding: 14rpx 18rpx; background: #fff8e6; border-radius: 12rpx; border: 2rpx solid #f0d080; }
-.detail-dynamic-text { font-size: 20rpx; color: #a06820; line-height: 1.5; }
+
+.skill-detail-btn {
+  min-height: 38rpx;
+  padding: 0 12rpx;
+  font-size: 18rpx;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #64748B;
+}
+
+.preset-row { display: flex; flex-direction: column; gap: 4rpx; }
+.preset-row-main { display: flex; flex-direction: column; gap: 2rpx; }
+
+.preset-row-name {
+  font-size: 20rpx;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.preset-row-note { color: #64748B; }
+
+.manual-grid {
+  margin-top: 12rpx;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8rpx;
+}
+
+.manual-item {
+  padding: 10rpx;
+  border-radius: 8rpx;
+  background: #F8FAFC;
+}
+
+.manual-label {
+  display: block;
+  font-size: 18rpx;
+  color: #64748B;
+}
+
+.manual-input {
+  margin-top: 6rpx;
+  height: 48rpx;
+  border-radius: 8rpx;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  padding: 0 12rpx;
+  font-size: 20rpx;
+  color: #1E293B;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
+}
+
+.manual-input-row {
+  display: flex;
+  gap: 8rpx;
+  align-items: center;
+  margin-top: 6rpx;
+}
+
+.manual-input-row .manual-input {
+  flex: 1;
+  min-width: 0;
+  margin-top: 0;
+}
+
+.auto-calc-btn {
+  white-space: nowrap;
+  padding: 8rpx 14rpx;
+  border-radius: 8rpx;
+  background: #22C55E;
+  color: #FFFFFF;
+  font-size: 18rpx;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.manual-hint {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 18rpx;
+  color: #0EA5E9;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
+}
+
+.result-card { margin-top: 12rpx; }
+
+.result-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10rpx;
+}
+
+.result-item-title {
+  font-size: 20rpx;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.recommend-card { margin-top: 12rpx; }
+.recommend-line.note { color: #22C55E; }
+
+.detail-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(61, 52, 43, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.detail-card {
+  width: 100%;
+  max-width: 580rpx;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 8rpx 24rpx rgba(61, 52, 43, 0.1);
+  padding: 16rpx;
+  box-sizing: border-box;
+}
+
+.detail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10rpx;
+}
+
+.detail-close {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 8rpx;
+  background: #F8FAFC;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.detail-dynamic-hint {
+  margin-top: 12rpx;
+  padding: 10rpx 14rpx;
+  background: rgba(246, 185, 59, 0.06);
+  border-radius: 8rpx;
+  border: 1px solid rgba(246, 185, 59, 0.25);
+}
+
+.detail-dynamic-text {
+  font-size: 18rpx;
+  color: #22C55E;
+  line-height: 1.5;
+}
 </style>

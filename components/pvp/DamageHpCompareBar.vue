@@ -2,7 +2,7 @@
   <view class="compare-card">
     <text class="compare-title">{{ title }}</text>
     <text class="compare-summary">
-      {{ damageLabel || '伤害' }} {{ formatValue(damage) }} / {{ hpLabel || '生命' }} {{ formatValue(hp) }}，{{ percentText }}，{{ diffText }}
+      {{ damageLabel || '伤害' }} <text class="mono">{{ formatValue(damage) }}</text> / {{ hpLabel || '生命' }} <text class="mono">{{ formatValue(hp) }}</text>，<text class="mono">{{ percentText }}</text>，{{ diffText }}
     </text>
 
     <view class="bar-row">
@@ -10,7 +10,7 @@
       <view class="bar-track">
         <view class="bar-fill damage-fill" :style="{ width: `${damageWidth}%` }"></view>
       </view>
-      <text class="bar-value">{{ formatValue(damage) }}</text>
+      <text class="bar-value mono">{{ formatValue(damage) }}</text>
     </view>
 
     <view class="bar-row">
@@ -18,7 +18,7 @@
       <view class="bar-track">
         <view class="bar-fill hp-fill" :style="{ width: `${hpWidth}%` }"></view>
       </view>
-      <text class="bar-value">{{ formatValue(hp) }}</text>
+      <text class="bar-value mono">{{ formatValue(hp) }}</text>
     </view>
   </view>
 </template>
@@ -74,54 +74,70 @@ export default {
 
 <style scoped>
 .compare-card {
-  padding: 24rpx;
-  border-radius: 24rpx;
-  background: #fffdf8;
-  border: 1rpx solid #f0e4d1;
+  margin-top: 11px;
+  padding: 11px;
+  border-radius: 13px;
+  background: #F7F1E3;
+  border: 1.5px solid #E3DCC8;
 }
 
 .compare-title {
   display: block;
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #2f2a23;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6B7A6E;
 }
 
 .compare-summary {
   display: block;
-  margin: 12rpx 0 18rpx;
-  font-size: 24rpx;
-  line-height: 1.6;
-  color: #665947;
+  margin: 6px 0 10px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #6B7A6E;
+}
+
+.compare-summary .mono {
+  font-weight: 800;
+  color: #2C3A2F;
+}
+
+.mono {
+  font-family: Monaco, Consolas, 'Courier New', monospace;
 }
 
 .bar-row {
   display: grid;
-  grid-template-columns: 112rpx 1fr 76rpx;
+  grid-template-columns: 48px 1fr 44px;
   align-items: center;
-  gap: 12rpx;
-  margin-bottom: 14rpx;
+  gap: 7px;
+  margin-bottom: 8px;
 }
 
 .bar-row:last-child {
   margin-bottom: 0;
 }
 
-.bar-label,
-.bar-value {
-  font-size: 22rpx;
-  color: #796950;
+.bar-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #6B7A6E;
 }
 
 .bar-value {
+  font-size: 11px;
+  font-weight: 800;
+  color: #2C3A2F;
   text-align: right;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
 }
 
 .bar-track {
-  height: 20rpx;
-  border-radius: 999rpx;
+  height: 11px;
+  border-radius: 999px;
   overflow: hidden;
-  background: #eee3d5;
+  background: #FFFDF7;
+  border: 1px solid #E3DCC8;
+  box-sizing: border-box;
 }
 
 .bar-fill {
@@ -130,10 +146,12 @@ export default {
 }
 
 .damage-fill {
-  background: linear-gradient(90deg, #f56a52 0%, #ffb161 100%);
+  background: linear-gradient(90deg, #C64B38 0%, #E0604E 100%);
+  box-shadow: inset 0 1.5px 0 rgba(255, 245, 236, 0.35);
 }
 
 .hp-fill {
-  background: linear-gradient(90deg, #5ca8ff 0%, #87d7c4 100%);
+  background: linear-gradient(90deg, #2C6FD1 0%, #4F9CFF 100%);
+  box-shadow: inset 0 1.5px 0 rgba(240, 247, 255, 0.35);
 }
 </style>

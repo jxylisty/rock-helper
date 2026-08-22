@@ -1,7 +1,13 @@
 node_modules/
 unpackage/
 .hbuilderx/
+.zcode/
 .DS_Store
 static/map_z8_v3.png
-staging/remote_static_backup/
-staging/full_map_backup/
+crawler/output/
+crawler_official_api/api_key.local
+crawler_official_api/output/
+all_pets_official.json
+*.bak
+static/static-png/
+static-png

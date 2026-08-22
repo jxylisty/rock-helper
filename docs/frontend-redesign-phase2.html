@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>洛克王国助手 · 页面推广改造方案 · 第二阶段</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #FAF6EC;
+  --paper-deep: #F2EBDA;
+  --paper-card: #FFFDF7;
+  --ink: #2C3A2F;
+  --ink-soft: #6B7A6E;
+  --ink-faint: #A3AE9F;
+  --green: #2F9E5F;
+  --green-deep: #1E7A46;
+  --green-mist: #E4F2E8;
+  --gold: #C9A14E;
+  --gold-deep: #A97F35;
+  --gold-mist: #F6EEDB;
+  --blue: #4F9CFF;
+  --blue-deep: #2C6FD1;
+  --blue-mist: #E7F1FE;
+  --red: #E0604E;
+  --red-deep: #C64B38;
+  --red-mist: #FBE9E4;
+  --line: #E3DCC8;
+  --serif: 'Noto Serif SC', serif;
+  --sans: 'Noto Sans SC', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(47,158,95,.05) 0, transparent 42%),
+    radial-gradient(circle at 88% 30%, rgba(201,161,78,.06) 0, transparent 40%);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.7;
+  padding-bottom: 80px;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+.hero-cover { padding: 72px 0 40px; text-align: center; }
+.cover-tag {
+  display: inline-block; font-size: 13px; letter-spacing: .35em; color: var(--gold-deep);
+  font-weight: 700; border: 1.5px solid var(--gold); border-radius: 999px;
+  padding: 5px 22px 5px 26px; background: var(--gold-mist); margin-bottom: 26px;
+}
+.cover-title { font-family: var(--serif); font-weight: 900; font-size: clamp(34px, 5vw, 56px); line-height: 1.25; }
+.cover-title em { font-style: normal; color: var(--green-deep); }
+.cover-sub { margin: 18px auto 0; font-size: 15.5px; color: var(--ink-soft); max-width: 620px; }
+.cover-meta { margin-top: 28px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; font-size: 13px; color: var(--ink-soft); }
+.cover-meta span { background: var(--paper-card); border: 1.5px solid var(--line); border-radius: 999px; padding: 4px 16px; box-shadow: 0 3px 0 rgba(44,58,47,.10); }
+
+section.chapter { margin-top: 68px; }
+.chapter-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 8px; }
+.chapter-no {
+  font-family: var(--serif); font-weight: 900; font-size: 15px; color: #fff;
+  background: var(--green); border-radius: 8px; padding: 3px 12px;
+  box-shadow: 0 3px 0 rgba(44,58,47,.12); transform: rotate(-3deg); flex-shrink: 0;
+}
+.chapter-title { font-family: var(--serif); font-weight: 900; font-size: clamp(23px, 3.2vw, 32px); letter-spacing: .06em; }
+.chapter-lead { color: var(--ink-soft); font-size: 15px; margin-bottom: 26px; margin-left: 2px; }
+.sticker { background: var(--paper-card); border: 1.5px solid var(--line); border-radius: 18px; box-shadow: 0 3px 0 rgba(44,58,47,.10); padding: 24px; }
+code.h { font-size: 12.5px; background: var(--paper-deep); border-radius: 5px; padding: 1px 7px; color: var(--green-deep); }
+
+/* 主题矩阵 */
+.theme-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+.theme-table th {
+  font-family: var(--serif); text-align: left; font-size: 14px; background: var(--green-mist); color: var(--green-deep);
+  padding: 11px 14px; border-top: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line);
+}
+.theme-table th:first-child { border-left: 1.5px solid var(--line); border-radius: 12px 0 0 0; }
+.theme-table th:last-child { border-right: 1.5px solid var(--line); border-radius: 0 12px 0 0; }
+.theme-table td { padding: 11px 14px; border-bottom: 1px solid var(--line); background: var(--paper-card); vertical-align: top; color: var(--ink-soft); }
+.theme-table td:first-child { border-left: 1.5px solid var(--line); color: var(--ink); font-weight: 700; }
+.theme-table td:last-child { border-right: 1.5px solid var(--line); }
+.theme-table tr:last-child td { border-bottom: 1.5px solid var(--line); }
+.theme-table tr:last-child td:first-child { border-radius: 0 0 0 12px; }
+.theme-table tr:last-child td:last-child { border-radius: 0 0 12px 0; }
+.sw { display: inline-block; width: 13px; height: 13px; border-radius: 4px; vertical-align: -2px; margin-right: 7px; border: 1.5px solid rgba(44,58,47,.18); }
+.done-tag { font-size: 10.5px; font-weight: 700; border-radius: 999px; padding: 1px 9px; margin-left: 7px; vertical-align: 2px; background: var(--green-mist); color: var(--green-deep); border: 1px solid var(--green); }
+
+/* 三层改造 */
+.layer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.layer-card { position: relative; padding-top: 30px; }
+.layer-badge {
+  position: absolute; top: -14px; left: 20px; font-family: var(--serif); font-weight: 700; font-size: 13px;
+  color: #fff; background: var(--green); border-radius: 999px; padding: 2px 14px; box-shadow: 0 2px 0 rgba(44,58,47,.14);
+}
+.layer-card:nth-child(2) .layer-badge { background: var(--gold-deep); }
+.layer-card:nth-child(3) .layer-badge { background: var(--blue-deep); }
+.layer-card h4 { font-family: var(--serif); font-size: 17px; margin-bottom: 8px; }
+.layer-card p { font-size: 14px; color: var(--ink-soft); }
+.layer-card b { color: var(--ink); }
+
+/* 页面方案卡 */
+.page-block { margin-bottom: 22px; }
+.page-head-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.page-no {
+  font-family: var(--serif); font-weight: 900; font-size: 13px; width: 34px; height: 34px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 2px 0 rgba(44,58,47,.14); flex-shrink: 0;
+}
+.page-head-row h3 { font-family: var(--serif); font-size: 20px; }
+.page-head-row .en { font-size: 12px; color: var(--ink-faint); letter-spacing: .1em; font-family: var(--serif); }
+.prio { font-size: 10.5px; font-weight: 700; border-radius: 999px; padding: 1px 9px; }
+.prio.p1 { background: var(--red-mist); color: var(--red); border: 1px solid var(--red); }
+.prio.p2 { background: var(--gold-mist); color: var(--gold-deep); border: 1px solid var(--gold); }
+.prio.p3 { background: var(--blue-mist); color: var(--blue-deep); border: 1px solid var(--blue); }
+.mockup-stage { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; justify-items: center; align-items: start; margin-top: 20px; }
+.phone { width: 330px; border-radius: 36px; background: var(--ink); padding: 10px; box-shadow: 0 18px 40px -14px rgba(44,58,47,.4), 0 5px 0 rgba(44,58,47,.16); }
+.phone-screen { border-radius: 28px; overflow: hidden; background: var(--paper); height: 640px; display: flex; flex-direction: column; position: relative; }
+.phone-caption { text-align: center; margin-top: 14px; font-family: var(--serif); font-weight: 700; font-size: 14px; }
+.phone-caption small { display: block; font-family: var(--sans); font-weight: 400; color: var(--ink-soft); font-size: 12px; margin-top: 2px; }
+
+/* mockup 公共 */
+.mk-statusbar { height: 28px; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; padding: 0 18px; font-size: 10px; font-weight: 700; color: var(--ink-soft); }
+.mk-header { flex-shrink: 0; padding: 8px 14px 13px; display: flex; align-items: center; gap: 10px; color: #fff; border-radius: 0 0 20px 20px; position: relative; overflow: hidden; }
+.mk-header::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.14) 1px, transparent 1.4px); background-size: 14px 14px; border-radius: 0 0 20px 20px; pointer-events: none; }
+.mk-hbtn { width: 33px; height: 33px; border-radius: 11px; background: rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+.mk-htitle { flex: 1; position: relative; z-index: 1; }
+.mk-htitle b { display: block; font-family: var(--serif); font-size: 15px; font-weight: 900; }
+.mk-htitle span { display: block; font-size: 9px; opacity: .85; }
+.mk-hcapsule { position: relative; z-index: 1; display: flex; align-items: center; gap: 4px; background: rgba(255,255,255,.18); border-radius: 999px; padding: 4px 10px 4px 7px; font-size: 10px; font-weight: 700; }
+.mk-body { flex: 1; overflow: hidden; padding: 12px 12px 0; }
+.mk-sec-head { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; }
+.mk-sec-head .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+.mk-sec-head b { font-family: var(--serif); font-size: 12.5px; }
+.mk-sec-head .more { margin-left: auto; font-size: 9.5px; color: var(--ink-faint); font-weight: 700; }
+
+/* 图鉴 mockup */
+.mk-search { display: flex; align-items: center; gap: 8px; background: #fff; border: 1.5px solid var(--line); border-radius: 999px; padding: 8px 14px; box-shadow: 0 3px 0 rgba(44,58,47,.08); }
+.mk-search span { font-size: 11px; color: var(--ink-faint); }
+.mk-tabs { display: flex; gap: 6px; margin-top: 10px; overflow: hidden; }
+.mk-tab-chip { font-size: 10px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: var(--paper-deep); border: 1.5px solid var(--line); color: var(--ink-soft); white-space: nowrap; }
+.mk-tab-chip.on { background: var(--green-mist); border-color: var(--green); color: var(--green-deep); }
+.mk-tab-chip small { font-size: 8.5px; opacity: .7; margin-left: 3px; }
+.mk-typebar { display: flex; gap: 5px; margin-top: 9px; }
+.mk-type-dot { width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff; }
+.mk-type-dot.off { background: var(--paper-deep); color: var(--ink-faint); border: 1px dashed var(--line); }
+.mk-pet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.mk-pet-card { background: var(--paper-card); border: 1.5px solid var(--line); border-radius: 13px; box-shadow: 0 2px 0 rgba(44,58,47,.08); padding: 7px; display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; overflow: hidden; }
+.mk-pet-card .topline { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.mk-pet-ava { width: 44px; height: 44px; border-radius: 10px; background: var(--paper-deep); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--ink-faint); font-weight: 700; }
+.mk-pet-name { font-size: 10px; font-weight: 700; }
+.mk-pet-id { font-size: 8px; color: var(--ink-faint); font-family: Consolas, monospace; }
+.mk-pet-badge { position: absolute; top: 5px; right: 5px; font-size: 7.5px; font-weight: 700; color: var(--gold-deep); background: var(--gold-mist); border: 1px solid var(--gold); border-radius: 999px; padding: 0 5px; }
+
+/* 详情 mockup */
+.det-header { flex-shrink: 0; background: linear-gradient(140deg, #C2583F 0%, #E0604E 55%, #EC8264 100%); padding: 8px 14px 16px; color: #fff; border-radius: 0 0 24px 24px; position: relative; overflow: hidden; }
+.det-header::before { content: ''; position: absolute; right: -30px; top: -30px; width: 130px; height: 130px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.22), transparent 65%); }
+.det-nav { display: flex; align-items: center; gap: 10px; position: relative; z-index: 1; }
+.det-back { width: 32px; height: 32px; border-radius: 10px; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; }
+.det-hero { display: flex; align-items: center; gap: 12px; margin-top: 10px; position: relative; z-index: 1; }
+.det-portrait { width: 76px; height: 76px; border-radius: 20px; background: rgba(255,255,255,.22); border: 2px solid rgba(255,255,255,.4); display: flex; align-items: center; justify-content: center; font-size: 11px; opacity: .95; }
+.det-info b { display: block; font-family: var(--serif); font-size: 19px; font-weight: 900; }
+.det-info .id { font-size: 9.5px; opacity: .85; font-family: Consolas, monospace; display: block; margin-top: 1px; }
+.det-pills { display: flex; gap: 5px; margin-top: 6px; }
+.det-pill { font-size: 9.5px; font-weight: 700; background: rgba(255,255,255,.24); border: 1px solid rgba(255,255,255,.45); border-radius: 999px; padding: 2px 9px; }
+.det-yise { display: flex; gap: 4px; margin-top: 8px; }
+.det-yise i { font-style: normal; font-size: 9px; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: rgba(255,255,255,.18); }
+.det-yise i.on { background: #fff; color: #C2583F; }
+.det-sec { margin-top: 12px; }
+.det-race { background: var(--paper-card); border: 1.5px solid var(--line); border-radius: 15px; box-shadow: 0 2px 0 rgba(44,58,47,.08); padding: 11px 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.det-race-item { background: var(--paper-deep); border-radius: 10px; padding: 6px 0 5px; text-align: center; }
+.det-race-item span { display: block; font-size: 8.5px; color: var(--ink-soft); }
+.det-race-item b { display: block; font-size: 13px; font-family: Consolas, monospace; }
+.det-race-item.total { background: var(--gold-mist); border: 1px solid var(--gold); }
+.det-race-item.total b { color: var(--gold-deep); }
+.det-skill { display: flex; align-items: center; gap: 8px; background: var(--paper-card); border: 1.5px solid var(--line); border-radius: 13px; box-shadow: 0 2px 0 rgba(44,58,47,.08); padding: 8px 10px; margin-bottom: 7px; }
+.det-skill .ic { width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #fff; font-weight: 700; }
+.det-skill-main { flex: 1; min-width: 0; }
+.det-skill-main b { display: block; font-size: 11px; }
+.det-skill-main span { display: block; font-size: 8.5px; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.det-skill-chips { display: flex; flex-direction: column; gap: 3px; align-items: flex-end; flex-shrink: 0; }
+.det-chip { font-size: 8px; font-weight: 700; border-radius: 999px; padding: 1px 7px; }
+.det-backfab { position: absolute; right: 14px; bottom: 14px; width: 46px; height: 46px; border-radius: 50%; background: var(--green); border: 2px solid var(--green-deep); box-shadow: 0 4px 0 var(--green-deep); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 17px; font-weight: 700; }
+
+/* 克制 mockup */
+.res-mode { display: flex; gap: 4px; background: var(--paper-deep); border: 1.5px solid var(--line); border-radius: 12px; padding: 3px; }
+.res-mode i { font-style: normal; flex: 1; text-align: center; font-size: 10.5px; font-weight: 700; color: var(--ink-soft); padding: 5px 0; border-radius: 9px; }
+.res-mode i.on { background: var(--red); color: #fff; box-shadow: 0 2px 0 var(--red-deep); }
+.res-slots { display: flex; gap: 8px; margin-top: 9px; }
+.res-slot { flex: 1; background: var(--paper-card); border: 1.5px solid var(--line); border-radius: 13px; padding: 8px 10px; box-shadow: 0 2px 0 rgba(44,58,47,.08); }
+.res-slot.on { border-color: var(--red); background: var(--red-mist); }
+.res-slot span { display: block; font-size: 8.5px; color: var(--ink-faint); font-weight: 700; }
+.res-slot b { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; margin-top: 3px; }
+.res-slot .tb { width: 14px; height: 14px; border-radius: 5px; display: inline-block; }
+.res-cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 11px; }
+.res-cat { border-radius: 14px; border: 1.5px solid; padding: 10px 11px; background: var(--paper-card); box-shadow: 0 2px 0 rgba(44,58,47,.07); }
+.res-cat b { font-family: var(--serif); font-size: 12px; display: flex; align-items: center; gap: 5px; }
+.res-cat small { display: block; font-size: 8.5px; color: var(--ink-soft); margin: 2px 0 7px; }
+.res-chip { display: flex; align-items: center; gap: 5px; background: var(--paper-deep); border-radius: 9px; padding: 4px 8px; margin-bottom: 4px; }
+.res-chip .tb { width: 15px; height: 15px; border-radius: 5px; }
+.res-chip span { font-size: 9.5px; font-weight: 700; flex: 1; }
+.res-chip em { font-style: normal; font-size: 9.5px; font-family: Consolas, monospace; font-weight: 700; }
+
+/* 变化清单 */
+.change-list { list-style: none; }
+.change-list li { font-size: 14px; color: var(--ink-soft); padding: 7px 0 7px 24px; position: relative; border-bottom: 1px dashed var(--line); }
+.change-list li:last-child { border-bottom: none; }
+.change-list li::before {
+  content: ''; position: absolute; left: 3px; top: 14px; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green); box-shadow: 0 0 0 3px var(--green-mist);
+}
+.change-list li b { color: var(--ink); }
+.old-inline { text-decoration: line-through; color: var(--ink-faint); }
+.new-inline { color: var(--green-deep); font-weight: 700; }
+
+/* 路线图 */
+.roadmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.phase { position: relative; padding-top: 26px; }
+.phase-tag { position: absolute; top: -13px; left: 18px; font-family: var(--serif); font-weight: 900; font-size: 13px; background: var(--ink); color: var(--gold); border-radius: 999px; padding: 3px 16px; }
+.phase ul { list-style: none; margin-top: 4px; }
+.phase li { font-size: 13.5px; color: var(--ink-soft); padding: 6px 0 6px 22px; position: relative; border-bottom: 1px dashed var(--line); }
+.phase li:last-child { border-bottom: none; }
+.phase li::before { content: ''; position: absolute; left: 2px; top: 13px; width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px var(--green-mist); }
+.phase li b { color: var(--ink); }
+
+.next-step { margin-top: 70px; text-align: center; background: linear-gradient(135deg, var(--green-deep), var(--green)); border-radius: 20px; color: #fff; padding: 38px 30px; box-shadow: 0 5px 0 rgba(44,58,47,.14); position: relative; overflow: hidden; }
+.next-step::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.13) 1px, transparent 1.4px); background-size: 16px 16px; }
+.next-step h3 { font-family: var(--serif); font-size: 23px; position: relative; }
+.next-step p { position: relative; margin-top: 10px; font-size: 14.5px; opacity: .9; }
+footer { text-align: center; margin-top: 40px; font-size: 12.5px; color: var(--ink-faint); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero-cover">
+    <div class="cover-tag">PHASE 2 · PAGE ROLLOUT</div>
+    <h1 class="cover-title">九页推广改造方案<br><em>魔法图鉴绘本 · 续章</em></h1>
+    <p class="cover-sub">首页样板已验收。本方案将其视觉语言推广到其余九个页面：先组件后页面、每页一个主题色、图标全面替换文字符号。含图鉴 / 详情 / 克制三张高保真预览。</p>
+    <div class="cover-meta">
+      <span>已完成：首页 + 图标库 + 全局组件</span>
+      <span>待推广：9 个页面</span>
+      <span>2026-08-22</span>
+    </div>
+  </header>
+
+  <!-- ============ 01 全局策略 ============ -->
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="chapter-no">壹</span>
+      <h2 class="chapter-title">全局策略：三层改造法</h2>
+    </div>
+    <p class="chapter-lead">与首页样板相同的方法论：底层组件先行，页面只做「换壳 + 换图标」，业务逻辑零改动。</p>
+    <div class="layer-grid">
+      <div class="sticker layer-card">
+        <span class="layer-badge">第一层 · 组件</span>
+        <h4>共享组件贴纸化</h4>
+        <p><b>PetCard</b>（图鉴 / 技能查询共用）升级为贴纸卡 + 属性色顶边条 + 编号等宽字 + 描金角标；<b>TypeBadge</b> 加 1px 白描边与硬阴影，升级为「印记」质感；<b>AppHeader</b> 补齐金 / 蓝 / 红三个新主题。</p>
+      </div>
+      <div class="sticker layer-card">
+        <span class="layer-badge">第二层 · 框架</span>
+        <h4>每页一个主题色</h4>
+        <p>头栏渐变色按页面职能分配：<b>绿</b> = 资料库（图鉴 / 阵容）、<b>金</b> = 培养工具（孵蛋 / 技能）、<b>蓝</b> = 探索（地图 / 速度）、<b>红</b> = 战斗（克制 / 伤害）。页面底色统一羊皮纸，卡片统一贴纸规格。</p>
+      </div>
+      <div class="sticker layer-card">
+        <span class="layer-badge">第三层 · 页面</span>
+        <h4>逐页换壳 + 图标化</h4>
+        <p>每页替换：纸底背景、贴纸卡片、<code class="h">AppIcon</code> 图标按钮（替换 <span class="old-inline">+ − × ▼ ▶ →</span> 等文字符号）、按压反馈。详情页与伤害计算页需在 <code class="h">pages.json</code> 切换为 custom 导航后接入主题头栏。</p>
+      </div>
+    </div>
+
+    <div style="margin-top:26px;">
+      <table class="theme-table">
+        <tr><th style="width:170px;">页面</th><th style="width:150px;">头栏主题</th><th>专属改造亮点</th></tr>
+        <tr><td>首页 index<span class="done-tag">已完成</span></td><td><span class="sw" style="background:#2F9E5F;"></span>翠绿渐变</td><td>渐变头栏 / 图标快捷入口 / 贴纸阵容卡 / 图标抽屉</td></tr>
+        <tr><td>图鉴 catalog</td><td><span class="sw" style="background:#2F9E5F;"></span>翠绿渐变</td><td>贴纸搜索胶囊 / 属性色顶边条卡片 / 描金角标</td></tr>
+        <tr><td>详情 detail</td><td><span class="sw" style="background:#E0604E;"></span><b>属性色动态渐变</b></td><td>头栏底色跟随精灵主属性 · 六维种族值格子 · 技能胶囊</td></tr>
+        <tr><td>阵容编辑 team-editor</td><td><span class="sw" style="background:#2F9E5F;"></span>翠绿渐变</td><td>AI 诊断卡贴纸化 / 评分描金徽章 / 图标化操作</td></tr>
+        <tr><td>属性克制 restriction</td><td><span class="sw" style="background:#E0604E;"></span>赤陶渐变</td><td>四类结果卡色彩编码（红/绿/蓝/金边框）</td></tr>
+        <tr><td>技能查询 skill-search</td><td><span class="sw" style="background:#C9A14E;"></span>描金渐变</td><td>技能行胶囊化 / 能耗威力徽章</td></tr>
+        <tr><td>速度排行 speed-rank</td><td><span class="sw" style="background:#4F9CFF;"></span>天蓝渐变</td><td>速档大数字 + 风 icon / 前三档金银铜描边</td></tr>
+        <tr><td>伤害计算 pvp-breakpoint</td><td><span class="sw" style="background:#2F9E5F;"></span>翠绿渐变</td><td>攻绿守蓝双色卡 / 描金 VS 徽章 / 交换图标钮</td></tr>
+        <tr><td>孵蛋 egg</td><td><span class="sw" style="background:#C9A14E;"></span>描金渐变</td><td>第一名描金领奖台 / 概率胶囊</td></tr>
+        <tr><td>地图 map</td><td><span class="sw" style="background:#4F9CFF;"></span>天蓝渐变</td><td>缩放按钮图标化 / 统计行胶囊化</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 02 图鉴 ============ -->
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="chapter-no">贰</span>
+      <h2 class="chapter-title">图鉴页 catalog</h2>
+    </div>
+    <p class="chapter-lead">全 App 数据量最大的页面（2000+ 精灵三列网格），改造重点是让筛选器和卡片更有「翻图鉴」的感觉。</p>
+
+    <div class="sticker page-block">
+      <div class="page-head-row">
+        <span class="page-no" style="background:var(--green);">01</span>
+        <h3>改造清单</h3><span class="prio p1">P1</span>
+      </div>
+      <ul class="change-list">
+        <li><b>搜索框</b>贴纸胶囊化，内嵌 <span class="new-inline">search 图标</span>，placeholder 保持不变</li>
+        <li><b>形态标签</b>（全部 / 最终形态 / I阶 / II阶…）改为贴纸 chip，激活态绿底描边 + 数量徽章</li>
+        <li><b>属性筛选</b>：18 属性格改为属性色圆角块（图标 webp 已存在），选中态实色填充 + 白描边，未选态纸灰虚线</li>
+        <li><b>已选属性条</b>与图鉴总数合并为一条统计胶囊行（等宽数字）</li>
+        <li><b>PetCard 贴纸化</b>：纸底卡片 + <b>属性色顶边条</b>（一眼识别元素）+ 编号等宽字 + <b>首领化 / 多形态描金角标</b></li>
+        <li><b>空态</b>图标化（search 图标 + 引导文案），加载提示贴纸化</li>
+      </ul>
+
+      <div class="mockup-stage">
+        <div>
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="mk-statusbar"><span>9:41</span><span>▮▮▮ 100%</span></div>
+              <div class="mk-header" style="background:linear-gradient(120deg,#1E7A46,#2F9E5F 68%,#46B274);">
+                <div class="mk-hbtn">‹</div>
+                <div class="mk-htitle"><b>图鉴</b><span>本地收录全部精灵</span></div>
+                <div class="mk-hcapsule">2000+</div>
+              </div>
+              <div class="mk-body">
+                <div class="mk-search">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A3AE9F" stroke-width="2.4" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="6.4"/><path d="M15.4 15.4 20 20"/></svg>
+                  <span>搜索精灵名称或属性…</span>
+                </div>
+                <div class="mk-tabs">
+                  <div class="mk-tab-chip on">全部<small>2036</small></div>
+                  <div class="mk-tab-chip">最终形态</div>
+                  <div class="mk-tab-chip">首领形态</div>
+                </div>
+                <div class="mk-typebar">
+                  <div class="mk-type-dot" style="background:#58A85C;">草</div>
+                  <div class="mk-type-dot" style="background:#4F9CFF;">水</div>
+                  <div class="mk-type-dot" style="background:#F0803C;">火</div>
+                  <div class="mk-type-dot" style="background:#F6C445;color:#6B5410;">电</div>
+                  <div class="mk-type-dot" style="background:#6FCBEF;">冰</div>
+                  <div class="mk-type-dot off">…</div>
+                </div>
+                <div class="mk-sec-head" style="margin-top:12px;"><span class="dot"></span><b>精灵图鉴</b><span class="more">已选：火 · 龙</span></div>
+                <div class="mk-pet-grid">
+                  <div class="mk-pet-card"><span class="topline" style="background:#F0803C;"></span><div class="mk-pet-ava">立绘</div><span class="mk-pet-name">迪莫</span><span class="mk-pet-id">#001</span></div>
+                  <div class="mk-pet-card"><span class="topline" style="background:#58A85C;"></span><span class="mk-pet-badge">首领</span><div class="mk-pet-ava">立绘</div><span class="mk-pet-name">音速犬</span><span class="mk-pet-id">#048</span></div>
+                  <div class="mk-pet-card"><span class="topline" style="background:#4F9CFF;"></span><div class="mk-pet-ava">立绘</div><span class="mk-pet-name">水蓝蓝</span><span class="mk-pet-id">#008</span></div>
+                  <div class="mk-pet-card"><span class="topline" style="background:#6D78D5;"></span><div class="mk-pet-ava">立绘</div><span class="mk-pet-name">烈火战神</span><span class="mk-pet-id">#007</span></div>
+                  <div class="mk-pet-card"><span class="topline" style="background:#9B59B6;"></span><span class="mk-pet-badge">多形态</span><div class="mk-pet-ava">立绘</div><span class="mk-pet-name">咔咔鸟</span><span class="mk-pet-id">#098</span></div>
+                  <div class="mk-pet-card"><span class="topline" style="background:#F49AC2;color:#7A3A5B;"></span><div class="mk-pet-ava">立绘</div><span class="mk-pet-name">阿布</span><span class="mk-pet-id">#112</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="phone-caption">图鉴页 · 高保真预览<small>贴纸搜索 / 属性色带 / 顶边条卡片</small></p>
+        </div>
+
+        <div class="sticker" style="align-self:start; max-width:360px;">
+          <h4 style="font-family:var(--serif); font-size:16px; margin-bottom:10px;">PetCard 组件升级细节</h4>
+          <ul class="change-list">
+            <li>卡片纸底 <code class="h">#FFFDF7</code> + 描边 + 2px 硬阴影</li>
+            <li><b>属性色顶边条</b>：3px 高，取精灵第一属性色（单属性精灵一道、双属性双色拼接）</li>
+            <li>编号 <code class="h">#001</code> 等宽字体，右上角</li>
+            <li><b>首领化</b>：描金角标（金底金边）；<b>多形态</b>：灰纸角标</li>
+            <li>图片区纸灰色圆角底，空图虚线占位</li>
+          </ul>
+          <p style="font-size:13px; color:var(--ink-soft); margin-top:12px;">该组件同时被 <b>技能查询</b>页的精灵列表复用，一次升级两页受益。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 详情 ============ -->
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="chapter-no">叁</span>
+      <h2 class="chapter-title">精灵详情页 detail</h2>
+    </div>
+    <p class="chapter-lead">本次改造的最大亮点页：头栏底色跟随精灵属性动态渐变——火系精灵进火红头栏，水系进湛蓝头栏，让每只精灵的图鉴页都有专属气质。</p>
+
+    <div class="sticker page-block">
+      <div class="page-head-row">
+        <span class="page-no" style="background:var(--red);">02</span>
+        <h3>改造清单</h3><span class="prio p1">P1</span>
+      </div>
+      <ul class="change-list">
+        <li><b>pages.json 切 custom 导航</b>，接入 AppHeader；头栏背景改为<b>精灵第一属性色渐变</b>（18 属性 → 18 套渐变端色）</li>
+        <li><b>立绘区</b>：大圆角相框（半透明白描边）+ 属性色径向光晕，异色切换改为头栏内胶囊开关</li>
+        <li><b>种族值</b>：六维改 2×3 格子（属性色数字）+ <b>总和描金格</b>；条形填充可视化数值高低</li>
+        <li><b>面板计算器</b>：展开箭头 <span class="old-inline">▼▶</span> → <span class="new-inline">chevron 图标</span>；输入框贴纸化；「计算面板」按钮 primary 贴纸</li>
+        <li><b>技能列表</b>：技能图标圆角底 + 属性色块角标 + <b>威力 / 能耗胶囊徽章</b>（灰色无威力）</li>
+        <li><b>技能弹窗</b>：贴纸化 + grabber 拖动条；关闭 <span class="old-inline">×</span> → <span class="new-inline">close 图标圆钮</span></li>
+        <li><b>底部返回按钮</b> → 右下角<b>悬浮贴纸圆钮</b>（箭头图标 + 硬阴影）</li>
+      </ul>
+
+      <div class="mockup-stage">
+        <div>
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="mk-statusbar"><span>9:41</span><span>▮▮▮ 100%</span></div>
+              <div class="det-header">
+                <div class="det-nav">
+                  <div class="det-back">‹</div>
+                  <div style="flex:1; position:relative; z-index:1;"><b style="font-family:var(--serif); font-size:14px;">精灵详情</b></div>
+                  <div class="mk-hcapsule">图鉴 #007</div>
+                </div>
+                <div class="det-hero">
+                  <div class="det-portrait">立 绘</div>
+                  <div class="det-info">
+                    <b>烈火战神</b>
+                    <span class="id">#007 · 最终形态</span>
+                    <div class="det-pills"><span class="det-pill">🔥 火</span><span class="det-pill">🐉 龙</span></div>
+                  </div>
+                </div>
+                <div class="det-yise"><i class="on">原皮</i><i>异色</i></div>
+              </div>
+              <div class="mk-body">
+                <div class="det-sec">
+                  <div class="mk-sec-head"><span class="dot"></span><b>种族值</b><span class="more">总和 618</span></div>
+                  <div class="det-race">
+                    <div class="det-race-item"><span>生命</span><b style="color:#E0604E;">80</b></div>
+                    <div class="det-race-item"><span>物攻</span><b style="color:#E0604E;">120</b></div>
+                    <div class="det-race-item"><span>魔攻</span><b style="color:#E0604E;">110</b></div>
+                    <div class="det-race-item"><span>物防</span><b>90</b></div>
+                    <div class="det-race-item"><span>魔防</span><b>98</b></div>
+                    <div class="det-race-item"><span>速度</span><b>120</b></div>
+                  </div>
+                </div>
+                <div class="det-sec">
+                  <div class="mk-sec-head"><span class="dot"></span><b>技能</b><span class="more">精灵技能 · 8</span></div>
+                  <div class="det-skill">
+                    <div class="ic" style="background:#F0803C;">🔥</div>
+                    <div class="det-skill-main"><b>烈焰冲锋</b><span>给对手造成伤害，10% 灼烧</span></div>
+                    <div class="det-skill-chips"><span class="det-chip" style="background:var(--red-mist); color:var(--red); border:1px solid var(--red);">威力110</span><span class="det-chip" style="background:var(--paper-deep); color:var(--ink-soft); border:1px solid var(--line);">能耗3</span></div>
+                  </div>
+                  <div class="det-skill">
+                    <div class="ic" style="background:#6D78D5;">🐉</div>
+                    <div class="det-skill-main"><b>龙之波动</b><span>释放龙之力量攻击对手</span></div>
+                    <div class="det-skill-chips"><span class="det-chip" style="background:var(--blue-mist); color:var(--blue-deep); border:1px solid var(--blue);">威力90</span><span class="det-chip" style="background:var(--paper-deep); color:var(--ink-soft); border:1px solid var(--line);">能耗2</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="det-backfab">‹</div>
+            </div>
+          </div>
+          <p class="phone-caption">详情页 · 火系精灵示例<small>属性色头栏 / 六维格子 / 技能胶囊</small></p>
+        </div>
+
+        <div class="sticker" style="align-self:start; max-width:360px;">
+          <h4 style="font-family:var(--serif); font-size:16px; margin-bottom:10px;">属性色头栏映射（节选）</h4>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; align-items:center; gap:10px;"><span class="sw" style="background:linear-gradient(120deg,#C2583F,#EC8264); width:34px; height:20px; border-radius:7px;"></span><span style="font-size:13.5px;">火系 → 焰红渐变</span></div>
+            <div style="display:flex; align-items:center; gap:10px;"><span class="sw" style="background:linear-gradient(120deg,#2C6FD1,#7CC0FF); width:34px; height:20px; border-radius:7px;"></span><span style="font-size:13.5px;">水系 → 湛蓝渐变</span></div>
+            <div style="display:flex; align-items:center; gap:10px;"><span class="sw" style="background:linear-gradient(120deg,#3E8A4A,#7BC98A); width:34px; height:20px; border-radius:7px;"></span><span style="font-size:13.5px;">草系 → 翠叶渐变</span></div>
+            <div style="display:flex; align-items:center; gap:10px;"><span class="sw" style="background:linear-gradient(120deg,#B8860B,#F6D365); width:34px; height:20px; border-radius:7px;"></span><span style="font-size:13.5px;">电系 → 鎏金渐变</span></div>
+            <div style="display:flex; align-items:center; gap:10px;"><span class="sw" style="background:linear-gradient(120deg,#4E54A8,#9B8FD5); width:34px; height:20px; border-radius:7px;"></span><span style="font-size:13.5px;">幽系 → 暗夜渐变</span></div>
+          </div>
+          <p style="font-size:13px; color:var(--ink-soft); margin-top:12px;">双属性精灵取第一属性为主端、第二属性为渐变尾端，实现 18×18 自然过渡。文字统一白色 + 半透明白描边相框，保证任意底色可读。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 其余页面 ============ -->
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="chapter-no">肆</span>
+      <h2 class="chapter-title">其余七页改造要点</h2>
+    </div>
+    <p class="chapter-lead">均遵循同一套换壳流程：主题头栏 + 纸底 + 贴纸卡 + 图标化，以下仅列各页专属改动。</p>
+
+    <div class="mockup-stage" style="margin-bottom:24px;">
+      <div>
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="mk-statusbar"><span>9:41</span><span>▮▮▮ 100%</span></div>
+            <div class="mk-header" style="background:linear-gradient(120deg,#C64B38,#E0604E 68%,#EC8A72);">
+              <div class="mk-hbtn">‹</div>
+              <div class="mk-htitle"><b>属性克制</b><span>先看四类关系，再看例子</span></div>
+              <div class="mk-hcapsule">克制图</div>
+            </div>
+            <div class="mk-body">
+              <div class="res-mode"><i class="on">单属性</i><i>双属性</i></div>
+              <div class="res-slots">
+                <div class="res-slot on"><span>主属性</span><b><span class="tb" style="background:#F0803C;"></span>火</b></div>
+                <div class="res-slot"><span>副属性</span><b style="color:var(--ink-faint);">请选择</b></div>
+              </div>
+              <div class="mk-typebar" style="margin-top:10px;">
+                <div class="mk-type-dot" style="background:#F0803C;">火</div>
+                <div class="mk-type-dot" style="background:#4F9CFF;">水</div>
+                <div class="mk-type-dot off">…</div>
+              </div>
+              <div class="res-cat-grid">
+                <div class="res-cat" style="border-color:var(--red);">
+                  <b style="color:var(--red-deep);">▣ 克制我 ×2</b>
+                  <small>这些属性打我更痛</small>
+                  <div class="res-chip"><span class="tb" style="background:#4F9CFF;"></span><span>水</span><em>×2</em></div>
+                  <div class="res-chip"><span class="tb" style="background:#C89B53;"></span><span>地</span><em>×2</em></div>
+                </div>
+                <div class="res-cat" style="border-color:var(--green);">
+                  <b style="color:var(--green-deep);">✦ 我克制 ×2</b>
+                  <small>我打这些属性更痛</small>
+                  <div class="res-chip"><span class="tb" style="background:#58A85C;"></span><span>草</span><em>×2</em></div>
+                  <div class="res-chip"><span class="tb" style="background:#8BC34A;"></span><span>虫</span><em>×2</em></div>
+                </div>
+                <div class="res-cat" style="border-color:var(--blue);">
+                  <b style="color:var(--blue-deep);">◈ 我抵抗 ×½</b>
+                  <small>这些属性打我更轻</small>
+                  <div class="res-chip"><span class="tb" style="background:#F0803C;"></span><span>火</span><em>×½</em></div>
+                </div>
+                <div class="res-cat" style="border-color:var(--gold);">
+                  <b style="color:var(--gold-deep);">✕ 免疫 ×0</b>
+                  <small>这些属性打不到我</small>
+                  <div class="res-chip"><span class="tb" style="background:#A3AE9F;"></span><span>暂无</span><em>—</em></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="phone-caption">属性克制页 · 高保真预览<small>四色结果卡 / 倍率等宽数字</small></p>
+      </div>
+
+      <div class="sticker" style="align-self:start; max-width:420px;">
+        <div class="page-head-row">
+          <span class="page-no" style="background:var(--red);">03</span>
+          <h3>属性克制 restriction</h3><span class="prio p2">P2</span>
+        </div>
+        <ul class="change-list">
+          <li>四类结果卡<b>色彩编码</b>：克制我=红边、我克制=绿边、我抵抗=蓝边、免疫=金边，每类配专属小图标</li>
+          <li>倍率数字放大为等宽字体（<code class="h">×2 / ×½ / ×0</code>）</li>
+          <li>单/双属性切换改贴纸 segmented（激活态红底白字）</li>
+          <li>右侧「克制图」文字按钮 → 图标胶囊钮</li>
+        </ul>
+        <div class="page-head-row" style="margin-top:18px;">
+          <span class="page-no" style="background:var(--green);">04</span>
+          <h3>阵容编辑 team-editor</h3><span class="prio p1">P1</span>
+        </div>
+        <ul class="change-list">
+          <li>保存按钮贴纸化（primary 胶囊 + check 图标）；「全部清空」→ trash 图标红胶囊</li>
+          <li>AI 诊断卡贴纸化：<b>评分徽章描金</b>、短板 chip、危险属性红系、推荐卡与首页精灵卡同规格</li>
+          <li>替换建议的 <span class="old-inline">→</span> → <span class="new-inline">arrow-right 图标</span>；空槽 dashed 圆环 + plus 图标</li>
+        </ul>
+        <div class="page-head-row" style="margin-top:18px;">
+          <span class="page-no" style="background:var(--gold-deep);">05</span>
+          <h3>技能查询 skill-search</h3><span class="prio p2">P2</span>
+        </div>
+        <ul class="change-list">
+          <li>金主题头栏；「清空」→ 图标胶囊钮</li>
+          <li>技能行：图标圆角底 + 属性徽章 + <b>能耗胶囊</b>；选中态金边</li>
+          <li>结果面板复用新 PetCard</li>
+        </ul>
+        <div class="page-head-row" style="margin-top:18px;">
+          <span class="page-no" style="background:var(--blue-deep);">06</span>
+          <h3>速度排行 speed-rank</h3><span class="prio p2">P2</span>
+        </div>
+        <ul class="change-list">
+          <li>蓝主题头栏；hero 换 wind 图标贴纸卡</li>
+          <li>速档卡：<b>档位数字大号等宽</b> + wind 图标；<b>前 3 档金银铜描边</b>；组内精灵贴纸网格</li>
+        </ul>
+        <div class="page-head-row" style="margin-top:18px;">
+          <span class="page-no" style="background:var(--green);">07</span>
+          <h3>伤害计算 pvp-breakpoint</h3><span class="prio p2">P2</span>
+        </div>
+        <ul class="change-list">
+          <li>切 custom 导航 + 绿主题头栏；「交换攻守」→ swap 图标、「悬浮窗」→ window 图标胶囊钮</li>
+          <li><b>攻方绿调卡 / 守方蓝调卡</b> + 描金 VS 徽章；参数设置、技能卡、对比条全部贴纸化</li>
+        </ul>
+        <div class="page-head-row" style="margin-top:18px;">
+          <span class="page-no" style="background:var(--gold-deep);">08</span>
+          <h3>孵蛋预测 egg</h3><span class="prio p3">P3</span>
+        </div>
+        <ul class="change-list">
+          <li>金主题头栏；hero 换 egg 图标；预测按钮 primary 贴纸</li>
+          <li>结果列表：<b>第 1 名描金领奖台大卡</b>，其余行排名徽章 + <b>概率胶囊 + 迷你条形</b>；说明卡加 info 图标</li>
+        </ul>
+        <div class="page-head-row" style="margin-top:18px;">
+          <span class="page-no" style="background:var(--blue-deep);">09</span>
+          <h3>世界地图 map</h3><span class="prio p3">P3</span>
+        </div>
+        <ul class="change-list">
+          <li>蓝主题头栏；缩放按钮 <span class="old-inline">+ −</span> → <span class="new-inline">plus / minus 图标圆钮</span>，「居中」→ home 图标</li>
+          <li>统计行（级别/缩放/瓦片）改贴纸胶囊行，等宽数字；zoom 徽章描金化</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 路线图 ============ -->
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="chapter-no">伍</span>
+      <h2 class="chapter-title">实施顺序</h2>
+    </div>
+    <p class="chapter-lead">三批推进，每批完成后 App 均处于完整可运行状态；全部只动模板与样式，不动业务逻辑与数据层。</p>
+    <div class="roadmap">
+      <div class="sticker phase">
+        <span class="phase-tag">第一批 · P1</span>
+        <ul>
+          <li><b>组件层</b>：PetCard 贴纸化、TypeBadge 印记化、AppHeader 补金/蓝/红主题</li>
+          <li><b>图鉴 catalog</b>：搜索胶囊 + 属性筛选 + 卡片网格</li>
+          <li><b>详情 detail</b>：custom 导航 + 属性色头栏 + 六维格子 + 技能胶囊</li>
+          <li><b>阵容编辑 team-editor</b>：AI 诊断卡 + 操作图标化</li>
+        </ul>
+      </div>
+      <div class="sticker phase">
+        <span class="phase-tag">第二批 · P2</span>
+        <ul>
+          <li><b>属性克制 restriction</b>：四色结果卡</li>
+          <li><b>技能查询 skill-search</b>：技能行胶囊化</li>
+          <li><b>速度排行 speed-rank</b>：速档卡 + 金银铜</li>
+          <li><b>伤害计算 pvp-breakpoint</b>：攻绿守蓝 VS 布局</li>
+        </ul>
+      </div>
+      <div class="sticker phase">
+        <span class="phase-tag">第三批 · P3</span>
+        <ul>
+          <li><b>孵蛋预测 egg</b>：描金领奖台</li>
+          <li><b>世界地图 map</b>：图标工具条</li>
+          <li><b>全量回归</b>：真机 + H5 双端检查；<code class="h">check-sfc-syntax.mjs</code> 语法校验</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="next-step">
+    <h3>三批全部落地，10/10 页面改造完成</h3>
+    <p>第一批（组件层 / 图鉴 / 详情 / 阵容）、第二批（克制 / 技能 / 速度 / 伤害计算）、第三批（孵蛋 / 地图）均已按方案实施完毕；新增 zoom-in / zoom-out / crosshair / ruler / scale 五枚双色图标，DamageHpCompareBar 对比条组件同步贴纸化。全量 24 个 vue 文件通过模板 / 脚本 / 样式三层语法校验，图标引用 0 缺失，待真机 + H5 双端回归。</p>
+  </div>
+
+  <footer>洛克王国助手 · 前端视觉升级提案 · 第二阶段 · 2026-08-22 · 实施完成 · 本文档为纯静态预览，所有 Mockup 均为 CSS 手绘</footer>
+</div>
+
+</body>
+</html>

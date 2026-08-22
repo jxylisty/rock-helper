@@ -1,4 +1,4 @@
-export function safeBack(fallbackUrl = '/pages/index/index') {
+export function safeBack(fallbackUrl = '/pages/index') {
   const pages = getCurrentPages()
   if (pages.length > 1) {
     uni.navigateBack()

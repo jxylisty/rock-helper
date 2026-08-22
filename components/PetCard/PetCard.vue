@@ -1,19 +1,60 @@
 <template>
-  <view class="pet-card" :class="{ compact }" @click="$emit('click')">
-    <view class="img-wrap" :class="{ empty: !img }">
-      <RemoteImage v-if="img" class="img" :src="resolvedImg" mode="aspectFit" />
+  <view class="pet-card" :class="{ compact }" hover-class="card-press" @click="$emit('click')">
+    <view v-if="accentStyle" class="accent-strip" :style="accentStyle"></view>
+    <view v-if="badge" class="corner-badge" :class="`tone-${badgeTone}`">
+      <text>{{ badge }}</text>
     </view>
-    <view class="body">
-      <text class="name">{{ name }}</text>
-      <text class="sub">{{ subtitle }}</text>
-      <view v-if="(tags && tags.length) || $slots.tags" class="tags">
-        <slot name="tags">
-          <view v-for="tag in tags" :key="tag.label" class="tag" :style="{ background: tag.color || '#6b7cff' }">
-            <text>{{ tag.label }}</text>
-          </view>
-        </slot>
+
+    <template v-if="compact">
+      <view class="img-wrap" :class="{ empty: !img }">
+        <RemoteImage v-if="img" class="img" :src="resolvedImg" mode="aspectFit" />
       </view>
-    </view>
+      <view class="body">
+        <text class="name">{{ name }}</text>
+        <text v-if="subtitle" class="sub">{{ subtitle }}</text>
+        <view v-if="(tags && tags.length) || $slots.tags" class="tags">
+          <slot name="tags">
+            <view v-for="tag in tags" :key="tag.label" class="tag" :style="{ background: tag.color || '#6b7cff' }">
+              <text>{{ tag.label }}</text>
+            </view>
+          </slot>
+        </view>
+        <text v-if="code" class="code">{{ code }}</text>
+      </view>
+    </template>
+
+    <template v-else>
+      <view class="img-wrap" :class="{ empty: !img }">
+        <RemoteImage v-if="img" class="img" :src="resolvedImg" mode="aspectFit" />
+      </view>
+      <view class="body">
+        <template v-if="inlineTags">
+          <view class="name-row">
+            <text class="name">{{ name }}</text>
+            <view v-if="(tags && tags.length) || $slots.tags" class="tags">
+              <slot name="tags">
+                <view v-for="tag in tags" :key="tag.label" class="tag" :style="{ background: tag.color || '#6b7cff' }">
+                  <text>{{ tag.label }}</text>
+                </view>
+              </slot>
+            </view>
+          </view>
+          <text class="sub">{{ subtitle }}</text>
+        </template>
+        <template v-else>
+          <text class="name">{{ name }}</text>
+          <text class="sub">{{ subtitle }}</text>
+          <view v-if="(tags && tags.length) || $slots.tags" class="tags">
+            <slot name="tags">
+              <view v-for="tag in tags" :key="tag.label" class="tag" :style="{ background: tag.color || '#6b7cff' }">
+                <text>{{ tag.label }}</text>
+              </view>
+            </slot>
+          </view>
+        </template>
+      </view>
+    </template>
+
     <view v-if="$slots.extra" class="extra">
       <slot name="extra"></slot>
     </view>
@@ -30,11 +71,25 @@ export default {
     name: { type: String, default: '' },
     subtitle: { type: String, default: '' },
     tags: { type: Array, default: () => [] },
-    compact: { type: Boolean, default: false }
+    compact: { type: Boolean, default: false },
+    inlineTags: { type: Boolean, default: false },
+    accentColors: { type: Array, default: () => [] },
+    code: { type: String, default: '' },
+    badge: { type: String, default: '' },
+    badgeTone: { type: String, default: 'gold' }
   },
   computed: {
     resolvedImg() {
       return resolveAssetPath(this.img)
+    },
+    accentStyle() {
+      const colors = (this.accentColors || []).filter(Boolean).slice(0, 3)
+      if (!colors.length) return null
+      if (colors.length === 1) return { background: colors[0] }
+      const stops = colors
+        .map((color, index) => `${color} ${(index / colors.length) * 100}% ${((index + 1) / colors.length) * 100}%`)
+        .join(', ')
+      return { background: `linear-gradient(90deg, ${stops})` }
     }
   }
 }
@@ -42,32 +97,71 @@ export default {
 
 <style scoped>
 .pet-card {
+  position: relative;
   display: flex;
-  gap: 14rpx;
-  padding: 14rpx;
-  border-radius: 20rpx;
-  background: #fff;
-  box-shadow: 0 10rpx 24rpx rgba(31, 47, 87, 0.08);
+  gap: 12rpx;
+  padding: 12rpx;
+  border-radius: 24rpx;
+  background: #FFFDF7;
+  border: 1.5px solid #E3DCC8;
+  box-shadow: 0 3rpx 0 rgba(44, 58, 47, 0.10);
+  overflow: hidden;
+  transition: transform 0.12s ease;
+}
+
+.card-press {
+  transform: scale(0.97);
 }
 
 .pet-card.compact {
   flex-direction: column;
   gap: 8rpx;
-  padding: 12rpx;
+  padding: 10rpx 10rpx 12rpx;
+}
+
+.accent-strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6rpx;
+}
+
+.corner-badge {
+  position: absolute;
+  top: 12rpx;
+  right: 10rpx;
+  z-index: 2;
+  padding: 2rpx 10rpx;
+  border-radius: 999rpx;
+  font-size: 16rpx;
+  font-weight: 700;
+  border: 1px solid #C9A14E;
+  background: #F6EEDB;
+  color: #A97F35;
+}
+
+.corner-badge.tone-gray {
+  border-color: #D8D0BA;
+  background: #F2EBDA;
+  color: #6B7A6E;
 }
 
 .img-wrap {
-  width: 88rpx;
-  height: 88rpx;
-  border-radius: 18rpx;
-  background: #f7f9fe;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 14rpx;
+  background: #F2EBDA;
   overflow: hidden;
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .img-wrap.empty {
   background: transparent;
-  border: 1rpx dashed #d8dfec;
+  border: 1.5px dashed #CFC7AE;
 }
 
 .img {
@@ -77,8 +171,8 @@ export default {
 
 .pet-card.compact .img-wrap {
   width: 100%;
-  height: 112rpx;
-  border-radius: 16rpx;
+  height: 100rpx;
+  border-radius: 14rpx;
 }
 
 .body {
@@ -88,48 +182,75 @@ export default {
 
 .pet-card.compact .body {
   flex: initial;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
 }
 
 .name {
   display: block;
-  font-size: 28rpx;
-  font-weight: 800;
-  color: #1c2748;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #2C3A2F;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6rpx;
 }
 
 .sub {
   display: block;
-  margin-top: 6rpx;
-  font-size: 20rpx;
-  color: #6b7590;
+  margin-top: 4rpx;
+  font-size: 18rpx;
+  color: #6B7A6E;
 }
 
 .pet-card.compact .sub {
-  margin-top: 4rpx;
-  font-size: 18rpx;
+  margin-top: 2rpx;
+  font-size: 16rpx;
 }
 
 .pet-card.compact .name {
-  font-size: 22rpx;
-  line-height: 1.35;
+  font-size: 21rpx;
+  line-height: 1.3;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.code {
+  display: block;
+  font-size: 17rpx;
+  color: #A3AE9F;
+  font-weight: 700;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
 }
 
 .tags {
-  margin-top: 8rpx;
+  margin-top: 6rpx;
   display: flex;
   flex-wrap: wrap;
-  gap: 8rpx;
+  gap: 6rpx;
 }
 
 .pet-card.compact .tags {
-  margin-top: 6rpx;
+  margin-top: 2rpx;
+  justify-content: center;
 }
 
 .tag {
-  padding: 6rpx 10rpx;
-  border-radius: 999rpx;
-  font-size: 18rpx;
-  color: #fff;
+  padding: 4rpx 8rpx;
+  border-radius: 8rpx;
+  font-size: 16rpx;
+  background: #F2EBDA;
+  color: #6B7A6E;
 }
 
 .extra {
@@ -140,5 +261,6 @@ export default {
 
 .pet-card.compact .extra {
   justify-content: flex-start;
+  width: 100%;
 }
 </style>

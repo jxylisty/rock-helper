@@ -1,157 +1,185 @@
-import { petsDetail } from '../data/pets_detail.js';
-import { petVariantDetails } from '../data/pet_variant_details.js';
-import { buildBattlePetIndex } from '../src/utils/pvpBattlePetIndex.js';
+/**
+ * PVP 伤害计算回归测试
+ * 运行: node scripts/run-pvp-breakpoint-tests.mjs
+ *
+ * 覆盖: 克制表口径、面板截断顺序、连击、伤害下限、满配配置
+ */
 import {
-  generateAllBuilds,
-  generateAttackerProfiles,
-  generateDefenderProfiles
-} from '../src/utils/pvpBuildGenerator.js';
-import {
-  analyzeDefensiveBreakpoints,
-  analyzeOffensiveBreakpoints
-} from '../src/utils/pvpBreakpointAnalyzer.js';
-import { buildAvailableScenarioPresets, resolveBattleScenario } from '../src/utils/pvpScenarioPresetBuilder.js';
-import { compareBuildValue } from '../src/utils/pvpBuildValueAnalyzer.js';
+  getAttrMultiplier,
+  calculatePanelValue,
+  calculateAllPanels,
+  calculateDamageFull,
+  normalizeBattleSkill
+} from '../utils/pvpDamageEngine.js'
+import { buildOpponentFullConfig } from '../utils/buildOpponentFullConfig.js'
+import { buildSuggestedIvs } from '../utils/buildSuggestedIvs.js'
 
-function getUnits() {
-  return Object.values(buildBattlePetIndex(petsDetail, petVariantDetails)).filter((unit) => unit?.race && unit?.skills?.length);
+// 参考实现：项目规定的面板口径（先截断基础面板 → 乘性格 → 加星级裸加成）
+// 独立于引擎实现，用于交叉验证；不 import game_math.js 是因为它引入了 JSON（Node 需要 import attribute）
+const NATURE_KEY = { '生命': 'hp', '物攻': 'attack', '魔攻': 'mattack', '物防': 'defense', '魔防': 'mdefense', '速度': 'speed' }
+
+function referencePanel(raceValue, ivInput, level, star, attrKey, natureUpName, natureDownName) {
+  const iv = Math.max(0, Math.min(10, Number(ivInput) || 0)) * (star + 1)
+  const race = Number(raceValue) || 0
+  const base = race * 0.5 + iv * 0.25 + 10
+  const growth = attrKey === 'hp' ? (race + iv * 0.5) * 0.02 + 1 : (race + iv * 0.5) * 0.01
+  const raw = base + level * growth
+  let mod = 1
+  if (NATURE_KEY[natureUpName] === attrKey) mod = 1.2
+  else if (NATURE_KEY[natureDownName] === attrKey) mod = 0.9
+  return Math.round(Math.floor(raw) * mod + 0.0000001) + (attrKey === 'hp' ? star * 20 : star * 10)
 }
 
-function chooseBy(units, selector, excluded = []) {
-  return [...units]
-    .filter((unit) => !excluded.includes(unit.key))
-    .sort((a, b) => selector(b) - selector(a))[0];
+let passed = 0
+let failed = 0
+
+function assertEqual(actual, expected, label) {
+  const ok = actual === expected
+  if (ok) {
+    passed += 1
+    console.log(`  ✅ ${label}`)
+  } else {
+    failed += 1
+    console.error(`  ❌ ${label}: 期望 ${expected}, 实际 ${actual}`)
+  }
 }
 
-function findBuild(builds, predicate) {
-  return builds.find(predicate);
+function assertClose(actual, expected, label, eps = 1e-9) {
+  const ok = Math.abs(actual - expected) <= eps
+  if (ok) {
+    passed += 1
+    console.log(`  ✅ ${label}`)
+  } else {
+    failed += 1
+    console.error(`  ❌ ${label}: 期望 ${expected}, 实际 ${actual}`)
+  }
 }
 
-function pct(value) {
-  return `${value.toFixed(1)}%`;
+function assertTrue(value, label) {
+  if (value) {
+    passed += 1
+    console.log(`  ✅ ${label}`)
+  } else {
+    failed += 1
+    console.error(`  ❌ ${label}`)
+  }
 }
 
-function fmt(value) {
-  return Number(value || 0).toFixed(1);
+console.log('\n== 克制表（data/config/typeChart.js 唯一来源） ==')
+assertEqual(getAttrMultiplier('冰', ['地']), 2, '冰 打 地 = 2 倍')
+assertEqual(getAttrMultiplier('冰', ['地系']), 2, '冰 打 地系(带系后缀) = 2 倍')
+assertEqual(getAttrMultiplier('电', ['地']), 0.5, '电 打 地 = 0.5 倍')
+assertEqual(getAttrMultiplier('地', ['火']), 2, '地 打 火 = 2 倍')
+assertEqual(getAttrMultiplier('幽', ['光']), 2, '幽 打 光 = 2 倍')
+assertEqual(getAttrMultiplier('恶', ['毒']), 2, '恶 打 毒 = 2 倍')
+assertEqual(getAttrMultiplier('翼', ['草', '虫']), 3, '翼 打 草+虫 = 双克制 3 倍')
+assertEqual(getAttrMultiplier('草', ['火', '龙']), 1 / 3, '草 打 火+龙 = 双抵抗 1/3')
+assertEqual(getAttrMultiplier('草', ['火', '水']), 1, '草 打 火(抗)+水(克) = 1 倍')
+assertEqual(getAttrMultiplier('火', ['水', '地']), 1 / 3, '火 打 水+地 = 双抵抗 1/3')
+assertEqual(getAttrMultiplier('不存在属性', ['火']), 1, '未知属性返回 1 倍')
+
+console.log('\n== 面板公式：引擎与规范口径一致（先截断再乘性格） ==')
+{
+  const engineSpeed = calculatePanelValue({
+    raceValue: 97, inputIv: 10, level: 60, star: 5,
+    attrKey: 'speed', natureUp: '速度', natureDown: '物攻'
+  })
+  const refSpeed = referencePanel(97, 10, 60, 5, 'speed', '速度', '物攻')
+  assertEqual(engineSpeed, refSpeed, `引擎速度面板(${engineSpeed}) === 参考值(${refSpeed})`)
+
+  const engineSpeedEn = calculatePanelValue({
+    raceValue: 97, inputIv: 10, level: 60, star: 5,
+    attrKey: 'speed', natureUp: 'speed', natureDown: 'attack'
+  })
+  assertEqual(engineSpeedEn, engineSpeed, '引擎英文性格键与中文性格名结果一致')
+
+  // 截断顺序验证：若先乘性格再截断，会得到不同结果
+  const race = 113 // 选择一个截断顺序会产生差异的种族值
+  const wrongOrder = Math.round(Math.floor((race * 0.5 + 60 * 0.25 + 10 + 60 * ((race + 60 * 0.5) * 0.01)) * 1.2)) + 50
+  const rightOrder = referencePanel(race, 10, 60, 5, 'attack', '物攻', '魔攻')
+  const engineAttack = calculatePanelValue({
+    raceValue: race, inputIv: 10, level: 60, star: 5,
+    attrKey: 'attack', natureUp: '物攻', natureDown: '魔攻'
+  })
+  assertEqual(engineAttack, rightOrder, `引擎物攻面板按先截断口径(${engineAttack})`)
+  if (wrongOrder !== rightOrder) {
+    console.log(`  ℹ️ 该用例下两种截断顺序结果不同（错误顺序=${wrongOrder}），测试有效`)
+  }
+
+  const hpPanel = calculatePanelValue({
+    raceValue: 100, inputIv: 10, level: 60, star: 5,
+    attrKey: 'hp', natureUp: '生命', natureDown: '无'
+  })
+  assertEqual(hpPanel, referencePanel(100, 10, 60, 5, 'hp', '生命', '无'), 'HP 面板与参考口径一致')
+  assertTrue(Number.isInteger(hpPanel), `无 BUFF 面板应为整数(${hpPanel})`)
 }
 
-const units = getUnits();
-const physicalAttacker = chooseBy(units, (unit) => (unit.race.attack || 0) + (unit.race.speed || 0));
-const magicAttacker = chooseBy(units, (unit) => (unit.race.mattack || 0) + (unit.race.speed || 0), [physicalAttacker.key]);
-const defender = chooseBy(units, (unit) => (unit.race.hp || 0) + (unit.race.defense || 0) + (unit.race.mdefense || 0), [physicalAttacker.key, magicAttacker.key]);
-const targets = units.filter((unit) => ![physicalAttacker.key, magicAttacker.key, defender.key].includes(unit.key)).slice(0, 3);
+console.log('\n== 连击 ==')
+{
+  const attacker = { attack: 400, mattack: 400, defense: 200, mdefense: 200, hp: 1500, speed: 100 }
+  const defender = { attack: 100, mattack: 100, defense: 150, mdefense: 150, hp: 1200, speed: 90 }
+  const base = calculateDamageFull({
+    attackerPanel: attacker, defenderPanel: defender,
+    skillPower: 90, skillType: '物攻', skillAttr: '普通',
+    attackerAttrs: ['普通'], defenderAttrs: ['普通'], hits: 1
+  })
+  const multi = calculateDamageFull({
+    attackerPanel: attacker, defenderPanel: defender,
+    skillPower: 90, skillType: '物攻', skillAttr: '普通',
+    attackerAttrs: ['普通'], defenderAttrs: ['普通'], hits: 5
+  })
+  assertClose(multi.damage, base.damage * 5, '5 连击总伤害 = 单发 × 5')
 
-const attackerBuilds = generateAllBuilds(physicalAttacker);
-const defenderBuilds = generateAllBuilds(defender);
+  const skill = normalizeBattleSkill({ name: '测试', type: '物攻', power: 25, describe: '攻击敌方精灵，5连击。' })
+  assertEqual(skill.baseHits, 5, '从描述解析 5 连击')
+  const skill2 = normalizeBattleSkill({ name: '测试2', type: '物攻', power: 90, describe: '对敌方造成伤害。' })
+  assertEqual(skill2.baseHits, 1, '无连击描述默认 1 击')
+}
 
-const neutralBuild = findBuild(attackerBuilds, (build) => build.nature.natureUp === null && build.nature.natureDown === null && build.ivAllocation.highStats.includes('attack') && build.ivAllocation.highStats.includes('speed') && build.ivAllocation.highStats.includes('hp'));
-const speedBuild = findBuild(attackerBuilds, (build) => build.nature.natureUp === 'speed' && build.nature.natureDown === 'mattack' && build.ivAllocation.highStats.includes('attack') && build.ivAllocation.highStats.includes('speed') && build.ivAllocation.highStats.includes('hp'));
-const attackBuild = findBuild(attackerBuilds, (build) => build.nature.natureUp === 'attack' && build.nature.natureDown === 'mattack' && build.ivAllocation.highStats.includes('attack') && build.ivAllocation.highStats.includes('speed') && build.ivAllocation.highStats.includes('hp'));
-const hpBuild = findBuild(attackerBuilds, (build) => build.nature.natureUp === 'hp' && build.nature.natureDown === 'mattack' && build.ivAllocation.highStats.includes('attack') && build.ivAllocation.highStats.includes('speed') && build.ivAllocation.highStats.includes('hp'));
-const defenseIvBuild = findBuild(attackerBuilds, (build) => build.nature.natureUp === null && build.nature.natureDown === null && build.ivAllocation.highStats.includes('attack') && build.ivAllocation.highStats.includes('hp') && build.ivAllocation.highStats.includes('defense'));
-const mdefenseIvBuild = findBuild(attackerBuilds, (build) => build.nature.natureUp === null && build.nature.natureDown === null && build.ivAllocation.highStats.includes('attack') && build.ivAllocation.highStats.includes('hp') && build.ivAllocation.highStats.includes('mdefense'));
+console.log('\n== 伤害下限与修饰符 ==')
+{
+  const attacker = { attack: 10, mattack: 10, defense: 999, mdefense: 999, hp: 100, speed: 1 }
+  const defender = { attack: 1, mattack: 1, defense: 9999, mdefense: 9999, hp: 99999, speed: 1 }
+  const result = calculateDamageFull({
+    attackerPanel: attacker, defenderPanel: defender,
+    skillPower: 1, skillType: '物攻', skillAttr: '普通',
+    attackerAttrs: ['普通'], defenderAttrs: ['普通'], hits: 2, defenseReduction: 0.5
+  })
+  assertTrue(result.damage >= 1, `极端低伤害最终钳位 >= 1（实际 ${result.damage}）`)
 
-console.log('\n=== 1. 面板公式测试 ===');
-console.log({
-  pet: physicalAttacker.fullName,
-  neutral: neutralBuild?.panel,
-  speedNature: speedBuild?.panel,
-  attackNature: attackBuild?.panel,
-  hpNature: hpBuild?.panel,
-  defenseIvShift: defenseIvBuild?.panel,
-  mdefenseIvShift: mdefenseIvBuild?.panel
-});
+  const buff = calculateDamageFull({
+    attackerPanel: { attack: 400, mattack: 400, defense: 200, mdefense: 200, hp: 1500, speed: 100 },
+    defenderPanel: { attack: 1, mattack: 1, defense: 150, mdefense: 150, hp: 1200, speed: 1 },
+    skillPower: 90, skillType: '物攻', skillAttr: '普通',
+    attackerAttrs: ['普通'], defenderAttrs: ['普通'],
+    powerBuff: 1.5, defenseReduction: 0.3
+  })
+  const plain = calculateDamageFull({
+    attackerPanel: { attack: 400, mattack: 400, defense: 200, mdefense: 200, hp: 1500, speed: 100 },
+    defenderPanel: { attack: 1, mattack: 1, defense: 150, mdefense: 150, hp: 1200, speed: 1 },
+    skillPower: 90, skillType: '物攻', skillAttr: '普通',
+    attackerAttrs: ['普通'], defenderAttrs: ['普通']
+  })
+  assertClose(buff.damage, plain.damage * 1.5 * 0.7, '增伤50% × 减伤30% 为乘法叠加')
+}
 
-const offenseSkill = (physicalAttacker.skills || []).find((skill) => skill.type === '物攻' && Number(skill.power || 0) > 0)
-  || (physicalAttacker.skills || []).find((skill) => skill.type === '魔攻' && Number(skill.power || 0) > 0);
-const defenderProfiles = Object.fromEntries(targets.map((target) => [target.key, generateDefenderProfiles(target)]));
-const offenseResults = analyzeOffensiveBreakpoints({
-  attacker: physicalAttacker,
-  attackerBuilds: [attackBuild],
-  defenders: targets,
-  defenderProfiles,
-  skills: offenseSkill ? [offenseSkill] : [],
-  scenario: {}
-});
+console.log('\n== 满配配置 ==')
+{
+  const pet = { race: { hp: 100, attack: 95, mattack: 47, defense: 67, mdefense: 42, speed: 97 } }
+  const physical = buildOpponentFullConfig(pet, { skillType: '物攻' })
+  assertEqual(physical.natureUp, '物攻', '物理技能满配性格提升物攻')
+  assertEqual(physical.natureDown, '魔攻', '物理技能满配性格降低魔攻')
+  assertEqual(physical.level, 60, '满配默认 60 级')
+  assertEqual(physical.star, 5, '满配默认 5 星')
+  const highIvCount = Object.values(physical.ivs).filter((v) => v > 0).length
+  assertEqual(highIvCount, 3, '满配个体值为三项 10')
+  assertTrue(Object.values(physical.ivs).every((v) => v === 0 || v === 10), '个体值只含 0 或 10')
 
-console.log('\n=== 2. 伤害线测试 ===');
-targets.forEach((target) => {
-  const rows = offenseResults.filter((item) => item.targetKey === target.key).slice(0, 5);
-  console.log(`\n攻击方：${physicalAttacker.fullName}｜技能：${offenseSkill?.name}`);
-  rows.forEach((row) => {
-    console.log(`${target.fullName}｜${row.defenderProfileName}：${fmt(row.damage)} / ${fmt(row.targetHp)}，${pct(row.percent)}，${row.diff >= 0 ? `溢出 ${fmt(row.diff)}` : `差 ${fmt(Math.abs(row.diff))}`}`);
-  });
-});
+  const magic = buildOpponentFullConfig(pet, { skillType: '魔攻' })
+  assertEqual(magic.natureUp, '魔攻', '魔法技能满配性格提升魔攻')
+  assertEqual(magic.ivs.mattack, 10, '魔法满配魔攻个体 10')
+  assertEqual(magic.ivs.attack, 0, '魔法满配物攻（性格下降项）个体为 0')
+}
 
-const attackerProfiles = Object.fromEntries([physicalAttacker, magicAttacker, ...targets.slice(0, 1)].map((pet) => [pet.key, generateAttackerProfiles(pet)]));
-const defenseResults = analyzeDefensiveBreakpoints({
-  defender,
-  defenderBuilds: [
-    generateDefenderProfiles(defender, { builds: defenderBuilds }).find((item) => item.profileKey === 'standardProfile')
-  ].filter(Boolean),
-  attackers: [physicalAttacker, magicAttacker, ...targets.slice(0, 1)],
-  attackerProfiles,
-  scenario: {}
-});
-
-console.log('\n=== 3. 生存线测试 ===');
-defenseResults.slice(0, 9).forEach((row) => {
-  console.log(`${defender.fullName} 承受 ${row.attackerName}｜${row.attackerProfileName}｜${row.skillName}：${fmt(row.incomingDamage)} / ${fmt(row.defenderHp)}，${pct(row.percent)}，${row.diff >= 0 ? `剩余 ${fmt(row.diff)}` : `溢出 ${fmt(Math.abs(row.diff))}`}`);
-});
-
-const presetPet = magicAttacker;
-const presetSkill = (presetPet.skills || []).find((skill) => String(skill.type || '').trim() === '状态');
-const presetAttackSkill = (presetPet.skills || []).find((skill) => Number(skill.power || 0) > 0 && (skill.type === '物攻' || skill.type === '魔攻'));
-const presetCatalog = buildAvailableScenarioPresets(presetPet, presetPet.skills || []);
-const allPresets = [...presetCatalog.skillPresets, ...presetCatalog.traitPresets, ...presetCatalog.conditionalPresets]
-  .filter((preset, index, list) => list.findIndex((candidate) => candidate.id === preset.id) === index);
-const candidatePreset = allPresets
-  .find((preset) => Object.values(preset.effects || {}).some((value) => value !== null && value !== undefined && value !== 0));
-const baseScenario = resolveBattleScenario({ enabledPresets: [], manualScenario: {} });
-const enabledScenario = resolveBattleScenario({ enabledPresets: candidatePreset ? [candidatePreset] : [], manualScenario: {} });
-const presetTarget = targets[0];
-const baseDamage = analyzeOffensiveBreakpoints({
-  attacker: presetPet,
-  attackerBuilds: [generateAttackerProfiles(presetPet)[0]],
-  defenders: [presetTarget],
-  defenderProfiles: { [presetTarget.key]: generateDefenderProfiles(presetTarget) },
-  skills: presetAttackSkill ? [presetAttackSkill] : [],
-  scenario: baseScenario
-})[0];
-const buffedDamage = analyzeOffensiveBreakpoints({
-  attacker: presetPet,
-  attackerBuilds: [generateAttackerProfiles(presetPet)[0]],
-  defenders: [presetTarget],
-  defenderProfiles: { [presetTarget.key]: generateDefenderProfiles(presetTarget) },
-  skills: presetAttackSkill ? [presetAttackSkill] : [],
-  scenario: enabledScenario
-})[0];
-
-console.log('\n=== 4. 条件预设测试 ===');
-console.log({
-  pet: presetPet.fullName,
-  selectedStatusSkill: presetSkill?.name || '',
-  baseDamage: baseDamage ? `${fmt(baseDamage.damage)} / ${fmt(baseDamage.targetHp)}，${pct(baseDamage.percent)}` : '无可用结果',
-  availablePresets: allPresets.map((preset) => ({
-    name: preset.name,
-    description: preset.description,
-    conditionText: preset.conditionText
-  })),
-  enabledPreset: candidatePreset ? candidatePreset.name : '未找到可启用数值预设',
-  buffedDamage: buffedDamage ? `${fmt(buffedDamage.damage)} / ${fmt(buffedDamage.targetHp)}，${pct(buffedDamage.percent)}` : '无可用结果',
-  enabledSources: enabledScenario.enabledSources
-});
-
-const compareResult = compareBuildValue({
-  pet: physicalAttacker,
-  targetPets: [magicAttacker, defender, ...targets],
-  candidateBuilds: attackerBuilds
-});
-
-console.log('\n=== 推荐配置示例 ===');
-console.log(compareResult.rankedBuilds.slice(0, 5).map((item) => ({
-  buildName: item.buildName,
-  score: item.score,
-  recommendationLevel: item.recommendationLevel,
-  tradeoffSummary: item.tradeoffSummary
-})));
+console.log(`\n结果: ${passed} 通过, ${failed} 失败\n`)
+process.exit(failed ? 1 : 0)

@@ -6,8 +6,18 @@
 </template>
 
 <script>
-import { normalizeAttr } from '@/data/game_math.js'
+import { normalizeAttr } from '@/data/config/game_math.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
+
+function tint(color, alpha) {
+  const hex = String(color || '').replace('#', '')
+  if (hex.length !== 6 && hex.length !== 3) return 'rgba(44, 58, 47, 0.04)'
+  const full = hex.length === 3 ? hex.split('').map((c) => c + c).join('') : hex
+  const r = parseInt(full.slice(0, 2), 16)
+  const g = parseInt(full.slice(2, 4), 16)
+  const b = parseInt(full.slice(4, 6), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
 
 export default {
   name: 'TypeBadge',
@@ -19,12 +29,13 @@ export default {
   computed: {
     iconSrc() {
       const type = normalizeAttr(this.label) || this.label || '普通'
-      return resolveAssetPath(`/static/icons/${type}.png`)
+      return resolveAssetPath(`/static/icons/${type}.webp`)
     },
     badgeStyle() {
       return {
-        background: this.compact ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.9)',
-        borderColor: this.color
+        background: tint(this.color, 0.08),
+        borderColor: this.color,
+        boxShadow: `0 1.5px 0 ${tint(this.color, 0.28)}`
       }
     }
   }
@@ -36,32 +47,35 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8rpx;
-  min-height: 46rpx;
-  padding: 6rpx 12rpx;
-  border-radius: 999rpx;
-  border: 1rpx solid rgba(91, 124, 245, 0.18);
-  color: #1c2748;
+  gap: 6rpx;
+  min-height: 38rpx;
+  padding: 4rpx 10rpx;
+  border-radius: 9rpx;
+  background: #FFFDF7;
+  color: #64748B;
+  border: 1.5px solid #E3DCC8;
+  box-sizing: border-box;
 }
 
 .badge.compact {
-  min-width: 46rpx;
-  padding: 6rpx;
+  min-width: 38rpx;
+  padding: 4rpx;
 }
 
 .icon {
-  width: 26rpx;
-  height: 26rpx;
+  width: 22rpx;
+  height: 22rpx;
   flex-shrink: 0;
 }
 
 .badge.compact .icon {
-  width: 28rpx;
-  height: 28rpx;
+  width: 24rpx;
+  height: 24rpx;
 }
 
 .text {
-  font-size: 20rpx;
+  font-size: 18rpx;
   font-weight: 700;
+  color: #2C3A2F;
 }
 </style>

@@ -1,4 +1,4 @@
-import { inferSkillTags } from '../data/skill_tag_rules.js'
+import { inferSkillTags } from '../data/skill/skill_tag_rules.js'
 
 function toObject(value) {
   return value && typeof value === 'object' ? value : {}

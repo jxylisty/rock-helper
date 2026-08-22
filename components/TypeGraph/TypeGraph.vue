@@ -33,8 +33,8 @@
 
 <script>
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
-import { petTypes } from '@/data/pets.js'
-import { normalizeAttr } from '@/data/game_math.js'
+import { petTypes } from '@/data/pet/pet_detail.js'
+import { normalizeAttr } from '@/data/config/game_math.js'
 import { getDefenseGraphEdges, getSingleTypeEdges, getCircularLayout, getDefenseLayout, getTypeList } from '@/utils/typeGraph.js'
 
 const typeColorMap = petTypes.reduce((acc, item) => {

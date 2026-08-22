@@ -34,70 +34,71 @@ export default {
 <style scoped>
 .panel {
   display: grid;
-  gap: 12rpx;
+  gap: 8rpx;
 }
 
 .stat {
-  padding: 16rpx 12rpx;
-  border-radius: 18rpx;
-  background: #f7f9fe;
+  padding: 12rpx 10rpx;
+  border-radius: 8rpx;
+  background: #F8FAFC;
   text-align: center;
-  border: 1rpx solid transparent;
 }
 
 .stat.highlighted {
-  background: linear-gradient(180deg, #eef4ff 0%, #f8fbff 100%);
-  border-color: rgba(91, 124, 245, 0.24);
-  box-shadow: 0 8rpx 18rpx rgba(91, 124, 245, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #22C55E;
+  box-shadow: 0 2rpx 8rpx rgba(246, 185, 59, 0.12);
 }
 
 .label-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6rpx;
+  gap: 4rpx;
 }
 
 .label {
   display: block;
-  font-size: 20rpx;
-  color: #6b7590;
+  font-size: 18rpx;
+  color: #64748B;
 }
 
 .boost-arrow {
-  font-size: 20rpx;
-  font-weight: 800;
-  color: #f97316;
+  font-size: 18rpx;
+  font-weight: 700;
+  color: #E55039;
 }
 
 .value {
   display: block;
-  margin-top: 6rpx;
-  font-size: 28rpx;
-  font-weight: 800;
-  color: #1c2748;
+  margin-top: 4rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #1E293B;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
 }
 
 .value.active {
-  color: #ea580c;
+  color: #E55039;
 }
 
 .hint {
   display: block;
-  margin-top: 4rpx;
-  font-size: 18rpx;
-  color: #94a3b8;
+  margin-top: 2rpx;
+  font-size: 16rpx;
+  color: #94A3B8;
 }
 
 .hint.active {
-  color: #4f6ed4;
-  font-weight: 700;
+  color: #4A69BD;
+  font-weight: 600;
 }
 
 .growth {
   display: block;
-  margin-top: 4rpx;
-  font-size: 18rpx;
-  color: #33a06f;
+  margin-top: 2rpx;
+  font-size: 16rpx;
+  color: #4A69BD;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
 }
 </style>

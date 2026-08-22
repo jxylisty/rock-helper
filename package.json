@@ -4,16 +4,21 @@
   },
   "name": "luokewangguo",
   "version": "1.0.0",
+  "type": "module",
   "main": "main.js",
   "directories": {
     "test": "test"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.5",
+    "esbuild": "^0.28.2",
     "vite": "^8.0.8"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:float": "node scripts/build-float.mjs",
+    "build:float-data": "node scripts/build-float-data.mjs",
+    "test:pvp": "node scripts/run-pvp-breakpoint-tests.mjs"
   },
   "keywords": [],
   "author": "",

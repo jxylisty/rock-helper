@@ -1,5 +1,5 @@
-import { skillsData } from '../data/skills.js';
-import { auditSkillMechanics } from '../src/utils/skillParseAudit.js';
+import { skillsData } from '../data/skill/skills.js';
+import { auditSkillMechanics } from '../utils/skillParseAudit.js';
 
 const report = auditSkillMechanics(skillsData);
 

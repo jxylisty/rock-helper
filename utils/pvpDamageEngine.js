@@ -1,59 +1,7 @@
 import { PVP_RULES } from '../config/pvpRuleConfig.js'
+import { normalizeAttr, normalizeAttrList, getAttrMultiplier } from '../data/config/typeChart.js'
 
-const TYPE_EFFECT_CHART = {
-  普通: { strong: [], resist: ['岩', '钢', '机械'] },
-  草: { strong: ['水', '光', '土'], resist: ['火', '龙', '毒', '虫', '飞', '机械'] },
-  火: { strong: ['草', '冰', '虫', '机械'], resist: ['水', '土', '龙'] },
-  水: { strong: ['火', '土', '机械'], resist: ['草', '电', '龙'] },
-  光: { strong: ['暗', '恶'], resist: ['草', '冰'] },
-  土: { strong: ['火', '冰', '电', '毒'], resist: ['草', '武'] },
-  冰: { strong: ['草', '土', '龙', '飞'], resist: ['火', '冰', '机械'] },
-  龙: { strong: ['龙'], resist: ['机械'] },
-  电: { strong: ['水', '飞'], resist: ['草', '土', '龙', '电'] },
-  毒: { strong: ['草', '萌'], resist: ['土', '毒', '光', '机械'] },
-  虫: { strong: ['草', '暗', '光'], resist: ['火', '毒', '武', '飞', '萌', '机械'] },
-  武: { strong: ['普通', '土', '冰', '暗', '机械'], resist: ['毒', '虫', '飞', '萌'] },
-  飞: { strong: ['草', '虫', '武'], resist: ['土', '龙', '电', '机械'] },
-  萌: { strong: ['毒', '虫', '武'], resist: ['飞', '萌', '暗'] },
-  暗: { strong: ['虫', '萌'], resist: ['毒', '武', '虫', '暗'] },
-  机械: { strong: ['冰', '光', '萌'], resist: ['草', '火', '电', '飞', '暗'] }
-}
-
-const ATTR_ALIAS_MAP = {
-  普通: '普通',
-  火: '火',
-  火系: '火',
-  水: '水',
-  水系: '水',
-  草: '草',
-  草系: '草',
-  电: '电',
-  电系: '电',
-  冰: '冰',
-  冰系: '冰',
-  土: '土',
-  土系: '土',
-  武: '武',
-  武系: '武',
-  飞: '飞',
-  飞系: '飞',
-  毒: '毒',
-  毒系: '毒',
-  虫: '虫',
-  虫系: '虫',
-  龙: '龙',
-  龙系: '龙',
-  萌: '萌',
-  萌系: '萌',
-  暗: '暗',
-  暗系: '暗',
-  光: '光',
-  光系: '光',
-  机械: '机械',
-  机械系: '机械',
-  格斗: '武',
-  幽灵: '暗'
-}
+export { normalizeAttr, normalizeAttrList, getAttrMultiplier }
 
 const DAMAGE_SKILL_TYPES = ['物攻', '魔攻']
 const PANEL_BUFF_KEY_MAP = {
@@ -112,17 +60,28 @@ function getPercentBuffMultiplier(attrKey, buffs = {}) {
   return 1 + buffPercent / 100
 }
 
-export function normalizeAttr(attr) {
-  const text = repairText(attr).trim()
-  if (!text) return ''
-  if (ATTR_ALIAS_MAP[text]) return ATTR_ALIAS_MAP[text]
-  const plain = text.replace(/系$/, '')
-  return ATTR_ALIAS_MAP[plain] || plain
+// normalizeAttr / normalizeAttrList / getAttrMultiplier 统一来自 data/config/typeChart.js（见顶部 re-export）
+
+// 性格名（中文）→ 属性键，兼容中英文两种传入
+const NATURE_NAME_TO_KEY = {
+  '生命': 'hp',
+  '物攻': 'attack',
+  '魔攻': 'mattack',
+  '物防': 'defense',
+  '魔防': 'mdefense',
+  '速度': 'speed',
+  hp: 'hp',
+  attack: 'attack',
+  mattack: 'mattack',
+  defense: 'defense',
+  mdefense: 'mdefense',
+  speed: 'speed'
 }
 
-export function normalizeAttrList(attrs = []) {
-  const list = Array.isArray(attrs) ? attrs : [attrs]
-  return Array.from(new Set(list.map((item) => normalizeAttr(item)).filter(Boolean)))
+// 性格提升倍率随星级变化（与 game_math.js 口径一致，5星=1.2）
+function natureUpBonus(star) {
+  const s = toNumber(star, 0)
+  return s === 0 ? 0 : s === 1 ? 0.12 : s === 2 ? 0.14 : s === 3 ? 0.16 : s === 4 ? 0.18 : 0.2
 }
 
 export function calculatePanelValue({
@@ -135,20 +94,27 @@ export function calculatePanelValue({
   natureDown = null,
   buffs = {}
 }) {
-  const actualIv = toNumber(inputIv, 0) * (toNumber(star, 0) + 1)
+  const actualIv = clamp(toNumber(inputIv, 0), 0, 10) * (toNumber(star, 0) + 1)
   const race = toNumber(raceValue, 0)
   const baseValue = race * 0.5 + actualIv * 0.25 + 10
   const growth = attrKey === 'hp'
     ? (race + actualIv * 0.5) * 0.02 + 1
     : (race + actualIv * 0.5) * 0.01
 
-  let panel = baseValue + toNumber(level, 0) * growth
+  const rawPanel = baseValue + toNumber(level, 0) * growth
 
-  if (natureUp && natureUp === attrKey) panel *= PVP_RULES.nature.up
-  if (natureDown && natureDown === attrKey) panel *= PVP_RULES.nature.down
+  // 与 game_math.js 对齐：先截断基础面板，再乘性格系数，再加星级裸加成
+  const natureUpKey = natureUp ? NATURE_NAME_TO_KEY[natureUp] || natureUp : ''
+  const natureDownKey = natureDown ? NATURE_NAME_TO_KEY[natureDown] || natureDown : ''
+  let natureMod = 1
+  if (natureUpKey && natureUpKey === attrKey) natureMod = 1 + natureUpBonus(star)
+  else if (natureDownKey && natureDownKey === attrKey) natureMod = PVP_RULES.nature.down
 
-  if (attrKey === 'hp') panel += toNumber(star, 0) * 20
-  else panel += toNumber(star, 0) * 10
+  const preNaturePanel = Math.floor(rawPanel)
+  const postNaturePanel = Math.round(preNaturePanel * natureMod + 0.0000001)
+  const starBonus = attrKey === 'hp' ? toNumber(star, 0) * 20 : toNumber(star, 0) * 10
+
+  let panel = postNaturePanel + starBonus
 
   panel *= getPercentBuffMultiplier(attrKey, buffs)
   if (attrKey === 'speed') panel += toNumber(buffs?.speedFlat, 0)
@@ -172,26 +138,6 @@ export function calculateAllPanels({
     mdefense: calculatePanelValue({ raceValue: race.mdefense, inputIv: ivs.mdefense, level, star, attrKey: 'mdefense', natureUp, natureDown, buffs }),
     speed: calculatePanelValue({ raceValue: race.speed, inputIv: ivs.speed, level, star, attrKey: 'speed', natureUp, natureDown, buffs })
   }
-}
-
-export function getAttrMultiplier(attackAttr, defenderAttrs = []) {
-  const attackType = normalizeAttr(attackAttr)
-  const defenseTypes = normalizeAttrList(defenderAttrs)
-  const effect = TYPE_EFFECT_CHART[attackType]
-  if (!effect || !defenseTypes.length) return PVP_RULES.damage.strongAndResist
-
-  let strongCount = 0
-  let resistCount = 0
-  defenseTypes.forEach((defType) => {
-    if (effect.strong.includes(defType)) strongCount += 1
-    if (effect.resist.includes(defType)) resistCount += 1
-  })
-
-  if (strongCount >= 2) return PVP_RULES.damage.doubleStrong
-  if (resistCount >= 2 && strongCount === 0) return PVP_RULES.damage.doubleResist
-  if (strongCount === 1 && resistCount === 0) return PVP_RULES.damage.singleStrong
-  if (resistCount === 1 && strongCount === 0) return PVP_RULES.damage.singleResist
-  return PVP_RULES.damage.strongAndResist
 }
 
 export function isDamageSkill(skill = {}) {
@@ -410,7 +356,8 @@ export function calculateDamageFull({
   defenseReduction = PVP_RULES.defaultScenario.defenseReduction,
   atkLevel = PVP_RULES.defaultScenario.atkLevel,
   defLevel = PVP_RULES.defaultScenario.defLevel,
-  hits = PVP_RULES.defaultScenario.hits
+  hits = PVP_RULES.defaultScenario.hits,
+  skipAttrAndStab = false
 }) {
   const normalizedSkillType = repairText(skillType).trim()
   const isPhysical = normalizedSkillType === '物攻'
@@ -420,17 +367,19 @@ export function calculateDamageFull({
   const normalizedSkillAttr = normalizeAttr(skillAttr)
   const normalizedAttackerAttrs = normalizeAttrList(attackerAttrs)
   const normalizedDefenderAttrs = normalizeAttrList(defenderAttrs)
-  const sameTypeBonus = normalizedAttackerAttrs.includes(normalizedSkillAttr) ? PVP_RULES.damage.sameTypeBonus : 1
-  const attrMultiplier = getAttrMultiplier(normalizedSkillAttr, normalizedDefenderAttrs)
+  const sameTypeBonus = skipAttrAndStab ? 1 : (normalizedAttackerAttrs.includes(normalizedSkillAttr) ? PVP_RULES.damage.sameTypeBonus : 1)
+  const attrMultiplier = skipAttrAndStab ? 1 : getAttrMultiplier(normalizedSkillAttr, normalizedDefenderAttrs)
   const levelMod = 1.0 * (1 + toNumber(atkLevel, 0) / 10.0) * (1 + toNumber(defLevel, 0) / 10.0)
   const hitCount = Math.max(1, toNumber(hits, 1))
   const reductionMultiplier = 1 - clamp(toNumber(defenseReduction, 0), 0, 1)
 
+  // 总伤害 = 单发伤害 × 连击数 × (1 - 减伤)，下限 1 在最终结果上钳位
   const damage = Math.max(
     1,
     (atkUsed / defUsed) * 0.9 * toNumber(skillPower, 0) * toNumber(powerBuff, 1)
       * sameTypeBonus * attrMultiplier * levelMod * toNumber(weatherMod, 1)
-  ) * hitCount * reductionMultiplier
+      * hitCount * reductionMultiplier
+  )
 
   return {
     damage,

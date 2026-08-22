@@ -92,135 +92,137 @@ export default {
 
 <style scoped>
 .slot-card {
-  min-height: 250rpx;
-  border-radius: 24rpx;
-  background: rgba(255, 252, 244, 0.98);
-  box-shadow: 0 14rpx 28rpx rgba(68, 56, 32, 0.08);
+  min-height: 220rpx;
+  border-radius: 16rpx;
+  background: #FFFFFF;
+  box-shadow: 0 4rpx 12rpx rgba(61, 52, 43, 0.05);
   overflow: hidden;
-  border: 1rpx solid rgba(229, 220, 198, 0.8);
+  border: 1px solid #E2E8F0;
 }
 
 .slot-card.empty {
-  border: 2rpx dashed rgba(186, 168, 130, 0.45);
-  background: rgba(255, 250, 240, 0.88);
+  border: 1px dashed #94A3B8;
+  background: rgba(240, 235, 225, 0.6);
   box-shadow: none;
 }
 
 .slot-card.expanded {
-  box-shadow: 0 18rpx 34rpx rgba(68, 56, 32, 0.12);
+  box-shadow: 0 4rpx 16rpx rgba(61, 52, 43, 0.08);
 }
 
 .empty-state {
-  min-height: 250rpx;
+  min-height: 220rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10rpx;
+  gap: 8rpx;
 }
 
 .empty-plus {
-  font-size: 52rpx;
+  font-size: 44rpx;
   line-height: 1;
-  color: #c58c2b;
-  font-weight: 800;
+  color: #94A3B8;
+  font-weight: 600;
 }
 
 .empty-text {
-  font-size: 24rpx;
-  color: #7f6b46;
-  font-weight: 700;
+  font-size: 22rpx;
+  color: #64748B;
+  font-weight: 600;
 }
 
 .filled-state {
-  padding: 14rpx;
+  padding: 12rpx;
 }
 
 .pet-cover {
   width: 100%;
-  height: 132rpx;
-  border-radius: 20rpx;
-  background: linear-gradient(180deg, #efe6d6 0%, #f9f3ea 100%);
+  height: 110rpx;
+  border-radius: 8rpx;
+  background: #F8FAFC;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .pet-image {
-  width: 118rpx;
-  height: 118rpx;
+  width: 100rpx;
+  height: 100rpx;
   display: block;
 }
 
 .pet-name {
   display: block;
-  margin-top: 10rpx;
-  font-size: 26rpx;
-  font-weight: 900;
-  color: #1f1a12;
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #1E293B;
   line-height: 1.2;
   text-align: center;
-  word-break: break-all;
 }
 
 .info-line {
-  margin-top: 10rpx;
+  margin-top: 8rpx;
   display: grid;
-  grid-template-columns: 82rpx 1fr;
-  gap: 8rpx;
+  grid-template-columns: 70rpx 1fr;
+  gap: 6rpx;
   align-items: start;
 }
 
 .line-label {
-  min-height: 38rpx;
-  border-radius: 10rpx;
-  background: linear-gradient(180deg, #ffcb55 0%, #ffb300 100%);
-  color: #1f1a12;
-  font-size: 18rpx;
-  font-weight: 800;
+  min-height: 32rpx;
+  border-radius: 8rpx;
+  background: #22C55E;
+  color: #FFFFFF;
+  font-size: 16rpx;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .line-value {
-  min-height: 38rpx;
-  padding: 0 10rpx;
-  border-radius: 10rpx;
-  background: rgba(255, 255, 255, 0.82);
-  color: #1f1a12;
-  font-size: 19rpx;
-  font-weight: 700;
+  min-height: 32rpx;
+  padding: 0 8rpx;
+  border-radius: 8rpx;
+  background: #F8FAFC;
+  color: #1E293B;
+  font-size: 17rpx;
+  font-weight: 600;
   display: flex;
   align-items: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
 }
 
 .line-value.multiline {
   white-space: normal;
-  line-height: 1.35;
-  padding-top: 6rpx;
-  padding-bottom: 6rpx;
+  line-height: 1.3;
+  padding-top: 4rpx;
+  padding-bottom: 4rpx;
 }
 
 .action-row {
-  margin-top: 12rpx;
+  margin-top: 10rpx;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8rpx;
+  gap: 6rpx;
 }
 
 .mini-btn {
   min-width: 0;
-  height: 50rpx;
-  border-radius: 14rpx;
-  font-size: 18rpx;
-  font-weight: 800;
+  height: 44rpx;
+  border-radius: 8rpx;
+  font-size: 16rpx;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+  background: #F8FAFC;
+  color: #64748B;
 }
 </style>
