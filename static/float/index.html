@@ -36,6 +36,39 @@
   .ball-text { font-size: 8px; font-weight: 800; letter-spacing: .14em; margin-top: 2px; opacity: .95; }
   #panel { display: none; }
 
+  /* ---------- 贴图模式（ball.png 加载成功）：隐藏 CSS 球，只显示宝石贴图 + 特效 ---------- */
+  #ball.has-img { background: none; border: none; box-shadow: none; }
+  #ball.has-img .ball-inner { display: none; }
+  #ball.has-img .ball-img {
+    animation: ballGlow 2.8s ease-in-out infinite, ballPulse 3.4s ease-in-out infinite;
+  }
+  @keyframes ballGlow {
+    0%, 100% {
+      filter: drop-shadow(0 3px 5px rgba(0, 0, 0, .35))
+              drop-shadow(0 0 6px rgba(140, 190, 255, .30));
+    }
+    50% {
+      filter: drop-shadow(0 3px 5px rgba(0, 0, 0, .35))
+              drop-shadow(0 0 13px rgba(255, 170, 220, .55))
+              drop-shadow(0 0 20px rgba(150, 180, 255, .35));
+    }
+  }
+  @keyframes ballPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+  }
+
+  /* ---------- 交互特效（inapp 模式由 JS 加 class） ---------- */
+  #ball.pressed { transform: scale(.92); }
+  #ball.pressed .ball-img { animation-play-state: paused; }
+  #ball.dragging { transform: scale(1.12); }
+  #ball.bounce { animation: ballBounce .38s ease; }
+  @keyframes ballBounce {
+    0% { transform: scale(.9); }
+    50% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+
   /* ---------- 面板（展开态） ---------- */
   body.expanded #ball, body.uts-panel #ball { display: none !important; }
   body.expanded #panel, body.uts-panel #panel {
@@ -243,7 +276,7 @@
 </style>
 </head>
 <body>
-  <div id="ball"><img class="ball-img" src="ball.png" onerror="this.remove()" alt="" /><div class="ball-inner"><div class="ball-icon">⚔</div><div class="ball-text">伤害</div></div></div>
+  <div id="ball"><img class="ball-img" src="ball.png" onerror="this.remove()" onload="this.parentNode.classList.add('has-img')" alt="" /><div class="ball-inner"><div class="ball-icon">⚔</div><div class="ball-text">伤害</div></div></div>
   <div id="panel">
     <div class="head">
       <div class="head-title">⚔ 实时伤害 <span class="head-sub" style="font-size:9px;color:#A3AE9F;font-weight:700">对方满配口径</span><span class="head-hint" style="font-size:9px;color:#A3AE9F;font-weight:700">拖深色条移动 · 点条收起 · 长按关闭</span></div>

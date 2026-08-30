@@ -27,6 +27,7 @@ tools/static-web/
 pvp素材/
 素材/
 demo_*.png
+悬浮窗小球.png
 
 # Python 缓存
 __pycache__/

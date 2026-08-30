@@ -782,6 +782,8 @@ function initInApp() {
     if (expanded) return
     const t = event.touches[0]
     touch = { sx: t.screenX, sy: t.screenY, bx: ballX, by: ballY, moved: false, long: false }
+    ball.classList.remove('bounce')
+    ball.classList.add('pressed')
     clearPressTimer()
     pressTimer = setTimeout(() => {
       pressTimer = null
@@ -800,6 +802,8 @@ function initInApp() {
     if (Math.abs(dx) > 8 || Math.abs(dy) > 8) touch.moved = true
     if (touch.moved) {
       clearPressTimer()
+      ball.classList.remove('pressed')
+      ball.classList.add('dragging')
       ballX = clamp(touch.bx + dx, 0, W - BALL)
       ballY = clamp(touch.by + dy, 0, H - BALL)
       applyFrame(ballX, ballY, BALL, BALL)
@@ -808,12 +812,18 @@ function initInApp() {
   }, { passive: false })
   ball.addEventListener('touchend', () => {
     clearPressTimer()
+    ball.classList.remove('pressed', 'dragging')
     if (touch && touch.moved) savePos()
-    if (touch && !touch.moved && !touch.long) expand()
+    if (touch && !touch.moved && !touch.long) {
+      void ball.offsetWidth // 强制重排,确保 bounce 动画每次都能重放
+      ball.classList.add('bounce')
+      expand()
+    }
     touch = null
   })
   ball.addEventListener('touchcancel', () => {
     clearPressTimer()
+    ball.classList.remove('pressed', 'dragging')
     touch = null
   })
 
