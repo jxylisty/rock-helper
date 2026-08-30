@@ -51,18 +51,18 @@
           </view>
 
           <view class="pet-grid">
-            <view
+            <PetCard
               v-for="pet in group.pets"
               :key="pet.variantImage || `${pet.id}-${pet.name}`"
-              class="pet-item"
-              hover-class="press-down"
+              :img="pet.img"
+              :name="pet.name"
+              :code="'#' + String(pet.id).padStart(3, '0')"
+              :badge="getPetBadge(pet)"
+              :badge-tone="isLeaderPet(pet) ? 'gold' : 'gray'"
+              compact
               @click="goDetail(pet)"
             >
-              <view class="pet-img-wrap">
-                <RemoteImage class="pet-image" :src="resolvePetImage(pet.img)" mode="aspectFit" />
-              </view>
-              <text class="pet-name">{{ pet.name }}</text>
-              <view class="pet-types">
+              <template #tags>
                 <TypeBadge
                   v-for="type in pet.type"
                   :key="type"
@@ -70,8 +70,8 @@
                   :color="getTypeColor(type)"
                   compact
                 />
-              </view>
-            </view>
+              </template>
+            </PetCard>
           </view>
         </view>
       </view>
@@ -88,11 +88,12 @@
 <script>
 import AppHeader from '@/components/AppHeader/AppHeader.vue'
 import AppIcon from '@/components/AppIcon/AppIcon.vue'
+import PetCard from '@/components/PetCard/PetCard.vue'
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import { petTypes, petDetail } from '@/data/pet/pet_detail.js'
+import { hasLeaderFormPetId } from '@/data/pet/leader_forms.js'
 import { petRaceSpeed } from '@/data/pet/pet_race_speed.js'
 import { getSpeedRankEntries, calculatePetPanel } from '@/data/config/game_math.js'
-import { resolveAssetPath } from '@/utils/asset-path.js'
 import { buildBasePetList, getPetVariants, getPetVariantDetails } from '@/utils/petListBuilder.js'
 
 const GROUP_STEP = 12
@@ -127,6 +128,7 @@ export default {
   components: {
     AppHeader,
     AppIcon,
+    PetCard,
     TypeBadge
   },
   data() {
@@ -185,8 +187,14 @@ export default {
     getTypeColor(type) {
       return petTypes.find((item) => item.key === type)?.color || '#5b7cf5'
     },
-    resolvePetImage(src) {
-      return resolveAssetPath(src)
+    isLeaderPet(pet) {
+      return hasLeaderFormPetId(pet.id)
+    },
+    getPetBadge(pet) {
+      if (this.isLeaderPet(pet)) return '首领化'
+      const variants = petDetail[String(pet.id)]
+      if (Array.isArray(variants) && variants.length > 1) return '多形态'
+      return ''
     },
     computeDefaultPanelSpeed(baseSpeed) {
       if (typeof baseSpeed !== 'number' || Number.isNaN(baseSpeed)) return 0
@@ -485,52 +493,6 @@ export default {
   .pet-grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
-}
-
-.pet-item {
-  padding: 8px 6px;
-  border-radius: 12px;
-  background: #F7F1E3;
-  border: 1px solid #E3DCC8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  transition: transform 0.12s ease;
-}
-
-.pet-img-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 44px;
-}
-
-.pet-image {
-  width: 44px;
-  height: 44px;
-  display: block;
-  margin: 0 auto;
-}
-
-.pet-name {
-  display: block;
-  text-align: center;
-  font-size: 11px;
-  font-weight: 700;
-  color: #2C3A2F;
-  line-height: 1.3;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.pet-types {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 4px;
 }
 
 .loading-more {

@@ -29,26 +29,12 @@
     <view class="body">
       <scroll-view scroll-y class="skill-list" :show-scrollbar="false" lower-threshold="120" @scrolltolower="loadMoreSkills">
         <view class="skill-list-inner">
-          <view
-            v-for="skill in visibleSkills"
-            :key="skill.name"
-            class="skill-item"
-            :class="{ active: currentSkill && currentSkill.name === skill.name }"
-            hover-class="press-down"
-            @click="selectSkill(skill)"
-          >
-            <view class="skill-icon-frame">
-              <RemoteImage class="skill-icon" :src="getSkillIcon(skill.name)" mode="aspectFit" />
-            </view>
-            <view class="skill-meta">
-              <text class="skill-name">{{ skill.name }}</text>
-              <view class="skill-sub">
-                <text class="skill-sub-text">{{ skill.type }}</text>
-                <TypeBadge :label="skill.attr" compact />
-                <text class="skill-sub-text">{{ skill.consume || '-' }}</text>
-              </view>
-              <text class="skill-desc">{{ skill.describe || '暂无描述' }}</text>
-            </view>
+          <view v-for="skill in visibleSkills" :key="skill.name" class="skill-row-slot">
+            <SkillRow
+              :skill="skill"
+              :active="currentSkill && currentSkill.name === skill.name"
+              @click="selectSkill(skill)"
+            />
           </view>
 
           <view v-if="!visibleSkills.length" class="list-empty">
@@ -403,8 +389,8 @@ export default {
   flex: 1;
   min-height: 0;
   display: flex;
-  gap: 10px;
-  padding: 0 14px 12px;
+  gap: 12px;
+  padding: 0 12px 14px;
 }
 
 .card {
@@ -424,7 +410,7 @@ export default {
 }
 
 .skill-list-inner {
-  padding: 10px;
+  padding: 9px;
 }
 
 .result-panel {
@@ -436,81 +422,12 @@ export default {
   padding-bottom: 12px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
 }
 
-/* ===== 技能行胶囊 ===== */
-.skill-item {
-  display: flex;
-  gap: 9px;
-  padding: 9px;
-  border-radius: 13px;
-  background: #F7F1E3;
-  border: 1.5px solid transparent;
-  margin-bottom: 7px;
-  transition: transform 0.12s ease;
-}
-
-.skill-item.active {
-  background: #FFFDF7;
-  border-color: #C9A14E;
-  box-shadow: 0 2px 0 rgba(138, 106, 44, 0.22);
-}
-
-.skill-icon-frame {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 11px;
-  background: #FFFDF7;
-  border: 1px solid #E3DCC8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.skill-icon {
-  width: 38px;
-  height: 38px;
-}
-
-.skill-meta {
-  flex: 1;
-  min-width: 0;
-}
-
-.skill-name {
-  display: block;
-  font-size: 13px;
-  font-weight: 800;
-  color: #2C3A2F;
-}
-
-.skill-sub {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 4px;
-  flex-wrap: wrap;
-}
-
-.skill-sub-text {
-  font-size: 10.5px;
-  color: #6B7A6E;
-  font-weight: 700;
-  font-family: Monaco, Consolas, 'Courier New', monospace;
-}
-
-.skill-desc {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  margin-top: 4px;
-  font-size: 11px;
-  color: #6B7A6E;
-  line-height: 1.45;
+/* ===== 技能行（SkillRow 通用组件） ===== */
+.skill-row-slot {
+  margin-bottom: 9px;
 }
 
 .list-empty {
@@ -533,32 +450,32 @@ export default {
 }
 
 .list-empty-title {
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 700;
   color: #6B7A6E;
 }
 
 .list-empty-sub {
-  font-size: 10.5px;
+  font-size: 11.5px;
   color: #A3AE9F;
 }
 
 /* ===== 技能详情面板 ===== */
 .panel {
-  padding: 13px;
+  padding: 14px;
 }
 
 .panel-head {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
 }
 
 .panel-skill-frame {
   flex-shrink: 0;
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
   background: #F6EEDB;
   border: 1.5px solid #D9B96A;
   box-shadow: 0 2px 0 rgba(138, 106, 44, 0.22);
@@ -569,8 +486,8 @@ export default {
 }
 
 .panel-skill-img {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
 }
 
 .panel-head-text {
@@ -580,23 +497,23 @@ export default {
 
 .panel-title {
   display: block;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   color: #2C3A2F;
 }
 
 .panel-badges {
-  margin-top: 5px;
+  margin-top: 7px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   flex-wrap: wrap;
 }
 
 .badge {
-  height: 21px;
-  padding: 0 8px;
-  border-radius: 7px;
+  height: 23px;
+  padding: 0 10px;
+  border-radius: 8px;
   background: #F2EBDA;
   border: 1px solid #E3DCC8;
   display: inline-flex;
@@ -604,14 +521,14 @@ export default {
 }
 
 .badge-text {
-  font-size: 10.5px;
+  font-size: 11.5px;
   color: #6B7A6E;
   font-weight: 700;
   font-family: Monaco, Consolas, 'Courier New', monospace;
 }
 
 .panel-consume {
-  font-size: 10.5px;
+  font-size: 11.5px;
   color: #A97F35;
   font-weight: 700;
 }
@@ -622,35 +539,35 @@ export default {
 
 .panel-desc {
   display: block;
-  margin-top: 10px;
-  font-size: 12px;
+  margin-top: 12px;
+  font-size: 13px;
   color: #6B7A6E;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 /* ===== 精灵面板 ===== */
 .pets-panel {
-  padding: 13px;
+  padding: 15px;
 }
 
 .section-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
 }
 
 .section-left {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 9px;
   min-width: 0;
 }
 
 .section-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
   background: #F6EEDB;
   border: 1px solid #E0D3AE;
   display: flex;
@@ -659,15 +576,15 @@ export default {
 }
 
 .section-title {
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 800;
   color: #2C3A2F;
 }
 
 .count-capsule {
   flex-shrink: 0;
-  min-height: 24px;
-  padding: 2px 10px;
+  min-height: 28px;
+  padding: 2px 12px;
   border-radius: 999px;
   background: #F6EEDB;
   border: 1px solid #D9B96A;
@@ -676,7 +593,7 @@ export default {
 }
 
 .count {
-  font-size: 11px;
+  font-size: 12px;
   color: #A97F35;
   font-weight: 700;
   font-family: Monaco, Consolas, 'Courier New', monospace;
@@ -685,8 +602,8 @@ export default {
 .pet-list {
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  margin-top: 11px;
+  gap: 11px;
+  margin-top: 13px;
 }
 
 .empty {
@@ -708,24 +625,24 @@ export default {
 
 .empty-title {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   color: #2C3A2F;
 }
 
 .empty-sub {
   display: block;
-  margin-top: 2px;
-  font-size: 11px;
+  margin-top: 3px;
+  font-size: 12px;
   color: #6B7A6E;
-  line-height: 1.6;
+  line-height: 1.65;
   text-align: center;
 }
 
 .loading-more {
-  padding: 12px 0 4px;
+  padding: 14px 0 6px;
   text-align: center;
-  font-size: 11px;
+  font-size: 12px;
   color: #A3AE9F;
 }
 </style>

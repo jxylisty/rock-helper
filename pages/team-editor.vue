@@ -404,9 +404,17 @@
       <view class="footer-space"></view>
     </scroll-view>
 
+    <PetSelector
+      :visible="selectorVisible"
+      title="添加精灵"
+      :pets="petChoices"
+      default-tag="全部"
+      @close="closeSelector"
+      @select="onSelectorPet"
+    />
+
     <TeamEditSheet
       :visible="sheetVisible"
-      :mode="sheetMode"
       :edit-data="currentEditData"
       :pets="petChoices"
       :skill-options="currentSkillOptions"
@@ -420,6 +428,7 @@
 <script>
 import AppHeader from '@/components/AppHeader/AppHeader.vue'
 import AppIcon from '@/components/AppIcon/AppIcon.vue'
+import PetSelector from '@/components/PetSelector/PetSelector.vue'
 import StatPanel from '@/components/StatPanel/StatPanel.vue'
 import TeamEditSheet from '@/components/TeamEditSheet/TeamEditSheet.vue'
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
@@ -429,6 +438,7 @@ import { petSkills } from '@/data/pet/pet_skills.js'
 import { skillsData } from '@/data/skill/skills.js'
 import { skillIcons } from '@/data/skill/skill_icons.js'
 import { analyzeTeamTypeCoverage, calculatePetPanel, getHighestFormPets } from '@/data/config/game_math.js'
+import { normalizeAttr } from '@/data/config/typeChart.js'
 import { analyzeTeamDecision, recommendTeamComplements, recommendTeamReplacements } from '@/data/config/decision_engine.js'
 import { readStorage, writeStorage } from '@/utils/nav.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
@@ -538,8 +548,7 @@ function buildVariantPetsCompat() {
           type: v.type || [],
           race: v.race,
           baseId: Number(seq),
-          variantName: v.page_title?.replace(baseName, '').trim() || `形态${i}`,
-          skills: []
+          variantName: v.page_title?.replace(baseName, '').trim() || `形态${i}`
         })
       }
     }
@@ -548,16 +557,12 @@ function buildVariantPetsCompat() {
 }
 
 const _variantPets = buildVariantPetsCompat()
-const _variantPetMap = (() => {
-  const map = {}
-  for (const vp of _variantPets) { map[String(vp.id)] = vp }
-  return map
-})()
 
 export default {
   components: {
     AppHeader,
     AppIcon,
+    PetSelector,
     StatPanel,
     TeamEditSheet,
     TypeBadge
@@ -566,13 +571,12 @@ export default {
     return {
       team: createEmptyTeamSlots(),
       panelExpandedIndexes: [],
+      selectorVisible: false,
       sheetVisible: false,
-      sheetMode: 'add',
       editingIndex: -1,
       decisionMode: 'general',
       petChoices: [],
       petMap: {},
-      detailMap: petDetail,
       decisionModeOptions: DECISION_MODE_OPTIONS
     }
   },
@@ -658,8 +662,9 @@ export default {
         name: pet.name,
         img: pet.img,
         types: Array.isArray(pet.type) ? [...pet.type] : [],
-        race: this.detailMap[String(pet.id)]?.race || null,
+        race: petDetail[String(pet.id)]?.[0]?.race || null,
         colors: (pet.type || []).map((type) => TYPE_COLOR_MAP[type] || '#5b7cf5'),
+        uiTag: pet.uiTag || '其他',
         isVariant: false
       }))
 
@@ -670,6 +675,7 @@ export default {
         types: Array.isArray(vPet.type) ? [...vPet.type] : [],
         race: vPet.race,
         colors: (vPet.type || []).map((type) => TYPE_COLOR_MAP[type] || '#5b7cf5'),
+        uiTag: '变体形态',
         isVariant: true,
         baseId: vPet.baseId,
         variantName: vPet.variantName
@@ -711,13 +717,22 @@ export default {
       })
     },
     openAddSelector(index) {
-      this.sheetMode = 'add'
       this.editingIndex = index
-      this.sheetVisible = true
+      this.selectorVisible = true
+    },
+    closeSelector() {
+      this.selectorVisible = false
+      if (!this.sheetVisible) this.editingIndex = -1
+    },
+    onSelectorPet(pet) {
+      const index = this.editingIndex
+      this.selectorVisible = false
+      this.editingIndex = -1
+      if (index < 0 || !pet) return
+      this.addPetToSlot(index, pet.id)
     },
     openConfigEditor(index) {
       if (!this.team[index]) return
-      this.sheetMode = 'edit'
       this.editingIndex = index
       this.sheetVisible = true
     },
@@ -726,10 +741,6 @@ export default {
       this.editingIndex = -1
     },
     handleAutoSave(draft) {
-      if (this.sheetMode !== 'edit') {
-        this.closeSheet()
-        return
-      }
       if (this.editingIndex < 0 || !draft?.petId) {
         this.closeSheet()
         return
@@ -739,11 +750,7 @@ export default {
     },
     handleSave(draft) {
       if (this.editingIndex < 0) return
-      if (this.sheetMode === 'add') {
-        this.addPetToSlot(this.editingIndex, draft.petId)
-      } else {
-        this.persistSlot(this.editingIndex, draft, true)
-      }
+      this.persistSlot(this.editingIndex, draft, true)
       this.closeSheet()
     },
     addPetToSlot(index, petId) {
@@ -769,7 +776,7 @@ export default {
       const pet = this.petMap[String(slotLike.petId)]
       if (!pet) return null
 
-      let race = this.detailMap[String(pet.id)]?.race || {}
+      let race = petDetail[String(pet.id)]?.[0]?.race || {}
       if (pet.isVariant && pet.race) {
         race = pet.race
       }
@@ -857,14 +864,10 @@ export default {
     },
     buildSkillOptions(petId) {
       const pet = this.petMap[String(petId)]
-      let skills = []
-
-      if (pet?.isVariant) {
-        const variantPet = _variantPetMap[petId]
-        skills = variantPet?.skills || []
-      } else {
-        skills = Array.isArray(this.detailMap[String(petId)]?.skills) ? this.detailMap[String(petId)].skills : []
-      }
+      const skillSourceId = pet?.isVariant && pet.baseId != null ? pet.baseId : petId
+      const skills = Array.isArray(petSkills[String(skillSourceId)]?.skills)
+        ? petSkills[String(skillSourceId)].skills
+        : []
 
       const seen = new Set()
       return skills
@@ -874,14 +877,13 @@ export default {
           if (seen.has(key)) return null
           seen.add(key)
           const skillData = skillsData[skill.name] || {}
-          const fullSkillList = petSkills[String(petId)]?.skills || []
-          const fullSkill = fullSkillList.find(s => s.name === skill.name) || {}
           return {
             name: skill.name,
-            type: skillData.type || fullSkill.type || '-',
-            attr: skillData.attr || fullSkill.attr || '-',
-            consume: skillData.consume ? `${Number(skillData.consume)}耗能` : (fullSkill.consume ? `${Number(fullSkill.consume)}耗能` : '-'),
-            describe: skillData.describe || fullSkill.describe || '',
+            type: skillData.type || '-',
+            attr: normalizeAttr(skillData.attr || '') || '-',
+            consume: skillData.consume != null && skillData.consume !== '' ? `${Number(skillData.consume)}耗能` : '-',
+            power: skillData.power != null ? Number(skillData.power) : '',
+            describe: skillData.describe || '',
             icon: resolveAssetPath(skillIcons[skill.name] || ''),
             skillType: skill.skill_type || '精灵技能',
             skillTypeLabel: skill.skill_type || '精灵技能'

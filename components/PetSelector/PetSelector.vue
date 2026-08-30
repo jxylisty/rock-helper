@@ -1,28 +1,24 @@
 <template>
   <view v-if="visible" class="pet-selector-mask" @click="handleClose">
     <view class="pet-selector-sheet" @click.stop>
-      <view class="ps-head">
-        <text class="ps-title">{{ title }}</text>
-        <view class="ps-close" hover-class="touch-active" @click="handleClose">关闭</view>
-      </view>
+      <view class="sheet-grabber"></view>
 
-      <!-- 形态筛选标签 -->
-      <view class="ui-tag-tabs">
-        <view
-          v-for="tag in uiTagOptions"
-          :key="tag.key"
-          class="ui-tag-tab"
-          :class="{ active: selectedUiTag === tag.key }"
-          @click="selectedUiTag = tag.key"
-        >
-          <text class="ui-tag-text">{{ tag.label }}</text>
-          <text class="ui-tag-count">{{ tag.count }}</text>
+      <view class="ps-head">
+        <view class="ps-title-row">
+          <view class="ps-title-seal">
+            <AppIcon name="sparkles" :size="12" color="#FFF5EC" :stroke-width="2.4" />
+          </view>
+          <text class="ps-title">{{ title }}</text>
+        </view>
+        <view class="ps-close" hover-class="press-down" @click="handleClose">
+          <AppIcon name="close" :size="11" color="#FFF5EC" :stroke-width="2.8" />
         </view>
       </view>
 
-      <view class="selector-card">
-        <text class="section-title">搜索精灵</text>
-        <view class="search-row">
+      <view class="sheet-toolbar">
+        <!-- 搜索药丸 -->
+        <view class="search-pill">
+          <AppIcon name="search" :size="13" color="#A3AE9F" :stroke-width="2.4" />
           <input
             :value="keyword"
             class="search-input"
@@ -30,56 +26,108 @@
             placeholder-class="search-placeholder"
             @input="onKeywordInput"
           />
-          <view v-if="keyword" class="search-clear" @click="clearKeyword">清空</view>
+          <view v-if="keyword" class="search-clear" hover-class="press-down" @click="clearKeyword">
+            <AppIcon name="close" :size="9" color="#C64B38" :stroke-width="2.8" />
+          </view>
         </view>
 
-        <view class="filter-head">
-          <text class="section-title">属性筛选</text>
-          <view class="filter-clear" @click="clearTypes">全部</view>
-        </view>
+        <!-- 形态筛选标签 -->
+        <scroll-view scroll-x class="ui-tag-tabs" :show-scrollbar="false">
+          <view class="tag-tabs-inner">
+            <view
+              v-for="tag in uiTagOptions"
+              :key="tag.key"
+              class="ui-tag-tab"
+              :class="{ active: selectedUiTag === tag.key }"
+              hover-class="press-down"
+              @click="selectedUiTag = tag.key"
+            >
+              <text class="ui-tag-text">{{ tag.label }}</text>
+              <text class="ui-tag-count">{{ tag.count }}</text>
+            </view>
+          </view>
+        </scroll-view>
 
-        <view class="selected-row">
-          <text class="selected-label">已选属性</text>
-          <view v-if="selectedTypes.length" class="selected-types">
-            <TypeBadge
-              v-for="type in selectedTypes"
-              :key="type"
-              :label="type"
-              :color="getTypeColor(type)"
-              compact
+        <!-- 属性筛选可展开面板 -->
+        <view class="filter-head" hover-class="press-down" @click="filterExpanded = !filterExpanded">
+          <view class="filter-title-row">
+            <view class="filter-dot"></view>
+            <text class="filter-title">属性筛选</text>
+            <AppIcon
+              name="chevron-down"
+              :size="13"
+              color="#6B7A6E"
+              :stroke-width="2.6"
+              :class="['filter-chevron', { open: filterExpanded }]"
             />
           </view>
-          <text v-else class="selected-empty">未选择</text>
-        </view>
-
-        <view class="type-grid">
-          <view
-            v-for="type in typeOptions"
-            :key="type.key"
-            class="type-chip"
-            :class="{ active: selectedTypes.includes(type.key) }"
-            :style="selectedTypes.includes(type.key) ? { borderColor: type.color } : null"
-            @click="toggleType(type.key)"
-          >
-            <TypeBadge :label="type.key" :color="type.color" compact />
-            <text class="chip-text">{{ type.label }}</text>
+          <view class="filter-head-right">
+            <view v-if="selectedTypes.length" class="filter-count-badge">
+              <AppIcon name="shield" :size="9" color="#8A6A2C" :stroke-width="2.2" />
+              <text class="filter-count-text">已选 {{ selectedTypes.length }}</text>
+            </view>
+            <view v-if="selectedTypes.length" class="clear-btn" hover-class="press-down" @click.stop="clearTypes">
+              <AppIcon name="close" :size="10" color="#C64B38" :stroke-width="2.8" />
+              <text class="clear-btn-text">清空</text>
+            </view>
+            <view class="result-badge">
+              <AppIcon name="users" :size="9" color="#8A6A2C" :stroke-width="2.2" />
+              <text class="result-badge-text">{{ filteredPets.length }} 只</text>
+            </view>
           </view>
         </view>
 
-        <text class="result-tip">当前显示 {{ filteredPets.length }} 只精灵</text>
+        <view v-if="filterExpanded" class="type-panel">
+          <view class="type-grid">
+            <view
+              v-for="type in typeOptions"
+              :key="type.key"
+              class="type-chip"
+              :class="{ active: selectedTypes.includes(type.key) }"
+              :style="selectedTypes.includes(type.key) ? { borderColor: type.color, background: type.color + '14' } : null"
+              hover-class="press-down"
+              @click="toggleType(type.key)"
+            >
+              <TypeBadge :label="type.key" :color="type.color" compact />
+              <text class="chip-text">{{ type.label }}</text>
+            </view>
+          </view>
+          <view class="filter-foot">
+            <text class="filter-foot-tip">可多选，同时满足所选属性</text>
+            <view class="filter-done-btn" hover-class="press-down" @click="filterExpanded = false">
+              <AppIcon name="check" :size="10" color="#FFF5EC" :stroke-width="3" />
+              <text class="filter-done-text">完成</text>
+            </view>
+          </view>
+        </view>
       </view>
 
-      <scroll-view scroll-y class="ps-scroll" :style="{ height: scrollHeight || '58vh' }">
+      <scroll-view
+        scroll-y
+        class="ps-scroll"
+        :show-scrollbar="false"
+        :style="scrollHeight ? { height: scrollHeight, flex: 'none' } : null"
+      >
         <view class="pet-grid">
           <view
             v-for="pet in filteredPets"
             :key="pet.id || pet.key"
             class="pet-card"
             :class="{ active: isActive(pet) }"
+            hover-class="press-down"
             @click="handleSelect(pet)"
           >
-            <RemoteImage class="pet-card-image" :src="resolvePetImage(getPetImg(pet))" mode="aspectFit" />
+            <view v-if="isActive(pet)" class="pet-card-check">
+              <AppIcon name="check" :size="10" color="#FFF5EC" :stroke-width="3" />
+            </view>
+            <view v-if="getPetBadge(pet)" class="pet-card-badge" :class="{ leader: isLeaderPet(pet) }">
+              <text>{{ getPetBadge(pet) }}</text>
+            </view>
+            <view class="pet-card-art">
+              <RemoteImage class="pet-card-image" :src="resolvePetImage(getPetImg(pet))" mode="aspectFit" />
+            </view>
             <text class="pet-card-name">{{ pet.fullName || pet.name }}</text>
+            <text class="pet-card-code">{{ getPetCode(pet) }}</text>
             <view class="pet-card-types">
               <TypeBadge
                 v-for="type in (pet.types || [])"
@@ -91,7 +139,13 @@
             </view>
           </view>
         </view>
-        <view v-if="!filteredPets.length" class="empty-tip">没有找到符合条件的精灵</view>
+        <view v-if="!filteredPets.length" class="empty-state">
+          <view class="empty-icon">
+            <AppIcon name="search" :size="18" color="#A3AE9F" :stroke-width="2.2" />
+          </view>
+          <text class="empty-text">没有找到符合条件的精灵</text>
+          <text class="empty-sub">试试换个关键词或清空属性筛选</text>
+        </view>
       </scroll-view>
     </view>
   </view>
@@ -100,30 +154,49 @@
 <script>
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import RemoteImage from '@/components/RemoteImage/RemoteImage.vue'
-import { petTypes } from '@/data/pet/pet_detail.js'
+import AppIcon from '@/components/AppIcon/AppIcon.vue'
+import { petTypes, petDetail } from '@/data/pet/pet_detail.js'
+import { hasLeaderFormPetId } from '@/data/pet/leader_forms.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
 
 const TYPE_OPTIONS = (petTypes || [])
   .map((item) => ({ key: item.key, label: item.label || item.key, color: item.color || '#5b7cf5' }))
   .filter((item, index, list) => item.key && list.findIndex((o) => o.key === item.key) === index)
 
-const UI_TAG_ORDER = ['全部', '最终形态', 'I阶', 'II阶', '首领形态']
+const UI_TAG_ORDER = ['全部', '最终形态', 'I阶', 'II阶', '首领形态', '变体形态']
+
+function resolveBaseId(pet) {
+  if (pet.baseId != null) return pet.baseId
+  return pet.id != null ? pet.id : pet.seq
+}
+
+function matchSpecialTag(pet, tag) {
+  const id = resolveBaseId(pet)
+  if (tag === '首领形态') return hasLeaderFormPetId(id)
+  if (tag === '变体形态') {
+    const variants = petDetail[String(id)]
+    return Array.isArray(variants) && variants.length > 1
+  }
+  return null
+}
 
 export default {
   name: 'PetSelector',
-  components: { TypeBadge, RemoteImage },
+  components: { TypeBadge, RemoteImage, AppIcon },
   props: {
     visible: { type: Boolean, default: false },
     title: { type: String, default: '选择精灵' },
     pets: { type: Array, default: () => [] },
     activeId: { type: [Number, String], default: null },
-    scrollHeight: { type: String, default: '' }
+    scrollHeight: { type: String, default: '' },
+    defaultTag: { type: String, default: '最终形态' }
   },
   data() {
     return {
       keyword: '',
       selectedTypes: [],
-      selectedUiTag: '最终形态'
+      selectedUiTag: '最终形态',
+      filterExpanded: false
     }
   },
   computed: {
@@ -136,6 +209,11 @@ export default {
       }
       const result = [{ key: '全部', label: '全部', count: this.pets.length }]
       for (const key of UI_TAG_ORDER.slice(1)) {
+        if (key === '首领形态' || key === '变体形态') {
+          const count = this.pets.filter((pet) => matchSpecialTag(pet, key)).length
+          if (count) result.push({ key, label: key, count })
+          continue
+        }
         if (tagMap[key]) result.push({ key, label: key, count: tagMap[key] })
       }
       // 其他未归类的标签
@@ -154,7 +232,14 @@ export default {
           String(pet.searchText || '').includes(kw)
         const matchType = !types.length ||
           types.every((t) => (pet.types || []).includes(t))
-        const matchTag = tag === '全部' || (pet.uiTag || '其他') === tag
+        let matchTag = true
+        if (tag === '首领形态') {
+          matchTag = matchSpecialTag(pet, '首领形态')
+        } else if (tag === '变体形态') {
+          matchTag = matchSpecialTag(pet, '变体形态')
+        } else if (tag !== '全部') {
+          matchTag = (pet.uiTag || '其他') === tag
+        }
         return matchKw && matchType && matchTag
       })
     }
@@ -164,7 +249,8 @@ export default {
       if (val) {
         this.keyword = ''
         this.selectedTypes = []
-        this.selectedUiTag = '最终形态'
+        this.selectedUiTag = this.defaultTag
+        this.filterExpanded = false
       }
     }
   },
@@ -174,6 +260,18 @@ export default {
     },
     resolvePetImage(src) { return resolveAssetPath(src) },
     getPetImg(pet) { return pet.img || (pet.detail && pet.detail.img) || '' },
+    isLeaderPet(pet) { return hasLeaderFormPetId(resolveBaseId(pet)) },
+    getPetBadge(pet) {
+      if (this.isLeaderPet(pet)) return '首领化'
+      const variants = petDetail[String(resolveBaseId(pet))]
+      if (Array.isArray(variants) && variants.length > 1) return '多形态'
+      return ''
+    },
+    getPetCode(pet) {
+      const id = resolveBaseId(pet)
+      if (id == null || id === '') return '#—'
+      return '#' + String(id).padStart(3, '0')
+    },
     isActive(pet) {
       const pid = pet.id || pet.key
       return pid != null && String(pid) === String(this.activeId)
@@ -200,134 +298,178 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 999;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(30, 25, 14, 0.55);
   display: flex;
   align-items: flex-end;
 }
 
 .pet-selector-sheet {
   width: 100%;
-  max-height: 90vh;
-  background: #FFFFFF;
-  border-radius: 16px 16px 0 0;
+  height: 86vh;
+  background: #FAF6EC;
+  background-image:
+    radial-gradient(circle at 10% 4%, rgba(47, 158, 95, 0.06) 0, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(201, 161, 78, 0.07) 0, transparent 38%);
+  border-radius: 24px 24px 0 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
+.sheet-grabber {
+  flex-shrink: 0;
+  width: 40px;
+  height: 4.5px;
+  border-radius: 999px;
+  background: rgba(44, 58, 47, 0.18);
+  margin: 8px auto 0;
+}
+
+/* ===== 翠绿头栏 ===== */
 .ps-head {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 16px 12px;
-  flex-shrink: 0;
+  gap: 10px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, #1E7A46 0%, #2F9E5F 100%);
+  border-bottom: 1.5px solid rgba(22, 98, 53, 0.5);
+  box-shadow: 0 3px 0 rgba(22, 98, 53, 0.18);
+}
+
+.ps-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ps-title-seal {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1.5px solid rgba(255, 245, 236, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ps-title {
-  font-size: 17px;
-  font-weight: 600;
-  color: #1E293B;
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #FFF5EC;
+  letter-spacing: 0.02em;
 }
 
 .ps-close {
-  font-size: 14px;
-  color: #64748B;
-  padding: 4px 8px;
-}
-
-/* 形态筛选标签 - 与 catalog 页一致 */
-.ui-tag-tabs {
-  display: flex;
-  gap: 8px;
-  padding: 10px 16px;
-  overflow-x: auto;
-  white-space: nowrap;
-  flex-shrink: 0;
-  -webkit-overflow-scrolling: touch;
-}
-
-.ui-tag-tab {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid #E2E8F0;
-  background: #F8FAFC;
-}
-
-.ui-tag-tab.active {
-  background: rgba(34, 197, 94, 0.08);
-  border-color: #22C55E;
-}
-
-.ui-tag-text {
-  font-size: 13px;
-  color: #64748B;
-  white-space: nowrap;
-}
-
-.ui-tag-tab.active .ui-tag-text {
-  color: #22C55E;
-  font-weight: 600;
-}
-
-.ui-tag-count {
-  font-size: 11px;
-  color: #94A3B8;
-  background: #E2E8F0;
-  padding: 1px 6px;
+  width: 30px;
+  height: 30px;
   border-radius: 10px;
-  min-width: 18px;
-  text-align: center;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1.5px solid rgba(255, 245, 236, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.ui-tag-tab.active .ui-tag-count {
-  background: rgba(34, 197, 94, 0.15);
-  color: #22C55E;
-}
-
-.ps-scroll {
-  padding: 0 16px 16px;
-}
-
-.selector-card {
-  padding: 10px;
-  border-radius: 8px;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  margin: 0 16px;
+/* ===== 工具区 ===== */
+.sheet-toolbar {
   flex-shrink: 0;
+  padding: 10px 14px 0;
 }
 
-.search-row {
-  margin-top: 8px;
+.search-pill {
   display: flex;
   align-items: center;
   gap: 8px;
+  height: 42px;
+  padding: 0 14px;
+  background: #FFFFFF;
+  border: 1.5px solid #E3DCC8;
+  border-radius: 999px;
+  box-shadow: 0 2px 0 rgba(44, 58, 47, 0.06);
 }
 
 .search-input {
   flex: 1;
+  min-width: 0;
   height: 40px;
-  border-radius: 6px;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  font-size: 13.5px;
+  color: #2C3A2F;
+}
+
+.search-placeholder {
+  color: #A3AE9F;
+  font-size: 12.5px;
+}
+
+.search-clear {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #FBE9E4;
+  border: 1px solid rgba(198, 75, 56, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 形态筛选标签 - 与 catalog 页一致 */
+.ui-tag-tabs {
+  margin-top: 10px;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tag-tabs-inner {
+  display: inline-flex;
+  gap: 7px;
+  padding-right: 4px;
+}
+
+.ui-tag-tab {
+  flex-shrink: 0;
+  height: 30px;
   padding: 0 12px;
-  font-size: 14px;
-  color: #1E293B;
+  border-radius: 999px;
+  background: #F2EBDA;
+  border: 1.5px solid #E3DCC8;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: transform 0.12s ease;
 }
 
-.search-clear,
-.filter-clear {
-  font-size: 12px;
-  font-weight: 600;
-  color: #22C55E;
+.ui-tag-tab.active {
+  background: #E4F2E8;
+  border-color: #2F9E5F;
 }
 
-.filter-head,
-.selected-row {
+.ui-tag-text {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #6B7A6E;
+  white-space: nowrap;
+}
+
+.ui-tag-tab.active .ui-tag-text {
+  color: #1E7A46;
+}
+
+.ui-tag-count {
+  font-size: 10.5px;
+  color: #A3AE9F;
+  font-weight: 700;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
+}
+
+.ui-tag-tab.active .ui-tag-count {
+  color: rgba(30, 122, 70, 0.65);
+}
+
+/* 属性筛选可展开面板 - 与 catalog 页一致 */
+.filter-head {
   margin-top: 12px;
   display: flex;
   align-items: center;
@@ -335,75 +477,296 @@ export default {
   gap: 8px;
 }
 
-.filter-actions,
-.selected-types,
-.type-grid,
-.pet-card-types {
+.filter-title-row {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 6px;
 }
 
-.type-chip {
-  min-height: 32px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  border: 1px solid #E2E8F0;
-  background: #F1F5F9;
+.filter-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #C9A14E;
+}
+
+.filter-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #2C3A2F;
+}
+
+.filter-chevron {
+  transition: transform 0.2s ease;
+}
+
+.filter-chevron.open {
+  transform: rotate(180deg);
+}
+
+.filter-head-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-count-badge {
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #FBF3DD;
+  border: 1px solid #D9B96A;
   display: inline-flex;
   align-items: center;
   gap: 4px;
 }
 
+.filter-count-text {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #8A6A2C;
+}
+
+.result-badge {
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #E9F0FA;
+  border: 1px solid #7FA3D8;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.result-badge-text {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #2C6FD1;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
+}
+
+.clear-btn {
+  height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: #FBE9E4;
+  border: 1px solid #E0604E;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: transform 0.12s ease;
+}
+
+.clear-btn-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: #C64B38;
+}
+
+.type-panel {
+  margin-top: 9px;
+  padding: 10px;
+  border-radius: 14px;
+  background: #FFFDF7;
+  border: 1.5px solid #E3DCC8;
+  box-shadow: 0 2.5px 0 rgba(44, 58, 47, 0.10);
+}
+
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+@media screen and (min-width: 560px) {
+  .type-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.type-chip {
+  min-height: 34px;
+  padding: 4px 6px;
+  border-radius: 10px;
+  border: 1.5px solid #E3DCC8;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  transition: transform 0.12s ease;
+}
+
 .type-chip.active {
-  background: rgba(34, 197, 94, 0.08);
-  border-color: #22C55E;
-  color: #22C55E;
+  border-width: 2px;
 }
 
 .chip-text {
-  font-size: 12px;
-  color: #1E293B;
+  font-size: 11px;
+  font-weight: 700;
+  color: #2C3A2F;
 }
 
-.selected-label,
-.selected-empty,
-.result-tip {
-  font-size: 12px;
-  color: #64748B;
+.filter-foot {
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px dashed #E3DCC8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.result-tip {
-  display: block;
-  margin-top: 8px;
+.filter-foot-tip {
+  font-size: 10px;
+  color: #A3AE9F;
+  font-weight: 700;
+}
+
+.filter-done-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 13px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1E7A46 0%, #2F9E5F 100%);
+  border: 1.5px solid #166235;
+  box-shadow: 0 2px 0 rgba(22, 98, 53, 0.35);
+  transition: transform 0.12s ease;
+}
+
+.filter-done-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFF5EC;
+}
+
+/* ===== 精灵滚动区 ===== */
+.ps-scroll {
+  flex: 1;
+  height: 0;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.pet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  padding: 2px 14px 16px;
+}
+
+@media screen and (min-width: 560px) {
+  .pet-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .pet-card {
-  padding: 8px;
-  border-radius: 6px;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
+  position: relative;
+  padding: 7px 6px 8px;
+  border-radius: 14px;
+  background: #FFFDF7;
+  border: 1.5px solid #E3DCC8;
+  box-shadow: 0 2.5px 0 rgba(44, 58, 47, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  transition: transform 0.12s ease;
 }
 
 .pet-card.active {
-  border-color: #22C55E;
-  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.15);
+  border-color: #2F9E5F;
+  border-width: 2px;
+  background: #F2FAF4;
+  box-shadow: 0 2.5px 0 rgba(30, 122, 70, 0.25);
+}
+
+.pet-card-check {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1E7A46 0%, #2F9E5F 100%);
+  border: 2px solid #FFFDF7;
+  box-shadow: 0 2px 0 rgba(22, 98, 53, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.pet-card-badge {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 2;
+  height: 17px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.92);
+  border: 1px solid #D8D0BA;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pet-card-badge text {
+  font-size: 9px;
+  font-weight: 700;
+  color: #6B7A6E;
+  white-space: nowrap;
+}
+
+.pet-card-badge.leader {
+  background: #FBF3DD;
+  border-color: #D9B96A;
+}
+
+.pet-card-badge.leader text {
+  color: #A97F35;
+}
+
+.pet-card-art {
+  width: 100%;
+  height: 62px;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 50% 62%, rgba(201, 161, 78, 0.10) 0, transparent 62%),
+    #FFFFFF;
+  border: 1px solid rgba(227, 220, 200, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .pet-card-image {
   width: 100%;
-  height: 72px;
-  border-radius: 6px;
-  background: #FFFFFF;
+  height: 100%;
 }
 
 .pet-card-name {
-  display: block;
-  margin-top: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #1E293B;
+  margin-top: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #2C3A2F;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pet-card-code {
+  margin-top: 1px;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #A3AE9F;
+  font-family: Monaco, Consolas, 'Courier New', monospace;
 }
 
 .pet-card-types {
@@ -414,17 +777,45 @@ export default {
   gap: 3px;
 }
 
-.pet-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  padding: 2px;
+/* ===== 空态 ===== */
+.empty-state {
+  margin: 22px 14px 30px;
+  padding: 26px 16px;
+  border-radius: 18px;
+  background: #FFFDF7;
+  border: 1.5px dashed #D8CFB4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
-.empty-tip {
-  text-align: center;
-  padding: 24px 0;
+.empty-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: #F2EBDA;
+  border: 1.5px solid #E3DCC8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+}
+
+.empty-text {
   font-size: 13px;
-  color: #94A3B8;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.empty-sub {
+  font-size: 11px;
+  color: #A3AE9F;
+  font-weight: 600;
+}
+
+.press-down {
+  transform: scale(0.96);
+  opacity: 0.88;
 }
 </style>

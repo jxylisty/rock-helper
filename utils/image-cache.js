@@ -21,6 +21,61 @@ export function writeImageCacheMap(map) {
   uni.setStorageSync(IMAGE_CACHE_KEY, map || {})
 }
 
+// Concurrent download limiter: too many simultaneous uni.downloadFile calls fail on Android
+const MAX_CONCURRENT_DOWNLOADS = 4
+let activeDownloadCount = 0
+const downloadWaitQueue = []
+const inflightDownloads = new Map()
+
+function acquireDownloadSlot() {
+  if (activeDownloadCount < MAX_CONCURRENT_DOWNLOADS) {
+    activeDownloadCount += 1
+    return Promise.resolve()
+  }
+  return new Promise((resolve) => downloadWaitQueue.push(resolve))
+}
+
+function releaseDownloadSlot() {
+  const next = downloadWaitQueue.shift()
+  if (next) {
+    next()
+    return
+  }
+  activeDownloadCount -= 1
+}
+
+function downloadFileOnce(url) {
+  const existing = inflightDownloads.get(url)
+  if (existing) return existing
+
+  const task = (async () => {
+    try {
+      await acquireDownloadSlot()
+      const downloadResult = await new Promise((resolve, reject) => {
+        uni.downloadFile({ url, success: resolve, fail: reject })
+      })
+      if (!downloadResult || downloadResult.statusCode !== 200 || !downloadResult.tempFilePath) {
+        return ''
+      }
+      const saveResult = await new Promise((resolve, reject) => {
+        uni.saveFile({ tempFilePath: downloadResult.tempFilePath, success: resolve, fail: reject })
+      })
+      if (!saveResult || !saveResult.savedFilePath) return ''
+      return saveResult.savedFilePath
+    } catch (error) {
+      // Download failure must not throw: caller falls back to direct remote URL
+      console.warn('[image-cache] download failed:', url, error && error.errMsg)
+      return ''
+    } finally {
+      releaseDownloadSlot()
+      inflightDownloads.delete(url)
+    }
+  })()
+
+  inflightDownloads.set(url, task)
+  return task
+}
+
 export async function ensureCachedRemoteImage(cacheKey, remoteUrl) {
   const url = String(remoteUrl || '').trim()
   if (!url) return ''
@@ -33,33 +88,12 @@ export async function ensureCachedRemoteImage(cacheKey, remoteUrl) {
     return cachedPath
   }
 
-  const downloadResult = await new Promise((resolve, reject) => {
-    uni.downloadFile({
-      url,
-      success: resolve,
-      fail: reject
-    })
-  })
+  const savedFilePath = await downloadFileOnce(url)
+  if (!savedFilePath) return ''
 
-  if (!downloadResult || downloadResult.statusCode !== 200 || !downloadResult.tempFilePath) {
-    return ''
-  }
-
-  const saveResult = await new Promise((resolve, reject) => {
-    uni.saveFile({
-      tempFilePath: downloadResult.tempFilePath,
-      success: resolve,
-      fail: reject
-    })
-  })
-
-  if (!saveResult || !saveResult.savedFilePath) {
-    return ''
-  }
-
-  cacheMap[key] = saveResult.savedFilePath
+  cacheMap[key] = savedFilePath
   writeImageCacheMap(cacheMap)
-  return saveResult.savedFilePath
+  return savedFilePath
 }
 
 export async function clearCachedRemoteImage(cacheKey) {

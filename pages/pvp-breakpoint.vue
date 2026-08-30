@@ -49,16 +49,7 @@
               </view>
               <view class="side-params-link" hover-class="press-down" @click.stop="openParamSetting('attack')">
                 <AppIcon name="edit" :size="9" color="#1E7A46" />
-                <text class="side-params-text">参数设置</text>
-              </view>
-            </view>
-            <view class="stat-grid-compact">
-              <view v-for="item in attackStatBlocks" :key="'attack-' + item.key" class="stat-item-compact" :class="item.theme">
-                <view class="stat-meta-left">
-                  <text class="stat-label-mini">{{ item.label }}</text>
-                  <view v-if="item.mark" class="stat-mark-mini" :class="item.mark.class"></view>
-                </view>
-                <text class="stat-value-mini mono">{{ item.value }}</text>
+                <text class="side-params-text">配置</text>
               </view>
             </view>
           </view>
@@ -89,16 +80,7 @@
               </view>
               <view class="side-params-link" hover-class="press-down" @click.stop="openParamSetting('defense')">
                 <AppIcon name="edit" :size="9" color="#2C6FD1" />
-                <text class="side-params-text">参数设置</text>
-              </view>
-            </view>
-            <view class="stat-grid-compact">
-              <view v-for="item in defenseStatBlocks" :key="'defense-' + item.key" class="stat-item-compact" :class="item.theme">
-                <view class="stat-meta-left">
-                  <text class="stat-label-mini">{{ item.label }}</text>
-                  <view v-if="item.mark" class="stat-mark-mini" :class="item.mark.class"></view>
-                </view>
-                <text class="stat-value-mini mono">{{ item.value }}</text>
+                <text class="side-params-text">配置</text>
               </view>
             </view>
           </view>
@@ -262,7 +244,7 @@
             <view class="modal-head-icon">
               <AppIcon name="edit" :size="12" color="#FFF5EC" />
             </view>
-            <text class="modal-title">{{ paramSideLabel }}参数设置</text>
+            <text class="modal-title">{{ paramSideLabel }}配置</text>
           </view>
           <view class="modal-close" hover-class="press-down" @click="closeParamSetting">
             <AppIcon name="close" :size="9" color="#C64B38" :stroke-width="3" />
@@ -278,6 +260,18 @@
             <text class="selected-name">{{ paramPet.fullName || paramPet.name || '未选择精灵' }}</text>
             <text class="selected-type">{{ formatTypes(getPetTypes(paramPet)) }}</text>
             <text class="selected-note">沿用阵容编辑页的个体 / 性格配置，仅保留本页所需部分。</text>
+          </view>
+        </view>
+        <view class="config-card">
+          <text class="config-title">六维面板</text>
+          <view class="stat-grid-config">
+            <view v-for="item in paramStatBlocks" :key="'cfg-' + item.key" class="stat-item-compact stat-item-config" :class="item.theme">
+              <view class="stat-meta-left">
+                <text class="stat-label-mini">{{ item.label }}</text>
+                <view v-if="item.mark" class="stat-mark-mini" :class="item.mark.class"></view>
+              </view>
+              <text class="stat-value-mini mono">{{ item.value }}</text>
+            </view>
           </view>
         </view>
 
@@ -362,14 +356,15 @@
         </view>
         <scroll-view scroll-y class="modal-scroll skill-scroll" :style="{ height: '54vh' }">
           <view class="skill-grid">
-            <view v-for="skill in filteredSkillOptions" :key="skill.name + '-' + skill.skill_type" class="skill-option-card" :class="{ active: selectedSkill.name === skill.name }" hover-class="press-down" @click="selectSkill(skill)">
-              <view class="skill-option-icon-wrap" hover-class="press-down" @click.stop="openSkillDetail(skill)">
-                <RemoteImage class="skill-option-icon" :src="skill.icon || getSkillIcon(skill.name)" mode="aspectFit" />
-              </view>
-              <view class="skill-option-info">
-                <text class="skill-option-name">{{ skill.name }}</text>
-                <text class="skill-option-power">威力 {{ skill.power || 0 }}</text>
-              </view>
+            <view v-for="skill in filteredSkillOptions" :key="skill.name + '-' + skill.skill_type" class="skill-row-slot">
+              <SkillRow
+                :skill="skill"
+                compact
+                show-detail
+                :active="selectedSkill.name === skill.name"
+                @click="selectSkill(skill)"
+                @detail="openSkillDetail(skill)"
+              />
             </view>
           </view>
           <view v-if="!filteredSkillOptions.length" class="empty-tip">没有找到符合条件的技能</view>
@@ -724,6 +719,7 @@ export default {
     defensePanel() { return this.calculatePanel(this.defenseSide, this.defensePet) },
     attackStatBlocks() { return this.buildStatBlocks(this.attackPanel, this.attackSide) },
     defenseStatBlocks() { return this.buildStatBlocks(this.defensePanel, this.defenseSide) },
+    paramStatBlocks() { return this.paramSide === 'attack' ? this.attackStatBlocks : this.defenseStatBlocks },
     petOptions() { return this.petList },
     attackSkillOptions() {
       const pet = this.attackPet
@@ -1213,23 +1209,23 @@ export default {
 /* ===== 攻守对战卡 ===== */
 .battle {
   margin: 12px 14px 0;
-  padding: 13px;
+  padding: 14px;
 }
 
 .battle-grid {
   display: flex;
   align-items: stretch;
-  gap: 8px;
+  gap: 10px;
 }
 
 .side-card {
   flex: 1;
   min-width: 0;
-  padding: 11px;
-  border-radius: 14px;
+  padding: 13px;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   transition: transform 0.12s ease;
 }
 
@@ -1255,9 +1251,9 @@ export default {
 .side-seal {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  height: 25px;
-  padding: 0 10px 0 8px;
+  gap: 5px;
+  height: 28px;
+  padding: 0 11px 0 9px;
   border-radius: 999px;
   border: 1.5px solid;
 }
@@ -1275,7 +1271,7 @@ export default {
 }
 
 .side-seal-text {
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.02em;
 }
@@ -1291,9 +1287,9 @@ export default {
 .side-action {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  height: 25px;
-  padding: 0 9px;
+  gap: 5px;
+  height: 29px;
+  padding: 0 11px 0 9px;
   border-radius: 999px;
   background: #FFFDF7;
   border: 1px solid;
@@ -1309,7 +1305,7 @@ export default {
 }
 
 .side-action-text {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
 }
 
@@ -1322,7 +1318,7 @@ export default {
 }
 
 .pet-name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   color: #2C3A2F;
   line-height: 1.3;
@@ -1334,20 +1330,20 @@ export default {
 .type-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
 }
 
 .pet-art-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
 }
 
 .pet-art {
   flex-shrink: 0;
-  width: 62px;
-  height: 62px;
-  border-radius: 14px;
+  width: 70px;
+  height: 70px;
+  border-radius: 15px;
   background: #FFFDF7;
   border: 1.5px solid;
   display: flex;
@@ -1366,16 +1362,16 @@ export default {
 }
 
 .pet-image {
-  width: 54px;
-  height: 54px;
+  width: 62px;
+  height: 62px;
 }
 
 .side-params-link {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  height: 26px;
-  padding: 0 10px;
+  gap: 5px;
+  height: 30px;
+  padding: 0 12px;
   border-radius: 999px;
   background: #FFFDF7;
   border: 1.5px dashed;
@@ -1391,7 +1387,7 @@ export default {
 }
 
 .side-params-text {
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -1406,19 +1402,19 @@ export default {
 .stat-grid-compact {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 5px;
+  gap: 7px;
 }
 
 .stat-item-compact {
-  min-height: 42px;
-  padding: 5px 7px;
-  border-radius: 10px;
+  min-height: 48px;
+  padding: 7px 9px;
+  border-radius: 12px;
   background: #FFFDF7;
   border: 1px solid;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
   box-sizing: border-box;
 }
 
@@ -1473,18 +1469,18 @@ export default {
 .stat-meta-left {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .stat-label-mini {
-  font-size: 9px;
+  font-size: 10.5px;
   font-weight: 700;
   color: #6B7A6E;
 }
 
 .stat-mark-mini {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 999px;
 }
 
@@ -1499,7 +1495,7 @@ export default {
 }
 
 .stat-value-mini {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   line-height: 1;
 }
@@ -1507,8 +1503,8 @@ export default {
 .vs-badge {
   flex-shrink: 0;
   align-self: center;
-  width: 42px;
-  padding: 9px 0;
+  width: 46px;
+  padding: 11px 0;
   border-radius: 999px;
   background: linear-gradient(135deg, #C64B38 0%, #E0604E 100%);
   border: 1.5px solid #9C3A2B;
@@ -1521,7 +1517,7 @@ export default {
 }
 
 .vs-text {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   font-style: italic;
   color: #FFF5EC;
@@ -1533,28 +1529,28 @@ export default {
 .buff-section,
 .result-section {
   margin: 12px 14px 0;
-  padding: 13px;
+  padding: 14px;
 }
 
 .section-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 10px;
 }
 
 .section-head-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   min-width: 0;
 }
 
 .section-icon {
   flex-shrink: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1575,7 +1571,7 @@ export default {
 }
 
 .section-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   color: #2C3A2F;
 }
@@ -1583,9 +1579,9 @@ export default {
 .section-action {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  height: 26px;
-  padding: 0 10px;
+  gap: 5px;
+  height: 30px;
+  padding: 0 12px;
   border-radius: 999px;
   background: #FBF3DD;
   border: 1.5px solid #D9B96A;
@@ -1594,7 +1590,7 @@ export default {
 }
 
 .section-action-text {
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   color: #8A6A2C;
 }
@@ -1602,19 +1598,19 @@ export default {
 /* ===== 技能卡 ===== */
 .skill-card {
   margin-top: 11px;
-  padding: 11px;
-  border-radius: 14px;
+  padding: 13px;
+  border-radius: 16px;
   background: #FBF3DD;
   border: 1.5px solid #E6D5A8;
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .skill-icon-frame {
   flex-shrink: 0;
-  width: 52px;
-  height: 52px;
-  border-radius: 13px;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
   background: #FFFDF7;
   border: 1.5px solid #D9B96A;
   box-shadow: 0 2px 0 rgba(138, 106, 44, 0.2);
@@ -1624,8 +1620,8 @@ export default {
 }
 
 .skill-icon {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
 }
 
 .skill-main {
@@ -1636,25 +1632,25 @@ export default {
 .skill-main-head {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .skill-name {
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 800;
   color: #2C3A2F;
 }
 
 .skill-chip-row {
-  margin-top: 7px;
+  margin-top: 9px;
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 7px;
 }
 
 .skill-chip {
-  height: 22px;
-  padding: 0 9px;
+  height: 24px;
+  padding: 0 10px;
   border-radius: 999px;
   background: #FFFDF7;
   border: 1px solid #E3DCC8;
@@ -1663,7 +1659,7 @@ export default {
 }
 
 .skill-chip-text {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: #6B7A6E;
 }
@@ -1679,15 +1675,15 @@ export default {
 }
 
 .power-input-row {
-  margin-top: 9px;
+  margin-top: 11px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .power-label {
   flex-shrink: 0;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #6B7A6E;
 }
@@ -1695,12 +1691,12 @@ export default {
 .power-input {
   flex: 1;
   min-width: 0;
-  height: 32px;
-  padding: 0 10px;
-  border-radius: 10px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 11px;
   background: #FFFDF7;
   border: 1.5px solid #D9B96A;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   color: #2C3A2F;
   font-family: Monaco, Consolas, 'Courier New', monospace;
@@ -1710,10 +1706,10 @@ export default {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  height: 32px;
-  padding: 0 11px;
-  border-radius: 10px;
+  gap: 5px;
+  height: 38px;
+  padding: 0 13px;
+  border-radius: 11px;
   background: linear-gradient(135deg, #A97F35 0%, #C9A14E 100%);
   border: 1.5px solid #8A6A2C;
   box-shadow: 0 2px 0 rgba(138, 106, 44, 0.4);
@@ -1721,33 +1717,33 @@ export default {
 }
 
 .auto-calc-text {
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 700;
   color: #FFF9EC;
 }
 
 .power-note-box {
-  margin-top: 9px;
-  padding: 8px 10px;
-  border-radius: 10px;
+  margin-top: 11px;
+  padding: 10px 12px;
+  border-radius: 11px;
   background: #FFFDF7;
   border: 1px dashed #D9B96A;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 
 .note-line {
   display: flex;
   align-items: flex-start;
-  gap: 5px;
+  gap: 6px;
 }
 
 .note-text {
   flex: 1;
-  font-size: 10px;
+  font-size: 11px;
   color: #6B7A6E;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .note-text.warn {
@@ -1755,37 +1751,37 @@ export default {
 }
 
 .dynamic-hint {
-  margin-top: 8px;
-  padding: 7px 9px;
-  border-radius: 10px;
+  margin-top: 9px;
+  padding: 9px 11px;
+  border-radius: 11px;
   background: #FBE9E4;
   border: 1px solid #E8A99E;
   display: flex;
   align-items: flex-start;
-  gap: 5px;
+  gap: 6px;
 }
 
 .dynamic-hint-text {
   flex: 1;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: #C64B38;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .skill-detail-row {
-  margin-top: 9px;
+  margin-top: 11px;
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
 }
 
 .skill-desc {
   flex: 1;
   min-width: 0;
-  font-size: 10.5px;
+  font-size: 11.5px;
   color: #6B7A6E;
-  line-height: 1.55;
+  line-height: 1.6;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -1796,9 +1792,9 @@ export default {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  height: 24px;
-  padding: 0 9px;
+  gap: 4px;
+  height: 26px;
+  padding: 0 10px;
   border-radius: 999px;
   background: #FFFDF7;
   border: 1px solid #D9B96A;
@@ -1806,7 +1802,7 @@ export default {
 }
 
 .detail-btn-text {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: #A97F35;
 }
@@ -1816,11 +1812,11 @@ export default {
   margin-top: 11px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 10px;
 }
 
 .buff-item {
-  padding: 10px 11px;
+  padding: 12px 13px;
   border-radius: 13px;
   background: #FFFDF7;
   border: 1.5px solid;
@@ -1839,31 +1835,31 @@ export default {
 .buff-head {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 7px;
 }
 
 .buff-label {
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 800;
   color: #2C3A2F;
 }
 
 .buff-input-wrap {
-  margin-top: 8px;
+  margin-top: 9px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .buff-input {
   flex: 1;
   min-width: 0;
-  height: 34px;
-  padding: 0 10px;
+  height: 40px;
+  padding: 0 12px;
   border-radius: 10px;
   background: #F7F1E3;
   border: 1.5px solid #E3DCC8;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   color: #2C3A2F;
   font-family: Monaco, Consolas, 'Courier New', monospace;
@@ -1880,29 +1876,29 @@ export default {
 }
 
 .buff-unit {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   color: #6B7A6E;
 }
 
 .buff-note {
   display: block;
-  margin-top: 6px;
-  font-size: 9.5px;
+  margin-top: 7px;
+  font-size: 10.5px;
   color: #A3AE9F;
 }
 
 /* ===== 计算结果 ===== */
 .result-mode {
   flex-shrink: 0;
-  height: 22px;
-  padding: 0 9px;
+  height: 24px;
+  padding: 0 10px;
   border-radius: 999px;
   background: #FBE9E4;
   border: 1px solid #E8A99E;
   display: inline-flex;
   align-items: center;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: #C64B38;
 }
@@ -1911,28 +1907,28 @@ export default {
   margin-top: 11px;
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .result-value {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
   color: #C64B38;
 }
 
 .result-subtitle {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: #2C6FD1;
 }
 
 .result-note {
   display: block;
-  margin-top: 5px;
-  font-size: 10.5px;
+  margin-top: 7px;
+  font-size: 11.5px;
   color: #6B7A6E;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* ===== 模态框 ===== */
@@ -2323,73 +2319,12 @@ export default {
   padding: 10px 14px 0;
 }
 
+/* 技能选择列表：SkillRow 通用组件单列 */
 .skill-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   padding-bottom: 12px;
-}
-
-@media screen and (min-width: 640px) {
-  .skill-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.skill-option-card {
-  padding: 9px;
-  border-radius: 12px;
-  background: #FFFDF7;
-  border: 1.5px solid #E3DCC8;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: transform 0.12s ease;
-}
-
-.skill-option-card.active {
-  border-color: #A97F35;
-  background: #FBF3DD;
-  box-shadow: 0 2px 0 rgba(138, 106, 44, 0.25);
-}
-
-.skill-option-icon-wrap {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 11px;
-  background: #F7F1E3;
-  border: 1px solid #E3DCC8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.skill-option-icon {
-  width: 32px;
-  height: 32px;
-}
-
-.skill-option-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.skill-option-name {
-  display: block;
-  font-size: 11.5px;
-  font-weight: 800;
-  color: #2C3A2F;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.skill-option-power {
-  display: block;
-  margin-top: 3px;
-  font-size: 9.5px;
-  color: #A3AE9F;
 }
 
 .empty-tip {
@@ -2550,5 +2485,27 @@ export default {
 
 .bottom-space {
   height: calc(28px + env(safe-area-inset-bottom));
+}
+
+.stat-grid-config {
+  margin-top: 9px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.stat-item-compact.stat-item-config {
+  min-height: 52px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  gap: 5px;
+}
+
+.stat-item-config .stat-label-mini {
+  font-size: 11px;
+}
+
+.stat-item-config .stat-value-mini {
+  font-size: 16px;
 }
 </style>

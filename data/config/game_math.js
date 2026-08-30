@@ -41,7 +41,7 @@ export function getTypeMultiplierLabel(value) {
   if (value === 3) return '3x';
   if (value === 2) return '2x';
   if (value === 0.5) return '0.5x';
-  if (value === 1 / 3) return '0.33x';
+  if (value === 1 / 4) return '0.25x';
   return `${value}x`;
 }
 
@@ -49,7 +49,7 @@ export function getRelationText(value) {
   if (value === 3) return '3倍克制';
   if (value === 2) return '2倍克制';
   if (value === 0.5) return '2倍抵抗';
-  if (value === 1 / 3) return '3倍抵抗';
+  if (value === 1 / 4) return '4倍抵抗';
   return '等倍';
 }
 
@@ -611,7 +611,9 @@ export function getFinalForm(pet, allPets = [], allPetDetails = {}) {
   });
 
   if (!chain.length) return pet;
-  return chain.sort((a, b) => a.id - b.id).at(-1) || pet;
+  // 兼容老 WebView（不支持 ES2022 的 Array.prototype.at）
+  const sorted = chain.sort((a, b) => a.id - b.id);
+  return sorted[sorted.length - 1] || pet;
 }
 
 export function getHighestFormPets(allPets = [], allPetDetails = {}) {

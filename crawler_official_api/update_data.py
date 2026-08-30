@@ -17,6 +17,8 @@
   python crawler_official_api/update_data.py build    # 从缓存生成前端数据与差异报告
   python crawler_official_api/update_data.py apply    # 将生成物覆盖到 data/（先看 diff_report.md）
   python crawler_official_api/update_data.py all      # fetch + build
+  python crawler_official_api/update_data.py fetch-egg        # 抓取孵蛋配置（/pets/{pid}/egg）
+  python crawler_official_api/update_data.py egg              # fetch-egg + 生成并应用 eggData.js
   python crawler_official_api/update_data.py fetch-skill-icons  # 下载缺失技能图标转 webp
   python crawler_official_api/update_data.py fetch-pet-images   # 下载缺失精灵立绘转 webp
   python crawler_official_api/update_data.py fetch-pet-images 150 152  # 指定序号强制覆盖立绘
@@ -45,9 +47,10 @@ CACHE_DIR = SCRIPT_DIR / "output" / "cache"
 GENERATED_DIR = SCRIPT_DIR / "output" / "generated"
 DATA_PET_DIR = PROJECT_ROOT / "data" / "pet"
 DATA_SKILL_DIR = PROJECT_ROOT / "data" / "skill"
-STATIC_PETS_DIR = PROJECT_ROOT / "static" / "static-web" / "pets"
-STATIC_TRAITS_DIR = PROJECT_ROOT / "static" / "static-web" / "traits"
-STATIC_SKILLS_DIR = PROJECT_ROOT / "static" / "static-web" / "skills"
+DATA_CONFIG_DIR = PROJECT_ROOT / "data" / "config"
+STATIC_PETS_DIR = PROJECT_ROOT / "cdn-assets" / "static-web" / "pets"
+STATIC_TRAITS_DIR = PROJECT_ROOT / "cdn-assets" / "static-web" / "traits"
+STATIC_SKILLS_DIR = PROJECT_ROOT / "cdn-assets" / "static-web" / "skills"
 
 MAX_WORKERS = 4
 REQUEST_INTERVAL = 0.12  # 每个工作线程请求间隔（秒）
@@ -56,6 +59,14 @@ REQUEST_INTERVAL = 0.12  # 每个工作线程请求间隔（秒）
 PLAIN_FORMS = {"本来的样子"}
 # 不进入图鉴变体的特殊形态
 EXCLUDED_FORMS = {"领地试炼用"}
+
+# eggData.js 沿用的属性英文键（中文 → 英文）
+EGG_TYPE_EN = {
+    "火": "fire", "水": "water", "草": "grass", "电": "electric", "冰": "ice",
+    "虫": "insect", "翼": "wing", "地": "ground", "萌": "cute", "武": "martial",
+    "毒": "poison", "龙": "dragon", "幽": "ghost", "恶": "evil", "光": "light",
+    "普通": "normal", "机械": "mechanic", "幻": "illusion",
+}
 
 # 现行 pet_detail.js 中的静态导出（与抓取数据无关，原样保留；幻为官方新增属性）
 PET_TYPES = [
@@ -263,6 +274,228 @@ def fetch_all():
     return pets, handbooks
 
 
+# ==================== fetch-egg ====================
+def fetch_egg():
+    """抓取每个图鉴初始形态的孵蛋配置 → output/cache/egg/{hb}.json
+
+    官方端点 /pets/{pid}/egg 仅普通初始形态有配置（首领形态等 404），
+    404 也写入缓存标记，避免重复请求。
+    """
+    list_cache = CACHE_DIR / "list.json"
+    if not list_cache.exists():
+        print("❌ 无精灵列表缓存，请先运行 fetch")
+        sys.exit(1)
+    pets = json.loads(list_cache.read_text(encoding="utf-8"))
+    handbooks = {}
+    for p in pets:
+        handbooks.setdefault(sanitize(p.get("handbook_no")), []).append(p)
+
+    client = ApiClient()
+    egg_dir = CACHE_DIR / "egg"
+    egg_dir.mkdir(parents=True, exist_ok=True)
+
+    todo = []
+    for hb in handbooks:
+        if (egg_dir / f"{hb}.json").exists():
+            continue
+        hb_cache = load_cache_json(CACHE_DIR / "handbook" / f"{hb}.json") or {}
+        order_ids = [p["pet_id"] for p in hb_cache.get("pets") or []]
+        group_ids = sorted(g["pet_id"] for g in handbooks[hb])
+        if not order_ids:
+            order_ids = group_ids
+        # 候选：官方规范顺序第一形态 + 组内最小 id + 组内 3xxx 普通形态最小 id（去重）
+        normal_ids = [i for i in group_ids if i < 4000000]
+        candidates = [order_ids[0]] + group_ids[:1] + normal_ids[:1]
+        seen, uniq = set(), []
+        for pid in candidates:
+            if pid not in seen:
+                seen.add(pid)
+                uniq.append(pid)
+        todo.append((hb, uniq))
+
+    print(f"  待抓取: {len(todo)} 个图鉴的孵蛋配置（已有缓存跳过）")
+    if not todo:
+        print("✅ 孵蛋缓存已是最新\n")
+        return
+
+    found, missing = 0, 0
+    ordered = sorted(todo, key=lambda x: int(x[0]))
+    for idx, (hb, candidates) in enumerate(ordered, 1):
+        data = None
+        for pid in candidates:
+            client._throttle()
+            try:
+                resp = client.session.get(f"{BASE_URL}/pets/{pid}/egg", timeout=15)
+            except Exception:
+                continue
+            if resp.status_code == 200:
+                payload = resp.json().get("data")
+                if payload and payload.get("egg_size"):
+                    data = payload
+                    break
+            elif resp.status_code in (429, 567):
+                print(f"    ⏳ 限流({resp.status_code})，等待 15s: 图鉴 {hb}")
+                time.sleep(15)
+        if data:
+            (egg_dir / f"{hb}.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            found += 1
+        else:
+            (egg_dir / f"{hb}.json").write_text('{"not_found": true}', encoding="utf-8")
+            missing += 1
+        if idx % 50 == 0 or idx == len(ordered):
+            print(f"  进度 {idx}/{len(ordered)}（有蛋 {found} / 无蛋 {missing}）")
+    print(f"  ✅ 有孵蛋配置: {found} 只，无配置: {missing} 只\n")
+
+
+# ==================== build-egg ====================
+# eggData.js 的预测/配色函数（生成数据时原样保留）
+EGG_FUNCS_TEMPLATE = '''
+export function predictEgg(height, weight) {
+	const predictions = []
+
+	eggData.forEach(egg => {
+		let score = 0
+		let heightMatch = false
+		let weightMatch = false
+
+		if (height >= egg.minHeight && height <= egg.maxHeight) {
+			heightMatch = true
+			const centerH = (egg.minHeight + egg.maxHeight) / 2
+			const rangeH = egg.maxHeight - egg.minHeight || 0.01
+			const diffH = Math.abs(height - centerH) / rangeH
+			score += (1 - Math.min(diffH, 1)) * 50
+		}
+
+		if (weight >= egg.minWeight && weight <= egg.maxWeight) {
+			weightMatch = true
+			const centerW = (egg.minWeight + egg.maxWeight) / 2
+			const rangeW = egg.maxWeight - egg.minWeight || 0.01
+			const diffW = Math.abs(weight - centerW) / rangeW
+			score += (1 - Math.min(diffW, 1)) * 50
+		}
+
+		if (heightMatch || weightMatch) {
+			predictions.push({
+				...egg,
+				score: Math.round(score),
+				heightMatch,
+				weightMatch,
+				matchType: heightMatch && weightMatch ? 'full' : (heightMatch ? 'height' : 'weight')
+			})
+		}
+	})
+
+	return predictions.sort((a, b) => b.score - a.score).slice(0, 10)
+}
+
+export function getEggColor(types) {
+	const typeColors = {
+		fire: '#FF6B35',
+		water: '#4A90D9',
+		grass: '#7CB342',
+		ice: '#81D4FA',
+		dragon: '#7C4DFF',
+		light: '#FFD54F',
+		ghost: '#7E57C2',
+		poison: '#9C27B0',
+		insect: '#8BC34A',
+		wing: '#64B5F6',
+		evil: '#424242',
+		electric: '#FFEB3B',
+		illusion: '#E91E63',
+		normal: '#9E9E9E',
+		ground: '#8D6E63',
+		martial: '#FF5722',
+		cute: '#F48FB1',
+		mechanic: '#607D8B'
+	}
+
+	if (types.length === 1) {
+		return typeColors[types[0]] || '#666'
+	}
+
+	return `linear-gradient(135deg, ${typeColors[types[0]] || '#666'} 50%, ${typeColors[types[1]] || '#666'} 50%)`
+}
+'''
+
+
+def build_egg_data(handbooks):
+    """从 cache/egg/*.json 生成 eggData 数组（官方蛋体型，替代旧搜集数据）"""
+    egg_dir = CACHE_DIR / "egg"
+    if not egg_dir.exists():
+        return None
+    pets = json.loads((CACHE_DIR / "list.json").read_text(encoding="utf-8"))
+    type_names_by_pid = {
+        p["pet_id"]: [sanitize(t) for t in (p.get("type_names") or [])] for p in pets
+    }
+
+    items = []
+    for hb in sorted(handbooks, key=lambda x: int(x)):
+        data = load_cache_json(egg_dir / f"{hb}.json")
+        if not data or data.get("not_found"):
+            continue
+        size = data.get("egg_size") or {}
+        h, w = size.get("height") or {}, size.get("weight") or {}
+        if h.get("min_m") is None or w.get("min_kg") is None:
+            continue
+        pet = data.get("pet") or {}
+        types = type_names_by_pid.get(pet.get("pet_id")) or []
+        if not types:
+            types = next((g.get("type_names") for g in handbooks[hb] if g.get("type_names")), []) or []
+        probs = data.get("probabilities") or {}
+        default_shiny = ((probs.get("none") or {}).get("glass") or {}).get("base_percent")
+        miracle_shiny = ((probs.get("miracle_exchange") or {}).get("glass") or {}).get("base_percent")
+        gender = pet.get("gender_ratio") or {}
+        items.append({
+            "petId": int(hb),
+            "name": sanitize(pet.get("name")) or sanitize(handbooks[hb][0].get("name")),
+            "minHeight": h.get("min_m"),
+            "maxHeight": h.get("max_m"),
+            "minWeight": w.get("min_kg"),
+            "maxWeight": w.get("max_kg"),
+            "type": [EGG_TYPE_EN.get(t, t) for t in types if t],
+            "hatchLabel": sanitize(data.get("hatch_label")),
+            "eggType": sanitize((data.get("egg_type") or {}).get("name")),
+            "eggGroups": [sanitize(g.get("name")) for g in (pet.get("egg_groups") or []) if g.get("name")],
+            "malePercent": gender.get("male_percent"),
+            "shinyPercent": default_shiny,
+            "shinyMiraclePercent": miracle_shiny,
+        })
+    return items
+
+
+def write_egg_data_js(items):
+    """生成 eggData.js（数组 + 预测函数）到 GENERATED_DIR，返回路径"""
+    GENERATED_DIR.mkdir(parents=True, exist_ok=True)
+    path = GENERATED_DIR / "eggData.js"
+    body = (f"// 由 crawler_official_api/update_data.py 生成（数据源: 官方 /pets/{{pid}}/egg）\n"
+            f"export const eggData = {json.dumps(items, ensure_ascii=False, indent=2)}\n"
+            f"{EGG_FUNCS_TEMPLATE}")
+    path.write_text(body, encoding="utf-8")
+    return path
+
+
+def run_egg():
+    """子命令入口: egg = fetch-egg + 生成 + 直接应用 eggData.js（不碰其他数据文件）"""
+    fetch_egg()
+    list_cache = CACHE_DIR / "list.json"
+    pets = json.loads(list_cache.read_text(encoding="utf-8"))
+    handbooks = {}
+    for p in pets:
+        handbooks.setdefault(sanitize(p.get("handbook_no")), []).append(p)
+    items = build_egg_data(handbooks)
+    if not items:
+        print("❌ 未生成任何孵蛋数据")
+        sys.exit(1)
+    path = write_egg_data_js(items)
+    DATA_CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+    dst = DATA_CONFIG_DIR / "eggData.js"
+    if dst.exists():
+        dst.replace(DATA_CONFIG_DIR / "eggData.js.bak")
+    shutil.copy2(path, dst)
+    print(f"  ✅ eggData.js 已更新: {len(items)} 条（旧文件备份为 eggData.js.bak）")
+
+
 # ==================== build ====================
 def build_local_image_index():
     """seq(3位) -> 该前缀下的本地立绘文件名列表（不含异色）"""
@@ -286,19 +519,19 @@ def match_local_image(img_index, seq3, page_title, name):
     files = img_index[seq3]
     exact = f"{seq3}_{page_title}.webp"
     if exact in files:
-        return f"/static/static-web/pets/{exact}"
+        return f"/cdn-assets/static-web/pets/{exact}"
     by_name = f"{seq3}_{name}.webp"
     if by_name in files:
-        return f"/static/static-web/pets/{by_name}"
+        return f"/cdn-assets/static-web/pets/{by_name}"
     if len(files) == 1:
-        return f"/static/static-web/pets/{files[0]}"
+        return f"/cdn-assets/static-web/pets/{files[0]}"
     return None
 
 
 def match_local_yise(seq3, page_title, name):
     for candidate in (f"{seq3}_{page_title}_异色.webp", f"{seq3}_{name}_异色.webp"):
         if (STATIC_PETS_DIR / candidate).exists():
-            return f"/static/static-web/pets/{candidate}"
+            return f"/cdn-assets/static-web/pets/{candidate}"
     return None
 
 
@@ -501,24 +734,23 @@ def build_skill_icon_map(skill_library, official_skills):
     icon_map = {}
     local_count = remote_count = 0
     for name in skill_library:
-        local = f"/static/static-web/skills/{name}.webp"
-        if (STATIC_SKILLS_DIR / f"{name}.webp").exists():
-            icon_map[name] = local
+        # 优先官方 API 完整 URL(运行期下载后缓存本地);本地 webp 仅兜底
+        icon_url = sanitize(official_skills.get(name, {}).get("icon"))
+        if icon_url:
+            icon_map[name] = icon_url
+            remote_count += 1
+        elif (STATIC_SKILLS_DIR / f"{name}.webp").exists():
+            icon_map[name] = f"/cdn-assets/static-web/skills/{name}.webp"
             local_count += 1
-        else:
-            icon_url = sanitize(official_skills.get(name, {}).get("icon"))
-            if icon_url:
-                icon_map[name] = icon_url
-                remote_count += 1
-            elif current.get(name):
-                icon_map[name] = current[name]
+        elif current.get(name):
+            icon_map[name] = current[name]
     return icon_map, local_count, remote_count
 
 
 def fetch_skill_icons(client, skill_library, official_skills):
     """下载缺失的技能图标并转为 webp（仅补缺，不覆盖已有文件）"""
     print("=" * 60)
-    print("🖼 下载缺失技能图标 → static/static-web/skills/（webp）")
+    print("🖼 下载缺失技能图标 → cdn-assets/static-web/skills/（webp）")
     print("=" * 60)
     try:
         from PIL import Image
@@ -552,11 +784,11 @@ def fetch_skill_icons(client, skill_library, official_skills):
 
 
 def fetch_pet_images(force_all=False, seq_filter=None):
-    """按官方 API 更新精灵立绘 → static/static-web/pets/（webp，覆盖式）
+    """按官方 API 更新精灵立绘 → cdn-assets/static-web/pets/（webp，覆盖式）
     模式：seq_filter 指定序号强制更新 > force_all 全量覆盖 > 默认仅补本地缺失
     本地文件名保持 {seq3}_{page_title}.webp 不变（与 pet_detail.js 引用一致）"""
     print("=" * 60)
-    print("🖼 更新精灵立绘 → static/static-web/pets/（webp）")
+    print("🖼 更新精灵立绘 → cdn-assets/static-web/pets/（webp）")
     print("=" * 60)
     try:
         from PIL import Image
@@ -722,15 +954,15 @@ def build_all(pets, handbooks):
             race = race_from_profile(profile)
 
             name = sanitize(p.get("name"))
-            img = match_local_image(img_index, seq3, title, name)
+            # 优先官方 API 完整 URL(运行期下载后缓存本地);本地 webp 仅兜底
+            img = sanitize((profile or {}).get("icon") or (overview or {}).get("icon"))
             if not img:
-                img = sanitize((profile or {}).get("icon") or (overview or {}).get("icon"))
+                img = match_local_image(img_index, seq3, title, name)
 
-            yise = match_local_yise(seq3, title, name)
+            shiny = (overview or {}).get("shiny") or {}
+            yise = sanitize(shiny["icon"]) if shiny.get("available") and shiny.get("icon") else None
             if not yise:
-                shiny = (overview or {}).get("shiny") or {}
-                if shiny.get("available") and shiny.get("icon"):
-                    yise = sanitize(shiny["icon"])
+                yise = match_local_yise(seq3, title, name)
 
             trait_img = (f"/static/static-web/traits/{seq3}.webp"
                          if (STATIC_TRAITS_DIR / f"{seq3}.webp").exists() else None)
@@ -868,6 +1100,11 @@ def build_all(pets, handbooks):
     write_js(GENERATED_DIR / "pet_race_speed.js", [("petRaceSpeed", pet_race_speed)])
     write_js(GENERATED_DIR / "skills.js", [("skillsData", skill_library)])
     write_js(GENERATED_DIR / "skill_icons.js", [("skillIcons", icon_map)])
+    if (CACHE_DIR / "egg").exists():
+        egg_items = build_egg_data(handbooks)
+        if egg_items:
+            write_egg_data_js(egg_items)
+            print(f"  ✅ eggData.js: {len(egg_items)} 条孵蛋配置")
     (GENERATED_DIR / "leader_forms.js").write_text(
         f"export const leaderFormPetIds = {json.dumps(leader_handbooks)}\n\n"
         f"export const leaderFormPetIdSet = new Set(leaderFormPetIds.map((id) => Number(id)))\n\n"
@@ -907,6 +1144,8 @@ def apply_generated():
         ("leader_forms.js", DATA_PET_DIR),
         ("skills.js", DATA_SKILL_DIR), ("skill_icons.js", DATA_SKILL_DIR),
     ]
+    if (GENERATED_DIR / "eggData.js").exists():
+        targets.append(("eggData.js", DATA_CONFIG_DIR))
     for fname, target_dir in targets:
         src = GENERATED_DIR / fname
         if not src.exists():
@@ -958,6 +1197,10 @@ def main():
         build_all(pets, handbooks)
     elif cmd == "apply":
         apply_generated()
+    elif cmd == "fetch-egg":
+        fetch_egg()
+    elif cmd == "egg":
+        run_egg()
     elif cmd == "fetch-skill-icons":
         run_fetch_skill_icons()
     elif cmd == "fetch-pet-images":

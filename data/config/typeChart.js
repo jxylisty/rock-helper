@@ -60,7 +60,7 @@ export function normalizeAttrList(attrs = []) {
 
 /**
  * 攻击属性对防守方属性组合的克制倍率
- * 单克制 2 / 单抵抗 0.5 / 双克制 3 / 双抵抗 1/3 / 克制+抵抗 1
+ * 单克制 2 / 单抵抗 0.5 / 双克制 3 / 双抵抗 1/4 / 克制+抵抗 1
  */
 export function getAttrMultiplier(attackAttr, defenseAttrs = []) {
   const atkType = normalizeAttr(attackAttr)
@@ -80,14 +80,30 @@ export function getAttrMultiplier(attackAttr, defenseAttrs = []) {
 
   if (strongCount >= 2) return 3
   if (strongCount === 1 && resistCount === 0) return 2
-  if (resistCount >= 2 && strongCount === 0) return 1 / 3
+  if (resistCount >= 2 && strongCount === 0) return 1 / 4
   if (resistCount === 1 && strongCount === 0) return 0.5
   return 1
+}
+
+// 属性图标文件名（英文，对应 static/static-web/icons/）。
+// Android 打包不允许静态资源文件名含中文（会告警），故用英文命名 + 本映射。
+const attrIconNameMap = {
+  '普通': 'normal', '火': 'fire', '水': 'water', '电': 'electric', '草': 'grass',
+  '冰': 'ice', '武': 'fighting', '毒': 'poison', '地': 'ground', '翼': 'flying',
+  '萌': 'fairy', '虫': 'bug', '幽': 'ghost', '龙': 'dragon', '恶': 'dark',
+  '机械': 'steel', '光': 'light', '幻': 'psychic'
+}
+
+// 根据属性中文名返回英文图标文件名（映射不到时回退为原中文名）
+export function getAttrIconName(attr) {
+  const type = normalizeAttr(attr)
+  return attrIconNameMap[type] || type
 }
 
 export default {
   typeEffectChart,
   normalizeAttr,
   normalizeAttrList,
-  getAttrMultiplier
+  getAttrMultiplier,
+  getAttrIconName
 }

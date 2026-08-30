@@ -89,16 +89,37 @@
             <view class="rank-seal" :class="rankClass(index)">
               <text class="rank-num mono">{{ index + 1 }}</text>
             </view>
+            <view class="pet-avatar">
+              <RemoteImage class="pet-avatar-img" :src="resolvePetImage(predImg(pred))" mode="aspectFit" />
+            </view>
             <view class="pet-info">
-              <text class="pet-name">{{ pred.name }}</text>
+              <view class="pet-name-row">
+                <text class="pet-name">{{ pred.name }}</text>
+                <text class="pet-code mono">#{{ String(pred.petId).padStart(3, '0') }}</text>
+                <view
+                  v-if="getPetBadge(pred.petId)"
+                  class="pet-badge"
+                  :class="{ leader: isLeaderPet(pred.petId) }"
+                >
+                  <text>{{ getPetBadge(pred.petId) }}</text>
+                </view>
+                <view v-if="predBulk(pred).isBulk" class="pet-badge bulk">
+                  <text>大块头</text>
+                </view>
+              </view>
               <view class="pet-types">
                 <TypeBadge
-                  v-for="t in pred.type"
+                  v-for="t in predTypes(pred)"
                   :key="t"
                   :label="t"
                   :color="getTypeColor(t)"
                   compact
                 />
+              </view>
+              <view v-if="predMeta(pred).length" class="pet-meta">
+                <view v-for="meta in predMeta(pred)" :key="meta" class="meta-chip">
+                  <text class="meta-chip-text">{{ meta }}</text>
+                </view>
               </view>
             </view>
             <view class="score">
@@ -115,6 +136,40 @@
         </view>
         <text class="empty-title">没有找到匹配的精灵</text>
         <text class="empty-sub">可以换一个更接近的身高或重量再试一次。</text>
+      </view>
+
+      <view v-if="bulkJudge" class="section card">
+        <view class="section-head">
+          <view class="section-head-left">
+            <view class="section-icon bulk">
+              <AppIcon name="scale" :size="11" color="#FFF9EC" />
+            </view>
+            <text class="section-title">大块头判定</text>
+          </view>
+          <view class="bulk-verdict" :class="{ pass: bulkJudge.isBulk }">
+            <text class="bulk-verdict-text">{{ bulkJudge.isBulk ? '✓ 大块头' : '未达标' }}</text>
+          </view>
+        </view>
+        <text class="bulk-target">按 {{ bulkJudge.name }} 蛋范围（{{ bulkJudge.rangeLabel }}）判定</text>
+        <view class="bulk-rows">
+          <view class="bulk-row">
+            <text class="bulk-row-label">身高</text>
+            <text class="bulk-row-value mono">{{ bulkJudge.height }}m</text>
+            <text class="bulk-row-need mono">≥ {{ fmt(bulkJudge.heightThreshold) }}m</text>
+            <text class="bulk-row-state" :class="bulkJudge.heightOk ? 'ok' : 'fail'">
+              {{ bulkJudge.heightOk ? '达标' : '差 ' + fmt(bulkJudge.heightThreshold - bulkJudge.height) + 'm' }}
+            </text>
+          </view>
+          <view class="bulk-row">
+            <text class="bulk-row-label">重量</text>
+            <text class="bulk-row-value mono">{{ bulkJudge.weight }}kg</text>
+            <text class="bulk-row-need mono">≥ {{ fmt(bulkJudge.weightThreshold) }}kg</text>
+            <text class="bulk-row-state" :class="bulkJudge.weightOk ? 'ok' : 'fail'">
+              {{ bulkJudge.weightOk ? '达标' : '差 ' + fmt(bulkJudge.weightThreshold - bulkJudge.weight) + 'kg' }}
+            </text>
+          </view>
+        </view>
+        <text class="bulk-note">判定口径：身高与体重均达到该精灵蛋范围的 98%（双维度同时达标）。</text>
       </view>
 
       <view class="section card">
@@ -137,6 +192,10 @@
             <AppIcon name="check" :size="9" color="#1E7A46" :stroke-width="3" />
             <text class="tip-item">点击结果卡片可以直接进入精灵详情页。</text>
           </view>
+          <view class="tip-line">
+            <AppIcon name="check" :size="9" color="#1E7A46" :stroke-width="3" />
+            <text class="tip-item">身高与体重都达到该精灵蛋范围的 98% 即为"大块头"（两项需同时达标）。</text>
+          </view>
         </view>
       </view>
 
@@ -149,24 +208,57 @@
 import AppHeader from '@/components/AppHeader/AppHeader.vue'
 import AppIcon from '@/components/AppIcon/AppIcon.vue'
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
-import { predictEgg } from '@/data/config/eggData.js'
-import { petTypes } from '@/data/pet/pet_detail.js'
+import RemoteImage from '@/components/RemoteImage/RemoteImage.vue'
+import { predictEgg, judgeBulkEgg } from '@/data/config/eggData.js'
+import { petTypes, petDetail } from '@/data/pet/pet_detail.js'
+import { hasLeaderFormPetId } from '@/data/pet/leader_forms.js'
+import { resolveAssetPath } from '@/utils/asset-path.js'
 
 export default {
   components: {
     AppHeader,
     AppIcon,
-    TypeBadge
+    TypeBadge,
+    RemoteImage
   },
   data() {
     return {
       height: '',
       weight: '',
+      queryHeight: 0,
+      queryWeight: 0,
       predictions: [],
       hasSearched: false
     }
   },
+  computed: {
+    // 大块头判定面板：优先展示已达大块头的候选，否则取"完全匹配"得分最高者
+    bulkJudge() {
+      if (!this.predictions.length) return null
+      const judgeOf = (pred) => judgeBulkEgg(pred, this.queryHeight, this.queryWeight)
+      const bulkPred = this.predictions.find((pred) => judgeOf(pred).isBulk)
+      const pred = bulkPred
+        || this.predictions.find((item) => item.matchType === 'full')
+        || this.predictions[0]
+      const judge = judgeOf(pred)
+      const rangeLabel = `${this.fmt(pred.minHeight)}~${this.fmt(pred.maxHeight)}m / ${this.fmt(pred.minWeight)}~${this.fmt(pred.maxWeight)}kg`
+      return {
+        ...judge,
+        name: pred.name,
+        height: this.queryHeight,
+        weight: this.queryWeight,
+        rangeLabel
+      }
+    }
+  },
   methods: {
+    fmt(value) {
+      const num = Number(value) || 0
+      return String(Math.round(num * 1000) / 1000)
+    },
+    predBulk(pred) {
+      return judgeBulkEgg(pred, this.queryHeight, this.queryWeight)
+    },
     predict() {
       const h = parseFloat(this.height)
       const w = parseFloat(this.weight)
@@ -176,6 +268,8 @@ export default {
         return
       }
 
+      this.queryHeight = h
+      this.queryWeight = w
       this.predictions = predictEgg(h, w)
       this.hasSearched = true
     },
@@ -187,6 +281,34 @@ export default {
     },
     getTypeColor(type) {
       return petTypes.find((item) => item.key === type)?.color || '#5b7cf5'
+    },
+    resolvePetImage(src) {
+      return resolveAssetPath(src)
+    },
+    predImg(pred) {
+      return petDetail[String(pred.petId)]?.[0]?.img || ''
+    },
+    predTypes(pred) {
+      const types = petDetail[String(pred.petId)]?.[0]?.type
+      return Array.isArray(types) && types.length ? types : pred.type
+    },
+    predMeta(pred) {
+      const metas = []
+      if (pred.hatchLabel) metas.push(`孵化 ${pred.hatchLabel}`)
+      if (Array.isArray(pred.eggGroups) && pred.eggGroups.length) {
+        metas.push(pred.eggGroups.join('/'))
+      }
+      if (pred.eggType && pred.eggType !== '普通') metas.push(pred.eggType)
+      return metas.slice(0, 3)
+    },
+    isLeaderPet(petId) {
+      return hasLeaderFormPetId(petId)
+    },
+    getPetBadge(petId) {
+      if (this.isLeaderPet(petId)) return '首领化'
+      const variants = petDetail[String(petId)]
+      if (Array.isArray(variants) && variants.length > 1) return '多形态'
+      return ''
     },
     getMatchLabel(type) {
       if (type === 'full') return '完全匹配'
@@ -547,19 +669,193 @@ export default {
   color: #6B7A6E;
 }
 
+.pet-avatar {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 50% 62%, rgba(201, 161, 78, 0.10) 0, transparent 62%),
+    #FFFFFF;
+  border: 1px solid rgba(227, 220, 200, 0.8);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pet-avatar-img {
+  width: 100%;
+  height: 100%;
+}
+
 .pet-info {
   flex: 1;
   min-width: 0;
 }
 
+.pet-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
 .pet-name {
-  display: block;
   font-size: 13px;
   font-weight: 800;
   color: #2C3A2F;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 100%;
+}
+
+.pet-code {
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #A3AE9F;
+}
+
+.pet-badge {
+  flex-shrink: 0;
+  height: 18px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #F2EBDA;
+  border: 1px solid #D8D0BA;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pet-badge text {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #6B7A6E;
+  white-space: nowrap;
+}
+
+.pet-badge.leader {
+  background: #FBF3DD;
+  border-color: #D9B96A;
+}
+
+.pet-badge.leader text {
+  color: #A97F35;
+}
+
+.pet-badge.bulk {
+  background: linear-gradient(135deg, #B05A2E 0%, #D98A4A 100%);
+  border-color: #8F4A24;
+}
+
+.pet-badge.bulk text {
+  color: #FFF9EC;
+}
+
+/* ===== 大块头判定 ===== */
+.section-icon.bulk {
+  background: linear-gradient(135deg, #B05A2E 0%, #D98A4A 100%);
+  border-color: #8F4A24;
+  box-shadow: 0 2px 0 rgba(143, 74, 36, 0.4);
+}
+
+.bulk-verdict {
+  flex-shrink: 0;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #F2EBDA;
+  border: 1px solid #D8D0BA;
+  display: inline-flex;
+  align-items: center;
+}
+
+.bulk-verdict-text {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #6B7A6E;
+}
+
+.bulk-verdict.pass {
+  background: linear-gradient(135deg, #B05A2E 0%, #D98A4A 100%);
+  border-color: #8F4A24;
+  box-shadow: 0 2px 0 rgba(143, 74, 36, 0.35);
+}
+
+.bulk-verdict.pass .bulk-verdict-text {
+  color: #FFF9EC;
+}
+
+.bulk-target {
+  display: block;
+  margin-top: 8px;
+  font-size: 10.5px;
+  color: #6B7A6E;
+}
+
+.bulk-rows {
+  margin-top: 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bulk-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 11px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+}
+
+.bulk-row-label {
+  flex-shrink: 0;
+  width: 30px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.bulk-row-value {
+  flex: 1;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #2C3A2F;
+}
+
+.bulk-row-need {
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #8A6A2C;
+}
+
+.bulk-row-state {
+  flex-shrink: 0;
+  min-width: 52px;
+  text-align: right;
+  font-size: 10.5px;
+  font-weight: 800;
+}
+
+.bulk-row-state.ok {
+  color: #1E7A46;
+}
+
+.bulk-row-state.fail {
+  color: #B05A2E;
+}
+
+.bulk-note {
+  display: block;
+  margin-top: 9px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #A3AE9F;
 }
 
 .pet-types {
@@ -567,6 +863,30 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+}
+
+.pet-meta {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.meta-chip {
+  height: 16px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #FBF3DD;
+  border: 1px solid #E3DCC8;
+  display: inline-flex;
+  align-items: center;
+}
+
+.meta-chip-text {
+  font-size: 9px;
+  font-weight: 700;
+  color: #8A6A2C;
+  white-space: nowrap;
 }
 
 .score {

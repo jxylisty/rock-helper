@@ -273,16 +273,15 @@
 
         <view class="dialog-tip">
           <AppIcon name="info" :size="11" color="#A97F35" />
-          <text class="dialog-tip-text">红色箭头表示克制，蓝色箭头表示抵抗。双属性时会按 2x / 3x / 1/2x / 1/3x 计算。</text>
+          <text class="dialog-tip-text">行看攻击、列看防守：红格=克制(2x/3x)，蓝格=抵抗(½x/¼x)。双属性时会自动合并倍率。</text>
         </view>
 
         <view class="graph-box">
-          <TypeGraph
+          <TypeMatrix
             :mode="graphMode"
             :selectedType1="selectedPrimary"
             :selectedType2="doubleMode ? selectedSecondary : ''"
             :typeList="typeOptions"
-            :relationTable="typeEffectChart"
             @selectType="onGraphSelect"
             @clearSelect="onGraphClear"
           />
@@ -297,13 +296,12 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
 import AppIcon from '@/components/AppIcon/AppIcon.vue'
 import PetCard from '@/components/PetCard/PetCard.vue'
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
-import TypeGraph from '@/components/TypeGraph/TypeGraph.vue'
+import TypeMatrix from '@/components/TypeMatrix/TypeMatrix.vue'
 import { petTypes, petDetail } from '@/data/pet/pet_detail.js'
 import { getAttrMultiplier, getBestAttackMatchup, getHighestFormPets, normalizeAttr, typeEffectChart } from '@/data/config/game_math.js'
-import { getTypeList } from '@/utils/typeGraph.js'
 import { buildBasePetList } from '@/utils/petListBuilder.js'
 
-const typeOptions = getTypeList(typeEffectChart)
+const typeOptions = Object.keys(typeEffectChart)
   .map((key) => {
     const found = petTypes.find((item) => normalizeAttr(item.key) === key)
     return {
@@ -320,7 +318,7 @@ function formatMultiplier(value) {
   if (value === 3) return '3x'
   if (value === 2) return '2x'
   if (value === 0.5) return '0.5x'
-  if (value === 1 / 3) return '0.33x'
+  if (value === 1 / 4) return '0.25x'
   return `${value}x`
 }
 
@@ -332,7 +330,7 @@ export default {
     AppIcon,
     PetCard,
     TypeBadge,
-    TypeGraph
+    TypeMatrix
   },
   data() {
     return {

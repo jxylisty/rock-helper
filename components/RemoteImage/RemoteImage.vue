@@ -20,6 +20,7 @@
 
 <script>
 import { getAssetCandidateUrls, isLocalStaticAsset, resolveAssetPath } from '@/utils/asset-path.js'
+import { ensureCachedRemoteImage, isPackagedImage } from '@/utils/image-cache.js'
 
 export default {
   name: 'RemoteImage',
@@ -94,6 +95,17 @@ export default {
     }
   },
   methods: {
+    async loadCachedCandidate(candidateUrl) {
+      if (!candidateUrl) return ''
+      if (isPackagedImage(candidateUrl)) return ''
+      try {
+        const cached = await ensureCachedRemoteImage(candidateUrl, candidateUrl)
+        return cached || ''
+      } catch (error) {
+        // Cache failure must never break rendering: fall back to direct remote URL
+        return ''
+      }
+    },
     async refreshSource() {
       const nextRequestId = this.requestId + 1
       this.requestId = nextRequestId
@@ -103,6 +115,22 @@ export default {
       const originalSource = String(this.src || '').trim()
       this.candidates = getAssetCandidateUrls(originalSource)
       this.candidateIndex = 0
+
+      // 优先尝试远程资源本地化缓存：首次下载后存本地，避免重复请求 CDN
+      for (let i = 0; i < this.candidates.length; i++) {
+        const candidate = this.candidates[i]
+        const isRemote = /^https?:\/\//i.test(candidate)
+        if (!isRemote) continue
+        if (nextRequestId !== this.requestId) return
+        const cached = await this.loadCachedCandidate(candidate)
+        if (nextRequestId !== this.requestId) return
+        if (cached) {
+          this.candidateIndex = i
+          this.displaySrc = cached
+          this.$emit('load', {})
+          return
+        }
+      }
 
       const resolved = this.candidates[0] || resolveAssetPath(originalSource)
       this.displaySrc = resolved || ''

@@ -1,0 +1,137 @@
+// 悬浮球/面板触摸处理基类逻辑拆分：
+// - BallTouchListener：球窗口（拖动 / 单击切换面板 / 长按关闭）
+// - PanelTouchListener：面板抓手条（拖动 / 单击收起面板 / 长按关闭全部）
+
+import View from "android.view.View";
+import MotionEvent from "android.view.MotionEvent";
+import { FloatWindowManager } from "../managers/FloatWindowManager";
+
+// 位移超过该值视为拖动（px）
+const TAP_SLOP: number = 12;
+// 长按判定时长（ms）
+const LONG_PRESS_MS: Int = 700;
+
+export class BallTouchListener extends View.OnTouchListener {
+    mManager: FloatWindowManager;
+
+    mStartRawX: number = 0;
+    mStartRawY: number = 0;
+    mStartWinX: number = 0;
+    mStartWinY: number = 0;
+    mMoved: boolean = false;
+
+    constructor(manager: FloatWindowManager) {
+        super();
+        this.mManager = manager;
+    }
+
+    override onTouch(v: View, event: MotionEvent): boolean {
+        const action = event.getActionMasked();
+        const params = this.mManager.mBallParams;
+        const wm = this.mManager.mWindowManager;
+        if (params == null || wm == null) return false;
+
+        if (action == MotionEvent.ACTION_DOWN) {
+            this.mStartRawX = event.getRawX();
+            this.mStartRawY = event.getRawY();
+            this.mStartWinX = params.x;
+            this.mStartWinY = params.y;
+            this.mMoved = false;
+            return true;
+        }
+
+        if (action == MotionEvent.ACTION_MOVE) {
+            const dx = event.getRawX() - this.mStartRawX;
+            const dy = event.getRawY() - this.mStartRawY;
+            if (!this.mMoved) {
+                if (dx * dx + dy * dy > TAP_SLOP * TAP_SLOP) {
+                    this.mMoved = true;
+                }
+            }
+            if (this.mMoved) {
+                params.x = (this.mStartWinX + dx).toInt();
+                params.y = (this.mStartWinY + dy).toInt();
+                wm.updateViewLayout(v, params);
+            }
+            return true;
+        }
+
+        if (action == MotionEvent.ACTION_UP) {
+            const pressDuration = event.getEventTime() - event.getDownTime();
+            if (!this.mMoved) {
+                if (pressDuration >= LONG_PRESS_MS) {
+                    this.mManager.removeViews();
+                } else {
+                    this.mManager.togglePanel();
+                }
+            }
+            return true;
+        }
+
+        return false;
+    }
+}
+
+/** 面板抓手条：拖动移动面板窗口 / 单击收起面板 / 长按关闭全部 */
+export class PanelTouchListener extends View.OnTouchListener {
+    mManager: FloatWindowManager;
+    mContainer: View;
+
+    mStartRawX: number = 0;
+    mStartRawY: number = 0;
+    mStartWinX: number = 0;
+    mStartWinY: number = 0;
+    mMoved: boolean = false;
+
+    constructor(manager: FloatWindowManager, containerView: View) {
+        super();
+        this.mManager = manager;
+        this.mContainer = containerView;
+    }
+
+    override onTouch(v: View, event: MotionEvent): boolean {
+        const action = event.getActionMasked();
+        const params = this.mManager.mPanelParams;
+        const wm = this.mManager.mWindowManager;
+        if (params == null || wm == null) return false;
+
+        if (action == MotionEvent.ACTION_DOWN) {
+            this.mStartRawX = event.getRawX();
+            this.mStartRawY = event.getRawY();
+            this.mStartWinX = params.x;
+            this.mStartWinY = params.y;
+            this.mMoved = false;
+            return true;
+        }
+
+        if (action == MotionEvent.ACTION_MOVE) {
+            const dx = event.getRawX() - this.mStartRawX;
+            const dy = event.getRawY() - this.mStartRawY;
+            if (!this.mMoved) {
+                if (dx * dx + dy * dy > TAP_SLOP * TAP_SLOP) {
+                    this.mMoved = true;
+                }
+            }
+            if (this.mMoved) {
+                params.x = (this.mStartWinX + dx).toInt();
+                params.y = (this.mStartWinY + dy).toInt();
+                wm.updateViewLayout(this.mContainer, params);
+            }
+            return true;
+        }
+
+        if (action == MotionEvent.ACTION_UP) {
+            const pressDuration = event.getEventTime() - event.getDownTime();
+            if (!this.mMoved) {
+                if (pressDuration >= LONG_PRESS_MS) {
+                    this.mManager.removeViews();
+                } else {
+                    this.mManager.hidePanel();
+                }
+            }
+            return true;
+        }
+
+        return false;
+    }
+}

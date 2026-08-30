@@ -1,114 +1,77 @@
 <template>
   <view v-if="visible" class="sheet-mask" @click="handleMaskClick">
     <view class="sheet-panel" @click.stop>
-      <view class="sheet-handle"></view>
+      <view class="sheet-grabber"></view>
 
-      <view class="sheet-topbar">
-        <view class="top-btn ghost" @click="$emit('close')">取消</view>
-        <text class="sheet-title">{{ title }}</text>
-        <view class="top-btn primary" @click="submit">{{ mode === 'add' ? '添加' : '保存' }}</view>
+      <view class="sheet-head">
+        <view class="head-title-row">
+          <view class="head-seal">
+            <AppIcon name="wand" :size="12" color="#FFF5EC" :stroke-width="2.4" />
+          </view>
+          <text class="head-title">编辑配置</text>
+        </view>
+        <view class="head-actions">
+          <view class="head-close" hover-class="press-down" @click="$emit('close')">
+            <AppIcon name="close" :size="10" color="#C64B38" :stroke-width="2.8" />
+            <text class="head-close-text">取消</text>
+          </view>
+          <view class="head-save" hover-class="press-down" @click="submit">
+            <AppIcon name="check" :size="11" color="#FFF9EC" :stroke-width="3" />
+            <text class="head-save-text">保存</text>
+          </view>
+        </view>
       </view>
 
-      <view v-if="mode === 'add'" class="sheet-body add-body">
-        <view class="selector-card">
-          <text class="section-title">搜索精灵</text>
-          <view class="search-row">
-            <input
-              class="search-input"
-              :value="keyword"
-              placeholder="搜索最高形态精灵"
-              placeholder-class="input-placeholder"
-              @input="onKeywordInput"
-            />
-            <view v-if="keyword" class="search-clear" @click="clearKeyword">清空</view>
-          </view>
-
-          <view class="filter-head">
-            <text class="section-title">属性筛选</text>
-            <view class="filter-clear" @click="clearTypes">全部</view>
-          </view>
-
-          <view class="selected-row">
-            <text class="selected-label">已选属性</text>
-            <view v-if="selectedTypes.length" class="selected-types">
-              <TypeBadge
-                v-for="type in selectedTypes"
-                :key="type"
-                :label="type"
-                :color="getTypeColor(type)"
-                compact
-              />
+      <scroll-view scroll-y class="sheet-scroll" :show-scrollbar="false">
+        <view class="sheet-inner">
+          <view class="pet-card">
+            <view class="pet-art">
+              <RemoteImage class="pet-img" :src="resolvePetImage(selectedPet?.img)" mode="aspectFit" />
             </view>
-            <text v-else class="selected-empty">未选择</text>
-          </view>
-
-          <view class="type-grid">
-            <view
-              v-for="type in typeOptions"
-              :key="type.key"
-              class="type-chip"
-              :class="{ active: selectedTypes.includes(type.key) }"
-              :style="selectedTypes.includes(type.key) ? { borderColor: type.color } : null"
-              @click="toggleType(type.key)"
-            >
-              <TypeBadge :label="type.key" :color="type.color" compact />
-              <text class="chip-text">{{ type.label }}</text>
-            </view>
-          </view>
-
-          <text class="result-tip">当前显示 {{ filteredPets.length }} 只精灵</text>
-        </view>
-
-        <scroll-view scroll-y class="pet-list-scroll">
-          <view class="pet-grid">
-            <view
-              v-for="pet in filteredPets"
-              :key="pet.id"
-              class="pet-card"
-              :class="{ active: draft.petId === pet.id }"
-              @click="selectPet(pet)"
-            >
-              <RemoteImage class="pet-card-image" :src="resolvePetImage(pet.img)" mode="aspectFit" />
-              <text class="pet-card-name">{{ pet.name }}</text>
-              <view class="pet-card-types">
+            <view class="pet-side">
+              <text class="pet-name">{{ selectedPet?.name || '未选择精灵' }}</text>
+              <view class="pet-types">
                 <TypeBadge
-                  v-for="type in pet.types"
+                  v-for="type in (selectedPet?.types || [])"
                   :key="type"
                   :label="type"
                   :color="getTypeColor(type)"
                   compact
                 />
               </view>
+              <text class="pet-note">等级 60 / 星级 5 固定。血脉技能只能带一项。</text>
             </view>
           </view>
-        </scroll-view>
-      </view>
 
-      <view v-else class="sheet-body edit-body">
-        <view class="selected-card">
-          <RemoteImage class="selected-image" :src="resolvePetImage(selectedPet?.img)" mode="aspectFit" />
-          <view class="selected-info">
-            <text class="selected-name">{{ selectedPet?.name || '未选择精灵' }}</text>
-            <text class="selected-type">{{ formatTypes(selectedPet?.types || []) }}</text>
-            <text class="selected-note">等级 60 / 星级 5 固定。攻击技能看属性克制，血脉技能只允许一项。</text>
+          <view class="tab-strip">
+            <view
+              class="tab-pill"
+              :class="{ active: activeSection === 'skills' }"
+              hover-class="press-down"
+              @click="activeSection = 'skills'"
+            >
+              <AppIcon name="zap" :size="11" :color="activeSection === 'skills' ? '#FFF5EC' : '#6B7A6E'" :stroke-width="2.4" />
+              <text class="tab-text">技能组</text>
+            </view>
+            <view
+              class="tab-pill"
+              :class="{ active: activeSection === 'build' }"
+              hover-class="press-down"
+              @click="activeSection = 'build'"
+            >
+              <AppIcon name="sparkles" :size="11" :color="activeSection === 'build' ? '#FFF5EC' : '#6B7A6E'" :stroke-width="2.4" />
+              <text class="tab-text">个体 / 性格</text>
+            </view>
           </view>
-        </view>
 
-        <view class="editor-tabs">
-          <view class="editor-tab" :class="{ active: activeSection === 'skills' }" @click="activeSection = 'skills'">
-            技能组
-          </view>
-          <view class="editor-tab" :class="{ active: activeSection === 'build' }" @click="activeSection = 'build'">
-            个体 / 性格
-          </view>
-        </view>
-
-        <scroll-view scroll-y class="config-scroll">
-          <view v-if="activeSection === 'skills'" class="config-stack">
-            <view class="config-card">
+          <template v-if="activeSection === 'skills'">
+            <view class="section-card">
               <view class="section-head">
-                <text class="section-title">已选技能</text>
-                <text class="section-note">先点技能槽，再点下面的技能卡</text>
+                <view class="section-title-row">
+                  <view class="section-dot"></view>
+                  <text class="section-title">已选技能</text>
+                </view>
+                <text class="section-sub">先点技能槽，再选下方技能</text>
               </view>
               <view class="picked-grid">
                 <view
@@ -116,24 +79,35 @@
                   :key="`picked-${index}`"
                   class="picked-card"
                   :class="{ active: activeSkillSlot === index }"
+                  hover-class="press-down"
                   @click="activeSkillSlot = index"
                 >
                   <view class="picked-top">
                     <text class="picked-slot">技能{{ index + 1 }}</text>
-                    <text class="picked-clear" @click.stop="clearSkillSlot(index)">清空</text>
+                    <view v-if="skill.name" class="picked-clear" hover-class="press-down" @click.stop="clearSkillSlot(index)">
+                      <AppIcon name="close" :size="8" color="#C64B38" :stroke-width="3" />
+                    </view>
                   </view>
-                  <RemoteImage v-if="skill.icon" class="picked-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
-                  <view v-else class="picked-icon empty-icon"></view>
-                  <text class="picked-name">{{ skill.name || '点击选择技能' }}</text>
+                  <view class="picked-icon-wrap">
+                    <RemoteImage v-if="skill.icon" class="picked-icon" :src="skill.icon" mode="aspectFit" />
+                    <AppIcon v-else name="plus" :size="14" color="#C9A14E" :stroke-width="2.6" />
+                  </view>
+                  <text class="picked-name">{{ skill.name || '点击选择' }}</text>
                 </view>
               </view>
-              <text v-if="skillWarning" class="field-warning">{{ skillWarning }}</text>
+              <view v-if="skillWarning" class="warn-banner">
+                <AppIcon name="info" :size="11" color="#C64B38" :stroke-width="2.4" />
+                <text class="warn-text">{{ skillWarning }}</text>
+              </view>
             </view>
 
-            <view class="config-card">
+            <view class="section-card">
               <view class="section-head">
-                <text class="section-title">技能筛选</text>
-                <text class="section-note">血脉技能最多一个</text>
+                <view class="section-title-row">
+                  <view class="section-dot"></view>
+                  <text class="section-title">技能筛选</text>
+                </view>
+                <text class="section-sub">血脉技能最多一个</text>
               </view>
               <view class="filter-chips">
                 <view
@@ -141,66 +115,91 @@
                   :key="item.value"
                   class="filter-chip"
                   :class="{ active: activeSkillFilter === item.value }"
+                  hover-class="press-down"
                   @click="activeSkillFilter = item.value"
                 >
-                  {{ item.label }}
+                  <text class="filter-chip-text">{{ item.label }}</text>
                 </view>
               </view>
             </view>
 
-            <view class="config-card">
+            <view class="section-card">
               <view class="section-head">
-                <text class="section-title">可选技能</text>
-                <text class="section-note">当前编辑技能{{ activeSkillSlot + 1 }}</text>
+                <view class="section-title-row">
+                  <view class="section-dot"></view>
+                  <text class="section-title">可选技能</text>
+                </view>
+                <view class="count-badge">
+                  <text class="count-badge-text">当前编辑 技能{{ activeSkillSlot + 1 }}</text>
+                </view>
               </view>
               <view v-if="filteredSkillOptions.length" class="skill-option-list">
                 <view
                   v-for="skill in filteredSkillOptions"
                   :key="`${skill.name}-${skill.skillType}`"
-                  class="skill-option-card"
-                  :class="[
-                    { active: isSkillSelectedOnActiveSlot(skill), chosen: isSkillChosen(skill) },
-                    skill.skillType === '血脉技能' ? 'bloodline' : '',
-                    skill.skillType === '可学技能石' ? 'stone' : '',
-                    skill.skillType === '精灵技能' ? 'normal' : ''
-                  ]"
-                  @click="selectSkillCard(skill)"
+                  class="skill-option-slot"
+                  :class="{ chosen: isSkillChosen(skill) && !isSkillSelectedOnActiveSlot(skill) }"
                 >
-                  <RemoteImage v-if="skill.icon" class="skill-option-icon" :src="resolvePetImage(skill.icon)" mode="aspectFit" />
-                  <view v-else class="skill-option-icon empty-icon"></view>
-                  <text class="skill-option-name">{{ skill.name }}</text>
-                  <view class="skill-option-meta">
-                    <text class="skill-option-tag">{{ skill.type }}</text>
-                    <TypeBadge v-if="skill.attr && skill.attr !== '-'" :label="skill.attr" :color="getTypeColor(skill.attr)" compact />
-                    <text class="skill-option-tag muted">{{ skill.skillTypeLabel }}</text>
-                  </view>
-                  <text class="skill-option-desc">{{ skill.describe || '暂无描述' }}</text>
+                  <SkillRow
+                    :skill="skill"
+                    compact
+                    :active="isSkillSelectedOnActiveSlot(skill)"
+                    @click="selectSkillCard(skill)"
+                  />
                 </view>
               </view>
               <view v-else class="empty-skills">
-                <text>当前精灵没有可选技能数据</text>
+                <AppIcon name="search" :size="15" color="#A3AE9F" :stroke-width="2.2" />
+                <text class="empty-skills-text">当前精灵没有可选技能数据</text>
               </view>
             </view>
-          </view>
+          </template>
 
-          <view v-else class="config-stack">
-            <view class="config-card">
-              <text class="section-title">性格增益 / 减益</text>
+          <template v-else>
+            <view class="section-card">
+              <view class="section-head">
+                <view class="section-title-row">
+                  <view class="section-dot"></view>
+                  <text class="section-title">性格增益 / 减益</text>
+                </view>
+              </view>
               <view class="picker-stack">
                 <picker :range="natureLabels" :value="upIndex" @change="onNatureChange('up', $event)">
-                  <view class="picker-box">增益：{{ getNatureLabel(draft.natureUp) }}</view>
+                  <view class="picker-box">
+                    <view class="picker-tag up">
+                      <text class="picker-tag-text">增益</text>
+                    </view>
+                    <text class="picker-value">{{ getNatureLabel(draft.natureUp) }}</text>
+                    <AppIcon name="chevron-down" :size="12" color="#A3AE9F" :stroke-width="2.6" />
+                  </view>
                 </picker>
                 <picker :range="natureLabels" :value="downIndex" @change="onNatureChange('down', $event)">
-                  <view class="picker-box">减益：{{ getNatureLabel(draft.natureDown) }}</view>
+                  <view class="picker-box">
+                    <view class="picker-tag down">
+                      <text class="picker-tag-text">减益</text>
+                    </view>
+                    <text class="picker-value">{{ getNatureLabel(draft.natureDown) }}</text>
+                    <AppIcon name="chevron-down" :size="12" color="#A3AE9F" :stroke-width="2.6" />
+                  </view>
                 </picker>
               </view>
-              <text v-if="natureWarning" class="field-warning">{{ natureWarning }}</text>
+              <view v-if="natureWarning" class="warn-banner">
+                <AppIcon name="info" :size="11" color="#C64B38" :stroke-width="2.4" />
+                <text class="warn-text">{{ natureWarning }}</text>
+              </view>
             </view>
 
-            <view class="config-card">
-              <text class="section-title">个体值</text>
+            <view class="section-card">
+              <view class="section-head">
+                <view class="section-title-row">
+                  <view class="section-dot"></view>
+                  <text class="section-title">个体值</text>
+                </view>
+                <view class="count-badge">
+                  <text class="count-badge-text">已提升 {{ filledIvItems.length }}/3 项</text>
+                </view>
+              </view>
               <view class="iv-summary">
-                <text class="iv-summary-label">当前提升</text>
                 <view v-if="filledIvItems.length" class="iv-summary-tags">
                   <text v-for="item in filledIvItems" :key="item.key" class="iv-summary-tag">
                     {{ item.label }} +{{ item.value }}
@@ -208,9 +207,20 @@
                 </view>
                 <text v-else class="iv-summary-empty">默认全为 0，未增加任何个体值</text>
               </view>
-              <text class="iv-rule-tip">规则：每项只能填 1-10，最多只能提升 3 项，其余保持 0。</text>
-              <text class="iv-rule-tip">默认策略：性格增益优先 +10，减益保持 0，并按种族值自动补满另外两项。</text>
-              <text v-if="ivWarning" class="field-warning">{{ ivWarning }}</text>
+              <view class="iv-rule-list">
+                <view class="iv-rule-line">
+                  <AppIcon name="check" :size="9" color="#1E7A46" :stroke-width="3" />
+                  <text class="iv-rule-text">每项只能填 1-10，最多提升 3 项，其余保持 0。</text>
+                </view>
+                <view class="iv-rule-line">
+                  <AppIcon name="check" :size="9" color="#1E7A46" :stroke-width="3" />
+                  <text class="iv-rule-text">默认按性格增益 +10，减益 0，种族值自动补满。</text>
+                </view>
+              </view>
+              <view v-if="ivWarning" class="warn-banner">
+                <AppIcon name="info" :size="11" color="#C64B38" :stroke-width="2.4" />
+                <text class="warn-text">{{ ivWarning }}</text>
+              </view>
               <view class="iv-grid">
                 <view
                   v-for="item in ivFields"
@@ -228,19 +238,23 @@
                 </view>
               </view>
             </view>
-          </view>
-        </scroll-view>
-      </view>
+          </template>
+
+          <view class="bottom-safe"></view>
+        </view>
+      </scroll-view>
     </view>
   </view>
 </template>
 
 <script>
+import AppIcon from '@/components/AppIcon/AppIcon.vue'
+import SkillRow from '@/components/SkillRow/SkillRow.vue'
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import { petTypes } from '@/data/pet/pet_detail.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
 import { buildSuggestedIvs } from '@/utils/buildSuggestedIvs.js'
-import { savePetConfig, loadPetConfig } from '@/utils/petConfigCache.js'
+import { savePetConfig } from '@/utils/petConfigCache.js'
 
 const IV_FIELDS = [
   { key: 'hp', label: '生命' },
@@ -314,16 +328,14 @@ function createEmptySkill() {
 export default {
   name: 'TeamEditSheet',
   components: {
+    AppIcon,
+    SkillRow,
     TypeBadge
   },
   props: {
     visible: {
       type: Boolean,
       default: false
-    },
-    mode: {
-      type: String,
-      default: 'add'
     },
     editData: {
       type: Object,
@@ -341,25 +353,17 @@ export default {
   data() {
     return {
       draft: createDraft(),
-      keyword: '',
-      selectedTypes: [],
       activeSection: 'skills',
       activeSkillSlot: 0,
       activeSkillFilter: 'all'
     }
   },
   computed: {
-    title() {
-      return this.mode === 'add' ? '添加精灵' : '编辑配置'
-    },
     ivFields() {
       return IV_FIELDS
     },
     natureLabels() {
       return NATURE_OPTIONS.map((item) => item.label)
-    },
-    typeOptions() {
-      return TYPE_OPTIONS
     },
     skillFilterOptions() {
       return SKILL_FILTER_OPTIONS
@@ -369,16 +373,6 @@ export default {
     },
     downIndex() {
       return Math.max(0, NATURE_OPTIONS.findIndex((item) => item.value === this.draft.natureDown))
-    },
-    filteredPets() {
-      const keyword = String(this.keyword || '').trim().toLowerCase()
-      return this.pets.filter((pet) => {
-        const matchKeyword = !keyword || String(pet.name || '').toLowerCase().includes(keyword)
-        const matchType =
-          this.selectedTypes.length === 0 ||
-          this.selectedTypes.every((type) => (pet.types || []).includes(type))
-        return matchKeyword && matchType
-      })
     },
     selectedPet() {
       return this.pets.find((pet) => pet.id === this.draft.petId) || null
@@ -433,9 +427,7 @@ export default {
       handler(value) {
         if (!value) return
         this.draft = createDraft(this.editData)
-        this.keyword = ''
-        this.selectedTypes = []
-        this.activeSection = this.mode === 'add' ? 'skills' : 'skills'
+        this.activeSection = 'skills'
         this.activeSkillSlot = 0
         this.activeSkillFilter = 'all'
       }
@@ -451,53 +443,13 @@ export default {
   },
   methods: {
     handleMaskClick() {
-      if (this.mode === 'edit') {
-        this.$emit('autosave', this.sanitizeDraft())
-        return
-      }
-      this.$emit('close')
-    },
-    onKeywordInput(event) {
-      this.keyword = event.detail.value
-    },
-    clearKeyword() {
-      this.keyword = ''
-    },
-    clearTypes() {
-      this.selectedTypes = []
-    },
-    toggleType(type) {
-      const index = this.selectedTypes.indexOf(type)
-      if (index >= 0) {
-        this.selectedTypes.splice(index, 1)
-        return
-      }
-      if (this.selectedTypes.length >= 2) {
-        this.selectedTypes.shift()
-      }
-      this.selectedTypes.push(type)
+      this.$emit('autosave', this.sanitizeDraft())
     },
     getTypeColor(type) {
       return TYPE_OPTIONS.find((item) => item.key === type)?.color || '#5b7cf5'
     },
     resolvePetImage(src) {
       return resolveAssetPath(src)
-    },
-    selectPet(pet) {
-      this.draft.petId = pet.id
-      this.draft.petName = pet.name
-      this.draft.image = resolveAssetPath(pet.img)
-      this.draft.types = [...(pet.types || [])]
-      const cached = loadPetConfig(pet.id)
-      if (cached && cached.ivs) {
-        this.draft.ivs = { ...cached.ivs }
-        if (cached.natureUp) this.draft.natureUp = cached.natureUp
-        if (cached.natureDown) this.draft.natureDown = cached.natureDown
-        if (cached.star !== undefined) this.draft.star = cached.star
-        if (cached.level !== undefined) this.draft.level = cached.level
-      } else {
-        this.applySuggestedBuild()
-      }
     },
     onNatureChange(kind, event) {
       const option = NATURE_OPTIONS[Number(event.detail.value)] || NATURE_OPTIONS[0]
@@ -553,24 +505,30 @@ export default {
       return this.skillSlots.some((item) => item.name === skill.name && item.skillType === skill.skillType)
     },
     selectSkillCard(skill) {
+      if (this.isSkillSelectedOnActiveSlot(skill)) {
+        this.clearSkillSlot(this.activeSkillSlot)
+        return
+      }
+
+      const existedIndex = this.skillSlots.findIndex(
+        (item, index) => index !== this.activeSkillSlot && item.name === skill.name && item.skillType === skill.skillType
+      )
+      if (existedIndex >= 0) {
+        this.activeSkillSlot = existedIndex
+        return
+      }
+
       if (skill.skillType === '血脉技能') {
-        const existed = this.skillSlots.findIndex(
+        const bloodIndex = this.skillSlots.findIndex(
           (item, index) => index !== this.activeSkillSlot && item.skillType === '血脉技能' && item.name
         )
-        if (existed >= 0) {
+        if (bloodIndex >= 0) {
           uni.showToast({ title: '血脉技能最多只能选择一个', icon: 'none' })
           return
         }
       }
 
       const nextSkills = this.skillSlots.slice(0, 4).map((item) => ({ ...item }))
-      const duplicateIndex = nextSkills.findIndex(
-        (item, index) => index !== this.activeSkillSlot && item.name === skill.name && item.skillType === skill.skillType
-      )
-      if (duplicateIndex >= 0) {
-        uni.showToast({ title: '同一只精灵不能带两个相同技能', icon: 'none' })
-        return
-      }
       nextSkills[this.activeSkillSlot] = { ...skill }
       this.draft.skills = nextSkills
 
@@ -586,9 +544,6 @@ export default {
     },
     getNatureLabel(value) {
       return NATURE_OPTIONS.find((item) => item.value === value)?.label || '无'
-    },
-    formatTypes(types = []) {
-      return types.join(' / ')
     },
     sanitizeDraft() {
       const draft = createDraft(this.draft)
@@ -611,15 +566,15 @@ export default {
         uni.showToast({ title: '请先选择精灵', icon: 'none' })
         return
       }
-      if (this.mode === 'edit' && this.natureWarning) {
+      if (this.natureWarning) {
         uni.showToast({ title: this.natureWarning, icon: 'none' })
         return
       }
-      if (this.mode === 'edit' && this.ivWarning) {
+      if (this.ivWarning) {
         uni.showToast({ title: '个体值最多只能提升 3 项', icon: 'none' })
         return
       }
-      if (this.mode === 'edit' && this.skillWarning) {
+      if (this.skillWarning) {
         uni.showToast({ title: this.skillWarning, icon: 'none' })
         return
       }
@@ -640,538 +595,633 @@ export default {
 <style scoped>
 .sheet-mask {
   position: fixed;
-  inset: 0;
-  z-index: 90;
-  background: rgba(61, 52, 43, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: rgba(30, 25, 14, 0.55);
   display: flex;
   align-items: flex-end;
 }
 
 .sheet-panel {
   width: 100%;
-  height: 84vh;
-  border-radius: 16rpx 16rpx 0 0;
-  background: #FFFFFF;
-  padding: 12rpx 16rpx calc(12rpx + env(safe-area-inset-bottom));
-  box-shadow: 0 -4rpx 16rpx rgba(61, 52, 43, 0.08);
+  height: 86vh;
+  background: #FAF6EC;
+  background-image:
+    radial-gradient(circle at 10% 4%, rgba(47, 158, 95, 0.06) 0, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(201, 161, 78, 0.07) 0, transparent 38%);
+  border-radius: 24px 24px 0 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-.sheet-handle {
-  width: 56rpx;
-  height: 6rpx;
-  border-radius: 8rpx;
-  background: #E2E8F0;
-  margin: 0 auto;
+.sheet-grabber {
+  flex-shrink: 0;
+  width: 40px;
+  height: 4.5px;
+  border-radius: 999px;
+  background: rgba(44, 58, 47, 0.18);
+  margin: 8px auto 0;
 }
 
-.sheet-topbar {
-  display: grid;
-  grid-template-columns: 120rpx 1fr 120rpx;
+/* ===== 翠绿头栏 ===== */
+.sheet-head {
+  flex-shrink: 0;
+  display: flex;
   align-items: center;
-  gap: 10rpx;
-  margin-top: 12rpx;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 14px;
+  background: linear-gradient(135deg, #1E7A46 0%, #2F9E5F 100%);
+  border-bottom: 1.5px solid rgba(22, 98, 53, 0.5);
+  box-shadow: 0 3px 0 rgba(22, 98, 53, 0.18);
+  margin-top: 6px;
 }
 
-.top-btn {
-  height: 52rpx;
-  border-radius: 8rpx;
+.head-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.head-seal {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1.5px solid rgba(255, 245, 236, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20rpx;
-  font-weight: 600;
+  flex-shrink: 0;
 }
 
-.top-btn.ghost {
-  background: #F8FAFC;
-  color: #64748B;
-}
-
-.top-btn.primary {
-  background: #22C55E;
-  color: #FFFFFF;
-}
-
-.sheet-title {
-  text-align: center;
-  font-size: 26rpx;
+.head-title {
+  font-size: 16.5px;
   font-weight: 700;
-  color: #1E293B;
+  color: #FFF5EC;
+  letter-spacing: 0.02em;
 }
 
-.sheet-body {
-  flex: 1;
-  min-height: 0;
-  margin-top: 14rpx;
-}
-
-.add-body {
-  display: flex;
-  flex-direction: column;
-  gap: 12rpx;
-}
-
-.edit-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.selector-card,
-.config-card,
-.selected-card {
-  padding: 14rpx;
-  border-radius: 16rpx;
-  background: #FFFFFF;
-  box-shadow: 0 4rpx 12rpx rgba(61, 52, 43, 0.05);
-}
-
-.pet-list-scroll,
-.config-scroll {
-  flex: 1;
-  min-height: 0;
-}
-
-.search-row {
-  margin-top: 10rpx;
+.head-actions {
   display: flex;
   align-items: center;
-  gap: 10rpx;
+  gap: 7px;
+  flex-shrink: 0;
 }
 
-.search-input {
-  flex: 1;
-  height: 60rpx;
-  border-radius: 8rpx;
-  background: #F8FAFC;
-  padding: 0 16rpx;
-  font-size: 22rpx;
-  color: #1E293B;
+.head-close {
+  height: 30px;
+  padding: 0 11px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1.5px solid rgba(255, 245, 236, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.12s ease;
 }
 
-.input-placeholder {
-  color: #94A3B8;
-}
-
-.search-clear,
-.filter-clear {
-  font-size: 20rpx;
-  font-weight: 600;
-  color: #22C55E;
-}
-
-.section-title {
-  display: block;
-  font-size: 22rpx;
+.head-close-text {
+  font-size: 11.5px;
   font-weight: 700;
-  color: #1E293B;
+  color: #FFF5EC;
+}
+
+.head-save {
+  height: 30px;
+  padding: 0 13px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #A97F35 0%, #C9A14E 100%);
+  border: 1.5px solid #8A6A2C;
+  box-shadow: 0 2px 0 rgba(138, 106, 44, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.12s ease;
+}
+
+.head-save-text {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #FFF9EC;
+}
+
+/* ===== 主体 ===== */
+.sheet-scroll {
+  flex: 1;
+  height: 0;
+  overflow: hidden;
+}
+
+.sheet-inner {
+  padding: 12px 14px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.press-down {
+  transform: scale(0.96);
+  opacity: 0.88;
+}
+
+/* ===== 选中精灵卡 ===== */
+.pet-card {
+  padding: 11px;
+  border-radius: 16px;
+  background: #FFFDF7;
+  border: 1.5px solid #E3DCC8;
+  box-shadow: 0 2.5px 0 rgba(44, 58, 47, 0.10);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.pet-art {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 62%, rgba(201, 161, 78, 0.12) 0, transparent 62%),
+    #FFFFFF;
+  border: 1px solid rgba(227, 220, 200, 0.8);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pet-img {
+  width: 100%;
+  height: 100%;
+}
+
+.pet-side {
+  flex: 1;
+  min-width: 0;
+}
+
+.pet-name {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  color: #2C3A2F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pet-types {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.pet-note {
+  display: block;
+  margin-top: 5px;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: #6B7A6E;
+}
+
+/* ===== 选项卡 ===== */
+.tab-strip {
+  display: flex;
+  gap: 8px;
+}
+
+.tab-pill {
+  flex: 1;
+  height: 34px;
+  border-radius: 999px;
+  background: #F2EBDA;
+  border: 1.5px solid #E3DCC8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: transform 0.12s ease;
+}
+
+.tab-pill.active {
+  background: linear-gradient(135deg, #1E7A46 0%, #2F9E5F 100%);
+  border-color: #166235;
+  box-shadow: 0 2px 0 rgba(22, 98, 53, 0.35);
+}
+
+.tab-text {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.tab-pill.active .tab-text {
+  color: #FFF5EC;
+}
+
+/* ===== 区块卡 ===== */
+.section-card {
+  padding: 12px;
+  border-radius: 16px;
+  background: #FFFDF7;
+  border: 1.5px solid #E3DCC8;
+  box-shadow: 0 2.5px 0 rgba(44, 58, 47, 0.10);
 }
 
 .section-head {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10rpx;
-}
-
-.section-note,
-.selected-label,
-.selected-empty,
-.result-tip,
-.selected-type,
-.selected-note,
-.iv-summary-label,
-.iv-summary-empty,
-.iv-rule-tip,
-.field-warning,
-.skill-option-meta,
-.skill-picker-type {
-  font-size: 18rpx;
-  color: #64748B;
-}
-
-.filter-head,
-.selected-row {
-  margin-top: 14rpx;
-  display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10rpx;
+  gap: 8px;
 }
 
-.selected-types,
-.type-grid,
-.pet-card-types,
-.iv-summary-tags,
-.filter-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6rpx;
-}
-
-.type-grid {
-  margin-top: 12rpx;
-}
-
-.type-chip,
-.filter-chip {
-  min-height: 48rpx;
-  padding: 6rpx 10rpx;
-  border-radius: 8rpx;
-  border: 1px solid #E2E8F0;
-  background: #F8FAFC;
-  display: inline-flex;
-  align-items: center;
-  gap: 6rpx;
-}
-
-.type-chip.active,
-.filter-chip.active {
-  background: rgba(246, 185, 59, 0.1);
-  border-color: #22C55E;
-  color: #22C55E;
-}
-
-.chip-text {
-  font-size: 18rpx;
-  color: #1E293B;
-}
-
-.result-tip {
-  display: block;
-  margin-top: 10rpx;
-}
-
-.pet-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10rpx;
-  padding: 2rpx;
-}
-
-.pet-card {
-  padding: 12rpx;
-  border-radius: 16rpx;
-  background: #FFFFFF;
-  box-shadow: 0 4rpx 12rpx rgba(61, 52, 43, 0.05);
-  border: 1px solid #E2E8F0;
-}
-
-.pet-card.active {
-  border-color: #22C55E;
-  box-shadow: 0 4rpx 16rpx rgba(246, 185, 59, 0.15);
-}
-
-.pet-card-image {
-  width: 100%;
-  height: 100rpx;
-}
-
-.pet-card-name,
-.selected-name {
-  display: block;
-  margin-top: 8rpx;
-  font-size: 20rpx;
-  font-weight: 700;
-  color: #1E293B;
-}
-
-.selected-card {
+.section-title-row {
   display: flex;
   align-items: center;
-  gap: 12rpx;
-  flex-shrink: 0;
-}
-
-.selected-image {
-  width: 100rpx;
-  height: 100rpx;
-  flex: 0 0 auto;
-}
-
-.selected-info {
+  gap: 6px;
   min-width: 0;
 }
 
-.editor-tabs {
-  margin-top: 12rpx;
-  display: flex;
-  gap: 10rpx;
+.section-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #C9A14E;
+}
+
+.section-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #2C3A2F;
+}
+
+.section-sub {
+  font-size: 10px;
+  font-weight: 600;
+  color: #A3AE9F;
   flex-shrink: 0;
 }
 
-.editor-tab {
-  flex: 1;
-  height: 56rpx;
-  border-radius: 8rpx;
-  background: #F8FAFC;
-  display: flex;
+.count-badge {
+  flex-shrink: 0;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #E4F2E8;
+  border: 1px solid #2F9E5F;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 22rpx;
+}
+
+.count-badge-text {
+  font-size: 10px;
   font-weight: 700;
-  color: #64748B;
+  color: #1E7A46;
 }
 
-.editor-tab.active {
-  background: #22C55E;
-  color: #FFFFFF;
-}
-
-.config-scroll {
-  margin-top: 12rpx;
-  height: 0;
-}
-
-.config-stack {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12rpx;
-  padding-bottom: 20rpx;
-}
-
+/* ===== 已选技能槽 ===== */
 .picked-grid {
-  margin-top: 10rpx;
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10rpx;
+  gap: 8px;
 }
 
 .picked-card {
-  padding: 10rpx;
-  border-radius: 8rpx;
-  background: #F8FAFC;
-  border: 1px solid transparent;
+  position: relative;
+  padding: 8px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1.5px solid #E3DCC8;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: transform 0.12s ease;
 }
 
 .picked-card.active {
-  border-color: #22C55E;
-  background: rgba(246, 185, 59, 0.08);
+  border-color: #C9A14E;
+  background: #FBF3DD;
+  box-shadow: 0 2px 0 rgba(138, 106, 44, 0.22);
 }
 
 .picked-top {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6rpx;
-  width: 100%;
-}
-
-.picked-slot,
-.picked-name {
-  color: #1E293B;
 }
 
 .picked-slot {
-  font-size: 18rpx;
+  font-size: 10px;
   font-weight: 700;
+  color: #6B7A6E;
 }
 
 .picked-clear {
-  font-size: 16rpx;
-  color: #E55039;
-  font-weight: 600;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FBE9E4;
+  border: 1px solid rgba(224, 96, 78, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.picked-name {
-  display: block;
-  margin-top: 6rpx;
-  font-size: 20rpx;
-  font-weight: 600;
-  line-height: 1.3;
-  text-align: center;
+.picked-icon-wrap {
+  margin-top: 6px;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: #F2EBDA;
+  border: 1px solid #E3DCC8;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .picked-icon {
-  width: 60rpx;
-  height: 60rpx;
-  margin-top: 8rpx;
-  border-radius: 8rpx;
-  background: #FFFFFF;
+  width: 100%;
+  height: 100%;
 }
 
-.skill-option-list {
-  margin-top: 10rpx;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10rpx;
-}
-
-.skill-option-card {
-  padding: 10rpx;
-  border-radius: 8rpx;
-  background: #F8FAFC;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #E2E8F0;
-}
-
-.skill-option-card.active {
-  border-color: #22C55E;
-  background: rgba(34, 197, 94, 0.08);
-}
-
-.skill-option-card.chosen:not(.active) {
-  border-color: rgba(246, 185, 59, 0.3);
-}
-
-.skill-option-card.bloodline {
-  border-color: rgba(229, 80, 57, 0.2);
-}
-
-.skill-option-card.stone {
-  border-color: rgba(74, 105, 189, 0.2);
-}
-
-.skill-option-icon {
-  width: 60rpx;
-  height: 60rpx;
-  border-radius: 8rpx;
-  background: #FFFFFF;
-}
-
-.skill-option-name {
-  display: block;
-  margin-top: 6rpx;
-  font-size: 20rpx;
+.picked-name {
+  margin-top: 5px;
+  font-size: 11px;
   font-weight: 700;
-  color: #1E293B;
-  line-height: 1.3;
-  text-align: center;
+  color: #2C3A2F;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.skill-option-meta {
-  margin-top: 6rpx;
+.picked-card.active .picked-name {
+  color: #8A6A2C;
+}
+
+.warn-banner {
+  margin-top: 9px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: #FBE9E4;
+  border: 1px dashed rgba(224, 96, 78, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.warn-text {
+  flex: 1;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #C64B38;
+  line-height: 1.4;
+}
+
+/* ===== 筛选 chips ===== */
+.filter-chips {
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 4rpx;
+  gap: 7px;
 }
 
-.skill-option-tag {
-  height: 30rpx;
-  padding: 0 8rpx;
-  border-radius: 8rpx;
-  background: #FFFFFF;
-  color: #64748B;
-  font-size: 16rpx;
-  font-weight: 600;
+.filter-chip {
+  height: 28px;
+  padding: 0 13px;
+  border-radius: 999px;
+  background: #F2EBDA;
+  border: 1.5px solid #E3DCC8;
   display: inline-flex;
   align-items: center;
-  border: 1px solid #E2E8F0;
+  transition: transform 0.12s ease;
 }
 
-.skill-option-tag.muted {
-  background: #F8FAFC;
-  color: #94A3B8;
+.filter-chip.active {
+  background: #E4F2E8;
+  border-color: #2F9E5F;
 }
 
-.skill-option-desc {
-  display: -webkit-box;
-  margin-top: 4rpx;
-  font-size: 16rpx;
-  line-height: 1.4;
-  color: #64748B;
-  text-align: center;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.filter-chip-text {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.filter-chip.active .filter-chip-text {
+  color: #1E7A46;
+}
+
+/* ===== 可选技能列表 ===== */
+.skill-option-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.skill-option-slot {
+  border-radius: 14px;
+  transition: transform 0.12s ease;
+}
+
+.skill-option-slot.chosen {
+  border: 1.5px dashed rgba(201, 161, 78, 0.55);
+  border-radius: 14px;
+  padding: 3px;
 }
 
 .empty-skills {
-  margin-top: 10rpx;
-  padding: 16rpx;
-  border-radius: 8rpx;
-  background: #F8FAFC;
-  font-size: 20rpx;
-  color: #94A3B8;
-  text-align: center;
+  margin-top: 10px;
+  padding: 18px 12px;
+  border-radius: 14px;
+  background: #FFFDF7;
+  border: 1.5px dashed #D8CFB4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
+.empty-skills-text {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #A3AE9F;
+}
+
+/* ===== 性格 picker ===== */
 .picker-stack {
-  margin-top: 10rpx;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10rpx;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .picker-box {
-  min-height: 60rpx;
-  border-radius: 8rpx;
-  background: #F8FAFC;
-  padding: 0 14rpx;
+  height: 40px;
+  padding: 0 11px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1.5px solid #E3DCC8;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10rpx;
-  font-size: 20rpx;
-  color: #1E293B;
+  gap: 8px;
 }
 
-.field-warning {
-  display: block;
-  margin-top: 8rpx;
-  color: #E55039;
+.picker-tag {
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
+.picker-tag.up {
+  background: #E4F2E8;
+  border: 1px solid #2F9E5F;
+}
+
+.picker-tag.down {
+  background: #FBE9E4;
+  border: 1px solid rgba(224, 96, 78, 0.5);
+}
+
+.picker-tag-text {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.picker-tag.up .picker-tag-text {
+  color: #1E7A46;
+}
+
+.picker-tag.down .picker-tag-text {
+  color: #C64B38;
+}
+
+.picker-value {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+  color: #2C3A2F;
+}
+
+/* ===== 个体值 ===== */
 .iv-summary {
-  margin-top: 10rpx;
+  margin-top: 10px;
+}
+
+.iv-summary-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .iv-summary-tag {
-  min-height: 34rpx;
-  padding: 2rpx 8rpx;
-  border-radius: 8rpx;
-  background: #F8FAFC;
-  color: #1E293B;
-  font-size: 16rpx;
-  font-weight: 600;
+  height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: #F6EEDB;
+  border: 1px solid #D9B96A;
+  color: #8A6A2C;
+  font-size: 10.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
   font-family: Monaco, Consolas, 'Courier New', monospace;
-  border: 1px solid #E2E8F0;
+}
+
+.iv-summary-empty {
+  font-size: 10.5px;
+  color: #A3AE9F;
+  font-weight: 600;
+}
+
+.iv-rule-list {
+  margin-top: 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.iv-rule-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.iv-rule-text {
+  flex: 1;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #6B7A6E;
 }
 
 .iv-grid {
-  margin-top: 10rpx;
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10rpx;
+  gap: 8px;
+}
+
+@media screen and (min-width: 520px) {
+  .iv-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .iv-item {
-  padding: 10rpx;
-  border-radius: 8rpx;
-  background: #F8FAFC;
-  border: 1px solid transparent;
+  padding: 8px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1.5px solid #E3DCC8;
 }
 
 .iv-item.active {
-  border-color: #22C55E;
-  background: rgba(246, 185, 59, 0.06);
+  border-color: #2F9E5F;
+  background: #F2FAF4;
 }
 
 .iv-label {
   display: block;
-  font-size: 18rpx;
-  font-weight: 600;
-  color: #64748B;
+  font-size: 10px;
+  font-weight: 700;
+  color: #6B7A6E;
 }
 
 .iv-input {
-  margin-top: 8rpx;
-  height: 52rpx;
-  border-radius: 8rpx;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  padding: 0 12rpx;
-  font-size: 22rpx;
-  color: #1E293B;
+  margin-top: 5px;
+  width: 100%;
+  height: 34px;
+  border-radius: 9px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+  padding: 0 10px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 800;
+  color: #2C3A2F;
   font-family: Monaco, Consolas, 'Courier New', monospace;
+}
+
+.iv-item.active .iv-input {
+  border-color: rgba(47, 158, 95, 0.5);
+}
+
+.bottom-safe {
+  height: 16px;
 }
 </style>

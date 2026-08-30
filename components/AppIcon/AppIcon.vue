@@ -1,14 +1,5 @@
 <template>
-  <view class="app-icon" :style="wrapStyle">
-    <svg :width="size" :height="size" viewBox="0 0 24 24">
-      <template v-for="(el, index) in renderElements" :key="index">
-        <path v-if="el.tag === 'path'" v-bind="el.attrs" />
-        <rect v-else-if="el.tag === 'rect'" v-bind="el.attrs" />
-        <circle v-else-if="el.tag === 'circle'" v-bind="el.attrs" />
-        <ellipse v-else v-bind="el.attrs" />
-      </template>
-    </svg>
-  </view>
+  <image class="app-icon" :style="wrapStyle" :src="iconSrc" mode="aspectFit" />
 </template>
 
 <script>
@@ -180,6 +171,51 @@ const ICONS = {
   ]
 }
 
+function serializeAttrs(attrs) {
+  return Object.keys(attrs)
+    .map((key) => `${key}="${attrs[key]}"`)
+    .join(' ')
+}
+
+function buildSvgString(defs, color, strokeWidth) {
+  const body = defs
+    .map((el) => {
+      const attrs = { ...el.attrs }
+      switch (el.layer) {
+        case 'p':
+          attrs.fill = color
+          break
+        case 'ps':
+          attrs.fill = 'none'
+          attrs.stroke = color
+          attrs['stroke-width'] = el.sw || strokeWidth
+          attrs['stroke-linecap'] = 'round'
+          attrs['stroke-linejoin'] = 'round'
+          break
+        case 's':
+          attrs.fill = color
+          attrs['fill-opacity'] = '0.35'
+          break
+        case 'h':
+          attrs.fill = '#FFFFFF'
+          attrs['fill-opacity'] = '0.92'
+          break
+        case 'hs':
+          attrs.fill = 'none'
+          attrs.stroke = '#FFFFFF'
+          attrs['stroke-width'] = el.sw || 2
+          attrs['stroke-linecap'] = 'round'
+          attrs['stroke-linejoin'] = 'round'
+          break
+      }
+      return `<${el.tag} ${serializeAttrs(attrs)}/>`
+    })
+    .join('')
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">${body}</svg>`
+}
+
+const uriCache = new Map()
+
 export default {
   name: 'AppIcon',
   props: {
@@ -189,39 +225,17 @@ export default {
     strokeWidth: { type: Number, default: 2.6 }
   },
   computed: {
-    renderElements() {
+    iconSrc() {
+      const cacheKey = `${this.name}|${this.color}|${this.strokeWidth}`
+      const cached = uriCache.get(cacheKey)
+      if (cached) return cached
+
       const defs = ICONS[this.name] || ICONS.info
-      return defs.map((el) => {
-        const attrs = { ...el.attrs }
-        switch (el.layer) {
-          case 'p':
-            attrs.fill = this.color
-            break
-          case 'ps':
-            attrs.fill = 'none'
-            attrs.stroke = this.color
-            attrs['stroke-width'] = el.sw || this.strokeWidth
-            attrs['stroke-linecap'] = 'round'
-            attrs['stroke-linejoin'] = 'round'
-            break
-          case 's':
-            attrs.fill = this.color
-            attrs['fill-opacity'] = 0.35
-            break
-          case 'h':
-            attrs.fill = '#FFFFFF'
-            attrs['fill-opacity'] = 0.92
-            break
-          case 'hs':
-            attrs.fill = 'none'
-            attrs.stroke = '#FFFFFF'
-            attrs['stroke-width'] = el.sw || 2
-            attrs['stroke-linecap'] = 'round'
-            attrs['stroke-linejoin'] = 'round'
-            break
-        }
-        return { tag: el.tag, attrs }
-      })
+      const uri = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
+        buildSvgString(defs, this.color, this.strokeWidth)
+      )}`
+      uriCache.set(cacheKey, uri)
+      return uri
     },
     wrapStyle() {
       return {
@@ -235,9 +249,7 @@ export default {
 
 <style scoped>
 .app-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
   flex-shrink: 0;
   line-height: 0;
 }

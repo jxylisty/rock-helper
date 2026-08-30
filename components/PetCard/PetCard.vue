@@ -1,8 +1,11 @@
 <template>
-  <view class="pet-card" :class="{ compact }" hover-class="card-press" @click="$emit('click')">
+  <view class="pet-card" :class="{ compact, selected }" hover-class="card-press" @click="$emit('click')">
     <view v-if="accentStyle" class="accent-strip" :style="accentStyle"></view>
     <view v-if="badge" class="corner-badge" :class="`tone-${badgeTone}`">
       <text>{{ badge }}</text>
+    </view>
+    <view v-if="selected" class="check-seal">
+      <AppIcon name="check" :size="10" color="#FFF5EC" :stroke-width="3" />
     </view>
 
     <template v-if="compact">
@@ -63,9 +66,11 @@
 
 <script>
 import { resolveAssetPath } from '@/utils/asset-path.js'
+import AppIcon from '@/components/AppIcon/AppIcon.vue'
 
 export default {
   name: 'PetCard',
+  components: { AppIcon },
   props: {
     img: { type: String, default: '' },
     name: { type: String, default: '' },
@@ -76,7 +81,8 @@ export default {
     accentColors: { type: Array, default: () => [] },
     code: { type: String, default: '' },
     badge: { type: String, default: '' },
-    badgeTone: { type: String, default: 'gold' }
+    badgeTone: { type: String, default: 'gold' },
+    selected: { type: Boolean, default: false }
   },
   computed: {
     resolvedImg() {
@@ -145,6 +151,28 @@ export default {
   border-color: #D8D0BA;
   background: #F2EBDA;
   color: #6B7A6E;
+}
+
+.pet-card.selected {
+  border-color: #2F9E5F;
+  background: #F2FAF4;
+  box-shadow: 0 3rpx 0 rgba(30, 122, 70, 0.25);
+}
+
+.check-seal {
+  position: absolute;
+  top: -6rpx;
+  right: -6rpx;
+  z-index: 3;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1E7A46 0%, #2F9E5F 100%);
+  border: 3rpx solid #FFFDF7;
+  box-shadow: 0 2rpx 0 rgba(22, 98, 53, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .img-wrap {

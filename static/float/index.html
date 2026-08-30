@@ -10,125 +10,303 @@
   body {
     font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
     background: transparent;
-    color: #e6edf3;
-    font-size: 13px;
+    color: #2C3A2F;
+    font-size: 12px;
     user-select: none;
   }
+  .mono { font-family: Monaco, Consolas, "Courier New", monospace; font-variant-numeric: tabular-nums; }
 
-  /* ---------- 收起态：悬浮球 ---------- */
+  /* ---------- 悬浮球（44dp；若存在 ball.png 贴图则优先显示贴图） ---------- */
   #ball {
-    position: fixed; right: 6px; bottom: 6px;
-    width: 52px; height: 52px; border-radius: 50%;
-    background: linear-gradient(135deg, #16a34a, #0ea5e9);
-    box-shadow: 0 4px 14px rgba(0,0,0,.45);
+    position: fixed; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 12px; font-weight: 600;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 24%, rgba(255, 255, 255, .5) 0, rgba(255, 255, 255, 0) 36%),
+      linear-gradient(150deg, #34d399 0%, #16a34a 55%, #0b7a3c 100%);
+    border: 2px solid rgba(255, 255, 255, .65);
+    box-shadow: 0 5px 14px rgba(6, 46, 24, .5), inset 0 -6px 12px rgba(0, 0, 0, .22);
+    color: #fff;
     cursor: pointer;
+    touch-action: none; /* inapp 模式拖动悬浮球时禁止浏览器手势 */
   }
+  .ball-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .ball-inner { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+  .ball-icon { font-size: 15px; text-shadow: 0 2px 3px rgba(0, 0, 0, .35); }
+  .ball-text { font-size: 8px; font-weight: 800; letter-spacing: .14em; margin-top: 2px; opacity: .95; }
+  #panel { display: none; }
 
-  /* ---------- 展开态：面板 ---------- */
-  #panel {
+  /* ---------- 面板（展开态） ---------- */
+  body.expanded #ball, body.uts-panel #ball { display: none !important; }
+  body.expanded #panel, body.uts-panel #panel {
+    display: flex; flex-direction: column;
     position: fixed; inset: 0;
-    background: #16213e;
-    display: none; flex-direction: column;
-    padding: 8px 10px 10px;
+    background: #FAF6EC;
+    background-image: radial-gradient(circle at 12% 0%, rgba(198, 75, 56, .06) 0, transparent 40%),
+                      radial-gradient(circle at 88% 12%, rgba(201, 161, 78, .06) 0, transparent 40%);
+    padding: 9px 9px 8px;
+    gap: 7px;
+    overflow-y: auto;
   }
-  body.expanded #panel { display: flex; }
-  body.expanded #ball { display: none; }
 
-  /* ---------- 小球独立窗口模式（Native.js 双窗口） ---------- */
-  body.ball-mode { background: transparent; }
-  body.ball-mode #panel { display: none !important; }
-  body.ball-mode #ball {
-    position: fixed; inset: 0;
-    width: 100%; height: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    font-size: 13px;
-  }
-  body.ball-mode.expanded #ball { display: flex; }
+  /* ---------- UTS 系统悬浮窗：顶部深色抓手条承担 拖动/点按收起/长按关闭 ---------- */
+  body.uts-panel .head-btn { display: none; }
+  body.uts-panel .head-sub { display: none; }
+  .head-hint { display: none; }
+  body.uts-panel .head-hint { display: inline; }
+  body.uts-panel #panel { padding: 7px 8px 8px; gap: 6px; }
 
-  .head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .head-title { font-size: 14px; font-weight: 700; color: #fff; flex: 1; }
+  .head { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .head-title { font-size: 13px; font-weight: 800; color: #2C3A2F; flex: 1; }
   .head-btn {
-    padding: 3px 10px; border-radius: 10px; font-size: 12px;
-    background: rgba(255,255,255,.12); color: #cbd5e1; cursor: pointer;
+    padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700;
+    background: #F2EBDA; border: 1px solid #E3DCC8; color: #6B7A6E; cursor: pointer;
   }
-  .head-btn.accent { background: #16a34a; color: #fff; }
+  .head-btn.accent { background: linear-gradient(135deg, #2F9E5F, #1E7A46); border-color: #166235; color: #FFFDF7; }
 
-  .tabs { display: flex; gap: 6px; margin-bottom: 6px; }
-  .tab {
-    flex: 1; text-align: center; padding: 5px 0; border-radius: 8px;
-    background: rgba(255,255,255,.08); color: #94a3b8; font-size: 12px; cursor: pointer;
+  .card {
+    background: #FFFDF7; border: 1.5px solid #E3DCC8; border-radius: 14px;
+    box-shadow: 0 2px 0 rgba(44, 58, 47, .1);
+    flex-shrink: 0;
   }
-  .tab.active { background: #16a34a; color: #fff; font-weight: 600; }
 
-  .search-input {
-    width: 100%; padding: 6px 10px; border-radius: 8px; border: none;
-    background: rgba(255,255,255,.1); color: #e6edf3; font-size: 13px; outline: none;
-    margin-bottom: 6px;
+  /* ---------- 结果卡（常驻置顶） ---------- */
+  .result-card { padding: 9px 11px; }
+  .result-skill-row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+  .result-skill-name { font-size: 12px; font-weight: 800; color: #2C3A2F; }
+  .chip {
+    height: 15px; padding: 0 6px; border-radius: 999px;
+    display: inline-flex; align-items: center;
+    font-size: 9px; font-weight: 700; color: #6B7A6E;
+    background: #F2EBDA; border: 1px solid #E3DCC8; white-space: nowrap;
   }
-  .search-input::placeholder { color: #64748b; }
+  .chip.type { color: #fff; border: none; }
 
-  .pet-list { flex: 1; overflow-y: auto; min-height: 0; }
-  .pet-item {
-    display: flex; align-items: center; gap: 6px;
-    padding: 5px 8px; border-radius: 8px; margin-bottom: 3px;
-    background: rgba(255,255,255,.05); cursor: pointer;
+  .dmg-track {
+    position: relative; height: 14px; border-radius: 999px; overflow: hidden;
+    background: #EAF1F7; border: 1px solid #D8E2EC; margin-top: 8px;
   }
-  .pet-item.active { background: rgba(34,197,94,.25); outline: 1px solid #22c55e; }
-  .pet-name { flex: 1; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pet-types { font-size: 11px; color: #94a3b8; }
-  .pet-speed { font-size: 11px; color: #64748b; }
+  .dmg-hp {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, #B9D2E8, #A9C6E2);
+  }
+  .dmg-fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: linear-gradient(90deg, #D98A6A, #C64B38);
+    border-radius: 999px 0 0 999px;
+  }
+  .dmg-nums {
+    display: flex; align-items: baseline; gap: 7px; margin-top: 6px;
+  }
+  .result-damage { font-size: 22px; font-weight: 800; color: #C64B38; line-height: 1; }
+  .result-damage.kill { color: #A02B1B; }
+  .result-hp { font-size: 12px; font-weight: 700; color: #2C6FD1; }
+  .result-pct { font-size: 12px; font-weight: 700; color: #6B7A6E; margin-left: auto; }
+  .verdict { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px; }
+  .verdict.survive { background: #E4F3EA; color: #1E7A46; }
+  .verdict.kill { background: #FBE3DC; color: #A02B1B; }
+  .result-note { margin-top: 5px; font-size: 9.5px; color: #A3AE9F; line-height: 1.5; }
+  .empty-tip { text-align: center; color: #A3AE9F; padding: 14px 0; font-size: 11px; }
+  .error-tip { text-align: center; color: #C64B38; padding: 14px 8px; font-size: 11px; line-height: 1.6; }
 
-  .skill-strip {
-    display: flex; gap: 5px; overflow-x: auto; padding: 4px 0;
-    border-top: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08);
-    margin-bottom: 6px; flex-shrink: 0;
+  /* ---------- 精灵行卡片（对方 / 我方） ---------- */
+  .side-card { padding: 7px 9px 8px; }
+  .side-row { cursor: pointer; }
+  .side-row { display: flex; align-items: center; gap: 8px; }
+  .side-label {
+    flex-shrink: 0; font-size: 9.5px; font-weight: 800; color: #FFF9EC;
+    padding: 2px 7px; border-radius: 999px;
   }
+  .side-label.opp { background: linear-gradient(135deg, #C64B38, #D98A6A); }
+  .side-label.mine { background: linear-gradient(135deg, #2F9E5F, #5BBF85); }
+  .side-info { flex: 1; min-width: 0; }
+  .side-name-row { display: flex; align-items: center; gap: 5px; min-width: 0; }
+  .side-name { font-size: 12.5px; font-weight: 800; color: #2C3A2F; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .type-badges { display: inline-flex; gap: 3px; }
+  .type-badge {
+    width: 20px; height: 14px; border-radius: 5px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: 700; color: #fff;
+    border: 1px solid rgba(255, 255, 255, .45); overflow: hidden;
+  }
+  .type-badge img { width: 12px; height: 12px; object-fit: contain; }
+
+  /* 技能条上的属性小图标 / 血脉标记 */
+  .sc-icon {
+    width: 13px; height: 13px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 7px; font-weight: 700; color: #fff;
+    border: 1px solid rgba(255, 255, 255, .5); flex-shrink: 0;
+  }
+  .sc-icon img { width: 10px; height: 10px; object-fit: contain; }
+  .blood-tag {
+    font-style: normal; font-size: 8px; font-weight: 800; color: #8A6A2C;
+    background: #FBF3DD; border: 1px solid #D9B96A; border-radius: 4px;
+    padding: 0 2px; line-height: 1.3; flex-shrink: 0;
+  }
+
+  /* 对方配置（满配/自定） */
+  .cfg-row { display: flex; align-items: center; gap: 4px; margin-top: 6px; }
+  .cfg-toggle {
+    height: 17px; padding: 0 8px; border-radius: 999px;
+    display: inline-flex; align-items: center;
+    font-size: 9.5px; font-weight: 700; color: #6B7A6E;
+    background: #F7F1E3; border: 1px solid #E3DCC8; cursor: pointer;
+  }
+  .cfg-toggle.active { background: linear-gradient(135deg, #2F9E5F, #1E7A46); border-color: #166235; color: #FFFDF7; }
+  .cfg-hint { flex: 1; min-width: 0; font-size: 8.5px; color: #A3AE9F; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cfg-edit { display: none; margin-top: 6px; }
+  .cfg-edit.open { display: block; }
+  .cfg-line { display: flex; align-items: center; gap: 5px; }
+  .iv-toggles { display: flex; gap: 4px; margin-top: 5px; }
+  .iv-toggle {
+    flex: 1; height: 26px; border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: #F7F1E3; border: 1px solid #E3DCC8; cursor: pointer;
+  }
+  .iv-toggle.on { background: #E4F3EA; border-color: #2F9E5F; }
+  .iv-toggle .iv-label { font-size: 8px; font-weight: 700; color: #6B7A6E; line-height: 1.2; }
+  .iv-toggle .iv-value { font-size: 9px; font-weight: 800; color: #A3AE9F; line-height: 1.2; }
+  .iv-toggle.on .iv-value { color: #1E7A46; }
+
+  /* 互换攻守 */
+  .swap-row { display: flex; justify-content: center; flex-shrink: 0; margin: -1px 0; }
+  .swap-btn {
+    padding: 3px 12px; border-radius: 999px;
+    font-size: 10px; font-weight: 700; color: #8A6A2C;
+    background: #FBF3DD; border: 1px solid #D9B96A; cursor: pointer;
+  }
+  .side-action {
+    flex-shrink: 0; padding: 3px 11px; border-radius: 999px;
+    font-size: 10.5px; font-weight: 700; color: #8A6A2C;
+    background: #FBF3DD; border: 1px solid #D9B96A; cursor: pointer;
+  }
+
+  /* 技能 chips 横滑 */
+  .skill-strip { display: flex; gap: 4px; overflow-x: auto; margin-top: 7px; padding-bottom: 1px; }
+  .skill-strip::-webkit-scrollbar { display: none; }
   .skill-chip {
-    flex-shrink: 0; padding: 4px 9px; border-radius: 8px; font-size: 12px;
-    background: rgba(255,255,255,.08); color: #cbd5e1; cursor: pointer; white-space: nowrap;
+    flex-shrink: 0; height: 20px; padding: 0 8px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 10px; font-weight: 700; color: #6B7A6E;
+    background: #F7F1E3; border: 1px solid #E3DCC8; cursor: pointer; white-space: nowrap;
   }
-  .skill-chip.active { background: #0ea5e9; color: #fff; }
+  .skill-chip.active { background: linear-gradient(135deg, #2F9E5F, #1E7A46); border-color: #166235; color: #FFFDF7; }
+  .skill-chip .power { font-weight: 800; opacity: .85; }
 
-  .result {
-    background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.35);
-    border-radius: 10px; padding: 8px 10px; flex-shrink: 0;
+  /* 我方性格 */
+  .nature-row { display: flex; align-items: center; gap: 5px; margin-top: 7px; }
+  .nature-label { font-size: 9.5px; font-weight: 700; color: #A3AE9F; }
+  .dd-box {
+    flex: 1; min-width: 0; height: 22px; padding: 0 7px; border-radius: 8px;
+    border: 1px solid #D9B96A; background: #F7F1E3; color: #2C3A2F;
+    font-size: 10.5px; font-weight: 700; line-height: 20px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    cursor: pointer; position: relative;
   }
-  .result-top { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
-  .result-skill-name { font-size: 12px; color: #94a3b8; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .result-damage { font-size: 22px; font-weight: 700; color: #22c55e; font-variant-numeric: tabular-nums; }
-  .result-damage.kill { color: #ef4444; }
-  .result-rows { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 11px; color: #cbd5e1; }
-  .result-row b { color: #fff; font-weight: 600; }
-  .result-note { margin-top: 4px; font-size: 10px; color: #64748b; }
-
-  .empty-tip { text-align: center; color: #64748b; padding: 20px 0; font-size: 12px; }
-  .error-tip { text-align: center; color: #ef4444; padding: 20px 12px; font-size: 12px; line-height: 1.6; }
-
-  .nature-row { display: flex; gap: 4px; align-items: center; margin-bottom: 6px; flex-shrink: 0; }
-  .nature-label { font-size: 11px; color: #94a3b8; }
-  .nature-select {
-    flex: 1; padding: 4px 6px; border-radius: 8px; border: none;
-    background: rgba(255,255,255,.1); color: #e6edf3; font-size: 12px; outline: none;
+  .dd-box.active { border-color: #2F9E5F; background: #E4F3EA; }
+  .dd-box::after {
+    content: '▾'; position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+    font-size: 8px; color: #A3AE9F;
   }
-  .nature-select option { background: #16213e; color: #e6edf3; }
+  .dd-layer {
+    display: none; position: fixed; z-index: 99;
+    background: #FFFDF7; border: 1.5px solid #D9B96A; border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(44, 58, 47, .25);
+    max-height: 158px; overflow-y: auto; padding: 3px;
+  }
+  .dd-layer.open { display: block; }
+  .dd-item {
+    height: 24px; padding: 0 9px; border-radius: 7px;
+    display: flex; align-items: center;
+    font-size: 10.5px; font-weight: 700; color: #2C3A2F; cursor: pointer;
+  }
+  .dd-item.active { background: #E4F3EA; color: #1E7A46; }
+
+  /* 内联展开的选精灵列表 */
+  .inline-picker { display: none; margin-top: 7px; }
+  .inline-picker.open { display: block; }
+  .search-input {
+    width: 100%; height: 26px; padding: 0 9px; border-radius: 9px; border: 1px solid #D9B96A;
+    background: #F7F1E3; color: #2C3A2F; font-size: 11px; outline: none; box-sizing: border-box;
+  }
+  .search-input::placeholder { color: #A3AE9F; }
+  .pick-list { margin-top: 5px; max-height: 118px; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; }
+  .pick-item {
+    display: flex; align-items: center; gap: 6px;
+    height: 26px; padding: 0 8px; border-radius: 9px;
+    background: #F7F1E3; border: 1px solid #E3DCC8; cursor: pointer;
+  }
+  .pick-item.active { background: #E4F3EA; border-color: #2F9E5F; }
+  .pick-name { flex: 1; font-size: 11px; font-weight: 700; color: #2C3A2F; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pick-speed { font-size: 9px; color: #A3AE9F; font-weight: 700; }
 </style>
 </head>
 <body>
-  <div id="ball">伤害</div>
+  <div id="ball"><img class="ball-img" src="ball.png" onerror="this.remove()" alt="" /><div class="ball-inner"><div class="ball-icon">⚔</div><div class="ball-text">伤害</div></div></div>
   <div id="panel">
     <div class="head">
-      <div class="head-title">实时伤害（对方满配）</div>
-      <div class="head-btn" id="btn-collapse">收起</div>
+      <div class="head-title">⚔ 实时伤害 <span class="head-sub" style="font-size:9px;color:#A3AE9F;font-weight:700">对方满配口径</span><span class="head-hint" style="font-size:9px;color:#A3AE9F;font-weight:700">拖深色条移动 · 点条收起 · 长按关闭</span></div>
+      <div class="head-btn accent" id="btn-collapse">收起</div>
+      <div class="head-btn" id="btn-close">✕</div>
     </div>
-    <div class="tabs">
-      <div class="tab" id="tab-opponent">对方精灵</div>
-      <div class="tab" id="tab-mine">我方精灵</div>
+
+    <div class="card result-card" id="result"></div>
+
+    <div class="card side-card" id="opp-card">
+      <div class="side-row" id="opp-row">
+        <span class="side-label opp">对方</span>
+        <div class="side-info">
+          <div class="side-name-row"><span class="side-name" id="opp-name">未选择</span></div>
+          <div class="type-badges" id="opp-types"></div>
+        </div>
+        <div class="side-action" id="btn-opp-change">换</div>
+      </div>
+      <div class="skill-strip" id="opp-skills"></div>
+      <div class="cfg-row">
+        <span class="cfg-toggle" id="opp-cfg-auto">满配</span>
+        <span class="cfg-toggle" id="opp-cfg-custom">自定</span>
+        <span class="cfg-hint" id="opp-cfg-hint"></span>
+      </div>
+      <div class="cfg-edit" id="opp-cfg-edit">
+        <div class="cfg-line">
+          <span class="nature-label">性格</span>
+          <span class="dd-box" id="opp-nature-up"></span>
+          <span class="dd-box" id="opp-nature-down"></span>
+        </div>
+        <div class="iv-toggles" id="opp-iv-toggles"></div>
+      </div>
+      <div class="inline-picker" id="opp-picker">
+        <input class="search-input" id="opp-search" placeholder="搜索对方精灵" />
+        <div class="pick-list" id="opp-list"></div>
+      </div>
     </div>
-    <div id="tab-content"></div>
-    <div class="result" id="result"></div>
+
+    <div class="swap-row">
+      <span class="swap-btn" id="btn-swap">⇅ 互换攻守（看我们打对方）</span>
+    </div>
+
+    <div class="card side-card" id="my-card">
+      <div class="side-row" id="my-row">
+        <span class="side-label mine">我方</span>
+        <div class="side-info">
+          <div class="side-name-row"><span class="side-name" id="my-name">未选择</span></div>
+          <div class="type-badges" id="my-types"></div>
+        </div>
+        <div class="side-action" id="btn-my-change">换</div>
+      </div>
+      <div class="nature-row">
+        <span class="nature-label">性格</span>
+        <span class="dd-box" id="my-nature-up"></span>
+        <span class="dd-box" id="my-nature-down"></span>
+      </div>
+      <div class="inline-picker" id="my-picker">
+        <input class="search-input" id="my-search" placeholder="搜索我方精灵" />
+        <div class="pick-list" id="my-list"></div>
+      </div>
+    </div>
+
+    <div id="dd-layer"></div>
   </div>
   <script src="./app.js"></script>
 </body>

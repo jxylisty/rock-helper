@@ -147,6 +147,7 @@ import { petTypes, petDetail } from '@/data/pet/pet_detail.js'
 import { petIndex } from '@/data/pet/pet_index.js'
 import { hasLeaderFormPetId } from '@/data/pet/leader_forms.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
+import { getAttrIconName } from '@/data/config/typeChart.js'
 import finalFormMap from '@/data/config/final_form_map.json'
 
 const typeOptions = petTypes
@@ -227,10 +228,15 @@ export default {
         const tag = pet.uiTag || '其他'
         tagMap[tag] = (tagMap[tag] || 0) + 1
       }
-      // 固定顺序：全部 > 最终形态 > I阶 > II阶 > 首领形态
-      const order = ['全部', '最终形态', 'I阶', 'II阶', '首领形态']
+      // 固定顺序：全部 > 最终形态 > I阶 > II阶 > 首领形态 > 变体形态
+      const order = ['全部', '最终形态', 'I阶', 'II阶', '首领形态', '变体形态']
       const result = [{ key: '全部', label: '全部', count: this.petsList.length }]
       for (const key of order.slice(1)) {
+        if (key === '首领形态' || key === '变体形态') {
+          const count = this.petsList.filter((pet) => this.matchSpecialTag(pet, key)).length
+          if (count) result.push({ key, label: key, count })
+          continue
+        }
         if (tagMap[key]) {
           result.push({ key, label: key, count: tagMap[key] })
         }
@@ -254,9 +260,14 @@ export default {
         const attrMatch =
           this.selectedTypes.length === 0 ||
           this.selectedTypes.every((type) => (pet.type || []).includes(type))
-        const tagMatch =
-          this.selectedUiTag === '全部' ||
-          (pet.uiTag || '') === this.selectedUiTag
+        let tagMatch = true
+        if (this.selectedUiTag === '首领形态') {
+          tagMatch = this.hasLeaderForm(pet.id)
+        } else if (this.selectedUiTag === '变体形态') {
+          tagMatch = this.hasVariants(pet.id)
+        } else if (this.selectedUiTag !== '全部') {
+          tagMatch = (pet.uiTag || '') === this.selectedUiTag
+        }
         return nameMatch && typeMatch && attrMatch && tagMatch
       })
     },
@@ -282,6 +293,12 @@ export default {
     }
   },
   methods: {
+    matchSpecialTag(pet, tag) {
+      const id = pet.id != null ? pet.id : pet.seq
+      if (tag === '首领形态') return this.hasLeaderForm(id)
+      if (tag === '变体形态') return this.hasVariants(id)
+      return null
+    },
     resetRenderCount() {
       this.renderCount = INITIAL_RENDER_COUNT
     },
@@ -307,7 +324,7 @@ export default {
       this.selectedTypes.push(type)
     },
     getTypeIconPath(type) {
-      return resolveAssetPath(`/static/icons/${type}.webp`)
+      return resolveAssetPath(`/static/icons/${getAttrIconName(type)}.webp`)
     },
     typeChipStyle(type) {
       if (this.selectedTypes.includes(type.key)) {
@@ -409,6 +426,7 @@ export default {
 .ui-tag-tabs {
   margin-top: 10px;
   white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tag-tabs-inner {

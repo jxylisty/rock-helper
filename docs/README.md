@@ -27,7 +27,7 @@ luokewangguo/
 │   ├── StatPanel/          # 面板属性
 │   ├── TeamEditSheet/      # 阵容编辑弹窗
 │   ├── DamageHpCompareBar/ # 伤害对比条
-│   └── TypeGraph/          # 属性克制图
+│   └── TypeMatrix/         # 属性克制矩阵表
 │
 ├── data/                   # 数据文件
 │   ├── pet/                # 精灵数据（BCNF范式）
@@ -88,15 +88,18 @@ python crawler_official_api/update_data.py apply
 # 4. 下载缺失技能图标转 webp（可选，增量补缺）
 python crawler_official_api/update_data.py fetch-skill-icons
 
-# 5. 更新精灵立绘 webp（可选）
+# 5. 更新孵蛋数据（官方 /pets/{pid}/egg 端点；抓取+生成+应用 eggData.js 一条命令）
+python crawler_official_api/update_data.py egg
+
+# 6. 更新精灵立绘 webp（可选）
 python crawler_official_api/update_data.py fetch-pet-images          # 仅补本地缺失
 python crawler_official_api/update_data.py fetch-pet-images 150 152  # 指定序号强制覆盖
 python crawler_official_api/update_data.py fetch-pet-images --all    # 全量覆盖（图片错乱时一键修复）
 
-# 6. 验证图片完整性（引用缺失/内容重复检测）
+# 7. 验证图片完整性（引用缺失/内容重复检测）
 python crawler_official_api/verify_pet_images.py
 
-# 7. 更新悬浮窗用的精简数据（static/float/float_data.json）
+# 8. 更新悬浮窗用的精简数据（static/float/float_data.json）
 npm run build:float-data
 ```
 
@@ -113,10 +116,23 @@ API Key 读取顺序：环境变量 `ROCO_API_KEY` > `crawler_official_api/api_k
 | `static/static-web/pets/` | 精灵立绘 webp | `python crawler_official_api/update_data.py fetch-pet-images --all` |
 | `static/static-web/skills/` | 技能图标 webp | `python crawler_official_api/update_data.py fetch-skill-icons` |
 | `static/static-web/traits/` `icons/` | 特性/属性图标 | 官方 API 手动获取 |
-| `static/web/` | 地图瓦片（z5~z8 金字塔切片） | 由原始大图 `static/map_z8_v3.png` 切片生成 |
-| `static/static-png/` | PNG 源材料（转换中间产物） | 可由 API 重新生成 |
+| `static/web/` | 地图瓦片（z5~z8 金字塔切片） | 由原始大图 `static/map_z8_v3.png` 切片生成；**不打包进 APK**，地图页在线加载 |
 
 素材生成完成后，可运行 `python crawler_official_api/verify_pet_images.py` 校验立绘完整性。
+
+## APK 打包说明
+
+HBuilderX **云打包对工程体积有限制**，static 资源过大时图片不会打进 APK（表现为 APK 体积很小、安装后图片全部不显示）。
+
+- `static/static-web/`（立绘+图标）随 APK 打包，离线可用；地图瓦片 `static/web/` 不进包，在线加载
+- 立绘保持压缩态：长边 ≤800px、webp q82。若重新执行 `fetch-pet-images` 全量覆盖后，须再跑压缩：
+
+```bash
+python tools/compress_static_web.py            # 压缩到打包态（800px q82，小图自动跳过）
+python tools/compress_static_web.py --dry-run  # 仅预估体积
+```
+
+- 打包前自查：`python tools/verify_static_web.py`，要求输出总体积 ≤50MB 且全部 [OK]（立绘约 37MB + 图标约 13MB），超出则说明立绘未压缩
 
 ## 开发规范
 

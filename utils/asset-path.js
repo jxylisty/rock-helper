@@ -62,10 +62,7 @@ function buildRemoteStaticCandidates(relativePath = '') {
   )
 }
 
-export const REMOTE_ASSET_BASES = [
-  PRIMARY_ASSET_BASE,
-  ...FALLBACK_ASSET_BASES
-]
+export const REMOTE_ASSET_BASES = [PRIMARY_ASSET_BASE, ...FALLBACK_ASSET_BASES].filter(Boolean)
 
 function shouldPreferLocalStatic() {
   return true

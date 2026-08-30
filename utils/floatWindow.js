@@ -1,43 +1,59 @@
 /**
- * 悬浮窗统一入口（伤害实时计算）
+ * 实时伤害悬浮窗（优先系统级，应用内兜底）
  *
- * 默认实现：自研 Native.js 悬浮窗（免费、无插件）——仅 Android App。
- * 通过 plus.android 创建两个系统级 WebView 窗口覆盖在其他应用之上：
- *   - 悬浮球（56dp，整窗可拖动，单击展开/收起面板）
- *   - 面板（340×480dp，static/float/index.html 计算页面）
+ * 实现一【默认，系统级】：本地 UTS 插件 uni_modules/roco-float-window
+ *   Service + WindowManager + 原生 WebView，可覆盖到其他应用（如游戏）之上。
+ *   交互：拖动球移动 / 单击球开合面板 / 长按球 700ms 关闭。
+ *   需要：自定义调试基座（UTS 插件必须）；首次使用引导开启"显示在其他应用上层"权限。
+ *   源码参考开源项目 xx-uts-floating-popup（github.com/lwxgit/Xx-uts-floating-popup）改造。
  *
- * 使用前提（一次性）：
- *   manifest.json 已声明 SYSTEM_ALERT_WINDOW。标准基座可能未包含该权限，
- *   需先制作自定义调试基座：运行 → 运行到手机或模拟器 → 制作自定义调试基座。
- *
- * 可选替换实现：插件市场「增强版小窗口、悬浮窗」(hans-pip，ID 27324)，
- * 导入插件后取消文末两行注释即可覆盖自研实现。
+ * 实现二【兜底，应用内】：plus.webview 子窗口，免权限、标准基座可用，
+ *   但只覆盖本 App 页面。UTS 不可用或调用失败时自动回退到该实现。
  */
+// #ifdef APP-PLUS
+import {
+  startFloat,
+  closeFloat,
+  isOverlayPermissionGranted,
+  openOverlayPermissionSetting
+} from '@/uni_modules/roco-float-window'
+// #endif
 
 export const FLOAT_WINDOW_TAG = 'roco-damage-float'
 export const FLOAT_WINDOW_ASSET_PATH = '/static/float/index.html'
 
+const SCREEN_KEY = 'roco_float_screen'
+const BALL_SIZE = 56
+const EDGE_GAP = 8
+
 let nativeImpl = null
+let topmostHooked = false
 
 /**
- * 注册悬浮窗实现（默认为自研 Native.js；可被外部覆盖）
+ * 注册悬浮窗实现（默认为 plus.webview 应用内实现；可被外部覆盖）
  * @param {{available: Function, hasOverlayPermission: Function, openPermissionSettings: Function, open: Function, close: Function}} impl
  */
 export function setFloatWindowImpl(impl) {
   nativeImpl = impl
 }
 
-/** 系统级悬浮窗能力是否可用 */
+/** 悬浮能力是否可用（优先 UTS 系统级，否则应用内） */
 export function isSystemOverlayAvailable() {
   // #ifdef APP-PLUS
   if (!nativeImpl) {
-    nativeImpl = createNativeJsImpl()
+    const uts = createUtsFloatImpl()
+    nativeImpl = (uts && uts.available()) ? uts : createPlusWebviewImpl()
+    if (nativeImpl === uts) {
+      console.log('[floatWindow] 使用 UTS 系统级悬浮窗')
+    } else {
+      console.log('[floatWindow] UTS 不可用，回退应用内悬浮窗')
+    }
   }
   // #endif
   return !!(nativeImpl && typeof nativeImpl.available === 'function' && nativeImpl.available())
 }
 
-/** 是否已授予"显示在其他应用上层"权限 */
+/** 是否已授予悬浮窗权限（UTS 系统级查系统权限；应用内恒为已授权） */
 export function hasOverlayPermission() {
   if (!isSystemOverlayAvailable()) return false
   try {
@@ -47,27 +63,23 @@ export function hasOverlayPermission() {
   }
 }
 
-/** 跳转系统悬浮窗权限设置页 */
+/** 跳转系统悬浮窗权限设置页（应用内实现为占位） */
 export function openOverlayPermissionSettings() {
   if (!isSystemOverlayAvailable()) return false
   try {
-    nativeImpl.openPermissionSettings()
-    return true
+    return nativeImpl.openPermissionSettings() !== false
   } catch (error) {
     return false
   }
 }
 
 /**
- * 打开实时伤害悬浮窗（已打开则忽略）
- * @returns {{ok: boolean, reason?: 'unsupported'|'permission'|'error', message?: string}}
+ * 打开实时伤害悬浮面板（已打开则置顶）
+ * @returns {{ok: boolean, reason?: 'unsupported'|'error', message?: string}}
  */
 export function openDamageFloatWindow() {
   if (!isSystemOverlayAvailable()) {
-    return { ok: false, reason: 'unsupported', message: '悬浮窗仅支持 Android App' }
-  }
-  if (!hasOverlayPermission()) {
-    return { ok: false, reason: 'permission', message: '缺少悬浮窗权限' }
+    return { ok: false, reason: 'unsupported', message: '悬浮面板仅支持 App 端' }
   }
   try {
     nativeImpl.open()
@@ -77,7 +89,7 @@ export function openDamageFloatWindow() {
   }
 }
 
-/** 关闭实时伤害悬浮窗 */
+/** 关闭实时伤害悬浮面板 */
 export function closeDamageFloatWindow() {
   if (!nativeImpl || typeof nativeImpl.close !== 'function') return false
   try {
@@ -90,237 +102,171 @@ export function closeDamageFloatWindow() {
 
 // #ifdef APP-PLUS
 /**
- * 自研 Native.js 悬浮窗实现
- * 全部原生调用集中在 createNativeJsImpl 闭包内，出错时抛出并由上层转成提示
+ * UTS 插件实现（系统级悬浮窗，可覆盖到其他应用之上）
+ * uni_modules/roco-float-window：Service + WindowManager + 原生 WebView
  */
-function createNativeJsImpl() {
-  const BALL_SIZE_DP = 56
-  const PANEL_WIDTH_DP = 340
-  const PANEL_HEIGHT_DP = 480
-  const GAP_DP = 8
-  const TAP_SLOP = 12
-  const TAP_TIMEOUT = 400
-
-  let initialized = false
-  let android = null
-  let main = null
-  let wm = null
-  let density = 1
-  let screenW = 0
-  let screenH = 0
-  let LP = null
-  let ballView = null
-  let ballParams = null
-  let panelView = null
-  let panelParams = null
-  let panelShown = false
-
-  function dp(value) {
-    return Math.round(value * density)
+function createUtsFloatImpl() {
+  function hasUts() {
+    return typeof startFloat === 'function'
   }
 
-  function init() {
-    if (initialized) return
-    if (typeof plus === 'undefined' || !plus.android) {
-      throw new Error('当前环境不支持 Native.js（需要 Android App）')
-    }
-    android = plus.android
-    main = android.runtimeMainActivity()
-    wm = android.invoke(main, 'getSystemService', android.importClass('android.content.Context').WINDOW_SERVICE)
-    LP = android.importClass('android.view.WindowManager$LayoutParams')
-    const metrics = android.invoke(android.invoke(main, 'getResources'), 'getDisplayMetrics')
-    density = android.invoke(metrics, 'density') || 1
-    screenW = android.invoke(metrics, 'widthPixels') || 1080
-    screenH = android.invoke(metrics, 'heightPixels') || 1920
-    initialized = true
-  }
-
-  function sdkInt() {
+  /** 悬浮窗页面地址：优先运行时真实资源路径，回退 android_asset */
+  function pageUrl(query) {
     try {
-      return Number(android.invoke(android.importClass('android.os.Build$VERSION'), 'SDK_INT')) || 0
-    } catch (error) {
-      return 0
-    }
-  }
-
-  function hasOverlayPermission() {
-    const Settings = android.importClass('android.provider.Settings')
-    return !!android.invoke(Settings, 'canDrawOverlays', main)
-  }
-
-  function openPermissionSettings() {
-    const Intent = android.importClass('android.content.Intent')
-    const Uri = android.importClass('android.net.Uri')
-    const packageName = android.invoke(main, 'getPackageName')
-    const uri = android.invoke(Uri, 'parse', 'package:' + packageName)
-    const intent = android.newObject(Intent, 'android.settings.action.MANAGE_OVERLAY_PERMISSION', uri)
-    android.invoke(main, 'startActivity', intent)
-  }
-
-  /** 把 _www 内的相对路径转成 WebView 可加载的 URL */
-  function wwwUrl(file) {
-    let path = ''
-    try {
-      path = plus.io.convertLocalFileSystemURL('_www/static/float/' + file) || ''
-    } catch (error) {
-      path = ''
-    }
-    if (!path) {
-      const appid = (plus.runtime && plus.runtime.appid) || ''
-      return `file:///android_asset/apps/${appid}/www/static/float/${file}`
-    }
-    return /^file:/i.test(path) ? path : 'file://' + path
-  }
-
-  function createLayoutParams(widthPx, heightPx, x, y, focusable) {
-    const Gravity = android.importClass('android.view.Gravity')
-    const PixelFormat = android.importClass('android.graphics.PixelFormat')
-    const params = android.newObject(LP)
-    params.type = sdkInt() >= 26 ? LP.TYPE_APPLICATION_OVERLAY : LP.TYPE_PHONE
-    params.flags = LP.FLAG_NOT_TOUCH_MODAL | (focusable ? 0 : LP.FLAG_NOT_FOCUSABLE)
-    params.format = PixelFormat.TRANSLUCENT
-    params.gravity = Gravity.TOP | Gravity.LEFT
-    params.width = widthPx
-    params.height = heightPx
-    params.x = x
-    params.y = y
-    return params
-  }
-
-  function createWebView(mode) {
-    const WebView = android.importClass('android.webkit.WebView')
-    const Color = android.importClass('android.graphics.Color')
-    const view = android.newObject(WebView, main)
-    const settings = android.invoke(view, 'getSettings')
-    android.invoke(settings, 'setJavaScriptEnabled', true)
-    android.invoke(settings, 'setAllowFileAccess', true)
-    android.invoke(settings, 'setDomStorageEnabled', true)
-    android.invoke(view, 'setBackgroundColor', Color.TRANSPARENT)
-    const url = wwwUrl('index.html') + (mode === 'ball' ? '?mode=ball' : '')
-    android.invoke(view, 'loadUrl', url)
-    return view
-  }
-
-  function clampPanelPosition() {
-    const w = dp(PANEL_WIDTH_DP)
-    const h = dp(PANEL_HEIGHT_DP)
-    const margin = dp(GAP_DP)
-    panelParams.x = Math.max(margin, Math.min(Number(panelParams.x) || 0, screenW - w - margin))
-    panelParams.y = Math.max(margin, Math.min(Number(panelParams.y) || 0, screenH - h - margin))
-  }
-
-  function ensurePanel() {
-    if (panelView) return
-    panelView = createWebView('panel')
-    panelParams = createLayoutParams(dp(PANEL_WIDTH_DP), dp(PANEL_HEIGHT_DP), dp(GAP_DP), dp(120), true)
-  }
-
-  function togglePanel() {
-    if (panelShown) {
-      try {
-        android.invoke(wm, 'removeView', panelView)
-      } catch (error) { /* 窗口可能已不存在 */ }
-      panelShown = false
-      return
-    }
-    ensurePanel()
-    // 面板出现在悬浮球下方，超屏则贴边
-    panelParams.x = Number(ballParams.x) || 0
-    panelParams.y = (Number(ballParams.y) || 0) + dp(BALL_SIZE_DP) + dp(GAP_DP)
-    clampPanelPosition()
-    android.invoke(wm, 'addView', panelView, panelParams)
-    panelShown = true
-  }
-
-  function installBallTouch() {
-    let touch = null
-    const listener = android.implements('android.view.View$OnTouchListener', {
-      onTouch(v, event) {
-        try {
-          const action = Number(android.invoke(event, 'getAction')) & 0xff
-          if (action === 0) {
-            touch = {
-              rawX: Number(android.invoke(event, 'getRawX')),
-              rawY: Number(android.invoke(event, 'getRawY')),
-              startX: Number(ballParams.x) || 0,
-              startY: Number(ballParams.y) || 0,
-              moved: false,
-              time: Date.now()
-            }
-            return true
-          }
-          if (action === 2 && touch) {
-            const dx = Number(android.invoke(event, 'getRawX')) - touch.rawX
-            const dy = Number(android.invoke(event, 'getRawY')) - touch.rawY
-            if (!touch.moved && (Math.abs(dx) > TAP_SLOP || Math.abs(dy) > TAP_SLOP)) {
-              touch.moved = true
-            }
-            if (touch.moved) {
-              ballParams.x = touch.startX + Math.round(dx)
-              ballParams.y = touch.startY + Math.round(dy)
-              android.invoke(wm, 'updateViewLayout', ballView, ballParams)
-            }
-            return true
-          }
-          if (action === 1 && touch) {
-            const quickTap = !touch.moved && Date.now() - touch.time < TAP_TIMEOUT
-            touch = null
-            if (quickTap) togglePanel()
-            return true
-          }
-        } catch (error) {
-          console.error('[floatWindow] 触摸处理异常', error)
-        }
-        return false
+      const path = plus.io.convertLocalFileSystemURL('_www/static/float/index.html')
+      if (path && !/^_www/.test(path)) {
+        return 'file://' + path + query
       }
-    })
-    android.invoke(ballView, 'setOnTouchListener', listener)
+    } catch (error) { /* 回退 android_asset */ }
+    let appId = ''
+    try {
+      appId = (plus.runtime && plus.runtime.appid) || ''
+    } catch (error) {
+      appId = ''
+    }
+    return `file:///android_asset/apps/${appId}/www/static/float/index.html${query}`
   }
 
   return {
     available() {
-      try {
-        init()
-        return true
-      } catch (error) {
-        return false
-      }
+      return hasUts() && typeof plus !== 'undefined'
     },
 
-    hasOverlayPermission,
+    hasOverlayPermission() {
+      return !!isOverlayPermissionGranted()
+    },
 
-    openPermissionSettings,
+    openPermissionSettings() {
+      openOverlayPermissionSetting()
+      return true
+    },
 
     open() {
-      init()
-      if (ballView) return
-      ballView = createWebView('ball')
-      ballParams = createLayoutParams(dp(BALL_SIZE_DP), dp(BALL_SIZE_DP), dp(GAP_DP), dp(200), false)
-      installBallTouch()
-      android.invoke(wm, 'addView', ballView, ballParams)
+      if (!hasUts()) throw new Error('UTS 悬浮窗插件不可用（需自定义调试基座）')
+      const ballUrl = pageUrl('#mode=uts-ball')
+      console.log('[floatWindow] ballUrl =', ballUrl)
+      startFloat({
+        ballUrl,
+        panelUrl: pageUrl('#mode=uts-panel')
+      }, (res) => {
+        if (res && Number(res.code) !== 0) {
+          console.error('[floatWindow] UTS startFloat 失败:', res.message)
+        } else {
+          console.log('[floatWindow] UTS startFloat ok')
+        }
+      })
     },
 
     close() {
-      if (panelShown && panelView) {
-        try { android.invoke(wm, 'removeView', panelView) } catch (error) { /* 忽略 */ }
-        panelShown = false
+      if (!hasUts()) return
+      closeFloat()
+    }
+  }
+}
+
+/**
+ * plus.webview 应用内悬浮实现。
+ * 全部调用集中在 createPlusWebviewImpl 闭包内，出错时抛出并由上层转成提示。
+ */
+function createPlusWebviewImpl() {
+  function getWv() {
+    try {
+      return plus.webview.getWebviewById(FLOAT_WINDOW_TAG)
+    } catch (error) {
+      return null
+    }
+  }
+
+  /** 失败原因直接提示到界面（避免静默失败，用户看不到 console） */
+  function toast(message) {
+    console.error('[floatWindow]', message)
+    try {
+      if (typeof uni !== 'undefined' && uni.showToast) {
+        uni.showToast({ title: String(message).slice(0, 40), icon: 'none' })
       }
-      if (ballView) {
-        try { android.invoke(wm, 'removeView', ballView) } catch (error) { /* 忽略 */ }
-        ballView = null
-        ballParams = null
+    } catch (error) { /* 非 uniapp 环境忽略 */ }
+  }
+
+  function bringToFront() {
+    const wv = getWv()
+    if (wv) {
+      try {
+        wv.show('none')
+      } catch (error) { /* 窗口可能已关闭 */ }
+    }
+  }
+
+  /** 页面切换后把悬浮球重新置顶（新页面 webview 会盖住它，切页动画约 300ms） */
+  function hookPageNavigation() {
+    if (topmostHooked) return
+    topmostHooked = true
+    const apis = ['navigateTo', 'redirectTo', 'switchTab', 'navigateBack', 'reLaunch']
+    apis.forEach((api) => {
+      try {
+        uni.addInterceptor(api, { success: () => setTimeout(bringToFront, 350) })
+      } catch (error) { /* 拦截器注册失败不影响悬浮窗本身 */ }
+    })
+  }
+
+  return {
+    available() {
+      return typeof plus !== 'undefined' && !!(plus.webview && plus.webview.create)
+    },
+
+    hasOverlayPermission() {
+      return true
+    },
+
+    openPermissionSettings() {
+      return true
+    },
+
+    open() {
+      if (!this.available()) throw new Error('plus.webview 不可用')
+      // 已打开：仅置顶（用户可能从面板内关闭后球位置由页面自持久化）
+      if (getWv()) {
+        bringToFront()
+        return
+      }
+      const info = uni.getSystemInfoSync()
+      const w = Number(info.windowWidth) || 360
+      const h = Number(info.windowHeight) || 640
+      // 屏幕尺寸预写入，页面窗口仅 56px 无法自行测得屏幕大小
+      try {
+        plus.storage.setItem(SCREEN_KEY, JSON.stringify({ w, h }))
+      } catch (error) { /* 页面会回退到 plus.screen 分辨率估算 */ }
+      const wv = plus.webview.create(FLOAT_WINDOW_ASSET_PATH, FLOAT_WINDOW_TAG, {
+        left: (w - BALL_SIZE - EDGE_GAP) + 'px',
+        top: Math.round(h * 0.4) + 'px',
+        width: BALL_SIZE + 'px',
+        height: BALL_SIZE + 'px',
+        background: 'transparent',
+        bounce: 'none',
+        scrollIndicator: 'none'
+      })
+      wv.show('none')
+      hookPageNavigation()
+    },
+
+    close() {
+      const wv = getWv()
+      if (wv) {
+        try {
+          wv.close()
+        } catch (error) {
+          toast('悬浮面板关闭失败：' + ((error && error.message) || error))
+        }
       }
     }
   }
 }
 // #endif
 
-// ============ 可选：切换为插件市场实现（hans-pip，ID 27324）============
-// 1. HBuilderX 导入插件后，取消下面两行注释
-// 2. 制作自定义调试基座后运行（自研 Native.js 实现会被覆盖）
-//
-// import { hansPipFloatImpl } from './floatWindow.hanspip.js'
-// setFloatWindowImpl(hansPipFloatImpl)
+// ============ 说明 ============
+// 系统级悬浮窗由本地 UTS 插件 uni_modules/roco-float-window 提供（源码可改，
+// 改动 .uts 后需重新制作自定义调试基座）。UTS 不可用时自动回退应用内实现。
+// 若某天要换插件市场的付费插件（hans-pip，ID 27324）：
+//   导入插件后用 setFloatWindowImpl(你的适配实现) 覆盖默认选择即可。
 // ====================================================================
 
 export default {

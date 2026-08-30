@@ -109,7 +109,7 @@ export const petDetail = {
       "type": [
         "光"
       ],
-      "img": "/static/static-web/pets/001_迪莫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3004/icon.png",
       "race": {
         "hp": 120,
         "attack": 80,
@@ -209,7 +209,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/002_喵喵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3001/icon.png",
       "race": {
         "hp": 65,
         "attack": 66,
@@ -230,7 +230,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/003_喵呜.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3025/icon.png",
       "race": {
         "hp": 86,
         "attack": 87,
@@ -251,7 +251,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/004_魔力猫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3007/icon.png",
       "race": {
         "hp": 108,
         "attack": 109,
@@ -270,7 +270,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/004_叶冕魔力猫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4007/icon.png",
       "race": {
         "hp": 108,
         "attack": 127,
@@ -289,7 +289,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/004_叶冕魔力猫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5003/icon.png",
       "race": {
         "hp": 108,
         "attack": 127,
@@ -329,7 +329,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/005_火花.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3003/icon.png",
       "race": {
         "hp": 70,
         "attack": 84,
@@ -350,7 +350,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/006_焰火.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3032/icon.png",
       "race": {
         "hp": 93,
         "attack": 111,
@@ -371,7 +371,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/007_火神.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3006/icon.png",
       "race": {
         "hp": 117,
         "attack": 139,
@@ -390,7 +390,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/007_烈火战神.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4006/icon.png",
       "race": {
         "hp": 117,
         "attack": 175,
@@ -409,7 +409,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/007_烈火战神.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5017/icon.png",
       "race": {
         "hp": 117,
         "attack": 175,
@@ -430,7 +430,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/008_水蓝蓝.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3002/icon.png",
       "race": {
         "hp": 75,
         "attack": 35,
@@ -451,7 +451,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/009_波波拉.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3033/icon.png",
       "race": {
         "hp": 100,
         "attack": 46,
@@ -472,7 +472,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/010_水灵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3005/icon.png",
       "race": {
         "hp": 125,
         "attack": 58,
@@ -491,7 +491,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/010_圣水守护.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4005/icon.png",
       "race": {
         "hp": 125,
         "attack": 67,
@@ -510,7 +510,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/010_圣水守护.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5010/icon.png",
       "race": {
         "hp": 125,
         "attack": 67,
@@ -531,7 +531,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉（蓬松的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3012/icon.png",
       "race": {
         "hp": 136,
         "attack": 95,
@@ -550,7 +550,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉（紧实的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3036/icon.png",
       "race": {
         "hp": 136,
         "attack": 35,
@@ -569,7 +569,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉（急急急鸭）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3452/icon.png",
       "race": {
         "hp": 130,
         "attack": 95,
@@ -588,7 +588,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉（等一等鸭）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3453/icon.png",
       "race": {
         "hp": 137,
         "attack": 35,
@@ -607,7 +607,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉（燃了鸭）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3495/icon.png",
       "race": {
         "hp": 108,
         "attack": 89,
@@ -626,7 +626,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉（起来鸭）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3742/icon.png",
       "race": {
         "hp": 107,
         "attack": 53,
@@ -645,7 +645,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉国王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4012/icon.png",
       "race": {
         "hp": 136,
         "attack": 159,
@@ -664,7 +664,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉国王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5006/icon.png",
       "race": {
         "hp": 136,
         "attack": 159,
@@ -683,7 +683,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉国王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5036/icon.png",
       "race": {
         "hp": 136,
         "attack": 64,
@@ -702,7 +702,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉国王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5037/icon.png",
       "race": {
         "hp": 130,
         "attack": 160,
@@ -721,7 +721,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉国王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5038/icon.png",
       "race": {
         "hp": 137,
         "attack": 64,
@@ -740,7 +740,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉国王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5039/icon.png",
       "race": {
         "hp": 108,
         "attack": 150,
@@ -759,7 +759,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/011_鸭吉吉国王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5052/icon.png",
       "race": {
         "hp": 107,
         "attack": 77,
@@ -780,7 +780,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/012_板板壳.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3055/icon.png",
       "race": {
         "hp": 67,
         "attack": 28,
@@ -799,7 +799,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/012_板板壳（蜕皮时的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3516/icon.png",
       "race": {
         "hp": 88,
         "attack": 24,
@@ -820,7 +820,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/013_咔咔壳.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3056/icon.png",
       "race": {
         "hp": 90,
         "attack": 37,
@@ -839,7 +839,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/013_咔咔壳（蜕皮时的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3517/icon.png",
       "race": {
         "hp": 117,
         "attack": 31,
@@ -860,7 +860,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/014_水泡壳.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3057/icon.png",
       "race": {
         "hp": 112,
         "attack": 46,
@@ -879,7 +879,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/014_水泡壳（蜕皮时的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3518/icon.png",
       "race": {
         "hp": 146,
         "attack": 39,
@@ -900,7 +900,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/015_锥尾羊.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3045/icon.png",
       "race": {
         "hp": 67,
         "attack": 66,
@@ -921,7 +921,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/016_铃兰羊.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3046/icon.png",
       "race": {
         "hp": 89,
         "attack": 89,
@@ -943,7 +943,7 @@ export const petDetail = {
         "幽",
         "恶"
       ],
-      "img": "/static/static-web/pets/017_花影羚羊.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3047/icon.png",
       "race": {
         "hp": 112,
         "attack": 111,
@@ -964,7 +964,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/018_雪绒鸟.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3533/icon.png",
       "race": {
         "hp": 54,
         "attack": 77,
@@ -983,7 +983,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/018_雪绒鸟（春天的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3279/icon.png",
       "race": {
         "hp": 56,
         "attack": 77,
@@ -1002,7 +1002,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/018_雪绒鸟（夏天的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3280/icon.png",
       "race": {
         "hp": 59,
         "attack": 80,
@@ -1021,7 +1021,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/018_雪绒鸟（秋天的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3281/icon.png",
       "race": {
         "hp": 54,
         "attack": 76,
@@ -1042,7 +1042,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/019_冬羽雀.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3028/icon.png",
       "race": {
         "hp": 72,
         "attack": 103,
@@ -1061,7 +1061,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/019_冬羽雀（春天的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3282/icon.png",
       "race": {
         "hp": 75,
         "attack": 103,
@@ -1080,7 +1080,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/019_冬羽雀（夏天的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3283/icon.png",
       "race": {
         "hp": 79,
         "attack": 107,
@@ -1099,7 +1099,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/019_冬羽雀（秋天的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3284/icon.png",
       "race": {
         "hp": 72,
         "attack": 102,
@@ -1120,7 +1120,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/020_岚鸟.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3037/icon.png",
       "race": {
         "hp": 90,
         "attack": 128,
@@ -1139,7 +1139,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/020_岚鸟（春天的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3285/icon.png",
       "race": {
         "hp": 93,
         "attack": 128,
@@ -1158,7 +1158,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/020_岚鸟（夏天的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3286/icon.png",
       "race": {
         "hp": 99,
         "attack": 133,
@@ -1177,7 +1177,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/020_岚鸟（秋天的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3287/icon.png",
       "race": {
         "hp": 90,
         "attack": 127,
@@ -1196,7 +1196,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/020_霜翼领主.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4074/icon.png",
       "race": {
         "hp": 90,
         "attack": 142,
@@ -1215,7 +1215,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/020_霜翼领主.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5014/icon.png",
       "race": {
         "hp": 90,
         "attack": 142,
@@ -1234,7 +1234,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/020_霜翼领主.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5030/icon.png",
       "race": {
         "hp": 93,
         "attack": 142,
@@ -1253,7 +1253,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/020_霜翼领主.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5031/icon.png",
       "race": {
         "hp": 99,
         "attack": 147,
@@ -1272,7 +1272,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/020_霜翼领主.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5032/icon.png",
       "race": {
         "hp": 90,
         "attack": 141,
@@ -1293,7 +1293,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/021_小灵菇.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3145/icon.png",
       "race": {
         "hp": 67,
         "attack": 59,
@@ -1315,7 +1315,7 @@ export const petDetail = {
         "幽",
         "草"
       ],
-      "img": "/static/static-web/pets/022_幻灵菇.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3146/icon.png",
       "race": {
         "hp": 89,
         "attack": 79,
@@ -1337,7 +1337,7 @@ export const petDetail = {
         "幽",
         "草"
       ],
-      "img": "/static/static-web/pets/023_幻影灵菇.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3147/icon.png",
       "race": {
         "hp": 111,
         "attack": 98,
@@ -1358,7 +1358,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/024_石肤蜥.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3106/icon.png",
       "race": {
         "hp": 69,
         "attack": 61,
@@ -1377,7 +1377,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/024_石肤蜥（球球尾巴的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3500/icon.png",
       "race": {
         "hp": 68,
         "attack": 61,
@@ -1398,7 +1398,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/025_石刺蜥.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3107/icon.png",
       "race": {
         "hp": 92,
         "attack": 81,
@@ -1417,7 +1417,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/025_石刺蜥（球球尾巴的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3501/icon.png",
       "race": {
         "hp": 91,
         "attack": 82,
@@ -1438,7 +1438,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/026_石冠王蜥.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3108/icon.png",
       "race": {
         "hp": 115,
         "attack": 101,
@@ -1457,7 +1457,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/026_石冠王蜥（球球尾巴的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3502/icon.png",
       "race": {
         "hp": 113,
         "attack": 102,
@@ -1478,7 +1478,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/027_布是石.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3103/icon.png",
       "race": {
         "hp": 72,
         "attack": 81,
@@ -1499,7 +1499,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/028_布是岩.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3104/icon.png",
       "race": {
         "hp": 96,
         "attack": 108,
@@ -1520,7 +1520,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/029_布克棱岩.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3105/icon.png",
       "race": {
         "hp": 120,
         "attack": 135,
@@ -1539,7 +1539,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/029_迷嶂布莱克.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4072/icon.png",
       "race": {
         "hp": 125,
         "attack": 139,
@@ -1558,7 +1558,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/029_迷嶂布莱克.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5008/icon.png",
       "race": {
         "hp": 125,
         "attack": 139,
@@ -1580,7 +1580,7 @@ export const petDetail = {
         "恶",
         "翼"
       ],
-      "img": "/static/static-web/pets/030_恶魔叮.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3010/icon.png",
       "race": {
         "hp": 90,
         "attack": 100,
@@ -1591,7 +1591,7 @@ export const petDetail = {
         "total": 452
       },
       "trait": "渴求 入场时获得50%吸血。",
-      "yiseImg": "/static/static-web/pets/030_恶魔叮_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3010/shiny.png",
       "traitImg": "/static/static-web/traits/030.webp"
     }
   ],
@@ -1602,7 +1602,7 @@ export const petDetail = {
         "恶",
         "翼"
       ],
-      "img": "/static/static-web/pets/031_叮叮恶魔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3039/icon.png",
       "race": {
         "hp": 117,
         "attack": 125,
@@ -1613,7 +1613,7 @@ export const petDetail = {
         "total": 576
       },
       "trait": "渴求 入场时获得50%吸血。",
-      "yiseImg": "/static/static-web/pets/031_叮叮恶魔_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3039/shiny.png",
       "traitImg": "/static/static-web/traits/031.webp"
     },
     {
@@ -1622,7 +1622,7 @@ export const petDetail = {
         "恶",
         "翼"
       ],
-      "img": "/static/static-web/pets/031_叮叮恶魔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5055/icon.png",
       "race": {
         "hp": 117,
         "attack": 128,
@@ -1644,7 +1644,7 @@ export const petDetail = {
         "虫",
         "萌"
       ],
-      "img": "/static/static-web/pets/032_毛毛.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3136/icon.png",
       "race": {
         "hp": 32,
         "attack": 28,
@@ -1666,7 +1666,7 @@ export const petDetail = {
         "虫",
         "萌"
       ],
-      "img": "/static/static-web/pets/033_爬爬.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3137/icon.png",
       "race": {
         "hp": 42,
         "attack": 37,
@@ -1688,7 +1688,7 @@ export const petDetail = {
         "虫",
         "萌"
       ],
-      "img": "/static/static-web/pets/034_化蝶（平常的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3138/icon.png",
       "race": {
         "hp": 53,
         "attack": 46,
@@ -1708,7 +1708,7 @@ export const petDetail = {
         "虫",
         "萌"
       ],
-      "img": "/static/static-web/pets/034_化蝶（幽冥眼的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3470/icon.png",
       "race": {
         "hp": 43,
         "attack": 42,
@@ -1728,7 +1728,7 @@ export const petDetail = {
         "虫",
         "萌"
       ],
-      "img": "/static/static-web/pets/034_化蝶（喵喵的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3471/icon.png",
       "race": {
         "hp": 49,
         "attack": 47,
@@ -1748,7 +1748,7 @@ export const petDetail = {
         "虫",
         "萌"
       ],
-      "img": "/static/static-web/pets/034_化蝶（奇丽花的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3472/icon.png",
       "race": {
         "hp": 55,
         "attack": 46,
@@ -1770,7 +1770,7 @@ export const petDetail = {
         "幽",
         "草"
       ],
-      "img": "/static/static-web/pets/035_幽影树.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3064/icon.png",
       "race": {
         "hp": 111,
         "attack": 96,
@@ -1781,7 +1781,7 @@ export const petDetail = {
         "total": 571
       },
       "trait": "小偷小摸 入场时偷取敌方场上所有精灵2能量。",
-      "yiseImg": "/static/static-web/pets/035_幽影树_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3064/shiny.png",
       "traitImg": "/static/static-web/traits/035.webp"
     },
     {
@@ -1790,7 +1790,7 @@ export const petDetail = {
         "幽",
         "草"
       ],
-      "img": "/static/static-web/pets/035_幻影荆棘.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4064/icon.png",
       "race": {
         "hp": 113,
         "attack": 96,
@@ -1810,7 +1810,7 @@ export const petDetail = {
         "幽",
         "草"
       ],
-      "img": "/static/static-web/pets/035_幻影荆棘.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5019/icon.png",
       "race": {
         "hp": 113,
         "attack": 96,
@@ -1832,7 +1832,7 @@ export const petDetail = {
         "普通",
         "水"
       ],
-      "img": "/static/static-web/pets/036_小鼠獭.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3315/icon.png",
       "race": {
         "hp": 73,
         "attack": 57,
@@ -1854,7 +1854,7 @@ export const petDetail = {
         "普通",
         "水"
       ],
-      "img": "/static/static-web/pets/037_燕尾獭.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3316/icon.png",
       "race": {
         "hp": 97,
         "attack": 77,
@@ -1876,7 +1876,7 @@ export const petDetail = {
         "普通",
         "水"
       ],
-      "img": "/static/static-web/pets/038_卷胡巨獭.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3317/icon.png",
       "race": {
         "hp": 121,
         "attack": 96,
@@ -1898,7 +1898,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/039_矿晶虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3307/icon.png",
       "race": {
         "hp": 79,
         "attack": 77,
@@ -1920,7 +1920,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_晶石蜗（西瓜碧玺的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3308/icon.png",
       "race": {
         "hp": 99,
         "attack": 96,
@@ -1940,7 +1940,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_晶石蜗（莲花刚玉的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3448/icon.png",
       "race": {
         "hp": 94,
         "attack": 97,
@@ -1960,7 +1960,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_晶石蜗（星彩榴石的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3449/icon.png",
       "race": {
         "hp": 97,
         "attack": 101,
@@ -1980,7 +1980,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_晶石蜗（火山琉璃的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3450/icon.png",
       "race": {
         "hp": 97,
         "attack": 97,
@@ -2000,7 +2000,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_晶石蜗（蓝锥矿的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3451/icon.png",
       "race": {
         "hp": 99,
         "attack": 97,
@@ -2020,7 +2020,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_晶石蜗（烧蓝黄金的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3486/icon.png",
       "race": {
         "hp": 95,
         "attack": 97,
@@ -2040,7 +2040,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_钻石蜗.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4079/icon.png",
       "race": {
         "hp": 93,
         "attack": 96,
@@ -2060,7 +2060,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_钻石蜗.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5001/icon.png",
       "race": {
         "hp": 93,
         "attack": 96,
@@ -2080,7 +2080,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_钻石蜗.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5047/icon.png",
       "race": {
         "hp": 89,
         "attack": 97,
@@ -2100,7 +2100,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_钻石蜗.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5048/icon.png",
       "race": {
         "hp": 92,
         "attack": 101,
@@ -2120,7 +2120,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_钻石蜗.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5049/icon.png",
       "race": {
         "hp": 92,
         "attack": 97,
@@ -2140,7 +2140,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_钻石蜗.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5050/icon.png",
       "race": {
         "hp": 94,
         "attack": 97,
@@ -2160,7 +2160,7 @@ export const petDetail = {
         "光",
         "地"
       ],
-      "img": "/static/static-web/pets/040_钻石蜗.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5051/icon.png",
       "race": {
         "hp": 89,
         "attack": 97,
@@ -2181,7 +2181,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/041_奇丽草.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3029/icon.png",
       "race": {
         "hp": 67,
         "attack": 69,
@@ -2192,7 +2192,7 @@ export const petDetail = {
         "total": 383
       },
       "trait": "养分重吸收 回合结束时，回复3能量。",
-      "yiseImg": "/static/static-web/pets/041_奇丽草_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3029/shiny.png",
       "traitImg": "/static/static-web/traits/041.webp"
     }
   ],
@@ -2202,7 +2202,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/042_奇丽叶.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3030/icon.png",
       "race": {
         "hp": 90,
         "attack": 92,
@@ -2213,7 +2213,7 @@ export const petDetail = {
         "total": 511
       },
       "trait": "养分重吸收 回合结束时，回复3能量。",
-      "yiseImg": "/static/static-web/pets/042_奇丽叶_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3030/shiny.png",
       "traitImg": "/static/static-web/traits/042.webp"
     }
   ],
@@ -2223,7 +2223,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/043_奇丽花.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3031/icon.png",
       "race": {
         "hp": 112,
         "attack": 115,
@@ -2234,7 +2234,7 @@ export const petDetail = {
         "total": 638
       },
       "trait": "养分重吸收 回合结束时，回复3能量。",
-      "yiseImg": "/static/static-web/pets/043_奇丽花_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3031/shiny.png",
       "traitImg": "/static/static-web/traits/043.webp"
     },
     {
@@ -2242,7 +2242,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/043_奇丽果.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4022/icon.png",
       "race": {
         "hp": 112,
         "attack": 128,
@@ -2253,7 +2253,7 @@ export const petDetail = {
         "total": 686
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
-      "yiseImg": "/static/static-web/pets/043_奇丽果_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4022/shiny.png",
       "traitImg": "/static/static-web/traits/043.webp"
     },
     {
@@ -2261,7 +2261,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/043_奇丽果.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5005/icon.png",
       "race": {
         "hp": 112,
         "attack": 128,
@@ -2272,7 +2272,7 @@ export const petDetail = {
         "total": 686
       },
       "trait": "养分内循环 回合结束时，回复6能量。",
-      "yiseImg": "/static/static-web/pets/043_奇丽果_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5005/shiny.png",
       "traitImg": "/static/static-web/traits/043.webp"
     }
   ],
@@ -2282,7 +2282,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/044_丢丢（草地附近的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3040/icon.png",
       "race": {
         "hp": 44,
         "attack": 45,
@@ -2302,7 +2302,7 @@ export const petDetail = {
         "草",
         "地"
       ],
-      "img": "/static/static-web/pets/044_丢丢（沙地附近的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3289/icon.png",
       "race": {
         "hp": 44,
         "attack": 42,
@@ -2322,7 +2322,7 @@ export const petDetail = {
         "草",
         "冰"
       ],
-      "img": "/static/static-web/pets/044_丢丢（雪山附近的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3290/icon.png",
       "race": {
         "hp": 46,
         "attack": 41,
@@ -2342,7 +2342,7 @@ export const petDetail = {
         "草",
         "火"
       ],
-      "img": "/static/static-web/pets/044_丢丢.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3288/icon.png",
       "race": {
         "hp": 47,
         "attack": 52,
@@ -2363,7 +2363,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/045_卡卡虫（草地附近的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3041/icon.png",
       "race": {
         "hp": 59,
         "attack": 60,
@@ -2383,7 +2383,7 @@ export const petDetail = {
         "草",
         "地"
       ],
-      "img": "/static/static-web/pets/045_卡卡虫（沙地附近的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3292/icon.png",
       "race": {
         "hp": 58,
         "attack": 56,
@@ -2403,7 +2403,7 @@ export const petDetail = {
         "草",
         "冰"
       ],
-      "img": "/static/static-web/pets/045_卡卡虫（雪山附近的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3293/icon.png",
       "race": {
         "hp": 62,
         "attack": 54,
@@ -2423,7 +2423,7 @@ export const petDetail = {
         "草",
         "火"
       ],
-      "img": "/static/static-web/pets/045_卡卡虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3291/icon.png",
       "race": {
         "hp": 62,
         "attack": 69,
@@ -2444,7 +2444,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/046_卡瓦重（草地附近的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3042/icon.png",
       "race": {
         "hp": 74,
         "attack": 75,
@@ -2464,7 +2464,7 @@ export const petDetail = {
         "草",
         "地"
       ],
-      "img": "/static/static-web/pets/046_卡瓦重（沙地附近的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3295/icon.png",
       "race": {
         "hp": 73,
         "attack": 70,
@@ -2484,7 +2484,7 @@ export const petDetail = {
         "草",
         "冰"
       ],
-      "img": "/static/static-web/pets/046_卡瓦重（雪山附近的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3296/icon.png",
       "race": {
         "hp": 77,
         "attack": 68,
@@ -2504,7 +2504,7 @@ export const petDetail = {
         "草",
         "火"
       ],
-      "img": "/static/static-web/pets/046_卡瓦重.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3294/icon.png",
       "race": {
         "hp": 78,
         "attack": 86,
@@ -2525,7 +2525,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/047_护主犬.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3070/icon.png",
       "race": {
         "hp": 68,
         "attack": 103,
@@ -2536,7 +2536,7 @@ export const petDetail = {
         "total": 451
       },
       "trait": "专注力 入场首回合，获得物攻+100%。",
-      "yiseImg": "/static/static-web/pets/047_护主犬_异色.webp",
+      "yiseImg": "/cdn-assets/static-web/pets/047_护主犬_异色.webp",
       "traitImg": "/static/static-web/traits/047.webp"
     }
   ],
@@ -2546,7 +2546,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/048_音速犬.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3071/icon.png",
       "race": {
         "hp": 85,
         "attack": 128,
@@ -2557,7 +2557,7 @@ export const petDetail = {
         "total": 562
       },
       "trait": "专注力 入场首回合，获得物攻+100%。",
-      "yiseImg": "/static/static-web/pets/048_音速犬_异色.webp",
+      "yiseImg": "/cdn-assets/static-web/pets/048_音速犬_异色.webp",
       "traitImg": "/static/static-web/traits/048.webp"
     },
     {
@@ -2565,7 +2565,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/048_风暴战犬.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4078/icon.png",
       "race": {
         "hp": 85,
         "attack": 128,
@@ -2584,7 +2584,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/048_风暴战犬.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5018/icon.png",
       "race": {
         "hp": 85,
         "attack": 128,
@@ -2605,7 +2605,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/049_绿耳松鼠.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3098/icon.png",
       "race": {
         "hp": 69,
         "attack": 50,
@@ -2626,7 +2626,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/050_抱枕松鼠.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3099/icon.png",
       "race": {
         "hp": 92,
         "attack": 67,
@@ -2647,7 +2647,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/051_蹦床松鼠.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3100/icon.png",
       "race": {
         "hp": 114,
         "attack": 84,
@@ -2668,7 +2668,7 @@ export const petDetail = {
       "type": [
         "毒"
       ],
-      "img": "/static/static-web/pets/052_嘟嘟煲.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3367/icon.png",
       "race": {
         "hp": 110,
         "attack": 29,
@@ -2679,7 +2679,7 @@ export const petDetail = {
         "total": 459
       },
       "trait": "复方汤剂 在场时，双方回合结束时的中毒效果会额外触发1次。",
-      "yiseImg": "/static/static-web/pets/052_嘟嘟煲_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3367/shiny.png",
       "traitImg": "/static/static-web/traits/052.webp"
     }
   ],
@@ -2689,7 +2689,7 @@ export const petDetail = {
       "type": [
         "毒"
       ],
-      "img": "/static/static-web/pets/053_嘟嘟锅.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3368/icon.png",
       "race": {
         "hp": 137,
         "attack": 36,
@@ -2700,7 +2700,7 @@ export const petDetail = {
         "total": 573
       },
       "trait": "复方汤剂 在场时，双方回合结束时的中毒效果会额外触发1次。",
-      "yiseImg": "/static/static-web/pets/053_嘟嘟锅_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3368/shiny.png",
       "traitImg": "/static/static-web/traits/053.webp"
     }
   ],
@@ -2710,7 +2710,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/054_小灵面.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3060/icon.png",
       "race": {
         "hp": 55,
         "attack": 30,
@@ -2731,7 +2731,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/055_暗影灵面（睁眼的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3061/icon.png",
       "race": {
         "hp": 74,
         "attack": 40,
@@ -2750,7 +2750,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/055_暗影灵面（闭眼的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3481/icon.png",
       "race": {
         "hp": 84,
         "attack": 30,
@@ -2771,7 +2771,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/056_幽冥眼（睁眼的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3405/icon.png",
       "race": {
         "hp": 92,
         "attack": 50,
@@ -2790,7 +2790,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/056_幽冥眼（闭眼的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3482/icon.png",
       "race": {
         "hp": 105,
         "attack": 38,
@@ -2811,7 +2811,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/057_梦游（穿旧睡衣的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3438/icon.png",
       "race": {
         "hp": 90,
         "attack": 52,
@@ -2831,7 +2831,7 @@ export const petDetail = {
         "幽",
         "光"
       ],
-      "img": "/static/static-web/pets/057_梦游.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3440/icon.png",
       "race": {
         "hp": 90,
         "attack": 62,
@@ -2852,7 +2852,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/058_梦悠悠（穿旧睡衣的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3439/icon.png",
       "race": {
         "hp": 113,
         "attack": 65,
@@ -2872,7 +2872,7 @@ export const petDetail = {
         "幽",
         "光"
       ],
-      "img": "/static/static-web/pets/058_梦悠悠.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3441/icon.png",
       "race": {
         "hp": 112,
         "attack": 78,
@@ -2894,7 +2894,7 @@ export const petDetail = {
         "光",
         "草"
       ],
-      "img": "/static/static-web/pets/059_兽花蕾.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3492/icon.png",
       "race": {
         "hp": 70,
         "attack": 79,
@@ -2915,7 +2915,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/060_伏地兽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3165/icon.png",
       "race": {
         "hp": 95,
         "attack": 56,
@@ -2936,7 +2936,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/061_贪食鼹.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3166/icon.png",
       "race": {
         "hp": 126,
         "attack": 74,
@@ -2957,7 +2957,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/062_巨噬针鼹.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3167/icon.png",
       "race": {
         "hp": 158,
         "attack": 93,
@@ -2979,7 +2979,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/063_蹦蹦种子（海神球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3017/icon.png",
       "race": {
         "hp": 60,
         "attack": 64,
@@ -2999,7 +2999,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/063_蹦蹦种子（彩玉球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3297/icon.png",
       "race": {
         "hp": 62,
         "attack": 61,
@@ -3019,7 +3019,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/063_蹦蹦种子（短毛球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3298/icon.png",
       "race": {
         "hp": 57,
         "attack": 62,
@@ -3039,7 +3039,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/063_蹦蹦种子（象牙球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3299/icon.png",
       "race": {
         "hp": 59,
         "attack": 60,
@@ -3061,7 +3061,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/064_蹦蹦草（海神球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3018/icon.png",
       "race": {
         "hp": 80,
         "attack": 85,
@@ -3081,7 +3081,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/064_蹦蹦草（彩玉球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3300/icon.png",
       "race": {
         "hp": 83,
         "attack": 81,
@@ -3101,7 +3101,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/064_蹦蹦草（短毛球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3301/icon.png",
       "race": {
         "hp": 76,
         "attack": 82,
@@ -3121,7 +3121,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/064_蹦蹦草（象牙球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3302/icon.png",
       "race": {
         "hp": 79,
         "attack": 80,
@@ -3143,7 +3143,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/065_蹦蹦花（海神球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3019/icon.png",
       "race": {
         "hp": 100,
         "attack": 107,
@@ -3163,7 +3163,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/065_蹦蹦花（彩玉球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3303/icon.png",
       "race": {
         "hp": 103,
         "attack": 101,
@@ -3183,7 +3183,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/065_蹦蹦花（短毛球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3304/icon.png",
       "race": {
         "hp": 95,
         "attack": 103,
@@ -3203,7 +3203,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/065_蹦蹦花（象牙球形态）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3305/icon.png",
       "race": {
         "hp": 99,
         "attack": 100,
@@ -3223,7 +3223,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/065_蹦蹦果.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4019/icon.png",
       "race": {
         "hp": 100,
         "attack": 107,
@@ -3243,7 +3243,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/065_蹦蹦果.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5004/icon.png",
       "race": {
         "hp": 100,
         "attack": 107,
@@ -3263,7 +3263,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/065_蹦蹦果.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5033/icon.png",
       "race": {
         "hp": 103,
         "attack": 101,
@@ -3283,7 +3283,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/065_蹦蹦果.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5034/icon.png",
       "race": {
         "hp": 95,
         "attack": 103,
@@ -3303,7 +3303,7 @@ export const petDetail = {
         "草",
         "毒"
       ],
-      "img": "/static/static-web/pets/065_蹦蹦果.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5035/icon.png",
       "race": {
         "hp": 99,
         "attack": 100,
@@ -3324,7 +3324,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/066_电咩咩.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3190/icon.png",
       "race": {
         "hp": 47,
         "attack": 49,
@@ -3345,7 +3345,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/067_粉咩咩.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3191/icon.png",
       "race": {
         "hp": 62,
         "attack": 66,
@@ -3366,7 +3366,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/068_电球咩咩.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3192/icon.png",
       "race": {
         "hp": 78,
         "attack": 82,
@@ -3388,7 +3388,7 @@ export const petDetail = {
         "草",
         "萌"
       ],
-      "img": "/static/static-web/pets/069_蒲公英.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3034/icon.png",
       "race": {
         "hp": 89,
         "attack": 99,
@@ -3410,7 +3410,7 @@ export const petDetail = {
         "草",
         "萌"
       ],
-      "img": "/static/static-web/pets/070_蒲公英娃娃.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3027/icon.png",
       "race": {
         "hp": 111,
         "attack": 123,
@@ -3431,7 +3431,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/071_伊贝儿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3043/icon.png",
       "race": {
         "hp": 94,
         "attack": 73,
@@ -3452,7 +3452,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/072_伊贝粉粉.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3044/icon.png",
       "race": {
         "hp": 117,
         "attack": 91,
@@ -3473,7 +3473,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/073_白发懒人.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3049/icon.png",
       "race": {
         "hp": 94,
         "attack": 100,
@@ -3495,7 +3495,7 @@ export const petDetail = {
         "普通",
         "武"
       ],
-      "img": "/static/static-web/pets/074_动力猿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3101/icon.png",
       "race": {
         "hp": 125,
         "attack": 134,
@@ -3517,7 +3517,7 @@ export const petDetail = {
         "普通",
         "武"
       ],
-      "img": "/static/static-web/pets/075_瞌睡王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3102/icon.png",
       "race": {
         "hp": 156,
         "attack": 167,
@@ -3539,7 +3539,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/076_海盔虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3330/icon.png",
       "race": {
         "hp": 71,
         "attack": 25,
@@ -3559,7 +3559,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/076_海盔虫（磨损的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3475/icon.png",
       "race": {
         "hp": 70,
         "attack": 25,
@@ -3581,7 +3581,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/077_刺盔虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3331/icon.png",
       "race": {
         "hp": 94,
         "attack": 33,
@@ -3601,7 +3601,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/077_刺盔虫（磨损的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3476/icon.png",
       "race": {
         "hp": 94,
         "attack": 33,
@@ -3623,7 +3623,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/078_千棘盔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3332/icon.png",
       "race": {
         "hp": 118,
         "attack": 41,
@@ -3643,7 +3643,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/078_千棘盔（磨损的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3477/icon.png",
       "race": {
         "hp": 117,
         "attack": 41,
@@ -3663,7 +3663,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/078_千棘海针.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4020/icon.png",
       "race": {
         "hp": 118,
         "attack": 32,
@@ -3683,7 +3683,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/078_千棘海针.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5012/icon.png",
       "race": {
         "hp": 118,
         "attack": 32,
@@ -3703,7 +3703,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/078_千棘海针.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5029/icon.png",
       "race": {
         "hp": 117,
         "attack": 32,
@@ -3724,7 +3724,7 @@ export const petDetail = {
       "type": [
         "萌"
       ],
-      "img": "/static/static-web/pets/079_菊花梨.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3227/icon.png",
       "race": {
         "hp": 120,
         "attack": 56,
@@ -3735,7 +3735,7 @@ export const petDetail = {
         "total": 572
       },
       "trait": "无忧无虑 可获得的萌化层数不受限制。",
-      "yiseImg": "/static/static-web/pets/079_菊花梨_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3227/shiny.png",
       "traitImg": "/static/static-web/traits/079.webp"
     }
   ],
@@ -3745,7 +3745,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/080_小星光（星光能量的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3193/icon.png",
       "race": {
         "hp": 60,
         "attack": 81,
@@ -3765,7 +3765,7 @@ export const petDetail = {
         "电",
         "光"
       ],
-      "img": "/static/static-web/pets/080_小星光（月光能量的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3442/icon.png",
       "race": {
         "hp": 64,
         "attack": 76,
@@ -3786,7 +3786,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/081_星光狮（星光能量的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3194/icon.png",
       "race": {
         "hp": 75,
         "attack": 101,
@@ -3806,7 +3806,7 @@ export const petDetail = {
         "电",
         "光"
       ],
-      "img": "/static/static-web/pets/081_星光狮（月光能量的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3443/icon.png",
       "race": {
         "hp": 80,
         "attack": 95,
@@ -3828,7 +3828,7 @@ export const petDetail = {
         "虫",
         "翼"
       ],
-      "img": "/static/static-web/pets/082_一窝蜂.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3058/icon.png",
       "race": {
         "hp": 87,
         "attack": 32,
@@ -3850,7 +3850,7 @@ export const petDetail = {
         "虫",
         "翼"
       ],
-      "img": "/static/static-web/pets/083_黄蜂后.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3059/icon.png",
       "race": {
         "hp": 116,
         "attack": 43,
@@ -3872,7 +3872,7 @@ export const petDetail = {
         "虫",
         "翼"
       ],
-      "img": "/static/static-web/pets/084_花魁蜂后.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3157/icon.png",
       "race": {
         "hp": 145,
         "attack": 54,
@@ -3892,7 +3892,7 @@ export const petDetail = {
         "虫",
         "翼"
       ],
-      "img": "/static/static-web/pets/084_女王蜂.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4021/icon.png",
       "race": {
         "hp": 145,
         "attack": 50,
@@ -3912,7 +3912,7 @@ export const petDetail = {
         "虫",
         "翼"
       ],
-      "img": "/static/static-web/pets/084_女王蜂.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5015/icon.png",
       "race": {
         "hp": 145,
         "attack": 50,
@@ -3933,7 +3933,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/085_小夜.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3142/icon.png",
       "race": {
         "hp": 60,
         "attack": 69,
@@ -3944,7 +3944,7 @@ export const petDetail = {
         "total": 374
       },
       "trait": "嫁祸 自己每失去25%生命，连击数+2。",
-      "yiseImg": "/static/static-web/pets/085_小夜_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3142/shiny.png",
       "traitImg": "/static/static-web/traits/085.webp"
     }
   ],
@@ -3954,7 +3954,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/086_紫夜.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3143/icon.png",
       "race": {
         "hp": 80,
         "attack": 92,
@@ -3965,7 +3965,7 @@ export const petDetail = {
         "total": 499
       },
       "trait": "嫁祸 自己每失去25%生命，连击数+2。",
-      "yiseImg": "/static/static-web/pets/086_紫夜_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3143/shiny.png",
       "traitImg": "/static/static-web/traits/086.webp"
     }
   ],
@@ -3975,7 +3975,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/087_朔夜伊芙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3144/icon.png",
       "race": {
         "hp": 100,
         "attack": 115,
@@ -3986,7 +3986,7 @@ export const petDetail = {
         "total": 624
       },
       "trait": "嫁祸 自己每失去25%生命，连击数+2。",
-      "yiseImg": "/static/static-web/pets/087_朔夜伊芙_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3144/shiny.png",
       "traitImg": "/static/static-web/traits/087.webp"
     }
   ],
@@ -3997,7 +3997,7 @@ export const petDetail = {
         "翼",
         "水"
       ],
-      "img": "/static/static-web/pets/088_乖乖鹄.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3344/icon.png",
       "race": {
         "hp": 75,
         "attack": 57,
@@ -4019,7 +4019,7 @@ export const petDetail = {
         "翼",
         "水"
       ],
-      "img": "/static/static-web/pets/089_蓝珠天鹅.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3345/icon.png",
       "race": {
         "hp": 100,
         "attack": 76,
@@ -4041,7 +4041,7 @@ export const petDetail = {
         "翼",
         "水"
       ],
-      "img": "/static/static-web/pets/090_翠顶夫人.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3346/icon.png",
       "race": {
         "hp": 125,
         "attack": 95,
@@ -4063,7 +4063,7 @@ export const petDetail = {
         "翼",
         "恶"
       ],
-      "img": "/static/static-web/pets/091_黑羽夫人.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3571/icon.png",
       "race": {
         "hp": 132,
         "attack": 93,
@@ -4085,7 +4085,7 @@ export const petDetail = {
         "翼",
         "水"
       ],
-      "img": "/static/static-web/pets/092_锤头鹳.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3069/icon.png",
       "race": {
         "hp": 128,
         "attack": 77,
@@ -4107,7 +4107,7 @@ export const petDetail = {
         "草",
         "幻"
       ],
-      "img": "/static/static-web/pets/093_绿草精灵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3026/icon.png",
       "race": {
         "hp": 87,
         "attack": 39,
@@ -4129,7 +4129,7 @@ export const petDetail = {
         "草",
         "幻"
       ],
-      "img": "/static/static-web/pets/094_魔草巫灵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3035/icon.png",
       "race": {
         "hp": 109,
         "attack": 48,
@@ -4150,7 +4150,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/095_记忆石.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3050/icon.png",
       "race": {
         "hp": 112,
         "attack": 108,
@@ -4172,7 +4172,7 @@ export const petDetail = {
         "翼",
         "普通"
       ],
-      "img": "/static/static-web/pets/096_咔咔羽毛.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3175/icon.png",
       "race": {
         "hp": 58,
         "attack": 68,
@@ -4194,7 +4194,7 @@ export const petDetail = {
         "翼",
         "普通"
       ],
-      "img": "/static/static-web/pets/097_咔咔雀.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3176/icon.png",
       "race": {
         "hp": 78,
         "attack": 91,
@@ -4216,7 +4216,7 @@ export const petDetail = {
         "翼",
         "普通"
       ],
-      "img": "/static/static-web/pets/098_咔咔鸟.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3177/icon.png",
       "race": {
         "hp": 97,
         "attack": 114,
@@ -4238,7 +4238,7 @@ export const petDetail = {
         "虫",
         "草"
       ],
-      "img": "/static/static-web/pets/099_小草虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3139/icon.png",
       "race": {
         "hp": 73,
         "attack": 40,
@@ -4260,7 +4260,7 @@ export const petDetail = {
         "虫",
         "草"
       ],
-      "img": "/static/static-web/pets/100_草衣虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3140/icon.png",
       "race": {
         "hp": 97,
         "attack": 53,
@@ -4282,7 +4282,7 @@ export const petDetail = {
         "虫",
         "草"
       ],
-      "img": "/static/static-web/pets/101_花衣蝶.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3141/icon.png",
       "race": {
         "hp": 122,
         "attack": 67,
@@ -4304,7 +4304,7 @@ export const petDetail = {
         "萌",
         "翼"
       ],
-      "img": "/static/static-web/pets/102_绿翼鸟.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3276/icon.png",
       "race": {
         "hp": 52,
         "attack": 63,
@@ -4326,7 +4326,7 @@ export const petDetail = {
         "萌",
         "翼"
       ],
-      "img": "/static/static-web/pets/103_魔翼鸟.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3277/icon.png",
       "race": {
         "hp": 70,
         "attack": 85,
@@ -4348,7 +4348,7 @@ export const petDetail = {
         "萌",
         "翼"
       ],
-      "img": "/static/static-web/pets/104_魔眷鸟.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3278/icon.png",
       "race": {
         "hp": 87,
         "attack": 106,
@@ -4369,7 +4369,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/105_阿米亚特.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3014/icon.png",
       "race": {
         "hp": 64,
         "attack": 95,
@@ -4390,7 +4390,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/106_阿米樱.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3015/icon.png",
       "race": {
         "hp": 86,
         "attack": 127,
@@ -4412,7 +4412,7 @@ export const petDetail = {
         "地",
         "恶"
       ],
-      "img": "/static/static-web/pets/107_罗隐.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3016/icon.png",
       "race": {
         "hp": 107,
         "attack": 159,
@@ -4432,7 +4432,7 @@ export const petDetail = {
         "地",
         "恶"
       ],
-      "img": "/static/static-web/pets/107_罗隐.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5053/icon.png",
       "race": {
         "hp": 107,
         "attack": 159,
@@ -4454,7 +4454,7 @@ export const petDetail = {
         "水",
         "翼"
       ],
-      "img": "/static/static-web/pets/108_风铃鲨.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3115/icon.png",
       "race": {
         "hp": 54,
         "attack": 59,
@@ -4476,7 +4476,7 @@ export const petDetail = {
         "水",
         "翼"
       ],
-      "img": "/static/static-web/pets/109_蓝蝶鲨.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3116/icon.png",
       "race": {
         "hp": 72,
         "attack": 78,
@@ -4498,7 +4498,7 @@ export const petDetail = {
         "水",
         "翼"
       ],
-      "img": "/static/static-web/pets/110_彩蝶鲨.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3117/icon.png",
       "race": {
         "hp": 90,
         "attack": 98,
@@ -4518,7 +4518,7 @@ export const petDetail = {
         "水",
         "翼"
       ],
-      "img": "/static/static-web/pets/110_神谕鲨.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4073/icon.png",
       "race": {
         "hp": 90,
         "attack": 98,
@@ -4538,7 +4538,7 @@ export const petDetail = {
         "水",
         "翼"
       ],
-      "img": "/static/static-web/pets/110_神谕鲨.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5011/icon.png",
       "race": {
         "hp": 90,
         "attack": 98,
@@ -4559,7 +4559,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/111_石石.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3170/icon.png",
       "race": {
         "hp": 76,
         "attack": 79,
@@ -4581,7 +4581,7 @@ export const petDetail = {
         "地",
         "幽"
       ],
-      "img": "/static/static-web/pets/112_巨灵石.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3171/icon.png",
       "race": {
         "hp": 95,
         "attack": 99,
@@ -4603,7 +4603,7 @@ export const petDetail = {
         "地",
         "幻"
       ],
-      "img": "/static/static-web/pets/113_仪使者.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3109/icon.png",
       "race": {
         "hp": 64,
         "attack": 50,
@@ -4625,7 +4625,7 @@ export const petDetail = {
         "地",
         "幻"
       ],
-      "img": "/static/static-web/pets/114_仪式之星.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3110/icon.png",
       "race": {
         "hp": 85,
         "attack": 67,
@@ -4647,7 +4647,7 @@ export const petDetail = {
         "地",
         "幻"
       ],
-      "img": "/static/static-web/pets/115_仪式巨像.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3111/icon.png",
       "race": {
         "hp": 106,
         "attack": 84,
@@ -4667,7 +4667,7 @@ export const petDetail = {
         "地",
         "幻"
       ],
-      "img": "/static/static-web/pets/115_祭礼巨像.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4084/icon.png",
       "race": {
         "hp": 106,
         "attack": 96,
@@ -4687,7 +4687,7 @@ export const petDetail = {
         "地",
         "幻"
       ],
-      "img": "/static/static-web/pets/115_祭礼巨像.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5009/icon.png",
       "race": {
         "hp": 106,
         "attack": 96,
@@ -4708,7 +4708,7 @@ export const petDetail = {
       "type": [
         "光"
       ],
-      "img": "/static/static-web/pets/116_小独角兽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3062/icon.png",
       "race": {
         "hp": 79,
         "attack": 48,
@@ -4719,7 +4719,7 @@ export const petDetail = {
         "total": 476
       },
       "trait": "目空 携带的非光系技能，威力+25%。",
-      "yiseImg": "/static/static-web/pets/116_小独角兽_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3062/shiny.png",
       "traitImg": "/static/static-web/traits/116.webp"
     }
   ],
@@ -4729,7 +4729,7 @@ export const petDetail = {
       "type": [
         "光"
       ],
-      "img": "/static/static-web/pets/117_白金独角兽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3063/icon.png",
       "race": {
         "hp": 99,
         "attack": 61,
@@ -4740,7 +4740,7 @@ export const petDetail = {
         "total": 595
       },
       "trait": "目空 携带的非光系技能，威力+25%。",
-      "yiseImg": "/static/static-web/pets/117_白金独角兽_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3063/shiny.png",
       "traitImg": "/static/static-web/traits/117.webp"
     },
     {
@@ -4748,7 +4748,7 @@ export const petDetail = {
       "type": [
         "光"
       ],
-      "img": "/static/static-web/pets/117_彩虹独角兽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5002/icon.png",
       "race": {
         "hp": 99,
         "attack": 78,
@@ -4770,7 +4770,7 @@ export const petDetail = {
         "普通",
         "虫"
       ],
-      "img": "/static/static-web/pets/118_旋叶虫（金黄的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3376/icon.png",
       "race": {
         "hp": 56,
         "attack": 15,
@@ -4790,7 +4790,7 @@ export const petDetail = {
         "普通",
         "虫"
       ],
-      "img": "/static/static-web/pets/118_旋叶虫（枯叶的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3496/icon.png",
       "race": {
         "hp": 57,
         "attack": 15,
@@ -4812,7 +4812,7 @@ export const petDetail = {
         "普通",
         "虫"
       ],
-      "img": "/static/static-web/pets/119_蓬叶虫（金黄的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3483/icon.png",
       "race": {
         "hp": 74,
         "attack": 19,
@@ -4832,7 +4832,7 @@ export const petDetail = {
         "普通",
         "虫"
       ],
-      "img": "/static/static-web/pets/119_蓬叶虫（枯叶的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3497/icon.png",
       "race": {
         "hp": 76,
         "attack": 20,
@@ -4854,7 +4854,7 @@ export const petDetail = {
         "普通",
         "虫"
       ],
-      "img": "/static/static-web/pets/120_风滚暮虫（金黄的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3377/icon.png",
       "race": {
         "hp": 93,
         "attack": 24,
@@ -4874,7 +4874,7 @@ export const petDetail = {
         "普通",
         "虫"
       ],
-      "img": "/static/static-web/pets/120_风滚暮虫（枯叶的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3498/icon.png",
       "race": {
         "hp": 95,
         "attack": 25,
@@ -4955,7 +4955,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/121_小黑猫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3568/icon.png",
       "race": {
         "hp": 119,
         "attack": 42,
@@ -4976,7 +4976,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/122_黑猫巫师.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3569/icon.png",
       "race": {
         "hp": 149,
         "attack": 53,
@@ -4995,7 +4995,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/122_黑猫密探.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4083/icon.png",
       "race": {
         "hp": 149,
         "attack": 65,
@@ -5014,7 +5014,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/122_黑猫密探.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5007/icon.png",
       "race": {
         "hp": 149,
         "attack": 65,
@@ -5036,7 +5036,7 @@ export const petDetail = {
         "幽",
         "毒"
       ],
-      "img": "/static/static-web/pets/123_忽幽狸.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3065/icon.png",
       "race": {
         "hp": 78,
         "attack": 87,
@@ -5058,7 +5058,7 @@ export const petDetail = {
         "幽",
         "毒"
       ],
-      "img": "/static/static-web/pets/124_影狸.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3066/icon.png",
       "race": {
         "hp": 97,
         "attack": 109,
@@ -5080,7 +5080,7 @@ export const petDetail = {
         "毒",
         "地"
       ],
-      "img": "/static/static-web/pets/125_多多.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3151/icon.png",
       "race": {
         "hp": 51,
         "attack": 53,
@@ -5102,7 +5102,7 @@ export const petDetail = {
         "毒",
         "地"
       ],
-      "img": "/static/static-web/pets/126_多啦多.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3152/icon.png",
       "race": {
         "hp": 68,
         "attack": 70,
@@ -5124,7 +5124,7 @@ export const petDetail = {
         "毒",
         "地"
       ],
-      "img": "/static/static-web/pets/127_古啦多.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3153/icon.png",
       "race": {
         "hp": 85,
         "attack": 88,
@@ -5145,7 +5145,7 @@ export const petDetail = {
       "type": [
         "幻"
       ],
-      "img": "/static/static-web/pets/128_哭哭菇.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3239/icon.png",
       "race": {
         "hp": 74,
         "attack": 38,
@@ -5166,7 +5166,7 @@ export const petDetail = {
       "type": [
         "幻"
       ],
-      "img": "/static/static-web/pets/129_怖须菇.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3240/icon.png",
       "race": {
         "hp": 99,
         "attack": 50,
@@ -5187,7 +5187,7 @@ export const petDetail = {
       "type": [
         "幻"
       ],
-      "img": "/static/static-web/pets/130_怖哭菇.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3241/icon.png",
       "race": {
         "hp": 124,
         "attack": 63,
@@ -5208,7 +5208,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/131_恶魔狼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3011/icon.png",
       "race": {
         "hp": 115,
         "attack": 114,
@@ -5219,7 +5219,7 @@ export const petDetail = {
         "total": 548
       },
       "trait": "悲悯 己方队伍中每有1只力竭的精灵，自己获得双攻+30%。",
-      "yiseImg": "/static/static-web/pets/131_恶魔狼_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3011/shiny.png",
       "traitImg": "/static/static-web/traits/131.webp"
     },
     {
@@ -5227,7 +5227,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/131_恶魔狼王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4011/icon.png",
       "race": {
         "hp": 115,
         "attack": 121,
@@ -5238,7 +5238,7 @@ export const petDetail = {
         "total": 560
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
-      "yiseImg": "/static/static-web/pets/131_恶魔狼王_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4011/shiny.png",
       "traitImg": "/static/static-web/traits/131.webp"
     },
     {
@@ -5246,7 +5246,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/131_恶魔狼王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5016/icon.png",
       "race": {
         "hp": 115,
         "attack": 121,
@@ -5257,7 +5257,7 @@ export const petDetail = {
         "total": 560
       },
       "trait": "悼亡 双方队伍中每有1只力竭的精灵，自己获得双攻+30%。",
-      "yiseImg": "/static/static-web/pets/131_恶魔狼王_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5016/shiny.png",
       "traitImg": "/static/static-web/traits/131.webp"
     }
   ],
@@ -5268,7 +5268,7 @@ export const petDetail = {
         "冰",
         "电"
       ],
-      "img": "/static/static-web/pets/132_小电企鹅.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3434/icon.png",
       "race": {
         "hp": 75,
         "attack": 45,
@@ -5290,7 +5290,7 @@ export const petDetail = {
         "冰",
         "电"
       ],
-      "img": "/static/static-web/pets/133_电企鹅.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3435/icon.png",
       "race": {
         "hp": 94,
         "attack": 56,
@@ -5311,7 +5311,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/134_雪豆丁.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3172/icon.png",
       "race": {
         "hp": 97,
         "attack": 104,
@@ -5332,7 +5332,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/135_雪蛮人.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3173/icon.png",
       "race": {
         "hp": 130,
         "attack": 139,
@@ -5353,7 +5353,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/136_雪巨人.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3174/icon.png",
       "race": {
         "hp": 162,
         "attack": 174,
@@ -5375,7 +5375,7 @@ export const petDetail = {
         "冰",
         "地"
       ],
-      "img": "/static/static-web/pets/137_呼呼猪.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3262/icon.png",
       "race": {
         "hp": 98,
         "attack": 95,
@@ -5386,7 +5386,7 @@ export const petDetail = {
         "total": 463
       },
       "trait": "冻土 每携带1个冰系技能进入战斗，地系技能威力+10%。",
-      "yiseImg": "/static/static-web/pets/137_呼呼猪_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3262/shiny.png",
       "traitImg": "/static/static-web/traits/137.webp"
     }
   ],
@@ -5397,7 +5397,7 @@ export const petDetail = {
         "冰",
         "地"
       ],
-      "img": "/static/static-web/pets/138_獠牙猪.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3263/icon.png",
       "race": {
         "hp": 123,
         "attack": 119,
@@ -5408,7 +5408,7 @@ export const petDetail = {
         "total": 579
       },
       "trait": "冻土 每携带1个冰系技能进入战斗，地系技能威力+10%。",
-      "yiseImg": "/static/static-web/pets/138_獠牙猪_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3263/shiny.png",
       "traitImg": "/static/static-web/traits/138.webp"
     }
   ],
@@ -5418,7 +5418,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/139_雪娃娃.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3333/icon.png",
       "race": {
         "hp": 56,
         "attack": 67,
@@ -5439,7 +5439,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/140_冰封怨灵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3334/icon.png",
       "race": {
         "hp": 75,
         "attack": 90,
@@ -5460,7 +5460,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/141_雪灵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3335/icon.png",
       "race": {
         "hp": 94,
         "attack": 112,
@@ -5482,7 +5482,7 @@ export const petDetail = {
         "冰",
         "萌"
       ],
-      "img": "/static/static-web/pets/142_大耳帽兜.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3121/icon.png",
       "race": {
         "hp": 78,
         "attack": 62,
@@ -5493,7 +5493,7 @@ export const petDetail = {
         "total": 370
       },
       "trait": "捉迷藏 使敌方获得冻结时，也会使其获得全技能能耗+1。",
-      "yiseImg": "/static/static-web/pets/142_大耳帽兜_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3121/shiny.png",
       "traitImg": "/static/static-web/traits/142.webp"
     }
   ],
@@ -5504,7 +5504,7 @@ export const petDetail = {
         "冰",
         "萌"
       ],
-      "img": "/static/static-web/pets/143_帽兜娃娃.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3122/icon.png",
       "race": {
         "hp": 104,
         "attack": 83,
@@ -5515,7 +5515,7 @@ export const petDetail = {
         "total": 493
       },
       "trait": "捉迷藏 使敌方获得冻结时，也会使其获得全技能能耗+1。",
-      "yiseImg": "/static/static-web/pets/143_帽兜娃娃_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3122/shiny.png",
       "traitImg": "/static/static-web/traits/143.webp"
     }
   ],
@@ -5526,7 +5526,7 @@ export const petDetail = {
         "冰",
         "萌"
       ],
-      "img": "/static/static-web/pets/144_雪影娃娃.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3123/icon.png",
       "race": {
         "hp": 130,
         "attack": 103,
@@ -5537,7 +5537,7 @@ export const petDetail = {
         "total": 617
       },
       "trait": "捉迷藏 使敌方获得冻结时，也会使其获得全技能能耗+1。",
-      "yiseImg": "/static/static-web/pets/144_雪影娃娃_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3123/shiny.png",
       "traitImg": "/static/static-web/traits/144.webp"
     },
     {
@@ -5546,7 +5546,7 @@ export const petDetail = {
         "冰",
         "萌"
       ],
-      "img": "/static/static-web/pets/144_雪影冰灵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4085/icon.png",
       "race": {
         "hp": 130,
         "attack": 120,
@@ -5557,7 +5557,7 @@ export const petDetail = {
         "total": 650
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
-      "yiseImg": "/static/static-web/pets/144_雪影冰灵_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4085/shiny.png",
       "traitImg": "/static/static-web/traits/144.webp"
     },
     {
@@ -5566,7 +5566,7 @@ export const petDetail = {
         "冰",
         "萌"
       ],
-      "img": "/static/static-web/pets/144_雪影冰灵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5013/icon.png",
       "race": {
         "hp": 130,
         "attack": 120,
@@ -5577,7 +5577,7 @@ export const petDetail = {
         "total": 650
       },
       "trait": "抓到你了 自己入场时敌方获得2层冻结，使敌方获得冻结时，也会使其获得全技能能耗+1。",
-      "yiseImg": "/static/static-web/pets/144_雪影冰灵_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5013/shiny.png",
       "traitImg": "/static/static-web/traits/144.webp"
     }
   ],
@@ -5587,7 +5587,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/145_权杖-Ⅱ.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3410/icon.png",
       "race": {
         "hp": 82,
         "attack": 84,
@@ -5608,7 +5608,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/146_权杖-Ⅴ.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3411/icon.png",
       "race": {
         "hp": 103,
         "attack": 105,
@@ -5630,7 +5630,7 @@ export const petDetail = {
         "火",
         "冰"
       ],
-      "img": "/static/static-web/pets/147_灵狐.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3075/icon.png",
       "race": {
         "hp": 69,
         "attack": 52,
@@ -5641,7 +5641,7 @@ export const petDetail = {
         "total": 347
       },
       "trait": "灵魂灼伤 冰系技能使敌方获得4层灼烧，火系技能使敌方获得2层冻结。",
-      "yiseImg": "/static/static-web/pets/147_灵狐_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3075/shiny.png",
       "traitImg": "/static/static-web/traits/147.webp"
     }
   ],
@@ -5652,7 +5652,7 @@ export const petDetail = {
         "火",
         "冰"
       ],
-      "img": "/static/static-web/pets/148_九尾狐.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3076/icon.png",
       "race": {
         "hp": 92,
         "attack": 70,
@@ -5663,7 +5663,7 @@ export const petDetail = {
         "total": 465
       },
       "trait": "灵魂灼伤 冰系技能使敌方获得4层灼烧，火系技能使敌方获得2层冻结。",
-      "yiseImg": "/static/static-web/pets/148_九尾狐_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3076/shiny.png",
       "traitImg": "/static/static-web/traits/148.webp"
     }
   ],
@@ -5674,7 +5674,7 @@ export const petDetail = {
         "火",
         "冰"
       ],
-      "img": "/static/static-web/pets/149_尖嘴狐仙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3077/icon.png",
       "race": {
         "hp": 115,
         "attack": 87,
@@ -5685,7 +5685,7 @@ export const petDetail = {
         "total": 580
       },
       "trait": "灵魂灼伤 冰系技能使敌方获得4层灼烧，火系技能使敌方获得2层冻结。",
-      "yiseImg": "/static/static-web/pets/149_尖嘴狐仙_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3077/shiny.png",
       "traitImg": "/static/static-web/traits/149.webp"
     }
   ],
@@ -5695,7 +5695,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/150_里奥.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3395/icon.png",
       "race": {
         "hp": 79,
         "attack": 65,
@@ -5716,7 +5716,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/151_灵羽勇士.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3396/icon.png",
       "race": {
         "hp": 105,
         "attack": 87,
@@ -5737,7 +5737,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/152_圣羽翼王.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3397/icon.png",
       "race": {
         "hp": 132,
         "attack": 109,
@@ -5759,7 +5759,7 @@ export const petDetail = {
         "草",
         "武"
       ],
-      "img": "/static/static-web/pets/153_松仔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3594/icon.png",
       "race": {
         "hp": 63,
         "attack": 83,
@@ -5781,7 +5781,7 @@ export const petDetail = {
         "草",
         "武"
       ],
-      "img": "/static/static-web/pets/154_松叶羊.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3595/icon.png",
       "race": {
         "hp": 84,
         "attack": 111,
@@ -5803,7 +5803,7 @@ export const petDetail = {
         "草",
         "武"
       ],
-      "img": "/static/static-web/pets/155_针叶巡林.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3596/icon.png",
       "race": {
         "hp": 105,
         "attack": 139,
@@ -5825,7 +5825,7 @@ export const petDetail = {
         "火",
         "武"
       ],
-      "img": "/static/static-web/pets/156_小勇狮.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3600/icon.png",
       "race": {
         "hp": 82,
         "attack": 31,
@@ -5847,7 +5847,7 @@ export const petDetail = {
         "火",
         "武"
       ],
-      "img": "/static/static-web/pets/157_炽焰狮.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3601/icon.png",
       "race": {
         "hp": 110,
         "attack": 41,
@@ -5869,7 +5869,7 @@ export const petDetail = {
         "火",
         "武"
       ],
-      "img": "/static/static-web/pets/158_炽心勇狮.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3602/icon.png",
       "race": {
         "hp": 137,
         "attack": 51,
@@ -5891,7 +5891,7 @@ export const petDetail = {
         "水",
         "武"
       ],
-      "img": "/static/static-web/pets/159_水滴蛇.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3597/icon.png",
       "race": {
         "hp": 63,
         "attack": 66,
@@ -5913,7 +5913,7 @@ export const petDetail = {
         "水",
         "武"
       ],
-      "img": "/static/static-web/pets/160_水蛇锁.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3598/icon.png",
       "race": {
         "hp": 84,
         "attack": 88,
@@ -5935,7 +5935,7 @@ export const petDetail = {
         "水",
         "武"
       ],
-      "img": "/static/static-web/pets/161_游蛇魔使.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3599/icon.png",
       "race": {
         "hp": 105,
         "attack": 110,
@@ -5956,7 +5956,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/162_公平鸽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3499/icon.png",
       "race": {
         "hp": 113,
         "attack": 93,
@@ -5967,7 +5967,7 @@ export const petDetail = {
         "total": 649
       },
       "trait": "衡量 入场时，复制敌方的增益。在场时，若敌方获得增益自己也会获得。",
-      "yiseImg": "/static/static-web/pets/162_公平鸽_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3499/shiny.png",
       "traitImg": "/static/static-web/traits/162.webp"
     }
   ],
@@ -5977,7 +5977,7 @@ export const petDetail = {
       "type": [
         "武"
       ],
-      "img": "/static/static-web/pets/163_小怂猫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3237/icon.png",
       "race": {
         "hp": 74,
         "attack": 106,
@@ -5998,7 +5998,7 @@ export const petDetail = {
       "type": [
         "武"
       ],
-      "img": "/static/static-web/pets/164_怒目怂猫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3238/icon.png",
       "race": {
         "hp": 92,
         "attack": 132,
@@ -6019,7 +6019,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/165_小狮鹫（崖间地的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3127/icon.png",
       "race": {
         "hp": 64,
         "attack": 70,
@@ -6038,7 +6038,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/165_小狮鹫（高山地的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3467/icon.png",
       "race": {
         "hp": 65,
         "attack": 66,
@@ -6059,7 +6059,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/166_神圣狮鹫（崖间地的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3128/icon.png",
       "race": {
         "hp": 85,
         "attack": 93,
@@ -6078,7 +6078,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/166_神圣狮鹫（高山地的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3468/icon.png",
       "race": {
         "hp": 87,
         "attack": 88,
@@ -6099,7 +6099,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/167_皇家狮鹫（崖间地的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3129/icon.png",
       "race": {
         "hp": 107,
         "attack": 116,
@@ -6118,7 +6118,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/167_皇家狮鹫（高山地的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3469/icon.png",
       "race": {
         "hp": 109,
         "attack": 110,
@@ -6139,7 +6139,7 @@ export const petDetail = {
       "type": [
         "虫"
       ],
-      "img": "/static/static-web/pets/168_圆眼蜘蛛.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3130/icon.png",
       "race": {
         "hp": 55,
         "attack": 53,
@@ -6161,7 +6161,7 @@ export const petDetail = {
         "虫",
         "毒"
       ],
-      "img": "/static/static-web/pets/169_尖角蜘蛛.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3131/icon.png",
       "race": {
         "hp": 74,
         "attack": 70,
@@ -6183,7 +6183,7 @@ export const petDetail = {
         "虫",
         "毒"
       ],
-      "img": "/static/static-web/pets/170_芋香巨角蛛.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3132/icon.png",
       "race": {
         "hp": 92,
         "attack": 88,
@@ -6205,7 +6205,7 @@ export const petDetail = {
         "地",
         "水"
       ],
-      "img": "/static/static-web/pets/171_波波螺.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3508/icon.png",
       "race": {
         "hp": 67,
         "attack": 59,
@@ -6225,7 +6225,7 @@ export const petDetail = {
         "地",
         "水"
       ],
-      "img": "/static/static-web/pets/171_波波螺（被污染的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3511/icon.png",
       "race": {
         "hp": 64,
         "attack": 57,
@@ -6247,7 +6247,7 @@ export const petDetail = {
         "地",
         "水"
       ],
-      "img": "/static/static-web/pets/172_消波螺.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3509/icon.png",
       "race": {
         "hp": 89,
         "attack": 78,
@@ -6267,7 +6267,7 @@ export const petDetail = {
         "地",
         "水"
       ],
-      "img": "/static/static-web/pets/172_消波螺（被污染的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3512/icon.png",
       "race": {
         "hp": 85,
         "attack": 76,
@@ -6289,7 +6289,7 @@ export const petDetail = {
         "地",
         "水"
       ],
-      "img": "/static/static-web/pets/173_嗜波螺.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3510/icon.png",
       "race": {
         "hp": 112,
         "attack": 98,
@@ -6309,7 +6309,7 @@ export const petDetail = {
         "地",
         "水"
       ],
-      "img": "/static/static-web/pets/173_嗜波螺.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3513/icon.png",
       "race": {
         "hp": 107,
         "attack": 95,
@@ -6331,7 +6331,7 @@ export const petDetail = {
         "地",
         "草"
       ],
-      "img": "/static/static-web/pets/174_菇菇丁.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3378/icon.png",
       "race": {
         "hp": 89,
         "attack": 66,
@@ -6353,7 +6353,7 @@ export const petDetail = {
         "地",
         "草"
       ],
-      "img": "/static/static-web/pets/175_多菇丁.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3379/icon.png",
       "race": {
         "hp": 119,
         "attack": 88,
@@ -6375,7 +6375,7 @@ export const petDetail = {
         "地",
         "草"
       ],
-      "img": "/static/static-web/pets/176_九幽菇.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3380/icon.png",
       "race": {
         "hp": 149,
         "attack": 110,
@@ -6396,7 +6396,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/177_斑斑.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3534/icon.png",
       "race": {
         "hp": 87,
         "attack": 90,
@@ -6417,7 +6417,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/178_斑枭.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3535/icon.png",
       "race": {
         "hp": 109,
         "attack": 112,
@@ -6438,7 +6438,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/179_草头鸭.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3008/icon.png",
       "race": {
         "hp": 92,
         "attack": 79,
@@ -6460,7 +6460,7 @@ export const petDetail = {
         "草",
         "武"
       ],
-      "img": "/static/static-web/pets/180_卷毛鸭.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3067/icon.png",
       "race": {
         "hp": 116,
         "attack": 98,
@@ -6482,7 +6482,7 @@ export const petDetail = {
         "武",
         "水"
       ],
-      "img": "/static/static-web/pets/181_海豹战士.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3215/icon.png",
       "race": {
         "hp": 72,
         "attack": 91,
@@ -6504,7 +6504,7 @@ export const petDetail = {
         "武",
         "水"
       ],
-      "img": "/static/static-web/pets/182_海豹船长.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3216/icon.png",
       "race": {
         "hp": 90,
         "attack": 113,
@@ -6525,7 +6525,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/183_号儿鱼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3529/icon.png",
       "race": {
         "hp": 90,
         "attack": 24,
@@ -6546,7 +6546,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/184_圆号鱼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3530/icon.png",
       "race": {
         "hp": 113,
         "attack": 31,
@@ -6568,7 +6568,7 @@ export const petDetail = {
         "水",
         "萌"
       ],
-      "img": "/static/static-web/pets/185_甜田螺.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3112/icon.png",
       "race": {
         "hp": 68,
         "attack": 67,
@@ -6590,7 +6590,7 @@ export const petDetail = {
         "水",
         "萌"
       ],
-      "img": "/static/static-web/pets/186_壳乙螺.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3113/icon.png",
       "race": {
         "hp": 91,
         "attack": 89,
@@ -6612,7 +6612,7 @@ export const petDetail = {
         "水",
         "萌"
       ],
-      "img": "/static/static-web/pets/187_卡洛儿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3114/icon.png",
       "race": {
         "hp": 114,
         "attack": 112,
@@ -6634,7 +6634,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/188_棋棋（白子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3550/icon.png",
       "race": {
         "hp": 72,
         "attack": 100,
@@ -6654,7 +6654,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/188_棋棋（黑子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3555/icon.png",
       "race": {
         "hp": 66,
         "attack": 97,
@@ -6676,7 +6676,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/189_棋骑士（白子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3551/icon.png",
       "race": {
         "hp": 90,
         "attack": 126,
@@ -6696,7 +6696,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/189_棋骑士（黑子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3556/icon.png",
       "race": {
         "hp": 83,
         "attack": 121,
@@ -6778,7 +6778,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/190_棋齐垒（白子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3553/icon.png",
       "race": {
         "hp": 89,
         "attack": 94,
@@ -6798,7 +6798,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/190_棋齐垒（黑子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3558/icon.png",
       "race": {
         "hp": 89,
         "attack": 94,
@@ -6860,7 +6860,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/191_棋祈督（白子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3554/icon.png",
       "race": {
         "hp": 126,
         "attack": 87,
@@ -6880,7 +6880,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/191_棋祈督（黑子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3559/icon.png",
       "race": {
         "hp": 126,
         "attack": 87,
@@ -6942,7 +6942,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/192_棋绮后（白子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3552/icon.png",
       "race": {
         "hp": 93,
         "attack": 84,
@@ -6962,7 +6962,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/192_棋绮后（黑子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3557/icon.png",
       "race": {
         "hp": 93,
         "attack": 84,
@@ -6982,7 +6982,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/192_棋契陛下.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5040/icon.png",
       "race": {
         "hp": 93,
         "attack": 143,
@@ -7002,7 +7002,7 @@ export const petDetail = {
         "武",
         "地"
       ],
-      "img": "/static/static-web/pets/192_棋契陛下.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5044/icon.png",
       "race": {
         "hp": 93,
         "attack": 143,
@@ -7023,7 +7023,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/193_奔波鼠.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3255/icon.png",
       "race": {
         "hp": 82,
         "attack": 37,
@@ -7044,7 +7044,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/194_流浪鼠.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3256/icon.png",
       "race": {
         "hp": 103,
         "attack": 46,
@@ -7066,7 +7066,7 @@ export const petDetail = {
         "草",
         "萌"
       ],
-      "img": "/static/static-web/pets/195_呆小路.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3093/icon.png",
       "race": {
         "hp": 52,
         "attack": 60,
@@ -7088,7 +7088,7 @@ export const petDetail = {
         "草",
         "萌"
       ],
-      "img": "/static/static-web/pets/196_舞动路路.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3094/icon.png",
       "race": {
         "hp": 69,
         "attack": 80,
@@ -7110,7 +7110,7 @@ export const petDetail = {
         "草",
         "萌"
       ],
-      "img": "/static/static-web/pets/197_白发路路.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3095/icon.png",
       "race": {
         "hp": 86,
         "attack": 100,
@@ -7131,7 +7131,7 @@ export const petDetail = {
       "type": [
         "萌"
       ],
-      "img": "/static/static-web/pets/198_逗逗.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3373/icon.png",
       "race": {
         "hp": 48,
         "attack": 70,
@@ -7152,7 +7152,7 @@ export const petDetail = {
       "type": [
         "萌"
       ],
-      "img": "/static/static-web/pets/199_气球猫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3374/icon.png",
       "race": {
         "hp": 64,
         "attack": 93,
@@ -7173,7 +7173,7 @@ export const petDetail = {
       "type": [
         "萌"
       ],
-      "img": "/static/static-web/pets/200_梦想三三.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3375/icon.png",
       "race": {
         "hp": 81,
         "attack": 117,
@@ -7192,7 +7192,7 @@ export const petDetail = {
       "type": [
         "萌"
       ],
-      "img": "/static/static-web/pets/200_奇梦咪.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4087/icon.png",
       "race": {
         "hp": 81,
         "attack": 128,
@@ -7211,7 +7211,7 @@ export const petDetail = {
       "type": [
         "萌"
       ],
-      "img": "/static/static-web/pets/200_奇梦咪.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5024/icon.png",
       "race": {
         "hp": 81,
         "attack": 128,
@@ -7233,7 +7233,7 @@ export const petDetail = {
         "地",
         "草"
       ],
-      "img": "/static/static-web/pets/201_花怨鳗.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3506/icon.png",
       "race": {
         "hp": 232,
         "attack": 73,
@@ -7255,7 +7255,7 @@ export const petDetail = {
         "地",
         "草"
       ],
-      "img": "/static/static-web/pets/202_鳗尾兽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3507/icon.png",
       "race": {
         "hp": 290,
         "attack": 91,
@@ -7276,7 +7276,7 @@ export const petDetail = {
       "type": [
         "龙"
       ],
-      "img": "/static/static-web/pets/203_伊雷龙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3211/icon.png",
       "race": {
         "hp": 90,
         "attack": 73,
@@ -7297,7 +7297,7 @@ export const petDetail = {
       "type": [
         "龙"
       ],
-      "img": "/static/static-web/pets/204_伊兰亚龙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3412/icon.png",
       "race": {
         "hp": 112,
         "attack": 91,
@@ -7316,7 +7316,7 @@ export const petDetail = {
       "type": [
         "龙"
       ],
-      "img": "/static/static-web/pets/204_伊兰龙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4090/icon.png",
       "race": {
         "hp": 112,
         "attack": 91,
@@ -7335,7 +7335,7 @@ export const petDetail = {
       "type": [
         "龙"
       ],
-      "img": "/static/static-web/pets/204_伊兰龙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5022/icon.png",
       "race": {
         "hp": 112,
         "attack": 91,
@@ -7356,7 +7356,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/205_拉特.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3188/icon.png",
       "race": {
         "hp": 67,
         "attack": 80,
@@ -7367,7 +7367,7 @@ export const petDetail = {
         "total": 467
       },
       "trait": "噼啪！ 入场后首次行动，所选技能使用次数+1。",
-      "yiseImg": "/static/static-web/pets/205_拉特_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3188/shiny.png",
       "traitImg": null
     }
   ],
@@ -7377,7 +7377,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/206_酷拉.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3189/icon.png",
       "race": {
         "hp": 83,
         "attack": 100,
@@ -7388,7 +7388,7 @@ export const petDetail = {
         "total": 583
       },
       "trait": "噼啪！ 入场后首次行动，所选技能使用次数+1。",
-      "yiseImg": "/static/static-web/pets/206_酷拉_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3189/shiny.png",
       "traitImg": null
     },
     {
@@ -7396,7 +7396,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/206_酷拉.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5060/icon.png",
       "race": {
         "hp": 83,
         "attack": 100,
@@ -7417,7 +7417,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/207_闪电环.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3195/icon.png",
       "race": {
         "hp": 64,
         "attack": 49,
@@ -7438,7 +7438,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/208_刺电环.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3196/icon.png",
       "race": {
         "hp": 85,
         "attack": 65,
@@ -7459,7 +7459,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/209_荆棘电环.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3197/icon.png",
       "race": {
         "hp": 106,
         "attack": 81,
@@ -7481,7 +7481,7 @@ export const petDetail = {
         "机械",
         "幻"
       ],
-      "img": "/static/static-web/pets/210_小箱怪.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3618/icon.png",
       "race": {
         "hp": 111,
         "attack": 103,
@@ -7503,7 +7503,7 @@ export const petDetail = {
         "机械",
         "幻"
       ],
-      "img": "/static/static-web/pets/211_迷迷箱怪.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3619/icon.png",
       "race": {
         "hp": 138,
         "attack": 129,
@@ -7525,7 +7525,7 @@ export const petDetail = {
         "萌",
         "毒"
       ],
-      "img": "/static/static-web/pets/212_古钟蛇.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3225/icon.png",
       "race": {
         "hp": 85,
         "attack": 69,
@@ -7547,7 +7547,7 @@ export const petDetail = {
         "萌",
         "毒"
       ],
-      "img": "/static/static-web/pets/213_寒音蛇.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3226/icon.png",
       "race": {
         "hp": 106,
         "attack": 87,
@@ -7568,7 +7568,7 @@ export const petDetail = {
       "type": [
         "虫"
       ],
-      "img": "/static/static-web/pets/214_矮脚爬爬.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3178/icon.png",
       "race": {
         "hp": 80,
         "attack": 118,
@@ -7590,7 +7590,7 @@ export const petDetail = {
         "虫",
         "恶"
       ],
-      "img": "/static/static-web/pets/215_恶魔红钻.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3179/icon.png",
       "race": {
         "hp": 100,
         "attack": 147,
@@ -7611,7 +7611,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/216_火尾瓦特.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3090/icon.png",
       "race": {
         "hp": 63,
         "attack": 70,
@@ -7632,7 +7632,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/217_火尾战士.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3091/icon.png",
       "race": {
         "hp": 84,
         "attack": 94,
@@ -7653,7 +7653,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/218_烈火守护.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3092/icon.png",
       "race": {
         "hp": 105,
         "attack": 117,
@@ -7674,7 +7674,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/219_里拉鳐.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3521/icon.png",
       "race": {
         "hp": 118,
         "attack": 82,
@@ -7696,7 +7696,7 @@ export const petDetail = {
         "水",
         "幽"
       ],
-      "img": "/static/static-web/pets/220_海枝枝（碧蓝珊瑚）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3430/icon.png",
       "race": {
         "hp": 78,
         "attack": 58,
@@ -7716,7 +7716,7 @@ export const petDetail = {
         "水",
         "幽"
       ],
-      "img": "/static/static-web/pets/220_海枝枝（杏黄百合）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3431/icon.png",
       "race": {
         "hp": 91,
         "attack": 48,
@@ -7736,7 +7736,7 @@ export const petDetail = {
         "水",
         "幽"
       ],
-      "img": "/static/static-web/pets/220_海枝枝（洋红沙丁）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3432/icon.png",
       "race": {
         "hp": 97,
         "attack": 62,
@@ -7756,7 +7756,7 @@ export const petDetail = {
         "水",
         "幽"
       ],
-      "img": "/static/static-web/pets/220_海枝枝（翠绿纶布）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3433/icon.png",
       "race": {
         "hp": 90,
         "attack": 53,
@@ -7778,7 +7778,7 @@ export const petDetail = {
         "机械",
         "地"
       ],
-      "img": "/static/static-web/pets/221_多西.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3206/icon.png",
       "race": {
         "hp": 64,
         "attack": 73,
@@ -7800,7 +7800,7 @@ export const petDetail = {
         "机械",
         "地"
       ],
-      "img": "/static/static-web/pets/222_库多西.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3207/icon.png",
       "race": {
         "hp": 85,
         "attack": 98,
@@ -7822,7 +7822,7 @@ export const petDetail = {
         "机械",
         "地"
       ],
-      "img": "/static/static-web/pets/223_波多西.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3208/icon.png",
       "race": {
         "hp": 106,
         "attack": 122,
@@ -7844,7 +7844,7 @@ export const petDetail = {
         "龙",
         "翼"
       ],
-      "img": "/static/static-web/pets/224_小翼龙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3209/icon.png",
       "race": {
         "hp": 66,
         "attack": 91,
@@ -7866,7 +7866,7 @@ export const petDetail = {
         "龙",
         "翼"
       ],
-      "img": "/static/static-web/pets/225_翼龙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3210/icon.png",
       "race": {
         "hp": 83,
         "attack": 114,
@@ -7887,7 +7887,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/226_电动长颈鹿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3357/icon.png",
       "race": {
         "hp": 55,
         "attack": 46,
@@ -7908,7 +7908,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/227_奔乐鹿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3358/icon.png",
       "race": {
         "hp": 73,
         "attack": 61,
@@ -7929,7 +7929,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/228_爵士鹿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3359/icon.png",
       "race": {
         "hp": 92,
         "attack": 77,
@@ -7948,7 +7948,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/228_波普鹿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4088/icon.png",
       "race": {
         "hp": 92,
         "attack": 79,
@@ -7967,7 +7967,7 @@ export const petDetail = {
       "type": [
         "电"
       ],
-      "img": "/static/static-web/pets/228_波普鹿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5020/icon.png",
       "race": {
         "hp": 92,
         "attack": 79,
@@ -7988,7 +7988,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/229_缇塔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3406/icon.png",
       "race": {
         "hp": 73,
         "attack": 99,
@@ -8009,7 +8009,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/230_声波缇塔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3407/icon.png",
       "race": {
         "hp": 92,
         "attack": 124,
@@ -8030,7 +8030,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/231_小鹬.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3250/icon.png",
       "race": {
         "hp": 58,
         "attack": 59,
@@ -8051,7 +8051,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/232_鄙目鹬.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3251/icon.png",
       "race": {
         "hp": 77,
         "attack": 79,
@@ -8072,7 +8072,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/233_高脚鹬.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3252/icon.png",
       "race": {
         "hp": 96,
         "attack": 98,
@@ -8091,7 +8091,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/233_高脚鹬.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5054/icon.png",
       "race": {
         "hp": 96,
         "attack": 106,
@@ -8112,7 +8112,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/234_脆筒甜甜.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3124/icon.png",
       "race": {
         "hp": 72,
         "attack": 67,
@@ -8133,7 +8133,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/235_香草甜甜.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3125/icon.png",
       "race": {
         "hp": 96,
         "attack": 90,
@@ -8152,7 +8152,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/235_香草甜甜（杨桃饰品）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3478/icon.png",
       "race": {
         "hp": 88,
         "attack": 92,
@@ -8171,7 +8171,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/235_香草甜甜（蓝莓饰品）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3479/icon.png",
       "race": {
         "hp": 91,
         "attack": 94,
@@ -8192,7 +8192,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/236_圣代甜甜.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3126/icon.png",
       "race": {
         "hp": 119,
         "attack": 112,
@@ -8211,7 +8211,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/236_圣代甜甜（樱桃草莓口味）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3458/icon.png",
       "race": {
         "hp": 107,
         "attack": 120,
@@ -8230,7 +8230,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/236_圣代甜甜（樱桃抹茶口味）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3459/icon.png",
       "race": {
         "hp": 113,
         "attack": 112,
@@ -8249,7 +8249,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/236_圣代甜甜（蓝莓巧克力口味）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3460/icon.png",
       "race": {
         "hp": 114,
         "attack": 117,
@@ -8268,7 +8268,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/236_圣代甜甜（蓝莓草莓口味）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3461/icon.png",
       "race": {
         "hp": 113,
         "attack": 109,
@@ -8287,7 +8287,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/236_圣代甜甜（蓝莓抹茶口味）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3462/icon.png",
       "race": {
         "hp": 121,
         "attack": 100,
@@ -8306,7 +8306,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/236_圣代甜甜（杨桃巧克力口味）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3463/icon.png",
       "race": {
         "hp": 110,
         "attack": 116,
@@ -8325,7 +8325,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/236_圣代甜甜（杨桃草莓口味）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3464/icon.png",
       "race": {
         "hp": 108,
         "attack": 110,
@@ -8344,7 +8344,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/236_圣代甜甜（杨桃抹茶口味）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3465/icon.png",
       "race": {
         "hp": 110,
         "attack": 107,
@@ -8366,7 +8366,7 @@ export const petDetail = {
         "毒",
         "萌"
       ],
-      "img": "/static/static-web/pets/237_刺轮砣（上弦的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3582/icon.png",
       "race": {
         "hp": 100,
         "attack": 80,
@@ -8386,7 +8386,7 @@ export const petDetail = {
         "毒",
         "萌"
       ],
-      "img": "/static/static-web/pets/237_刺轮砣（下弦的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3584/icon.png",
       "race": {
         "hp": 100,
         "attack": 78,
@@ -8408,7 +8408,7 @@ export const petDetail = {
         "毒",
         "萌"
       ],
-      "img": "/static/static-web/pets/238_月亮砣（上弦的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3583/icon.png",
       "race": {
         "hp": 125,
         "attack": 100,
@@ -8428,7 +8428,7 @@ export const petDetail = {
         "毒",
         "萌"
       ],
-      "img": "/static/static-web/pets/238_月亮砣（下弦的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3585/icon.png",
       "race": {
         "hp": 125,
         "attack": 98,
@@ -8450,7 +8450,7 @@ export const petDetail = {
         "水",
         "龙"
       ],
-      "img": "/static/static-web/pets/239_豆丁鱼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3384/icon.png",
       "race": {
         "hp": 53,
         "attack": 62,
@@ -8472,7 +8472,7 @@ export const petDetail = {
         "水",
         "龙"
       ],
-      "img": "/static/static-web/pets/240_快鳍鱼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3385/icon.png",
       "race": {
         "hp": 71,
         "attack": 82,
@@ -8494,7 +8494,7 @@ export const petDetail = {
         "水",
         "龙"
       ],
-      "img": "/static/static-web/pets/241_龙鱼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3386/icon.png",
       "race": {
         "hp": 89,
         "attack": 103,
@@ -8516,7 +8516,7 @@ export const petDetail = {
         "电",
         "水"
       ],
-      "img": "/static/static-web/pets/242_胆小鳗鱼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3266/icon.png",
       "race": {
         "hp": 68,
         "attack": 92,
@@ -8538,7 +8538,7 @@ export const petDetail = {
         "电",
         "水"
       ],
-      "img": "/static/static-web/pets/243_闪电鳗鱼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3267/icon.png",
       "race": {
         "hp": 85,
         "attack": 115,
@@ -8560,7 +8560,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/244_翡翠水母.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3119/icon.png",
       "race": {
         "hp": 108,
         "attack": 30,
@@ -8582,7 +8582,7 @@ export const petDetail = {
         "水",
         "毒"
       ],
-      "img": "/static/static-web/pets/245_琉璃水母.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3120/icon.png",
       "race": {
         "hp": 134,
         "attack": 37,
@@ -8603,7 +8603,7 @@ export const petDetail = {
       "type": [
         "毒"
       ],
-      "img": "/static/static-web/pets/246_裘洛.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3154/icon.png",
       "race": {
         "hp": 44,
         "attack": 56,
@@ -8624,7 +8624,7 @@ export const petDetail = {
       "type": [
         "毒"
       ],
-      "img": "/static/static-web/pets/247_裘力.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3155/icon.png",
       "race": {
         "hp": 59,
         "attack": 74,
@@ -8645,7 +8645,7 @@ export const petDetail = {
       "type": [
         "毒"
       ],
-      "img": "/static/static-web/pets/248_裘卡.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3156/icon.png",
       "race": {
         "hp": 73,
         "attack": 93,
@@ -8666,7 +8666,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/249_可爱猿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3083/icon.png",
       "race": {
         "hp": 100,
         "attack": 97,
@@ -8687,7 +8687,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/250_炽热猿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3084/icon.png",
       "race": {
         "hp": 133,
         "attack": 130,
@@ -8708,7 +8708,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/251_火焰猿.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3085/icon.png",
       "race": {
         "hp": 167,
         "attack": 162,
@@ -8729,7 +8729,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/252_布鲁斯.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3257/icon.png",
       "race": {
         "hp": 44,
         "attack": 60,
@@ -8750,7 +8750,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/253_雪顶布鲁斯.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3258/icon.png",
       "race": {
         "hp": 58,
         "attack": 81,
@@ -8771,7 +8771,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/254_冰钻布鲁斯.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3259/icon.png",
       "race": {
         "hp": 73,
         "attack": 101,
@@ -8793,7 +8793,7 @@ export const petDetail = {
         "火",
         "萌"
       ],
-      "img": "/static/static-web/pets/255_治愈兔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3081/icon.png",
       "race": {
         "hp": 67,
         "attack": 28,
@@ -8804,7 +8804,7 @@ export const petDetail = {
         "total": 358
       },
       "trait": "仁心 敌方受到灼烧伤害时，自己回复等量生命。",
-      "yiseImg": "/static/static-web/pets/255_治愈兔_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3081/shiny.png",
       "traitImg": "/static/static-web/traits/255.webp"
     }
   ],
@@ -8815,7 +8815,7 @@ export const petDetail = {
         "火",
         "萌"
       ],
-      "img": "/static/static-web/pets/256_红丝绒.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3082/icon.png",
       "race": {
         "hp": 90,
         "attack": 38,
@@ -8826,7 +8826,7 @@ export const petDetail = {
         "total": 479
       },
       "trait": "仁心 敌方受到灼烧伤害时，自己回复等量生命。",
-      "yiseImg": "/static/static-web/pets/256_红丝绒_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3082/shiny.png",
       "traitImg": "/static/static-web/traits/256.webp"
     }
   ],
@@ -8837,7 +8837,7 @@ export const petDetail = {
         "火",
         "萌"
       ],
-      "img": "/static/static-web/pets/257_红绒十字.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3350/icon.png",
       "race": {
         "hp": 112,
         "attack": 47,
@@ -8848,7 +8848,7 @@ export const petDetail = {
         "total": 598
       },
       "trait": "仁心 敌方受到灼烧伤害时，自己回复等量生命。",
-      "yiseImg": "/static/static-web/pets/257_红绒十字_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3350/shiny.png",
       "traitImg": "/static/static-web/traits/257.webp"
     }
   ],
@@ -8859,7 +8859,7 @@ export const petDetail = {
         "恶",
         "火"
       ],
-      "img": "/static/static-web/pets/258_乌达（极昼的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3536/icon.png",
       "race": {
         "hp": 80,
         "attack": 95,
@@ -8879,7 +8879,7 @@ export const petDetail = {
         "恶",
         "冰"
       ],
-      "img": "/static/static-web/pets/258_乌达（极夜的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3539/icon.png",
       "race": {
         "hp": 96,
         "attack": 95,
@@ -8901,7 +8901,7 @@ export const petDetail = {
         "恶",
         "火"
       ],
-      "img": "/static/static-web/pets/259_迷你乌（极昼的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3537/icon.png",
       "race": {
         "hp": 107,
         "attack": 126,
@@ -8921,7 +8921,7 @@ export const petDetail = {
         "恶",
         "冰"
       ],
-      "img": "/static/static-web/pets/259_迷你乌（极夜的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3540/icon.png",
       "race": {
         "hp": 128,
         "attack": 126,
@@ -8943,7 +8943,7 @@ export const petDetail = {
         "恶",
         "火"
       ],
-      "img": "/static/static-web/pets/260_乌拉塔（极昼的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3538/icon.png",
       "race": {
         "hp": 134,
         "attack": 158,
@@ -8963,7 +8963,7 @@ export const petDetail = {
         "恶",
         "冰"
       ],
-      "img": "/static/static-web/pets/260_乌拉塔（极夜的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3541/icon.png",
       "race": {
         "hp": 160,
         "attack": 158,
@@ -8985,7 +8985,7 @@ export const petDetail = {
         "机械",
         "翼"
       ],
-      "img": "/static/static-web/pets/261_螺旋帕帕.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3484/icon.png",
       "race": {
         "hp": 88,
         "attack": 55,
@@ -9007,7 +9007,7 @@ export const petDetail = {
         "机械",
         "翼"
       ],
-      "img": "/static/static-web/pets/262_帕帕斯卡.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3547/icon.png",
       "race": {
         "hp": 110,
         "attack": 68,
@@ -9028,7 +9028,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/263_机械方方.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3200/icon.png",
       "race": {
         "hp": 62,
         "attack": 81,
@@ -9039,7 +9039,7 @@ export const petDetail = {
         "total": 362
       },
       "trait": "盲拧 回合开始时，技能顺序打乱，4号位的技能能耗-4。",
-      "yiseImg": "/static/static-web/pets/263_机械方方_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3200/shiny.png",
       "traitImg": "/static/static-web/traits/263.webp"
     }
   ],
@@ -9049,7 +9049,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/264_多彩方方.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3201/icon.png",
       "race": {
         "hp": 82,
         "attack": 108,
@@ -9060,7 +9060,7 @@ export const petDetail = {
         "total": 482
       },
       "trait": "盲拧 回合开始时，技能顺序打乱，4号位的技能能耗-4。",
-      "yiseImg": "/static/static-web/pets/264_多彩方方_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3201/shiny.png",
       "traitImg": "/static/static-web/traits/264.webp"
     }
   ],
@@ -9070,7 +9070,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/265_立方人.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3202/icon.png",
       "race": {
         "hp": 103,
         "attack": 135,
@@ -9081,7 +9081,7 @@ export const petDetail = {
         "total": 605
       },
       "trait": "盲拧 回合开始时，技能顺序打乱，4号位的技能能耗-4。",
-      "yiseImg": "/static/static-web/pets/265_立方人_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3202/shiny.png",
       "traitImg": "/static/static-web/traits/265.webp"
     }
   ],
@@ -9091,7 +9091,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/266_可立鸡.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3086/icon.png",
       "race": {
         "hp": 67,
         "attack": 72,
@@ -9112,7 +9112,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/267_晕晕鸡.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3087/icon.png",
       "race": {
         "hp": 89,
         "attack": 96,
@@ -9134,7 +9134,7 @@ export const petDetail = {
         "火",
         "武"
       ],
-      "img": "/static/static-web/pets/268_绅士鸡.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3088/icon.png",
       "race": {
         "hp": 112,
         "attack": 120,
@@ -9156,7 +9156,7 @@ export const petDetail = {
         "火",
         "武"
       ],
-      "img": "/static/static-web/pets/269_武者鸡.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3089/icon.png",
       "race": {
         "hp": 116,
         "attack": 137,
@@ -9178,7 +9178,7 @@ export const petDetail = {
         "地",
         "光"
       ],
-      "img": "/static/static-web/pets/270_优优.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3704/icon.png",
       "race": {
         "hp": 81,
         "attack": 35,
@@ -9200,7 +9200,7 @@ export const petDetail = {
         "地",
         "光"
       ],
-      "img": "/static/static-web/pets/271_绒光优优.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3705/icon.png",
       "race": {
         "hp": 101,
         "attack": 43,
@@ -9222,7 +9222,7 @@ export const petDetail = {
         "电",
         "翼"
       ],
-      "img": "/static/static-web/pets/272_噼啪鸟.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3444/icon.png",
       "race": {
         "hp": 78,
         "attack": 116,
@@ -9243,7 +9243,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/273_深蓝鲸.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3381/icon.png",
       "race": {
         "hp": 137,
         "attack": 44,
@@ -9264,7 +9264,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/274_格兰种子.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3072/icon.png",
       "race": {
         "hp": 65,
         "attack": 31,
@@ -9275,7 +9275,7 @@ export const petDetail = {
         "total": 321
       },
       "trait": "生长 回合结束时，回复12%生命。",
-      "yiseImg": "/static/static-web/pets/274_格兰种子_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3072/shiny.png",
       "traitImg": "/static/static-web/traits/274.webp"
     }
   ],
@@ -9285,7 +9285,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/275_格兰花.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3073/icon.png",
       "race": {
         "hp": 86,
         "attack": 42,
@@ -9296,7 +9296,7 @@ export const petDetail = {
         "total": 429
       },
       "trait": "生长 回合结束时，回复12%生命。",
-      "yiseImg": "/static/static-web/pets/275_格兰花_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3073/shiny.png",
       "traitImg": "/static/static-web/traits/275.webp"
     }
   ],
@@ -9306,7 +9306,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/276_格兰球.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3074/icon.png",
       "race": {
         "hp": 108,
         "attack": 52,
@@ -9317,7 +9317,7 @@ export const petDetail = {
         "total": 536
       },
       "trait": "生长 回合结束时，回复12%生命。",
-      "yiseImg": "/static/static-web/pets/276_格兰球_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3074/shiny.png",
       "traitImg": "/static/static-web/traits/276.webp"
     }
   ],
@@ -9327,7 +9327,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/277_地鼠（枯水期的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3020/icon.png",
       "race": {
         "hp": 66,
         "attack": 71,
@@ -9346,7 +9346,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/277_地鼠.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3454/icon.png",
       "race": {
         "hp": 67,
         "attack": 71,
@@ -9367,7 +9367,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/278_遁鼠（枯水期的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3021/icon.png",
       "race": {
         "hp": 88,
         "attack": 95,
@@ -9386,7 +9386,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/278_遁鼠.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3455/icon.png",
       "race": {
         "hp": 89,
         "attack": 94,
@@ -9407,7 +9407,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/279_遁地鼠（枯水期的样子）.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3022/icon.png",
       "race": {
         "hp": 110,
         "attack": 119,
@@ -9426,7 +9426,7 @@ export const petDetail = {
       "type": [
         "地"
       ],
-      "img": "/static/static-web/pets/279_遁地鼠.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3456/icon.png",
       "race": {
         "hp": 112,
         "attack": 118,
@@ -9447,7 +9447,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/280_墨鱿士.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3577/icon.png",
       "race": {
         "hp": 103,
         "attack": 97,
@@ -9469,7 +9469,7 @@ export const petDetail = {
         "幽",
         "恶"
       ],
-      "img": "/static/static-web/pets/281_混乱鱿彩.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3578/icon.png",
       "race": {
         "hp": 129,
         "attack": 122,
@@ -9491,7 +9491,7 @@ export const petDetail = {
         "幽",
         "萌"
       ],
-      "img": "/static/static-web/pets/282_秩序鱿墨.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3579/icon.png",
       "race": {
         "hp": 78,
         "attack": 120,
@@ -9512,7 +9512,7 @@ export const petDetail = {
       "type": [
         "虫"
       ],
-      "img": "/static/static-web/pets/283_小甲虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3038/icon.png",
       "race": {
         "hp": 98,
         "attack": 71,
@@ -9533,7 +9533,7 @@ export const petDetail = {
       "type": [
         "虫"
       ],
-      "img": "/static/static-web/pets/284_铠甲虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3013/icon.png",
       "race": {
         "hp": 122,
         "attack": 88,
@@ -9554,7 +9554,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/285_圣剑侍从.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3545/icon.png",
       "race": {
         "hp": 139,
         "attack": 116,
@@ -9575,7 +9575,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/286_圣剑-X.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3546/icon.png",
       "race": {
         "hp": 174,
         "attack": 144,
@@ -9594,7 +9594,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/286_圣剑骑士.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4089/icon.png",
       "race": {
         "hp": 187,
         "attack": 154,
@@ -9613,7 +9613,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/286_圣剑骑士.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5021/icon.png",
       "race": {
         "hp": 187,
         "attack": 154,
@@ -9635,7 +9635,7 @@ export const petDetail = {
         "地",
         "翼"
       ],
-      "img": "/static/static-web/pets/287_吸泥鸥.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3490/icon.png",
       "race": {
         "hp": 99,
         "attack": 89,
@@ -9657,7 +9657,7 @@ export const petDetail = {
         "地",
         "翼"
       ],
-      "img": "/static/static-web/pets/288_泥吼牙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3491/icon.png",
       "race": {
         "hp": 124,
         "attack": 112,
@@ -9677,7 +9677,7 @@ export const petDetail = {
         "地",
         "翼"
       ],
-      "img": "/static/static-web/pets/288_泥吼牙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4102/icon.png",
       "race": {
         "hp": 124,
         "attack": 138,
@@ -9697,7 +9697,7 @@ export const petDetail = {
         "地",
         "翼"
       ],
-      "img": "/static/static-web/pets/288_泥吼牙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5057/icon.png",
       "race": {
         "hp": 124,
         "attack": 138,
@@ -9719,7 +9719,7 @@ export const petDetail = {
         "龙",
         "幽"
       ],
-      "img": "/static/static-web/pets/289_大头骨龙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3268/icon.png",
       "race": {
         "hp": 96,
         "attack": 109,
@@ -9741,7 +9741,7 @@ export const petDetail = {
         "龙",
         "幽"
       ],
-      "img": "/static/static-web/pets/290_寂灭骨龙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3269/icon.png",
       "race": {
         "hp": 120,
         "attack": 137,
@@ -9763,7 +9763,7 @@ export const petDetail = {
         "毒",
         "恶"
       ],
-      "img": "/static/static-web/pets/291_厉毒小萝.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3419/icon.png",
       "race": {
         "hp": 67,
         "attack": 64,
@@ -9785,7 +9785,7 @@ export const petDetail = {
         "毒",
         "恶"
       ],
-      "img": "/static/static-web/pets/292_厉毒修萝.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3420/icon.png",
       "race": {
         "hp": 84,
         "attack": 80,
@@ -9806,7 +9806,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/293_小帕尔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3180/icon.png",
       "race": {
         "hp": 78,
         "attack": 76,
@@ -9827,7 +9827,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/294_帕尔萨斯.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3181/icon.png",
       "race": {
         "hp": 104,
         "attack": 102,
@@ -9848,7 +9848,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/295_龙息帕尔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3182/icon.png",
       "race": {
         "hp": 130,
         "attack": 127,
@@ -9870,7 +9870,7 @@ export const petDetail = {
         "虫",
         "地"
       ],
-      "img": "/static/static-web/pets/296_毛头小蛛.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3603/icon.png",
       "race": {
         "hp": 85,
         "attack": 80,
@@ -9892,7 +9892,7 @@ export const petDetail = {
         "虫",
         "地"
       ],
-      "img": "/static/static-web/pets/297_捕尘长绒.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3604/icon.png",
       "race": {
         "hp": 106,
         "attack": 100,
@@ -9914,7 +9914,7 @@ export const petDetail = {
         "虫",
         "地"
       ],
-      "img": "/static/static-web/pets/298_食尘短绒.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3605/icon.png",
       "race": {
         "hp": 109,
         "attack": 105,
@@ -9935,7 +9935,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/299_画精灵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3606/icon.png",
       "race": {
         "hp": 61,
         "attack": 32,
@@ -9956,7 +9956,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/300_画像守护.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3607/icon.png",
       "race": {
         "hp": 81,
         "attack": 42,
@@ -9978,7 +9978,7 @@ export const petDetail = {
         "普通",
         "幻"
       ],
-      "img": "/static/static-web/pets/301_画间法师手.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3608/icon.png",
       "race": {
         "hp": 101,
         "attack": 53,
@@ -10000,7 +10000,7 @@ export const petDetail = {
         "普通",
         "武"
       ],
-      "img": "/static/static-web/pets/302_画间沉铁兽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3609/icon.png",
       "race": {
         "hp": 126,
         "attack": 147,
@@ -10021,7 +10021,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/303_书魔虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3610/icon.png",
       "race": {
         "hp": 67,
         "attack": 69,
@@ -10042,7 +10042,7 @@ export const petDetail = {
       "type": [
         "普通"
       ],
-      "img": "/static/static-web/pets/304_书卷守护.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3611/icon.png",
       "race": {
         "hp": 89,
         "attack": 92,
@@ -10064,7 +10064,7 @@ export const petDetail = {
         "普通",
         "幻"
       ],
-      "img": "/static/static-web/pets/305_古卷执政官.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3612/icon.png",
       "race": {
         "hp": 111,
         "attack": 115,
@@ -10086,7 +10086,7 @@ export const petDetail = {
         "普通",
         "武"
       ],
-      "img": "/static/static-web/pets/306_古卷匣魔像.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3613/icon.png",
       "race": {
         "hp": 109,
         "attack": 109,
@@ -10108,7 +10108,7 @@ export const petDetail = {
         "光",
         "虫"
       ],
-      "img": "/static/static-web/pets/307_绒绒.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3244/icon.png",
       "race": {
         "hp": 58,
         "attack": 61,
@@ -10119,7 +10119,7 @@ export const petDetail = {
         "total": 379
       },
       "trait": "绒粉星光 攻击时，若敌方血脉是非本系的系别血脉，技能威力+100%。",
-      "yiseImg": "/static/static-web/pets/307_绒绒_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3244/shiny.png",
       "traitImg": "/static/static-web/traits/307.webp"
     }
   ],
@@ -10130,7 +10130,7 @@ export const petDetail = {
         "光",
         "虫"
       ],
-      "img": "/static/static-web/pets/308_小绒茧.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3245/icon.png",
       "race": {
         "hp": 77,
         "attack": 81,
@@ -10141,7 +10141,7 @@ export const petDetail = {
         "total": 504
       },
       "trait": "绒粉星光 攻击时，若敌方血脉是非本系的系别血脉，技能威力+100%。",
-      "yiseImg": "/static/static-web/pets/308_小绒茧_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3245/shiny.png",
       "traitImg": "/static/static-web/traits/308.webp"
     }
   ],
@@ -10152,7 +10152,7 @@ export const petDetail = {
         "光",
         "虫"
       ],
-      "img": "/static/static-web/pets/309_绒仙子.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3246/icon.png",
       "race": {
         "hp": 96,
         "attack": 101,
@@ -10163,7 +10163,7 @@ export const petDetail = {
         "total": 630
       },
       "trait": "绒粉星光 攻击时，若敌方血脉是非本系的系别血脉，技能威力+100%。",
-      "yiseImg": "/static/static-web/pets/309_绒仙子_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3246/shiny.png",
       "traitImg": "/static/static-web/traits/309.webp"
     }
   ],
@@ -10173,7 +10173,7 @@ export const petDetail = {
       "type": [
         "光"
       ],
-      "img": "/static/static-web/pets/310_犀角鸟.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3309/icon.png",
       "race": {
         "hp": 63,
         "attack": 88,
@@ -10184,7 +10184,7 @@ export const petDetail = {
         "total": 368
       },
       "trait": "月光审判 攻击时，若敌方血脉是首领血脉，技能威力+100%。",
-      "yiseImg": "/static/static-web/pets/310_犀角鸟_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3309/shiny.png",
       "traitImg": null
     }
   ],
@@ -10194,7 +10194,7 @@ export const petDetail = {
       "type": [
         "光"
       ],
-      "img": "/static/static-web/pets/311_光纤兽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3310/icon.png",
       "race": {
         "hp": 83,
         "attack": 117,
@@ -10205,7 +10205,7 @@ export const petDetail = {
         "total": 490
       },
       "trait": "月光审判 攻击时，若敌方血脉是首领血脉，技能威力+100%。",
-      "yiseImg": "/static/static-web/pets/311_光纤兽_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3310/shiny.png",
       "traitImg": null
     }
   ],
@@ -10215,7 +10215,7 @@ export const petDetail = {
       "type": [
         "光"
       ],
-      "img": "/static/static-web/pets/312_疾光千兽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3311/icon.png",
       "race": {
         "hp": 104,
         "attack": 146,
@@ -10226,7 +10226,7 @@ export const petDetail = {
         "total": 612
       },
       "trait": "月光审判 攻击时，若敌方血脉是首领血脉，技能威力+100%。",
-      "yiseImg": "/static/static-web/pets/312_疾光千兽_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3311/shiny.png",
       "traitImg": null
     }
   ],
@@ -10236,7 +10236,7 @@ export const petDetail = {
       "type": [
         "水"
       ],
-      "img": "/static/static-web/pets/313_果冻.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3118/icon.png",
       "race": {
         "hp": 81,
         "attack": 26,
@@ -10258,7 +10258,7 @@ export const petDetail = {
         "水",
         "草"
       ],
-      "img": "/static/static-web/pets/314_抹茶布丁.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3526/icon.png",
       "race": {
         "hp": 101,
         "attack": 32,
@@ -10280,7 +10280,7 @@ export const petDetail = {
         "水",
         "冰"
       ],
-      "img": "/static/static-web/pets/315_椰浆布丁.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3527/icon.png",
       "race": {
         "hp": 133,
         "attack": 34,
@@ -10302,7 +10302,7 @@ export const petDetail = {
         "水",
         "火"
       ],
-      "img": "/static/static-web/pets/316_熔岩布丁.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3528/icon.png",
       "race": {
         "hp": 128,
         "attack": 87,
@@ -10323,7 +10323,7 @@ export const petDetail = {
       "type": [
         "虫"
       ],
-      "img": "/static/static-web/pets/317_星尘虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3398/icon.png",
       "race": {
         "hp": 49,
         "attack": 47,
@@ -10344,7 +10344,7 @@ export const petDetail = {
       "type": [
         "虫"
       ],
-      "img": "/static/static-web/pets/318_落星虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3399/icon.png",
       "race": {
         "hp": 65,
         "attack": 62,
@@ -10365,7 +10365,7 @@ export const petDetail = {
       "type": [
         "虫"
       ],
-      "img": "/static/static-web/pets/319_陨星虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3400/icon.png",
       "race": {
         "hp": 81,
         "attack": 78,
@@ -10387,7 +10387,7 @@ export const petDetail = {
         "水",
         "电"
       ],
-      "img": "/static/static-web/pets/320_双灯鱼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3382/icon.png",
       "race": {
         "hp": 102,
         "attack": 55,
@@ -10398,7 +10398,7 @@ export const petDetail = {
         "total": 502
       },
       "trait": "对流 自己的能耗增加变为能耗降低；能耗降低变为能耗增加。",
-      "yiseImg": "/static/static-web/pets/320_双灯鱼_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3382/shiny.png",
       "traitImg": "/static/static-web/traits/320.webp"
     }
   ],
@@ -10409,7 +10409,7 @@ export const petDetail = {
         "水",
         "电"
       ],
-      "img": "/static/static-web/pets/321_利灯鱼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3383/icon.png",
       "race": {
         "hp": 128,
         "attack": 68,
@@ -10420,7 +10420,7 @@ export const petDetail = {
         "total": 626
       },
       "trait": "对流 自己的能耗增加变为能耗降低；能耗降低变为能耗增加。",
-      "yiseImg": "/static/static-web/pets/321_利灯鱼_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3383/shiny.png",
       "traitImg": "/static/static-web/traits/321.webp"
     }
   ],
@@ -10431,7 +10431,7 @@ export const petDetail = {
         "冰",
         "幻"
       ],
-      "img": "/static/static-web/pets/322_月牙雪熊.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3457/icon.png",
       "race": {
         "hp": 126,
         "attack": 97,
@@ -10442,7 +10442,7 @@ export const petDetail = {
         "total": 586
       },
       "trait": "月牙雪糕 使用攻击技能时，敌方每有1层冻结，在攻击前使其获得1层星陨印记。",
-      "yiseImg": "/static/static-web/pets/322_月牙雪熊_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3457/shiny.png",
       "traitImg": "/static/static-web/traits/322.webp"
     }
   ],
@@ -10453,7 +10453,7 @@ export const petDetail = {
         "恶",
         "光"
       ],
-      "img": "/static/static-web/pets/323_嗜光嗡嗡.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3614/icon.png",
       "race": {
         "hp": 74,
         "attack": 91,
@@ -10464,7 +10464,7 @@ export const petDetail = {
         "total": 505
       },
       "trait": "血型吸引 敌方每携带1种系别的技能，自己攻击时威力+10。",
-      "yiseImg": "/static/static-web/pets/323_嗜光嗡嗡_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3614/shiny.png",
       "traitImg": "/static/static-web/traits/323.webp"
     }
   ],
@@ -10475,7 +10475,7 @@ export const petDetail = {
         "恶",
         "光"
       ],
-      "img": "/static/static-web/pets/324_窃光蚊.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3615/icon.png",
       "race": {
         "hp": 93,
         "attack": 113,
@@ -10486,7 +10486,7 @@ export const petDetail = {
         "total": 630
       },
       "trait": "血型吸引 敌方每携带1种系别的技能，自己攻击时威力+10。",
-      "yiseImg": "/static/static-web/pets/324_窃光蚊_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3615/shiny.png",
       "traitImg": "/static/static-web/traits/324.webp"
     }
   ],
@@ -10497,7 +10497,7 @@ export const petDetail = {
         "火",
         "草"
       ],
-      "img": "/static/static-web/pets/325_柴渣虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3436/icon.png",
       "race": {
         "hp": 108,
         "attack": 96,
@@ -10508,7 +10508,7 @@ export const petDetail = {
         "total": 462
       },
       "trait": "煤渣草 在场时，所有灼烧的衰减变为增长。",
-      "yiseImg": "/static/static-web/pets/325_柴渣虫_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3436/shiny.png",
       "traitImg": "/static/static-web/traits/325.webp"
     }
   ],
@@ -10519,7 +10519,7 @@ export const petDetail = {
         "火",
         "草"
       ],
-      "img": "/static/static-web/pets/326_燃薪虫.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3437/icon.png",
       "race": {
         "hp": 135,
         "attack": 120,
@@ -10530,7 +10530,7 @@ export const petDetail = {
         "total": 579
       },
       "trait": "煤渣草 在场时，所有灼烧的衰减变为增长。",
-      "yiseImg": "/static/static-web/pets/326_燃薪虫_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3437/shiny.png",
       "traitImg": "/static/static-web/traits/326.webp"
     }
   ],
@@ -10540,7 +10540,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/327_空空颅.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3148/icon.png",
       "race": {
         "hp": 70,
         "attack": 7,
@@ -10551,7 +10551,7 @@ export const petDetail = {
         "total": 280
       },
       "trait": "搜刮 敌方每使用1次「聚能」技能或更换精灵，自己入场时获得魔攻+20%。",
-      "yiseImg": "/static/static-web/pets/327_空空颅_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3148/shiny.png",
       "traitImg": "/static/static-web/traits/327.webp"
     }
   ],
@@ -10561,7 +10561,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/328_夜宿颅.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3149/icon.png",
       "race": {
         "hp": 94,
         "attack": 9,
@@ -10572,7 +10572,7 @@ export const petDetail = {
         "total": 373
       },
       "trait": "搜刮 敌方每使用1次「聚能」技能或更换精灵，自己入场时获得魔攻+20%。",
-      "yiseImg": "/static/static-web/pets/328_夜宿颅_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3149/shiny.png",
       "traitImg": "/static/static-web/traits/328.webp"
     }
   ],
@@ -10582,7 +10582,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/329_夜枭.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3150/icon.png",
       "race": {
         "hp": 117,
         "attack": 10,
@@ -10593,7 +10593,7 @@ export const petDetail = {
         "total": 464
       },
       "trait": "搜刮 敌方每使用1次「聚能」技能或更换精灵，自己入场时获得魔攻+20%。",
-      "yiseImg": "/static/static-web/pets/329_夜枭_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3150/shiny.png",
       "traitImg": "/static/static-web/traits/329.webp"
     },
     {
@@ -10601,7 +10601,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/329_夜枭.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4104/icon.png",
       "race": {
         "hp": 117,
         "attack": 5,
@@ -10620,7 +10620,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/329_夜枭.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5059/icon.png",
       "race": {
         "hp": 117,
         "attack": 5,
@@ -10642,7 +10642,7 @@ export const petDetail = {
         "电",
         "幻"
       ],
-      "img": "/static/static-web/pets/330_粉粉星.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3198/icon.png",
       "race": {
         "hp": 93,
         "attack": 54,
@@ -10653,7 +10653,7 @@ export const petDetail = {
         "total": 495
       },
       "trait": "星地善良 回合结束时，若场上的己方精灵能量等于0，自己立即替换此精灵。",
-      "yiseImg": "/static/static-web/pets/330_粉粉星_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3198/shiny.png",
       "traitImg": "/static/static-web/traits/330.webp"
     }
   ],
@@ -10664,7 +10664,7 @@ export const petDetail = {
         "电",
         "幻"
       ],
-      "img": "/static/static-web/pets/331_小皮球.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3199/icon.png",
       "race": {
         "hp": 116,
         "attack": 68,
@@ -10675,7 +10675,7 @@ export const petDetail = {
         "total": 618
       },
       "trait": "星地善良 回合结束时，若场上的己方精灵能量等于0，自己立即替换此精灵。",
-      "yiseImg": "/static/static-web/pets/331_小皮球_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3199/shiny.png",
       "traitImg": "/static/static-web/traits/331.webp"
     }
   ],
@@ -10686,7 +10686,7 @@ export const petDetail = {
         "机械",
         "火"
       ],
-      "img": "/static/static-web/pets/332_贝瑟.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3203/icon.png",
       "race": {
         "hp": 79,
         "attack": 46,
@@ -10697,7 +10697,7 @@ export const petDetail = {
         "total": 385
       },
       "trait": "贪心算法 1号位技能获得传动1，且使用后使敌方获得6层灼烧。",
-      "yiseImg": "/static/static-web/pets/332_贝瑟_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3203/shiny.png",
       "traitImg": "/static/static-web/traits/332.webp"
     }
   ],
@@ -10708,7 +10708,7 @@ export const petDetail = {
         "机械",
         "火"
       ],
-      "img": "/static/static-web/pets/333_贝加尔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3204/icon.png",
       "race": {
         "hp": 105,
         "attack": 61,
@@ -10719,7 +10719,7 @@ export const petDetail = {
         "total": 512
       },
       "trait": "贪心算法 1号位技能获得传动1，且使用后使敌方获得6层灼烧。",
-      "yiseImg": "/static/static-web/pets/333_贝加尔_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3204/shiny.png",
       "traitImg": "/static/static-web/traits/333.webp"
     }
   ],
@@ -10730,7 +10730,7 @@ export const petDetail = {
         "机械",
         "火"
       ],
-      "img": "/static/static-web/pets/334_贝古斯.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3205/icon.png",
       "race": {
         "hp": 132,
         "attack": 76,
@@ -10741,7 +10741,7 @@ export const petDetail = {
         "total": 641
       },
       "trait": "贪心算法 1号位技能获得传动1，且使用后使敌方获得6层灼烧。",
-      "yiseImg": "/static/static-web/pets/334_贝古斯_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3205/shiny.png",
       "traitImg": "/static/static-web/traits/334.webp"
     }
   ],
@@ -10751,7 +10751,7 @@ export const petDetail = {
       "type": [
         "幻"
       ],
-      "img": "/static/static-web/pets/335_粉星仔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3319/icon.png",
       "race": {
         "hp": 80,
         "attack": 63,
@@ -10762,7 +10762,7 @@ export const petDetail = {
         "total": 514
       },
       "trait": "双向光速 在场时，双方回合结束时的效果会额外触发1次。",
-      "yiseImg": "/static/static-web/pets/335_粉星仔_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3319/shiny.png",
       "traitImg": "/static/static-web/traits/335.webp"
     }
   ],
@@ -10772,7 +10772,7 @@ export const petDetail = {
       "type": [
         "幻"
       ],
-      "img": "/static/static-web/pets/336_粉耳星兔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3320/icon.png",
       "race": {
         "hp": 100,
         "attack": 79,
@@ -10783,7 +10783,7 @@ export const petDetail = {
         "total": 642
       },
       "trait": "双向光速 在场时，双方回合结束时的效果会额外触发1次。",
-      "yiseImg": "/static/static-web/pets/336_粉耳星兔_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3320/shiny.png",
       "traitImg": "/static/static-web/traits/336.webp"
     }
   ],
@@ -10815,7 +10815,7 @@ export const petDetail = {
       "type": [
         "幻"
       ],
-      "img": "/static/static-web/pets/338_布瓜蝌.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3473/icon.png",
       "race": {
         "hp": 91,
         "attack": 84,
@@ -10836,7 +10836,7 @@ export const petDetail = {
       "type": [
         "幻"
       ],
-      "img": "/static/static-web/pets/339_上岸蛙.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3474/icon.png",
       "race": {
         "hp": 114,
         "attack": 106,
@@ -10857,7 +10857,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/340_火红尾.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3744/icon.png",
       "race": {
         "hp": 67,
         "attack": 56,
@@ -10868,7 +10868,7 @@ export const petDetail = {
         "total": 511
       },
       "trait": "天通地明 攻击时，若敌方血脉是污染血脉，技能威力+100%。",
-      "yiseImg": "/static/static-web/pets/340_火红尾_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3744/shiny.png",
       "traitImg": "/static/static-web/traits/340.webp"
     }
   ],
@@ -10878,7 +10878,7 @@ export const petDetail = {
       "type": [
         "火"
       ],
-      "img": "/static/static-web/pets/341_雅丹鬃.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3745/icon.png",
       "race": {
         "hp": 83,
         "attack": 70,
@@ -10889,7 +10889,7 @@ export const petDetail = {
         "total": 639
       },
       "trait": "天通地明 攻击时，若敌方血脉是污染血脉，技能威力+100%。",
-      "yiseImg": "/static/static-web/pets/341_雅丹鬃_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3745/shiny.png",
       "traitImg": "/static/static-web/traits/341.webp"
     }
   ],
@@ -10899,7 +10899,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/342_春团.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3161/icon.png",
       "race": {
         "hp": 48,
         "attack": 51,
@@ -10920,7 +10920,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/343_春兔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3162/icon.png",
       "race": {
         "hp": 63,
         "attack": 68,
@@ -10941,7 +10941,7 @@ export const petDetail = {
       "type": [
         "草"
       ],
-      "img": "/static/static-web/pets/344_春花兔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3372/icon.png",
       "race": {
         "hp": 79,
         "attack": 85,
@@ -10962,7 +10962,7 @@ export const petDetail = {
       "type": [
         "幻"
       ],
-      "img": "/static/static-web/pets/345_幽星光.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3369/icon.png",
       "race": {
         "hp": 49,
         "attack": 21,
@@ -10984,7 +10984,7 @@ export const petDetail = {
         "幻",
         "翼"
       ],
-      "img": "/static/static-web/pets/346_曜星光.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3370/icon.png",
       "race": {
         "hp": 65,
         "attack": 28,
@@ -11006,7 +11006,7 @@ export const petDetail = {
         "幻",
         "翼"
       ],
-      "img": "/static/static-web/pets/347_暮星辰.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3371/icon.png",
       "race": {
         "hp": 81,
         "attack": 35,
@@ -11027,7 +11027,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/348_钨丝贝贝.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3733/icon.png",
       "race": {
         "hp": 62,
         "attack": 68,
@@ -11048,7 +11048,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/349_辉光幕机.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3734/icon.png",
       "race": {
         "hp": 83,
         "attack": 91,
@@ -11069,7 +11069,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/350_机幕方舟.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3735/icon.png",
       "race": {
         "hp": 104,
         "attack": 113,
@@ -11090,7 +11090,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/351_凡雀.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3392/icon.png",
       "race": {
         "hp": 71,
         "attack": 55,
@@ -11111,7 +11111,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/352_紫翎鹰.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3393/icon.png",
       "race": {
         "hp": 94,
         "attack": 74,
@@ -11132,7 +11132,7 @@ export const petDetail = {
       "type": [
         "翼"
       ],
-      "img": "/static/static-web/pets/353_凡鹰.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3394/icon.png",
       "race": {
         "hp": 118,
         "attack": 92,
@@ -11153,7 +11153,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/354_小雪人.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3531/icon.png",
       "race": {
         "hp": 101,
         "attack": 85,
@@ -11164,7 +11164,7 @@ export const petDetail = {
         "total": 509
       },
       "trait": "大雪球 自己使用2次不同的冰系技能后，对手获得4层冻结，随后特性重置。",
-      "yiseImg": "/static/static-web/pets/354_小雪人_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3531/shiny.png",
       "traitImg": "/static/static-web/traits/354.webp"
     }
   ],
@@ -11174,7 +11174,7 @@ export const petDetail = {
       "type": [
         "冰"
       ],
-      "img": "/static/static-web/pets/355_雪怪.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3532/icon.png",
       "race": {
         "hp": 126,
         "attack": 107,
@@ -11185,7 +11185,7 @@ export const petDetail = {
         "total": 636
       },
       "trait": "大雪球 自己使用2次不同的冰系技能后，对手获得4层冻结，随后特性重置。",
-      "yiseImg": "/static/static-web/pets/355_雪怪_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3532/shiny.png",
       "traitImg": "/static/static-web/traits/355.webp"
     }
   ],
@@ -11196,7 +11196,7 @@ export const petDetail = {
         "火",
         "龙"
       ],
-      "img": "/static/static-web/pets/356_爆焰仔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3572/icon.png",
       "race": {
         "hp": 89,
         "attack": 101,
@@ -11207,7 +11207,7 @@ export const petDetail = {
         "total": 498
       },
       "trait": "大火球 自己使用2次不同的火系技能后，下次技能无需蓄力，随后特性重置。",
-      "yiseImg": "/static/static-web/pets/356_爆焰仔_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3572/shiny.png",
       "traitImg": "/static/static-web/traits/356.webp"
     }
   ],
@@ -11218,7 +11218,7 @@ export const petDetail = {
         "火",
         "龙"
       ],
-      "img": "/static/static-web/pets/357_爆焰喷喷.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3573/icon.png",
       "race": {
         "hp": 112,
         "attack": 127,
@@ -11229,7 +11229,7 @@ export const petDetail = {
         "total": 624
       },
       "trait": "大火球 自己使用2次不同的火系技能后，下次技能无需蓄力，随后特性重置。",
-      "yiseImg": "/static/static-web/pets/357_爆焰喷喷_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3573/shiny.png",
       "traitImg": "/static/static-web/traits/357.webp"
     }
   ],
@@ -11240,7 +11240,7 @@ export const petDetail = {
         "普通",
         "机械"
       ],
-      "img": "/static/static-web/pets/358_猴麦仔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3729/icon.png",
       "race": {
         "hp": 93,
         "attack": 75,
@@ -11251,7 +11251,7 @@ export const petDetail = {
         "total": 529
       },
       "trait": "换碟 自己携带的音波弹/音爆/金属噪音/午夜噪音威力提升，且获得巧变：同系别技能。",
-      "yiseImg": "/static/static-web/pets/358_猴麦仔_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3729/shiny.png",
       "traitImg": "/static/static-web/traits/358.webp"
     }
   ],
@@ -11262,7 +11262,7 @@ export const petDetail = {
         "普通",
         "机械"
       ],
-      "img": "/static/static-web/pets/359_音碟吼.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3730/icon.png",
       "race": {
         "hp": 116,
         "attack": 94,
@@ -11273,7 +11273,7 @@ export const petDetail = {
         "total": 661
       },
       "trait": "换碟 自己携带的音波弹/音爆/金属噪音/午夜噪音威力提升，且获得巧变：同系别技能。",
-      "yiseImg": "/static/static-web/pets/359_音碟吼_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3730/shiny.png",
       "traitImg": "/static/static-web/traits/359.webp"
     }
   ],
@@ -11284,7 +11284,7 @@ export const petDetail = {
         "水",
         "萌"
       ],
-      "img": "/static/static-web/pets/360_加油海葵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3659/icon.png",
       "race": {
         "hp": 93,
         "attack": 87,
@@ -11295,7 +11295,7 @@ export const petDetail = {
         "total": 547
       },
       "trait": "拉拉队长 若自己在萌化状态下再获得萌化会解除萌化。",
-      "yiseImg": "/static/static-web/pets/360_加油海葵_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3659/shiny.png",
       "traitImg": "/static/static-web/traits/360.webp"
     }
   ],
@@ -11306,7 +11306,7 @@ export const petDetail = {
         "水",
         "萌"
       ],
-      "img": "/static/static-web/pets/361_加油蟹.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3660/icon.png",
       "race": {
         "hp": 116,
         "attack": 108,
@@ -11317,7 +11317,7 @@ export const petDetail = {
         "total": 683
       },
       "trait": "拉拉队长 若自己在萌化状态下再获得萌化会解除萌化。",
-      "yiseImg": "/static/static-web/pets/361_加油蟹_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3660/shiny.png",
       "traitImg": "/static/static-web/traits/361.webp"
     },
     {
@@ -11326,7 +11326,7 @@ export const petDetail = {
         "水",
         "萌"
       ],
-      "img": "/static/static-web/pets/361_加油蟹.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3743/icon.png",
       "race": {
         "hp": 116,
         "attack": 155,
@@ -11337,7 +11337,7 @@ export const petDetail = {
         "total": 683
       },
       "trait": "拉拉队长 若自己在萌化状态下再获得萌化会解除萌化。",
-      "yiseImg": "/static/static-web/pets/361_加油蟹_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3743/shiny.png",
       "traitImg": "/static/static-web/traits/361.webp"
     }
   ],
@@ -11347,7 +11347,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/362_小丑豆豆.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3487/icon.png",
       "race": {
         "hp": 66,
         "attack": 87,
@@ -11358,7 +11358,7 @@ export const petDetail = {
         "total": 436
       },
       "trait": "戏耍 自己无法回复生命，而是将回复生命变为敌方扣除等量生命。",
-      "yiseImg": "/static/static-web/pets/362_小丑豆豆_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3487/shiny.png",
       "traitImg": "/static/static-web/traits/362.webp"
     }
   ],
@@ -11368,7 +11368,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/363_小丑兔.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3488/icon.png",
       "race": {
         "hp": 88,
         "attack": 116,
@@ -11379,7 +11379,7 @@ export const petDetail = {
         "total": 583
       },
       "trait": "戏耍 自己无法回复生命，而是将回复生命变为敌方扣除等量生命。",
-      "yiseImg": "/static/static-web/pets/363_小丑兔_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3488/shiny.png",
       "traitImg": "/static/static-web/traits/363.webp"
     }
   ],
@@ -11389,7 +11389,7 @@ export const petDetail = {
       "type": [
         "恶"
       ],
-      "img": "/static/static-web/pets/364_小丑公爵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3489/icon.png",
       "race": {
         "hp": 111,
         "attack": 145,
@@ -11400,7 +11400,7 @@ export const petDetail = {
         "total": 729
       },
       "trait": "戏耍 自己无法回复生命，而是将回复生命变为敌方扣除等量生命。",
-      "yiseImg": "/static/static-web/pets/364_小丑公爵_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3489/shiny.png",
       "traitImg": "/static/static-web/traits/364.webp"
     }
   ],
@@ -11411,7 +11411,7 @@ export const petDetail = {
         "火",
         "毒"
       ],
-      "img": "/static/static-web/pets/365_烟花团.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3677/icon.png",
       "race": {
         "hp": 61,
         "attack": 35,
@@ -11422,7 +11422,7 @@ export const petDetail = {
         "total": 389
       },
       "trait": "焰色反应 在场时，衰减的灼烧变为相同层数的中毒。",
-      "yiseImg": "/static/static-web/pets/365_烟花团_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3677/shiny.png",
       "traitImg": "/static/static-web/traits/365.webp"
     }
   ],
@@ -11433,7 +11433,7 @@ export const petDetail = {
         "火",
         "毒"
       ],
-      "img": "/static/static-web/pets/366_烟花伯爵.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3678/icon.png",
       "race": {
         "hp": 76,
         "attack": 44,
@@ -11444,7 +11444,7 @@ export const petDetail = {
         "total": 485
       },
       "trait": "焰色反应 在场时，衰减的灼烧变为相同层数的中毒。",
-      "yiseImg": "/static/static-web/pets/366_烟花伯爵_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3678/shiny.png",
       "traitImg": "/static/static-web/traits/366.webp"
     }
   ],
@@ -11454,7 +11454,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/367_咕咕帽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3683/icon.png",
       "race": {
         "hp": 103,
         "attack": 74,
@@ -11465,7 +11465,7 @@ export const petDetail = {
         "total": 515
       },
       "trait": "魔术帽 在场时，场上双方携带的技能获得巧变：同系别技能。",
-      "yiseImg": "/static/static-web/pets/367_咕咕帽_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3683/shiny.png",
       "traitImg": "/static/static-web/traits/367.webp"
     }
   ],
@@ -11475,7 +11475,7 @@ export const petDetail = {
       "type": [
         "幽"
       ],
-      "img": "/static/static-web/pets/368_咕德帽帽.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3684/icon.png",
       "race": {
         "hp": 128,
         "attack": 92,
@@ -11486,7 +11486,7 @@ export const petDetail = {
         "total": 642
       },
       "trait": "魔术帽 在场时，场上双方携带的技能获得巧变：同系别技能。",
-      "yiseImg": "/static/static-web/pets/368_咕德帽帽_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3684/shiny.png",
       "traitImg": "/static/static-web/traits/368.webp"
     }
   ],
@@ -11497,7 +11497,7 @@ export const petDetail = {
         "电",
         "光"
       ],
-      "img": "/static/static-web/pets/369_炫光迪迪.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3736/icon.png",
       "race": {
         "hp": 83,
         "attack": 95,
@@ -11508,7 +11508,7 @@ export const petDetail = {
         "total": 551
       },
       "trait": "安可 使用光系技能后，回合结束时自己返场。",
-      "yiseImg": "/static/static-web/pets/369_炫光迪迪_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3736/shiny.png",
       "traitImg": "/static/static-web/traits/369.webp"
     }
   ],
@@ -11519,7 +11519,7 @@ export const petDetail = {
         "电",
         "光"
       ],
-      "img": "/static/static-web/pets/370_霹雳迪迪.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3737/icon.png",
       "race": {
         "hp": 104,
         "attack": 119,
@@ -11530,7 +11530,7 @@ export const petDetail = {
         "total": 690
       },
       "trait": "安可 使用光系技能后，回合结束时自己返场。",
-      "yiseImg": "/static/static-web/pets/370_霹雳迪迪_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3737/shiny.png",
       "traitImg": "/static/static-web/traits/370.webp"
     }
   ],
@@ -11540,7 +11540,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/371_小鼓象.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3708/icon.png",
       "race": {
         "hp": 104,
         "attack": 86,
@@ -11551,7 +11551,7 @@ export const petDetail = {
         "total": 513
       },
       "trait": "合拍 本回合与敌方使用的技能在系别/类型/能耗上每有1项相同，回合结束时获得物攻和物防永久+10%。",
-      "yiseImg": "/static/static-web/pets/371_小鼓象_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3708/shiny.png",
       "traitImg": "/static/static-web/traits/371.webp"
     }
   ],
@@ -11561,7 +11561,7 @@ export const petDetail = {
       "type": [
         "机械"
       ],
-      "img": "/static/static-web/pets/372_巨鼓象.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3709/icon.png",
       "race": {
         "hp": 130,
         "attack": 107,
@@ -11572,7 +11572,7 @@ export const petDetail = {
         "total": 640
       },
       "trait": "合拍 本回合与敌方使用的技能在系别/类型/能耗上每有1项相同，回合结束时获得物攻和物防永久+10%。",
-      "yiseImg": "/static/static-web/pets/372_巨鼓象_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3709/shiny.png",
       "traitImg": "/static/static-web/traits/372.webp"
     }
   ],
@@ -11582,7 +11582,7 @@ export const petDetail = {
       "type": [
         "幻"
       ],
-      "img": "/static/static-web/pets/373_牵线木偶.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3234/icon.png",
       "race": {
         "hp": 77,
         "attack": 83,
@@ -11593,7 +11593,7 @@ export const petDetail = {
         "total": 509
       },
       "trait": "盲从 可以携带多个复写/借用/取念技能，非幻系技能能耗-2。",
-      "yiseImg": "/static/static-web/pets/373_牵线木偶_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3234/shiny.png",
       "traitImg": "/static/static-web/traits/373.webp"
     }
   ],
@@ -11603,7 +11603,7 @@ export const petDetail = {
       "type": [
         "幻"
       ],
-      "img": "/static/static-web/pets/374_帅帅魔偶.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3235/icon.png",
       "race": {
         "hp": 97,
         "attack": 104,
@@ -11614,7 +11614,7 @@ export const petDetail = {
         "total": 636
       },
       "trait": "盲从 可以携带多个复写/借用/取念技能，非幻系技能能耗-2。",
-      "yiseImg": "/static/static-web/pets/374_帅帅魔偶_异色.webp",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3235/shiny.png",
       "traitImg": "/static/static-web/traits/374.webp"
     }
   ],
@@ -11624,7 +11624,7 @@ export const petDetail = {
       "type": [
         "武"
       ],
-      "img": "/static/static-web/pets/375_学院呱呱.webp",
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3620/icon.png",
       "race": {
         "hp": 132,
         "attack": 99,

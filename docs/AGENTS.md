@@ -346,6 +346,15 @@ PVP默认规则：
 - baseHits 从“2连击、3连击、5连击”等描述中提取
 - 条件连击不要默认套用
 
+## 大块头蛋判定规则
+
+官方 API 无独立的体型分级端点，判定口径来自社区规则并用官方数据校准：
+
+- 判定条件：蛋的身高与体重**同时**达到该精灵蛋范围的 98% 分位，即 `≥ min + 0.98 × (max - min)`，双维度缺一不可
+- 校准依据：罗隐蛋官方区间 13.475~19.68kg，社区实测大块头准入 >19.556kg，与公式完全吻合
+- 实现位置：`data/config/eggData.js` 的 `judgeBulkEgg(egg, height, weight)`；孵蛋页（pages/egg.vue）展示判定面板与结果徽章
+- 蛋尺寸区间数据来自官方 `/pets/{pet_id}/egg` 端点（eggData.js 的 minHeight/maxHeight/minWeight/maxWeight）
+
 ## PVP分析展示规则
 
 PVP断点分析不要一次展示所有结果。
@@ -379,13 +388,19 @@ PVP组件：
 - utils/buildOpponentFullConfig.js（对方满配：60级5星+三项10+主攻性格）
 - utils/buildSuggestedIvs.js
 
-悬浮窗（实时伤害，自研 Native.js 实现，无需插件）：
-- utils/floatWindow.js（入口 + Native.js 双窗口实现：悬浮球拖动/点击、面板计算页、权限引导）
-- utils/floatWindow.hanspip.js（可选的插件市场实现，默认不启用）
-- static/float/index.html + scripts/float-src/main.js（悬浮窗页面，支持 ?mode=ball 小球窗口）
+悬浮窗（实时伤害，系统级 UTS 插件 + 应用内兜底）：
+- uni_modules/roco-float-window/（本地 UTS 插件：Service + WindowManager + 原生 WebView，
+  可覆盖到游戏等其他应用之上；架构照搬开源 xx-uts-floating-popup 改造，详见其 readme.md）
+- utils/floatWindow.js（入口：优先 UTS 系统级，不可用自动回退 plus.webview 应用内实现）
+- static/float/index.html + scripts/float-src/main.js（悬浮窗页面：
+  ?mode=uts-ball 球窗口 / ?mode=uts-panel 面板窗口 / inapp 应用内自管理 / 浏览器预览）
+- 交互约定：拖动球移动 / 单击球开合面板 / 长按球 700ms 关闭（面板内不放收起关闭按钮）
 - 数据构建时内联进 app.js（不发 fetch，规避 Android 11+ 文件访问限制）
 - 构建命令：npm run build:float / npm run build:float-data（数据更新后两者都要跑）
-- 真机前提：manifest 已声明 SYSTEM_ALERT_WINDOW；需制作自定义调试基座（免费）后运行
+- 真机前提：修改任何 .uts 后必须重新制作自定义调试基座；首次使用引导开启
+  "显示在其他应用上层"权限（manifest 与插件 AndroidManifest 均已声明 SYSTEM_ALERT_WINDOW）
+- 历史教训：Native.js 方案已废弃——打包运行时 JS 固定在 weex 桥线程，无法在 UI 线程
+  构造 WebView，必崩；UTS 插件编译为真 Kotlin，线程问题不存在
 
 PVP配置数据：
 - data/pvp/commonSkillPresets.json
@@ -402,7 +417,7 @@ PVP配置数据：
 | 异色立绘 | `static/static-web/pets/` | `{seq:03d}_{名字}_异色.webp` |
 | 特性图标 | `static/static-web/traits/` | `{seq:03d}.webp` |
 | 技能图标 | `static/static-web/skills/` | `{技能名}.webp` |
-| 属性图标 | `static/static-web/icons/` | `{属性名}.webp` |
+| 属性图标 | `static/static-web/icons/` | `{英文}.webp`（普通→normal、火→fire 等，避免 Android 打包中文文件名告警） |
 
 ## 数据更新（官方 API）
 

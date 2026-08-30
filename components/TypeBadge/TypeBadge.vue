@@ -7,6 +7,7 @@
 
 <script>
 import { normalizeAttr } from '@/data/config/game_math.js'
+import { getAttrIconName } from '@/data/config/typeChart.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
 
 function tint(color, alpha) {
@@ -29,7 +30,7 @@ export default {
   computed: {
     iconSrc() {
       const type = normalizeAttr(this.label) || this.label || '普通'
-      return resolveAssetPath(`/static/icons/${type}.webp`)
+      return resolveAssetPath(`/static/icons/${getAttrIconName(type)}.webp`)
     },
     badgeStyle() {
       return {

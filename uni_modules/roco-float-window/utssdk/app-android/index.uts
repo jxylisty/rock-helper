@@ -1,0 +1,123 @@
+// 悬浮窗插件入口
+// 架构：runOnUiThread 调度到 UI 线程直接操作 WindowManager（无 Service 依赖）
+// 用法（JS 侧）：
+//   import { startFloat, closeFloat, isOverlayPermissionGranted, openOverlayPermissionSetting } from '@/uni_modules/roco-float-window'
+//   startFloat({ ballUrl, panelUrl }, callback)
+
+import Intent from "android.content.Intent";
+import Uri from "android.net.Uri";
+import Settings from "android.provider.Settings";
+import Runnable from "java.lang.Runnable";
+import { getUniActivity, getAppContext } from "io.dcloud.uts.android";
+import { FloatWindowManager } from "./managers/FloatWindowManager";
+
+// 模块级单例（球地址/面板地址由 startFloat 每次刷新）
+let appManager: FloatWindowManager | null = null;
+
+/** UI 线程任务：显示悬浮球 */
+class ShowBallTask extends Runnable {
+    mManager: FloatWindowManager;
+    constructor(manager: FloatWindowManager) {
+        super();
+        this.mManager = manager;
+    }
+    override run() {
+        this.mManager.showBall();
+    }
+}
+
+/** UI 线程任务：移除全部悬浮窗口 */
+class CloseTask extends Runnable {
+    mManager: FloatWindowManager;
+    constructor(manager: FloatWindowManager) {
+        super();
+        this.mManager = manager;
+    }
+    override run() {
+        this.mManager.removeViews();
+    }
+}
+
+/**
+ * 打开悬浮窗（悬浮球 + 可切换面板）
+ * @param options { ballUrl: string, panelUrl: string }
+ * @param success 结果回调 (code 0 成功 / -2 获取Activity失败 / -3 异常)
+ */
+@UTSJS.keepAlive
+export function startFloat(options: UTSJSONObject, success: UTSCallback | null) {
+    console.log("call startFloat");
+    try {
+        const ballUrl = options.getString("ballUrl");
+        const panelUrl = options.getString("panelUrl");
+
+        const activity = getUniActivity();
+        if (activity == null) {
+            console.error("startFloat: activity is null");
+            if (success != null) {
+                success({ code: -2, message: "获取Activity失败" });
+            }
+            return;
+        }
+
+        if (appManager == null) {
+            appManager = new FloatWindowManager(activity, ballUrl ?? "", panelUrl ?? "");
+        }
+        // 局部常量：Kotlin 对模块级可变变量不能智能转换非空，必须先落到局部 val
+        const manager = appManager;
+        if (manager != null) {
+            manager.updateUrls(ballUrl ?? "", panelUrl ?? "");
+            // 窗口操作必须落在 UI 线程
+            activity.runOnUiThread(new ShowBallTask(manager));
+            console.log("startFloat: runOnUiThread(ShowBallTask) 已调度, package=" + activity.getPackageName());
+        }
+
+        if (success != null) {
+            success({ code: 0, message: "ok" });
+        }
+    } catch (e) {
+        console.error("startFloat error:", e);
+        if (success != null) {
+            success({ code: -3, message: "启动悬浮窗异常: " + e });
+        }
+    }
+}
+
+/** 关闭悬浮窗 */
+export function closeFloat() {
+    console.log("call closeFloat");
+    try {
+        const activity = getUniActivity();
+        if (activity == null) return;
+        const manager = appManager;
+        if (manager == null) return;
+        activity.runOnUiThread(new CloseTask(manager));
+    } catch (e) {
+        console.error("closeFloat error:", e);
+    }
+}
+
+/** 是否已授予“显示在其他应用上层”权限 */
+export function isOverlayPermissionGranted(): boolean {
+    const context = getAppContext();
+    if (context == null) return false;
+    try {
+        return Settings.canDrawOverlays(context);
+    } catch (e) {
+        return false;
+    }
+}
+
+/** 跳转系统“显示在其他应用上层”设置页 */
+export function openOverlayPermissionSetting() {
+    try {
+        const activity = getUniActivity();
+        if (activity == null) return;
+        const intent = new Intent(
+            "android.settings.action.MANAGE_OVERLAY_PERMISSION",
+            Uri.parse("package:" + activity.getPackageName())
+        );
+        activity.startActivity(intent);
+    } catch (e) {
+        console.error("openOverlayPermissionSetting error:", e);
+    }
+}

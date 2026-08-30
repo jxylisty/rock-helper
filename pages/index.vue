@@ -382,31 +382,27 @@
           <view class="rename-crest gold">
             <AppIcon name="info" :size="15" color="#A97F35" :stroke-width="2.2" />
           </view>
-          <text class="rename-title">实时伤害悬浮窗</text>
+          <text class="rename-title">实时伤害悬浮面板</text>
         </view>
-        <view v-if="floatGuideStep === 'permission'" class="float-guide-body">
-          <view class="float-guide-text">
-            <text>需要"显示在其他应用上层"权限。</text>
-            <text>点击下方按钮开启后，回到 App 再点一次"实时伤害悬浮窗"即可。</text>
-            <text>若设置里找不到本应用或开关不可用，请先制作自定义调试基座（运行 → 运行到手机或模拟器 → 制作自定义调试基座），标准基座可能未包含悬浮窗权限。</text>
+        <view class="float-guide-body">
+          <view v-if="floatGuideStep === 'permission'" class="float-guide-text">
+            <text>首次使用需要"显示在其他应用上层"权限。</text>
+            <text>点击下方按钮去开启，返回后再点一次"实时伤害悬浮窗"即可。</text>
+            <text>若设置里找不到本应用，请先制作自定义调试基座（UTS 插件必须）。</text>
+          </view>
+          <view v-else class="float-guide-text">
+            <text>悬浮窗为系统级窗口（UTS 插件实现），可覆盖到游戏等其他应用之上，仅支持 Android App。</text>
+            <text>悬浮球：单击展开/收起面板，拖动移动位置，长按关闭。</text>
+            <text>若提示不可用：请制作自定义调试基座后运行（运行 → 运行到手机或模拟器 → 制作自定义调试基座）。</text>
           </view>
           <view class="rename-actions">
-            <view class="rename-btn ghost" hover-class="press-down" @click="closeFloatGuide">
+            <view v-if="floatGuideStep === 'permission'" class="rename-btn ghost" hover-class="press-down" @click="closeFloatGuide">
               <text>取消</text>
             </view>
-            <view class="rename-btn primary" hover-class="press-down" @click="goFloatPermissionSettings">
+            <view v-if="floatGuideStep === 'permission'" class="rename-btn primary" hover-class="press-down" @click="goFloatPermissionSettings">
               <text>去开启权限</text>
             </view>
-          </view>
-        </view>
-        <view v-else class="float-guide-body">
-          <view class="float-guide-text">
-            <text>悬浮窗为自研实现（无需插件），仅支持 Android App。</text>
-            <text>若在真机上提示不可用，请先制作自定义调试基座后重试：</text>
-            <text>菜单 运行 → 运行到手机或模拟器 → 制作自定义调试基座（免费，需勾选当前 manifest 权限）。</text>
-          </view>
-          <view class="rename-actions">
-            <view class="rename-btn primary" hover-class="press-down" @click="closeFloatGuide">
+            <view v-else class="rename-btn primary" hover-class="press-down" @click="closeFloatGuide">
               <text>知道了</text>
             </view>
           </view>
@@ -425,12 +421,7 @@ import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import { petTypes } from '@/data/pet/pet_detail.js'
 import { readStorage, writeStorage } from '@/utils/nav.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
-import {
-  isSystemOverlayAvailable,
-  hasOverlayPermission,
-  openOverlayPermissionSettings,
-  openDamageFloatWindow
-} from '@/utils/floatWindow.js'
+import { openDamageFloatWindow, isSystemOverlayAvailable, hasOverlayPermission, openOverlayPermissionSettings } from '@/utils/floatWindow.js'
 
 const DRAFT_STORAGE_KEY = 'team_draft'
 const PRESET_STORAGE_KEY = 'team_presets'
@@ -460,14 +451,14 @@ export default {
       renameTeamKey: '',
       renameValue: '',
       floatGuideVisible: false,
-      floatGuideStep: 'permission'
+      floatGuideStep: 'info'
     }
   },
   computed: {
     shortcuts() {
       return [
         { title: '属性值计算', sub: '攻守双模式工具页', icon: 'wand', color: '#A97F35', bg: '#F6EEDB', action: this.goAttributeCalculator },
-        { title: '实时伤害悬浮窗', sub: '对方满配实时算', icon: 'window', color: '#2C6FD1', bg: '#E7F1FE', action: this.goFloatWindow },
+        { title: '实时伤害悬浮面板', sub: '对方满配实时算', icon: 'window', color: '#2C6FD1', bg: '#E7F1FE', action: this.goFloatWindow },
         { title: '技能查询', sub: '按技能查精灵', icon: 'zap', color: '#A97F35', bg: '#F6EEDB', action: this.goSkillSearch },
         { title: '速度排行', sub: '按速度种族值看', icon: 'wind', color: '#2C6FD1', bg: '#E7F1FE', action: this.goSpeedRank },
         { title: '属性克制', sub: '看倍率和例子', icon: 'shield', color: '#C64B38', bg: '#FBE9E4', action: this.goRestriction },
@@ -770,7 +761,7 @@ export default {
     goFloatWindow() {
       // #ifdef APP-PLUS
       if (!isSystemOverlayAvailable()) {
-        this.floatGuideStep = 'unsupported'
+        this.floatGuideStep = 'info'
         this.floatGuideVisible = true
         return
       }
@@ -780,15 +771,15 @@ export default {
         return
       }
       const result = openDamageFloatWindow()
-      if (!result.ok && result.reason !== 'unsupported') {
+      if (!result.ok && result.reason === 'error') {
         uni.showToast({ title: '悬浮窗打开失败：' + (result.message || ''), icon: 'none' })
       } else if (!result.ok) {
-        this.floatGuideStep = 'unsupported'
+        this.floatGuideStep = 'info'
         this.floatGuideVisible = true
       }
       // #endif
       // #ifndef APP-PLUS
-      uni.showToast({ title: '悬浮窗仅支持 Android App', icon: 'none' })
+      this.floatGuideVisible = true
       // #endif
     },
     goFloatPermissionSettings() {

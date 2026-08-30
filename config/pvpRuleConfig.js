@@ -17,7 +17,7 @@ export const PVP_RULES = {
     singleStrong: 2,
     singleResist: 0.5,
     doubleStrong: 3,
-    doubleResist: 1 / 3,
+    doubleResist: 1 / 4,
     strongAndResist: 1
   },
   defaultScenario: {

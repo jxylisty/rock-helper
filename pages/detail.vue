@@ -31,10 +31,18 @@
       </template>
     </AppHeader>
 
-    <scroll-view v-if="showVariantNav" scroll-x class="variant-strip" :show-scrollbar="false">
+    <scroll-view
+      v-if="showVariantNav"
+      scroll-x
+      class="variant-strip"
+      :show-scrollbar="false"
+      :scroll-into-view="variantScrollId"
+      scroll-with-animation
+    >
       <view class="variant-list">
         <view
           v-for="(item, index) in variantItems"
+          :id="`vchip-${index}`"
           :key="item.image"
           class="variant-chip"
           :class="{ active: index === currentVariantIndex && !showYise }"
@@ -231,29 +239,8 @@
         </view>
       </view>
       <view class="skills-list">
-        <view class="skill-row" v-for="(skill, index) in filteredSkills" :key="index" hover-class="press-down" @click="showSkillDetail(skill)">
-          <view class="skill-icon-wrap" :style="{ background: skillIconBg(skill) }">
-            <RemoteImage class="skill-icon" :src="getSkillIcon(skill.name)" mode="aspectFit"></RemoteImage>
-          </view>
-          <view class="skill-main">
-            <view class="skill-name-row">
-              <text class="skill-name">{{ skill.name }}</text>
-              <RemoteImage class="skill-attr-icon" :src="getTypeIconPath(skill.attr)" mode="aspectFit" v-if="skill.attr && skill.attr !== '-'"></RemoteImage>
-            </view>
-            <text class="skill-desc">{{ skill.describe || '暂无描述' }}</text>
-          </view>
-          <view class="skill-chips">
-            <text
-              v-if="(skill.type === '物攻' || skill.type === '魔攻') && skill.power !== undefined && skill.power !== null"
-              class="skill-chip power"
-              :class="{ empty: !skill.power }"
-            >威力{{ skill.power }}</text>
-            <text
-              v-if="skill.consume !== undefined && skill.consume !== null && skill.consume !== '-'"
-              class="skill-chip"
-              :class="{ empty: skill.consume === 0 }"
-            >{{ skill.consume !== 0 ? '能耗' + skill.consume : '无' }}</text>
-          </view>
+        <view class="skill-row-slot" v-for="(skill, index) in filteredSkills" :key="index">
+          <SkillRow :skill="skill" @click="showSkillDetail(skill)" />
         </view>
       </view>
     </view>
@@ -318,6 +305,7 @@ import { skillIcons } from '@/data/skill/skill_icons.js'
 import { skillsData } from '@/data/skill/skills.js'
 import { safeBack } from '@/utils/nav.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
+import { getAttrIconName } from '@/data/config/typeChart.js'
 
 function shade(hex, percent) {
   const raw = String(hex || '').replace('#', '')
@@ -432,6 +420,10 @@ export default {
     },
     showVariantNav() {
       return this.variants.length > 1
+    },
+    variantScrollId() {
+      if (!this.showVariantNav || this.showYise) return ''
+      return `vchip-${this.currentVariantIndex}`
     },
     hasYise() {
       const variants = petDetail[String(this.petId)]
@@ -685,7 +677,7 @@ export default {
         '萌系': '萌', '恶系': '恶', '幻系': '幻'
       }
       const iconName = attrMap[type] || type
-      return resolveAssetPath('/static/icons/' + iconName + '.webp')
+      return resolveAssetPath('/static/icons/' + getAttrIconName(iconName) + '.webp')
     },
     onImageError(e) {
       if (this.variants.length > 0) {
@@ -960,13 +952,17 @@ export default {
 /* ===== 形态切换条 ===== */
 .variant-strip {
   margin: 12px 14px 0;
+  width: auto;
+  max-width: 100%;
   white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
 
 .variant-list {
   display: inline-flex;
+  width: max-content;
   gap: 7px;
-  padding-right: 4px;
+  padding: 2px 4px 2px 0;
 }
 
 .variant-chip {
@@ -1360,101 +1356,7 @@ export default {
   gap: 8px;
 }
 
-.skill-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 11px;
-  background: #FFFDF7;
-  border: 1.5px solid #E3DCC8;
-  border-radius: 14px;
-  box-shadow: 0 2px 0 rgba(44, 58, 47, 0.07);
-  transition: transform 0.12s ease;
-}
-
-.skill-icon-wrap {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(44, 58, 47, 0.06);
-}
-
-.skill-icon {
-  width: 34px;
-  height: 34px;
-}
-
-.skill-main {
-  flex: 1;
-  min-width: 0;
-}
-
-.skill-name-row {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.skill-name {
-  font-size: 13.5px;
-  color: #2C3A2F;
-  font-weight: 700;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.skill-attr-icon {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-
-.skill-desc {
-  display: block;
-  margin-top: 3px;
-  font-size: 11px;
-  color: #A3AE9F;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.skill-chips {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  align-items: flex-end;
-  flex-shrink: 0;
-}
-
-.skill-chip {
-  font-size: 10.5px;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 2px 9px;
-  background: #F2EBDA;
-  border: 1px solid #E3DCC8;
-  color: #6B7A6E;
-}
-
-.skill-chip.power {
-  background: #FBE9E4;
-  border-color: #E0604E;
-  color: #C64B38;
-}
-
-.skill-chip.empty {
-  background: #F2EBDA;
-  border-color: #E3DCC8;
-  color: #A3AE9F;
-}
+/* 技能行已统一使用 SkillRow 通用组件 */
 
 /* ===== 技能详情弹窗（底部贴纸） ===== */
 .skill-modal-mask {

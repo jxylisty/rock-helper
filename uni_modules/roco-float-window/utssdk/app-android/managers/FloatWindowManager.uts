@@ -1,0 +1,256 @@
+// 悬浮窗窗口管理：悬浮球 WebView + 面板（抓手条 + WebView），WindowManager 直接添加
+// 面板页面参数与 static/float/index.html 的 #mode=uts-panel 对应
+
+import Context from "android.content.Context";
+import WindowManager from "android.view.WindowManager";
+import PixelFormat from "android.graphics.PixelFormat";
+import Gravity from "android.view.Gravity";
+import Build from "android.os.Build";
+import View from "android.view.View";
+import WebView from "android.webkit.WebView";
+import Color from "android.graphics.Color";
+import LinearLayout from "android.widget.LinearLayout";
+import MATCH_PARENT from "android.view.ViewGroup.LayoutParams.MATCH_PARENT";
+import { getUniActivity } from "io.dcloud.uts.android";
+import { BallTouchListener, PanelTouchListener } from "../touch/BallTouchListener";
+
+// 悬浮球尺寸（dp）
+const BALL_SIZE_DP: Int = 44;
+// 面板尺寸（dp）：抓手条 + 页面内容
+const PANEL_W_DP: Int = 304;
+const PANEL_H_DP: Int = 440;
+const GRABBER_DP: Int = 20;
+// 屏幕边距（dp）
+const GAP_DP: Int = 8;
+
+export class FloatWindowManager {
+    mContext: Context | null;
+    mWindowManager: WindowManager | null = null;
+    mDensity: number = 3;
+
+    mBallUrl: string = "";
+    mPanelUrl: string = "";
+    mBallView: WebView | null = null;
+    mBallParams: WindowManager.LayoutParams | null = null;
+    mPanelContainer: LinearLayout | null = null;
+    mPanelWebView: WebView | null = null;
+    mPanelParams: WindowManager.LayoutParams | null = null;
+    mPanelShown: boolean = false;
+
+    constructor(context: Context | null, ballUrl: string, panelUrl: string) {
+        console.log("实例化 FloatWindowManager");
+        this.mContext = context;
+        this.mBallUrl = ballUrl;
+        this.mPanelUrl = panelUrl;
+        const activity = getUniActivity();
+        if (activity != null) {
+            this.mWindowManager = activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager;
+            const metrics = activity.getResources().getDisplayMetrics();
+            if (metrics != null) {
+                this.mDensity = metrics.density;
+            }
+        }
+    }
+
+    // dp 转 px
+    dp(value: Int): Int {
+        return (this.mDensity * value).toInt();
+    }
+
+    // 刷新页面地址（悬浮窗已存在时重新打开用）
+    updateUrls(ballUrl: string, panelUrl: string) {
+        this.mBallUrl = ballUrl;
+        this.mPanelUrl = panelUrl;
+    }
+
+    // WebView 公共设置：透明背景 + JS + localStorage + 本地文件访问
+    setupWebView(webView: WebView) {
+        const settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setAllowFileAccess(true);
+        settings.setAllowFileAccessFromFileURLs(true);
+        settings.setAllowUniversalAccessFromFileURLs(true);
+        webView.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    // 窗口参数：type 按 Android 版本选择；ball 不获取焦点，面板可获取焦点（输入框需要）
+    makeParams(widthPx: Int, heightPx: Int, x: Int, y: Int, focusable: boolean): WindowManager.LayoutParams {
+        const params = WindowManager.LayoutParams();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            params.type = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+        if (focusable) {
+            params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+        } else {
+            params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        }
+        params.format = PixelFormat.TRANSLUCENT;
+        params.gravity = Gravity.TOP;
+        params.width = widthPx;
+        params.height = heightPx;
+        params.x = x;
+        params.y = y;
+        return params;
+    }
+
+    // 显示悬浮球（已显示则忽略）
+    showBall() {
+        if (this.mBallView != null) {
+            console.log("showBall: already shown");
+            return;
+        }
+        if (this.mWindowManager == null) {
+            console.error("showBall: windowManager is null");
+            return;
+        }
+        const activity = getUniActivity();
+        if (activity == null) return;
+
+        const ball = new WebView(activity);
+        this.setupWebView(ball);
+        this.mBallParams = this.makeParams(
+            this.dp(BALL_SIZE_DP), this.dp(BALL_SIZE_DP),
+            this.dp(GAP_DP), this.dp(200), false
+        );
+        this.mBallView = ball;
+        ball.setOnTouchListener(new BallTouchListener(this));
+        if (this.mBallUrl != "") {
+            console.log("showBall: loadUrl=" + this.mBallUrl);
+            ball.loadUrl(this.mBallUrl);
+        }
+        try {
+            this.mWindowManager.addView(ball, this.mBallParams);
+            console.log("showBall: ball added ✓");
+        } catch (e) {
+            // 无悬浮窗权限时这里会抛 BadTokenException
+            console.error("showBall: addView 失败: " + e);
+            this.mBallView = null;
+        }
+    }
+
+    // 单击悬浮球：开/收面板（面板出现在球下方，越界自动贴边）
+    togglePanel() {
+        if (this.mWindowManager == null) return;
+        if (this.mPanelShown) {
+            this.hidePanel();
+            return;
+        }
+        const activity = getUniActivity();
+        if (activity == null) return;
+
+        if (this.mPanelContainer == null) {
+            // 面板 = 纵向容器（原生抓手条 + 页面 WebView）
+            // 抓手条用纯色 View（避免 TextView.setTextSize 的 Float 参数兼容问题），
+            // 标题与操作提示由页面自身渲染
+            const container = new LinearLayout(activity);
+            container.setOrientation(LinearLayout.VERTICAL);
+
+            const grabber = new View(activity);
+            grabber.setBackgroundColor(Color.argb(255, 44, 58, 47));
+            container.addView(grabber, new LinearLayout.LayoutParams(MATCH_PARENT, this.dp(GRABBER_DP)));
+
+            const web = new WebView(activity);
+            this.setupWebView(web);
+            container.addView(web, new LinearLayout.LayoutParams(MATCH_PARENT, this.dp(PANEL_H_DP)));
+
+            this.mPanelContainer = container;
+            this.mPanelWebView = web;
+            this.mPanelParams = this.makeParams(
+                this.dp(PANEL_W_DP), this.dp(PANEL_H_DP + GRABBER_DP),
+                this.dp(GAP_DP), this.dp(120), true
+            );
+            grabber.setOnTouchListener(new PanelTouchListener(this, container));
+        }
+        const params = this.mPanelParams;
+        const container = this.mPanelContainer;
+        const web = this.mPanelWebView;
+        if (params == null || container == null || web == null) return;
+
+        // 以球位置为锚点，越界夹紧到屏幕内
+        const ballParams = this.mBallParams;
+        let x: Int = this.dp(GAP_DP);
+        let y: Int = this.dp(120);
+        if (ballParams != null) {
+            x = ballParams.x;
+            y = ballParams.y + this.dp(BALL_SIZE_DP) + this.dp(GAP_DP);
+        }
+        const metrics = activity.getResources().getDisplayMetrics();
+        let screenW: Int = 1080;
+        let screenH: Int = 1920;
+        if (metrics != null) {
+            screenW = metrics.widthPixels;
+            screenH = metrics.heightPixels;
+        }
+        const margin = this.dp(GAP_DP);
+        const maxW = screenW - this.dp(PANEL_W_DP) - margin;
+        const maxH = screenH - this.dp(PANEL_H_DP + GRABBER_DP) - margin;
+        if (x > maxW) { x = maxW; }
+        if (x < margin) { x = margin; }
+        if (y > maxH) { y = maxH; }
+        if (y < margin) { y = margin; }
+        params.x = x;
+        params.y = y;
+
+        if (this.mPanelUrl != "") {
+            console.log("togglePanel: loadUrl=" + this.mPanelUrl);
+            web.loadUrl(this.mPanelUrl);
+        }
+        try {
+            this.mWindowManager.addView(container, params);
+            this.mPanelShown = true;
+            this.bringBallToFront();
+            console.log("togglePanel: panel shown ✓");
+        } catch (e) {
+            console.error("togglePanel: addView 失败: " + e);
+        }
+    }
+
+    // 把悬浮球重新置顶：面板后添加会盖住球，导致球点不到/拖不动
+    bringBallToFront() {
+        const ball = this.mBallView;
+        const params = this.mBallParams;
+        if (ball == null || params == null || this.mWindowManager == null) return;
+        try {
+            this.mWindowManager.removeView(ball);
+        } catch (e) {
+            return;
+        }
+        try {
+            this.mWindowManager.addView(ball, params);
+        } catch (e) {
+            console.error("bringBallToFront re-add error:", e);
+        }
+    }
+
+    hidePanel() {
+        if (this.mPanelShown && this.mPanelContainer != null && this.mWindowManager != null) {
+            try {
+                this.mWindowManager.removeView(this.mPanelContainer);
+            } catch (e) {
+                console.error("hidePanel error:", e);
+            }
+            this.mPanelShown = false;
+        }
+    }
+
+    // 移除全部窗口（长按关闭时调用）
+    removeViews() {
+        this.hidePanel();
+        if (this.mBallView != null && this.mWindowManager != null) {
+            try {
+                this.mWindowManager.removeView(this.mBallView);
+            } catch (e) {
+                console.error("removeViews error:", e);
+            }
+            this.mBallView = null;
+            this.mBallParams = null;
+        }
+        this.mPanelContainer = null;
+        this.mPanelWebView = null;
+        this.mPanelParams = null;
+        this.mPanelShown = false;
+    }
+}
