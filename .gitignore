@@ -18,8 +18,13 @@ static/web/
 tmp_*.py
 _tmp_*.mjs
 scripts/_patch*.mjs
+scripts/_*.mjs
 output_diag/
 output_diag*/
+
+# 测试脚本运行时生成的转译产物（不入库）
+scripts/.meta-test/
+scripts/.hotupdate-test.cjs
 
 # 游戏素材与镜像目录（大文件，不入库）
 cdn-assets/

@@ -1,59 +1,41 @@
 # 洛克王国：世界 小助手
 
-uni-app / Vue 项目，提供精灵图鉴、PVP分析、阵容编辑等功能。
+uni-app / Vue 项目，提供精灵图鉴、孵蛋摆窝、PVP 属性值计算、阵容分析与编辑等功能。
 
-> 历史更新记录见 [UPDATE_LOG.md](UPDATE_LOG.md)。
+> 历史更新记录见 [UPDATE_LOG.md](UPDATE_LOG.md)，开发规范见 [AGENTS.md](AGENTS.md)。
 
 ## 项目结构
 
 ```
 luokewangguo/
-├── pages/                  # 页面
+├── pages/                  # 页面（均在 pages.json 注册）
 │   ├── index.vue           # 首页
 │   ├── catalog.vue         # 精灵图鉴
 │   ├── detail.vue          # 精灵详情
-│   ├── pvp-breakpoint.vue  # PVP断点分析
-│   ├── team-editor.vue     # 阵容编辑
-│   ├── speed-rank.vue      # 速度排名
+│   ├── egg.vue             # 蛋壳预测
+│   ├── breeding-planner.vue# 孵蛋摆窝
+│   ├── pvp-breakpoint.vue  # 属性值计算（断点分析）
+│   ├── team-editor.vue     # 阵容编辑（含天梯适配度预演）
+│   ├── team-report.vue     # 阵容报告
+│   ├── speed-rank.vue      # 速度排行
 │   ├── restriction.vue     # 属性克制
-│   ├── skill-search.vue    # 技能搜索
-│   ├── egg.vue             # 孵蛋
-│   └── map.vue             # 地图
+│   └── skill-search.vue    # 技能查询
 │
-├── components/             # 公共组件
-│   ├── AppHeader/          # 页面头部
-│   ├── PetCard/            # 精灵卡片
-│   ├── TypeBadge/          # 属性标签
-│   ├── StatPanel/          # 面板属性
-│   ├── TeamEditSheet/      # 阵容编辑弹窗
-│   ├── DamageHpCompareBar/ # 伤害对比条
-│   └── TypeMatrix/         # 属性克制矩阵表
-│
+├── components/             # 公共组件（easycom 自动注册 + 部分手动注册）
+├── config/                 # 应用规则配置（pvpRuleConfig.js）
 ├── data/                   # 数据文件
-│   ├── pet/                # 精灵数据（BCNF范式）
-│   │   ├── pet_index.js    # 联合主键索引 (wikiId, name) → page_title/uiTag
-│   │   ├── pet_detail.js   # 精灵详情（含变体、异色、特性图）
-│   │   ├── pet_skills.js   # 技能名列表
-│   │   └── pet_race_speed.js # 速度排名
+│   ├── pet/                # 精灵数据（BCNF 范式，见下文）
 │   ├── skill/              # 技能数据
-│   │   ├── skills.js       # 技能详情库
-│   │   └── skill_icons.js  # 技能图标映射
-│   └── config/             # 配置数据
-│       ├── game_math.js    # 游戏数学计算
-│       ├── asset_config.js # 静态资源配置
-│       └── eggData.js      # 孵蛋数据
+│   ├── config/             # 数学公式 / 属性克制表 / 孵蛋数据 / 满级模板等
+│   └── pvp/                # 天梯目标、通用技能预设、展示规则
 │
-├── static/static-web/      # 静态资源（WebP格式，素材不入库，见下文）
-│   ├── pets/               # 精灵立绘（含异色）
-│   ├── skills/             # 技能图标
-│   ├── traits/             # 特性图标
-│   └── icons/              # 属性图标
-│
-├── utils/                  # 工具函数
+├── utils/                  # 工具函数（伤害引擎、阵容分析、热更新、分享码等）
 ├── crawler_official_api/   # 官方 API 数据抓取与生成（唯一数据入口）
-├── scripts/                # 辅助脚本（悬浮窗构建 / 数据生成 / 测试）
+├── scripts/                # 辅助脚本（悬浮窗构建 / 数据生成 / 冒烟与回归测试）
+├── tools/                  # 运维工具（素材压缩校验 / 天梯映射 / 异色图补齐）
+├── server/share-code-proxy/# 阵容码解析转发服务（Cloudflare Worker，见其 README）
 ├── static/float/           # 实时伤害悬浮窗页面（独立 HTML + 打包产物）
-├── config/                 # 应用配置
+└── uni_modules/            # UTS 插件（Android 悬浮窗）
 ```
 
 ## 数据架构
@@ -62,14 +44,14 @@ luokewangguo/
 
 | 文件 | 主键 | 说明 |
 |------|------|------|
-| `pet_index.js` | `(wikiId, name)` | 索引表：名称→页面标题/UI标签 |
-| `pet_detail.js` | `seq` | 详情表：种族值、属性、图片、变体、异色、特性 |
-| `pet_skills.js` | `seq` | 技能名表：三种技能类型 |
+| `data/pet/pet_index.js` | `(wikiId, name)` | 索引表：名称→页面标题/UI标签 |
+| `data/pet/pet_detail.js` | `seq` | 详情表：种族值、属性、图片、变体、异色、特性 |
+| `data/pet/pet_skills.js` | `seq` | 技能名表：三种技能类型 |
 
 **关键设计：**
 - 变体数据合并在 `pet_detail.js` 中，按 `seq` 分组存储所有形态
 - 异色图片和特性图标直接嵌入详情，无需单独文件
-- 技能通过名称映射到 `skills.js` 获取完整信息
+- 技能通过名称映射到 `data/skill/skills.js` 获取完整信息
 
 ## 数据更新流程
 
@@ -116,15 +98,16 @@ API Key 读取顺序：环境变量 `ROCO_API_KEY` > `crawler_official_api/api_k
 | `static/static-web/pets/` | 精灵立绘 webp | `python crawler_official_api/update_data.py fetch-pet-images --all` |
 | `static/static-web/skills/` | 技能图标 webp | `python crawler_official_api/update_data.py fetch-skill-icons` |
 | `static/static-web/traits/` `icons/` | 特性/属性图标 | 官方 API 手动获取 |
-| `static/web/` | 地图瓦片（z5~z8 金字塔切片） | 由原始大图 `static/map_z8_v3.png` 切片生成；**不打包进 APK**，地图页在线加载 |
+| `static/web/` | 地图瓦片（z5~z8 金字塔切片） | 由原始大图切片生成；地图页已下线，当前无消费方 |
 
 素材生成完成后，可运行 `python crawler_official_api/verify_pet_images.py` 校验立绘完整性。
+异色图缺失时可用 `python tools/fetch_missing_shiny_images.py` 补齐本地镜像。
 
 ## APK 打包说明
 
 HBuilderX **云打包对工程体积有限制**，static 资源过大时图片不会打进 APK（表现为 APK 体积很小、安装后图片全部不显示）。
 
-- `static/static-web/`（立绘+图标）随 APK 打包，离线可用；地图瓦片 `static/web/` 不进包，在线加载
+- `static/static-web/`（立绘+图标）随 APK 打包，离线可用
 - 立绘保持压缩态：长边 ≤800px、webp q82。若重新执行 `fetch-pet-images` 全量覆盖后，须再跑压缩：
 
 ```bash
@@ -132,12 +115,21 @@ python tools/compress_static_web.py            # 压缩到打包态（800px q82�
 python tools/compress_static_web.py --dry-run  # 仅预估体积
 ```
 
-- 打包前自查：`python tools/verify_static_web.py`，要求输出总体积 ≤50MB 且全部 [OK]（立绘约 37MB + 图标约 13MB），超出则说明立绘未压缩
+- 打包前自查：`python tools/verify_static_web.py`，要求输出总体积 ≤50MB 且全部 [OK]，超出则说明立绘未压缩
 
-## 开发规范
+## 测试与校验
 
-详见 [AGENTS.md](AGENTS.md)，包含：
-- 全局样式规范和 CSS 变量
-- 变量命名规范（种族值、个体值、性格等）
-- PVP 基础规则和计算公式
-- 前端页面开发原则
+```bash
+npm run test:pvp        # PVP 断点回归（43 用例）
+npm run test:meta       # 天梯适配度预演冒烟
+npm run test:hotupdate  # 数据热更新端到端
+node scripts/smoke-data-chains.cjs          # 数据链路运行时冒烟
+node scripts/verify-config-imports.cjs      # config 模块依赖导出核对
+node scripts/verify-skill-index.cjs         # 技能反向索引验证
+node scripts/check-import-paths.cjs         # import 断链扫描
+node scripts/check-vue-syntax.cjs           # vue 文件三层语法校验
+node tools/check-asset-fallback-chain.mjs   # 资产回退链校验
+node tools/map-meta-pets.mjs <候选名单> <输出>  # 天梯目标映射（禁止手填 seq）
+```
+
+> `scripts/.meta-test/` 与 `scripts/.hotupdate-test.cjs` 是测试运行时自动生成的转译产物，已加入 `.gitignore`，无需手工维护。
