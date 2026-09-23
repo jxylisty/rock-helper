@@ -96,8 +96,11 @@ export default {
       return TYPE_COLOR_MAP[this.skill.attr] || '#6B7A6E'
     },
     powerText() {
+      if (['状态', '防御', '变化'].includes(this.skill.type)) return ''
       const p = this.skill.power
       if (p === undefined || p === null || p === '' || p === '-') return ''
+      const n = Number(p)
+      if (Number.isFinite(n) && n <= 0) return ''
       return String(p)
     },
     costText() {
@@ -252,20 +255,30 @@ export default {
   overflow: hidden;
 }
 
-/* ===== 紧凑模式：弹层选择列表用 ===== */
+/* ===== 紧凑模式：弹层选择与双栏列表用 ===== */
 .skill-row.compact {
-  padding: 10px 10px;
-  gap: 9px;
+  align-items: center;
+  padding: 8px 10px;
+  gap: 8px;
 }
 
 .skill-row.compact .icon-frame {
-  width: 40px;
-  height: 40px;
-  border-radius: 11px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
 }
 
 .skill-row.compact .name {
   font-size: 13px;
+}
+
+.skill-row.compact .stat-chip {
+  height: 20px;
+  padding: 0 7px;
+}
+
+.skill-row.compact .stat-chip-text {
+  font-size: 10px;
 }
 
 .skill-row.compact .desc {

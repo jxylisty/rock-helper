@@ -1,7 +1,40 @@
 <script>
+// 小程序端自动更新（两层）：
+// 1) 官方版本更新：wx.getUpdateManager 冷/热启动自动检查新版，下载完成后弹窗重启
+// 2) 数据热更新：静默拉取远程 manifest，版本号更新则下载数据包存 storage（见 utils/dataHotUpdate.js）
+import { checkDataUpdate } from '@/utils/dataHotUpdate.js'
+
 export default {
   onLaunch() {
     console.log('洛克王国助手启动')
+    // #ifdef MP-WEIXIN
+    this.setupMpUpdateManager()
+    // #endif
+    // 数据热更新：全平台静默执行，失败不影响启动
+    checkDataUpdate()
+  },
+  methods: {
+    // #ifdef MP-WEIXIN
+    setupMpUpdateManager() {
+      if (!wx.getUpdateManager) return
+      const updateManager = wx.getUpdateManager()
+      updateManager.onUpdateReady(() => {
+        uni.showModal({
+          title: '更新提示',
+          content: '新版本已经准备好，是否重启应用？',
+          success: (res) => {
+            if (res.confirm) {
+              updateManager.applyUpdate()
+            }
+          }
+        })
+      })
+      // 下载失败静默重试（下次启动微信会自动再检查，这里仅记录）
+      updateManager.onUpdateFailed(() => {
+        console.warn('[update] 新版本下载失败，将在下次启动重试')
+      })
+    }
+    // #endif
   },
   onShow() {
     console.log('App Show')

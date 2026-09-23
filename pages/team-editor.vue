@@ -2,6 +2,10 @@
   <view class="page">
     <AppHeader theme="gold" title="阵容编辑" subtitle="搭配你的出战小队" leftAction="back">
       <template #right>
+        <view class="header-capsule" hover-class="press-down" @click="openCodeImport" style="margin-right: 8px; background: rgba(255,255,255,0.22);">
+          <AppIcon name="download" :size="11" color="#FFF9EC" :stroke-width="2.6" />
+          <text class="header-capsule-text">导入码</text>
+        </view>
         <view class="header-capsule" hover-class="press-down" @click="saveTeam">
           <AppIcon name="check" :size="11" color="#FFF9EC" :stroke-width="3.2" />
           <text class="header-capsule-text">保存</text>
@@ -16,13 +20,19 @@
             <AppIcon name="users" :size="17" color="#A97F35" />
           </view>
           <view class="hero-text">
-            <text class="hero-title">我的阵容</text>
+            <text class="hero-title">我的阵容<text v-if="teamMagic" class="hero-magic"> · {{ teamMagic }}</text></text>
             <text class="hero-subtitle">先选最高形态精灵，再配置技能、个体与性格</text>
           </view>
         </view>
-        <view class="hero-clear" hover-class="press-down" @click="clearTeam">
-          <AppIcon name="trash" :size="10" color="#C64B38" :stroke-width="2.2" />
-          <text class="hero-clear-text">清空</text>
+        <view class="hero-actions">
+          <view class="hero-report-btn" hover-class="press-down" @click="generateReport">
+            <AppIcon name="book" :size="11" color="#FFF5EC" :stroke-width="2.4" />
+            <text class="hero-report-text">生成阵容报告</text>
+          </view>
+          <view class="hero-clear" hover-class="press-down" @click="clearTeam">
+            <AppIcon name="trash" :size="10" color="#C64B38" :stroke-width="2.2" />
+            <text class="hero-clear-text">清空</text>
+          </view>
         </view>
       </view>
 
@@ -90,6 +100,19 @@
                   </view>
                 </view>
 
+                <view v-if="slot.bloodline" class="info-row">
+                  <text class="info-label">血脉</text>
+                  <view class="bloodline-value">
+                    <image
+                      v-if="getBloodlineIcon(slot.bloodline)"
+                      class="bloodline-icon"
+                      :src="getBloodlineIcon(slot.bloodline)"
+                      mode="aspectFit"
+                    />
+                    <text class="info-value">{{ slot.bloodline }}</text>
+                  </view>
+                </view>
+
                 <view class="info-row">
                   <text class="info-label">性格</text>
                   <text class="info-value">{{ getNatureSummary(slot) }}</text>
@@ -117,6 +140,7 @@
                     <view class="skill-name-bar">
                       <text class="skill-name">{{ skill.name || '添加' }}</text>
                     </view>
+                    <text v-if="skill.name && skill.power && skill.power !== '-'" class="skill-sub mono">{{ skill.attr }}·{{ skill.power }}</text>
                   </view>
                 </view>
               </view>
@@ -201,6 +225,55 @@
             </view>
 
             <view class="ai-section">
+              <text class="ai-section-title">阵容速览</text>
+              <view v-if="teamInsights" class="insight-block">
+                <view class="insight-row">
+                  <text class="insight-label">输出核心</text>
+                  <view class="insight-tags">
+                    <view v-for="m in teamInsights.members.filter((x) => x.isCore)" :key="'core-' + m.seq" class="insight-tag core">
+                      <text>★ {{ m.name }}</text>
+                    </view>
+                  </view>
+                </view>
+                <view class="insight-row">
+                  <text class="insight-label">建议首发</text>
+                  <view class="insight-tags">
+                    <view v-for="m in teamInsights.members.filter((x) => x.isStarter)" :key="'starter-' + m.seq" class="insight-tag starter">
+                      <text>{{ m.name }} · 高耐久可试探承伤</text>
+                    </view>
+                  </view>
+                </view>
+                <view class="insight-row" v-for="m in teamInsights.members" :key="'speed-' + m.seq">
+                  <text class="insight-label speed">{{ m.name }}<text class="insight-role">{{ m.roles.join('/') }}</text></text>
+                  <view class="speed-bar-track">
+                    <view class="speed-bar-range" :style="speedBarStyle(m.speed)"></view>
+                  </view>
+                  <text class="insight-speed-text mono">{{ m.speed.min }}~{{ m.speed.max }}</text>
+                </view>
+              </view>
+            </view>
+
+            <view class="ai-section">
+              <text class="ai-section-title">愿力与血脉</text>
+              <view v-if="teamInsights" class="insight-block">
+                <view class="insight-row" v-for="m in teamInsights.members" :key="'wish-' + m.seq">
+                  <text class="insight-label speed">{{ m.name }}</text>
+                  <view class="insight-tags">
+                    <view class="insight-tag wish">
+                      <text>{{ m.wish ? m.wish.attr + '愿力' : '按属性选' }}</text>
+                    </view>
+                    <view v-if="m.wishAlt" class="insight-tag wish-alt">
+                      <text>备选 {{ m.wishAlt.attr }}</text>
+                    </view>
+                    <text v-if="m.bloodline" class="insight-blood">{{ m.bloodline }}</text>
+                  </view>
+                  <text class="insight-wish">{{ m.wishNote }}</text>
+                </view>
+                <text v-if="teamInsights.wishUniformNote" class="analysis-empty inline-empty">{{ teamInsights.wishUniformNote }}</text>
+              </view>
+            </view>
+
+            <view class="ai-section">
               <text class="ai-section-title">缺少打击面</text>
               <view class="analysis-tags">
                 <view
@@ -229,6 +302,12 @@
                 </view>
                 <text v-if="!decisionDangerAlerts.length" class="analysis-empty inline-empty">暂无明显危险属性</text>
               </view>
+              <view v-if="decisionDangerAlerts.length" class="danger-members">
+                <view v-for="item in decisionDangerAlerts.slice(0, 3)" :key="`danger-member-${item.type}`" class="danger-member-row">
+                  <text class="danger-member-type">{{ item.type }}系克：</text>
+                  <text class="danger-member-names">{{ (item.threatenedMembers || []).map((m) => m.name).join('、') || '—' }}</text>
+                </view>
+              </view>
             </view>
 
             <view class="ai-section">
@@ -243,6 +322,41 @@
                 </view>
                 <text v-if="!decisionStructureNotes.length" class="analysis-empty inline-empty">结构较均衡</text>
               </view>
+            </view>
+
+            <view class="ai-section">
+              <view class="meta-preview-head">
+                <text class="ai-section-title">阵容 vs 热门目标</text>
+                <text v-if="metaPreview" class="meta-preview-rate mono">天梯适配度 {{ metaPreview.readiness }}%（{{ metaPreview.readyCount }}/{{ metaPreview.total }}）</text>
+              </view>
+              <view v-if="metaPreviewRows.length" class="meta-preview-list">
+                <view v-for="row in metaPreviewRows" :key="`meta-${row.target.id}`" class="meta-preview-card">
+                  <view class="meta-preview-row">
+                    <text class="meta-preview-name">{{ row.target.name }}</text>
+                    <view class="meta-preview-tags">
+                      <text
+                        v-for="tag in row.target.targetTags.slice(0, 2)"
+                        :key="`meta-tag-${row.target.id}-${tag}`"
+                        class="meta-preview-tag"
+                      >{{ tag }}</text>
+                    </view>
+                    <text class="meta-preview-first" :class="row.best && row.best.firstStrike === 'me' ? 'good' : (row.best && row.best.firstStrike === 'tie' ? 'mid' : 'bad')">
+                      {{ row.best && row.best.firstStrike === 'me' ? '我方先手' : row.best && row.best.firstStrike === 'tie' ? '先手胶着' : '对方先手' }}
+                    </text>
+                  </view>
+                  <view v-if="row.best" class="meta-preview-row sub">
+                    <text class="meta-preview-detail">
+                      最优出手：{{ row.best.name }} · {{ row.best.bestSkillName || '无攻击技能' }}
+                      <text class="mono">≈{{ row.best.myDamage }}</text>
+                    </text>
+                    <text class="meta-preview-detail">
+                      承伤最大：{{ row.worst && row.worst.name }} <text class="mono">≈{{ row.worst && row.worst.targetDamage }}</text>
+                    </text>
+                  </view>
+                </view>
+                <text class="meta-preview-note">目标按 60级5星·三项10 满配估算，口径与属性计算器一致{{ metaPreviewRows.some((r) => r.target.confidence && r.target.confidence.indexOf('低') === 0) ? '；含低置信观察位' : '' }}</text>
+              </view>
+              <text v-else class="analysis-empty inline-empty">暂无目标数据</text>
             </view>
 
             <view v-if="getConfidenceHint(teamDecision)" class="ai-confidence-tip">
@@ -301,102 +415,9 @@
                 <text v-else class="analysis-empty">暂时没有可用的补位建议。</text>
               </view>
 
-              <view v-else>
-                <view class="ai-section-head">
-                  <text class="ai-section-title">替换建议 Top 3</text>
-                </view>
-                <view v-if="replacementRecommendations.length" class="ai-rec-list">
-                  <view
-                    v-for="(item, repIndex) in replacementRecommendations"
-                    :key="`rep-${item.current.petId}-${item.petName}`"
-                    class="ai-rec-card"
-                  >
-                    <view class="ai-swap-row">
-                      <view class="ai-swap-box">
-                        <text class="ai-swap-label">替换谁</text>
-                        <text class="ai-swap-value">{{ item.current.petName || '未知精灵' }}</text>
-                      </view>
-                      <view class="ai-swap-arrow">
-                        <AppIcon name="arrow-right" :size="13" color="#C9A14E" :stroke-width="2.6" />
-                      </view>
-                      <view class="ai-swap-box">
-                        <text class="ai-swap-label">换成谁</text>
-                        <text class="ai-swap-value">{{ item.petName || '未知精灵' }}</text>
-                      </view>
-                    </view>
-                    <view class="ai-rec-meta">
-                      <text class="ai-rec-meta-text mono">评分提升 +{{ formatScore(item.gain) }}</text>
-                      <text class="ai-rec-meta-text mono">置信 {{ formatPercent(item.confidence) }}</text>
-                      <text v-if="getConfidenceHint(item)" class="ai-rec-meta-note">仅供参考</text>
-                    </view>
-                    <view class="ai-rec-reasons">
-                      <text
-                        v-for="(reason, reasonIndex) in getReasonPreview(item.reasons)"
-                        :key="`rep-reason-${item.current.petId}-${reasonIndex}`"
-                        class="ai-rec-reason clamp-2"
-                      >
-                        {{ reason }}
-                      </text>
-                      <text v-if="!getReasonPreview(item.reasons).length" class="ai-rec-reason clamp-2">
-                        基于阵容短板和属性覆盖综合推荐
-                      </text>
-                    </view>
-                  </view>
-                </view>
-                <text v-else class="analysis-empty">当前队伍暂时没有明显替换目标。</text>
-              </view>
+              
             </view>
           </template>
-        </view>
-
-        <view class="analysis-card">
-          <view class="mini-card-head">
-            <view class="mini-icon blue">
-              <AppIcon name="zap" :size="12" color="#FFFFFF" />
-            </view>
-            <view class="mini-head-text">
-              <text class="analysis-title">技能打击面不足</text>
-              <text class="analysis-sub">按携带的攻击技能属性计算缺口</text>
-            </view>
-          </view>
-          <view v-if="coverageSummary.memberCount" class="analysis-tags">
-            <view
-              v-for="item in missingCoveragePreview"
-              :key="'missing-' + item.type"
-              class="type-tag neutral"
-            >
-              <TypeBadge :label="item.type" :color="getTypeColor(item.type)" compact />
-              <text class="tag-text">{{ item.type }}</text>
-            </view>
-            <text v-if="!missingCoveragePreview.length" class="analysis-empty">当前阵容打击面比较完整</text>
-          </view>
-          <text v-else class="analysis-empty">先添加精灵，系统再帮你分析打击面。</text>
-        </view>
-
-        <view class="analysis-card">
-          <view class="mini-card-head">
-            <view class="mini-icon red">
-              <AppIcon name="shield" :size="12" color="#FFFFFF" />
-            </view>
-            <view class="mini-head-text">
-              <text class="analysis-title">队伍易被克制</text>
-              <text class="analysis-sub">按精灵自身属性找出整体弱点</text>
-            </view>
-          </view>
-          <view v-if="coverageSummary.memberCount" class="analysis-tags">
-            <view
-              v-for="item in alertThreatPreview"
-              :key="'alert-' + item.type"
-              class="type-tag warning"
-            >
-              <TypeBadge :label="item.type" :color="getTypeColor(item.type)" compact />
-              <text class="tag-text">{{ item.type }}</text>
-              <text class="tag-note mono">{{ item.threatenedCount }}/{{ coverageSummary.memberCount }}</text>
-              <text v-if="item.maxMultiplier === 3" class="tag-alert">最高3倍克制</text>
-            </view>
-            <text v-if="!alertThreatPreview.length" class="analysis-empty">暂时没有特别集中的危险属性</text>
-          </view>
-          <text v-else class="analysis-empty">阵容为空时无法判断危险属性。</text>
         </view>
 
       </view>
@@ -422,6 +443,33 @@
       @save="handleSave"
       @autosave="handleAutoSave"
     />
+
+    <view v-if="codeImportVisible" class="code-import-mask" @click="codeImportVisible = false">
+      <view class="code-import-panel card" @click.stop>
+        <view class="code-import-head">
+          <text class="code-import-title">导入阵容码</text>
+          <view class="code-import-close" hover-class="press-down" @click="codeImportVisible = false">
+            <AppIcon name="close" :size="12" color="#6B7A6E" />
+          </view>
+        </view>
+        <text class="code-import-tip">粘贴游戏内复制的阵容码（B~ 开头），导入后覆盖当前 6 个阵容位。</text>
+        <textarea
+          v-model="codeImportInput"
+          class="code-import-input"
+          placeholder="B~..."
+          :maxlength="400"
+          auto-height
+        />
+        <view class="code-import-actions">
+          <view class="code-import-btn ghost" hover-class="press-down" @click="codeImportVisible = false">
+            <text>取消</text>
+          </view>
+          <view class="code-import-btn primary" hover-class="press-down" @click="confirmCodeImport">
+            <text>{{ codeImportLoading ? '导入中…' : '导入' }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -438,8 +486,11 @@ import { petSkills } from '@/data/pet/pet_skills.js'
 import { skillsData } from '@/data/skill/skills.js'
 import { skillIcons } from '@/data/skill/skill_icons.js'
 import { analyzeTeamTypeCoverage, calculatePetPanel, getHighestFormPets } from '@/data/config/game_math.js'
+import { parseTeamCode } from '@/utils/shareCode.js'
+import { buildTeamInsights } from '@/utils/teamInsights.js'
 import { normalizeAttr } from '@/data/config/typeChart.js'
 import { analyzeTeamDecision, recommendTeamComplements, recommendTeamReplacements } from '@/data/config/decision_engine.js'
+import { buildMetaPreview, buildTypeMatrix, buildChainAnalysis, buildActionableNotes } from '@/utils/metaPreview.js'
 import { readStorage, writeStorage } from '@/utils/nav.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
 import { buildBasePetList } from '@/utils/petListBuilder.js'
@@ -575,6 +626,10 @@ export default {
       sheetVisible: false,
       editingIndex: -1,
       decisionMode: 'general',
+      codeImportVisible: false,
+      teamMagic: '',
+      codeImportInput: '',
+      codeImportLoading: false,
       petChoices: [],
       petMap: {},
       decisionModeOptions: DECISION_MODE_OPTIONS
@@ -628,6 +683,26 @@ export default {
         return []
       }
     },
+    teamInsights() {
+      if (!this.activeTeamSlots.length) return null
+      try {
+        return buildTeamInsights(this.activeTeamSlots)
+      } catch (error) {
+        return null
+      }
+    },
+    metaPreview() {
+      if (!this.activeTeamSlots.length) return null
+      try {
+        const result = buildMetaPreview(this.activeTeamSlots)
+        return result && result.total ? result : null
+      } catch (error) {
+        return null
+      }
+    },
+    metaPreviewRows() {
+      return safeArray(this.metaPreview?.rows).slice(0, 6)
+    },
     decisionShortboards() {
       return safeArray(this.teamDecision?.summary?.weaknesses).slice(0, 3)
     },
@@ -642,11 +717,14 @@ export default {
       const roleCounts = summary.roleCounts || {}
       const notes = []
 
-      if (roleCounts.support === 0) notes.push('缺少辅助位')
-      if (roleCounts.control === 0 && this.decisionMode === 'pvp') notes.push('PVP 建议补控制')
-      if ((roleCounts.physical || 0) + (roleCounts.magic || 0) + (roleCounts.mixed || 0) <= 2) notes.push('输出点偏少')
-      if (summary.memberAvgSpeed && summary.memberAvgSpeed < 90 && this.decisionMode === 'pvp') notes.push('平均速度偏慢')
-      if (summary.memberAvgBulk && summary.memberAvgBulk < 260 && this.decisionMode !== 'pvp') notes.push('整体站场偏薄')
+      // 2026-09-16 审查修复：旧规则读的是英文键（support/control/physical），
+      // 与 decision_engine 新聚合的中文键（输出/坦克/辅助）不匹配，曾导致规则永远失明。
+      if ((roleCounts['辅助'] || 0) === 0) notes.push('缺少辅助位')
+      if ((summary.controlCount || 0) === 0 && this.decisionMode === 'pvp') notes.push('PVP 建议补控制')
+      if ((roleCounts['输出'] || 0) <= 2 && (roleCounts['输出'] || 0) > 0) notes.push('输出点偏少（' + roleCounts['输出'] + ' 只）')
+      if ((roleCounts['输出'] || 0) === 0) notes.push('缺少输出位')
+      if (summary.memberAvgSpeed && summary.memberAvgSpeed < 90 && this.decisionMode === 'pvp') notes.push('平均速度偏慢（均值 ' + summary.memberAvgSpeed + '）')
+      if (summary.memberAvgBulk && summary.memberAvgBulk < 260 && this.decisionMode !== 'pvp') notes.push('整体站场偏薄（均值 ' + summary.memberAvgBulk + '）')
 
       return notes.slice(0, 3)
     }
@@ -702,6 +780,52 @@ export default {
       writeStorage(STORAGE_KEY, this.team)
       if (showToast) {
         uni.showToast({ title: '阵容已保存', icon: 'success' })
+      }
+    },
+    // 生成阵容报告：聚合矩阵/预演/链分析为快照，写入 storage 后跳报告页
+    generateReport() {
+      const filled = this.activeTeamSlots.filter((s) => s && s.petId)
+      if (!filled.length) {
+        uni.showToast({ title: '先至少配置一只精灵', icon: 'none' })
+        return
+      }
+      try {
+        const meta = this.metaPreview || buildMetaPreview(this.activeTeamSlots)
+        const matrix = buildTypeMatrix(this.activeTeamSlots)
+        const chains = buildChainAnalysis(this.activeTeamSlots)
+        const notes = buildActionableNotes(this.teamDecision, this.decisionMode)
+        const insights = this.teamInsights
+        const snapshot = {
+          teamName: '我的阵容',
+          savedAtLabel: new Date().toLocaleString('zh-CN', { hour12: false }),
+          members: filled.map((slot) => {
+            const insight = (insights && insights.members || []).find((m) => String(m.seq) === String(slot.petId))
+            return {
+              petId: slot.petId,
+              name: slot.petName,
+              roles: insight ? insight.roles : [],
+              speedMin: insight ? insight.speed.min : 0,
+              speedMax: insight ? insight.speed.max : 0
+            }
+          }),
+          meta: {
+            readiness: meta.readiness,
+            readyCount: meta.readyCount,
+            total: meta.total,
+            rows: meta.rows,
+            memberCount: filled.length
+          },
+          matrix,
+          chains,
+          actionableNotes: notes.map((text) => ({
+            tone: /无|缺|偏慢|偏薄|偏少/.test(text) ? 'warn' : 'good',
+            text
+          }))
+        }
+        writeStorage('team_report_snapshot_v1', snapshot)
+        uni.navigateTo({ url: '/pages/team-report' })
+      } catch (error) {
+        uni.showToast({ title: '报告生成失败', icon: 'none' })
       }
     },
     clearTeam() {
@@ -776,7 +900,10 @@ export default {
       const pet = this.petMap[String(slotLike.petId)]
       if (!pet) return null
 
-      let race = petDetail[String(pet.id)]?.[0]?.race || {}
+      // 阵容码导入的变体形态：槽位自带该形态种族值，优先于图鉴主形态
+      let race = (slotLike.race && Object.keys(slotLike.race).length)
+        ? slotLike.race
+        : (petDetail[String(pet.id)]?.[0]?.race || {})
       if (pet.isVariant && pet.race) {
         race = pet.race
       }
@@ -800,6 +927,66 @@ export default {
           natureDown: slotLike.natureDown
         }
       )
+    },
+
+    speedBarStyle(speed) {
+      const { min, max } = this.teamInsights.axis
+      const span = (max - min) || 1
+      const left = Math.round(((min - this.teamInsights.axis.min) / span) * 100)
+      const width = Math.max(6, Math.round(((max - min) / span) * 100))
+      return { left: left + '%', width: width + '%' }
+    },
+    openCodeImport() {
+      this.codeImportInput = ''
+      this.codeImportVisible = true
+    },
+    async confirmCodeImport() {
+      if (this.codeImportLoading) return
+      this.codeImportLoading = true
+      try {
+        const parsed = await parseTeamCode(this.codeImportInput)
+        const slots = parsed.slots
+        this.teamMagic = parsed.magic
+        const next = createEmptyTeamSlots()
+        slots.slice(0, 6).forEach((imported, index) => {
+          const pet = this.petMap[String(imported.seq)]
+          if (!pet) return
+          const ivs = { hp: 0, attack: 0, mattack: 0, defense: 0, mdefense: 0, speed: 0, ...imported.ivs }
+          const slotData = {
+            petId: pet.id,
+            petName: imported.petName || pet.name,
+            image: imported.img || pet.img,
+            types: imported.types && imported.types.length ? [...imported.types] : [...(pet.types || [])],
+            race: imported.race || null,
+            bloodline: imported.bloodline || '',
+            level: DEFAULT_LEVEL,
+            star: DEFAULT_STAR,
+            ivs: {
+              hp: clampIv(ivs.hp),
+              attack: clampIv(ivs.attack),
+              mattack: clampIv(ivs.mattack),
+              defense: clampIv(ivs.defense),
+              mdefense: clampIv(ivs.mdefense),
+              speed: clampIv(ivs.speed)
+            },
+            natureUp: NATURE_LABEL_MAP[imported.natureUp] ? imported.natureUp : '无',
+            natureDown: NATURE_LABEL_MAP[imported.natureDown] ? imported.natureDown : '无',
+            skills: imported.skills.slice(0, 4)
+          }
+          slotData.panel = this.calculatePanel(slotData)
+          slotData.natureUpLabel = NATURE_LABEL_MAP[slotData.natureUp] || '无'
+          slotData.natureDownLabel = NATURE_LABEL_MAP[slotData.natureDown] || '无'
+          next[index] = slotData
+        })
+        this.team = next
+        this.saveTeam()
+        this.codeImportVisible = false
+        uni.showToast({ title: `已导入 ${slots.length} 只精灵`, icon: 'none' })
+      } catch (error) {
+        uni.showToast({ title: String(error.message || '导入失败'), icon: 'none' })
+      } finally {
+        this.codeImportLoading = false
+      }
     },
     persistSlot(index, draft, showToast) {
       const pet = this.petMap[String(draft.petId)]
@@ -893,15 +1080,23 @@ export default {
     },
     buildSkillItems(skills = []) {
       const normalized = Array.isArray(skills) ? skills.slice(0, 4) : []
-      return Array.from({ length: 4 }, (_, index) => normalized[index] || {
-        name: '',
-        type: '-',
-        attr: '-',
-        consume: '-',
-        describe: '',
-        icon: '',
-        skillType: '空槽',
-        skillTypeLabel: '空槽'
+      return Array.from({ length: 4 }, (_, index) => {
+        const name = typeof normalized[index] === 'string' ? normalized[index] : (normalized[index]?.name || '')
+        if (!name) {
+          return { name: '', type: '-', attr: '-', consume: '-', describe: '', icon: '', skillType: '空槽', skillTypeLabel: '空槽' }
+        }
+        const full = skillsData[name] || {}
+        return {
+          name,
+          type: full.type || '-',
+          attr: full.attr || '-',
+          power: String(full.power ?? '') || '-',
+          consume: full.consume || '-',
+          describe: full.describe || '',
+          icon: resolveAssetPath(skillIcons[name] || ''),
+          skillType: '精灵技能',
+          skillTypeLabel: '精灵技能'
+        }
       })
     },
     buildStatItems(panel, ivs = {}) {
@@ -983,6 +1178,20 @@ export default {
     },
     resolvePetImage(src) {
       return resolveAssetPath(src)
+    },
+    getBloodlineIcon(bloodline) {
+      const name = String(bloodline || '')
+      if (!name) return ''
+      const element = name.replace('血脉', '').replace('系', '')
+      const iconMap = {
+        '火': 'fire', '水': 'water', '草': 'grass', '电': 'electric',
+        '冰': 'ice', '虫': 'bug', '翼': 'flying', '地': 'ground',
+        '萌': 'fairy', '武': 'fighting', '毒': 'poison', '龙': 'dragon',
+        '幽': 'ghost', '恶': 'dark', '光': 'light', '普通': 'normal',
+        '机械': 'steel', '幻': 'psychic'
+      }
+      const file = iconMap[element]
+      return file ? `/static/static-web/icons/${file}.webp` : ''
     },
     getNatureSummary(slot) {
       const up = slot?.natureUpLabel && slot.natureUpLabel !== '无' ? slot.natureUpLabel : ''
@@ -1126,6 +1335,25 @@ function safeArray(value) {
   color: #6B7A6E;
 }
 
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+.hero-report-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 12rpx 24rpx;
+  background: #1E7A46;
+  border-radius: 30rpx;
+  box-shadow: 0 4rpx 10rpx rgba(30, 122, 70, 0.25);
+}
+.hero-report-text {
+  color: #FFF5EC;
+  font-size: 22rpx;
+  font-weight: 600;
+}
 .hero-clear {
   flex-shrink: 0;
   height: 30px;
@@ -1624,6 +1852,103 @@ function safeArray(value) {
   color: #A3AE9F;
 }
 
+/* 热门目标预演卡（ACDE 扩展） */
+.meta-preview-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.meta-preview-rate {
+  font-size: 11px;
+  color: #1E7A46;
+}
+.meta-preview-list {
+  display: block;
+}
+.meta-preview-card {
+  margin-top: 8px;
+  padding: 9px 11px;
+  background: rgba(255, 250, 240, 0.75);
+  border: 1rpx solid rgba(30, 122, 70, 0.16);
+  border-radius: 10rpx;
+}
+.meta-preview-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.meta-preview-row.sub {
+  margin-top: 5px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.meta-preview-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2C3A2F;
+}
+.meta-preview-tags {
+  display: flex;
+  gap: 4px;
+}
+.meta-preview-tag {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 6rpx;
+  background: rgba(30, 122, 70, 0.09);
+  color: #1E7A46;
+}
+.meta-preview-first {
+  margin-left: auto;
+  font-size: 10.5px;
+  padding: 1px 7px;
+  border-radius: 8rpx;
+}
+.meta-preview-first.good {
+  background: rgba(30, 122, 70, 0.14);
+  color: #1E7A46;
+}
+.meta-preview-first.mid {
+  background: rgba(201, 161, 78, 0.16);
+  color: #8A6A2C;
+}
+.meta-preview-first.bad {
+  background: rgba(198, 75, 56, 0.12);
+  color: #C64B38;
+}
+.meta-preview-detail {
+  font-size: 11.5px;
+  color: #5C6B60;
+}
+.meta-preview-note {
+  display: block;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #A3AE9F;
+}
+.danger-members {
+  margin-top: 8px;
+  display: block;
+}
+.danger-member-row {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 3px;
+}
+.danger-member-type {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: #C64B38;
+  font-weight: 600;
+}
+.danger-member-names {
+  font-size: 11px;
+  color: #8A5A50;
+  line-height: 1.5;
+}
+
 .analysis-empty.inline-empty {
   display: inline-block;
   margin-top: 0;
@@ -2017,5 +2342,253 @@ function safeArray(value) {
 
 .footer-space {
   height: calc(28px + env(safe-area-inset-bottom));
+}
+
+/* ===== 导入阵容码弹窗 ===== */
+.code-import-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 58, 47, 0.45);
+  z-index: 950;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.code-import-panel {
+  width: 100%;
+  max-width: 340px;
+  background: #FFFDF7;
+  border: 1.5px solid #E3DCC8;
+  border-radius: 16px;
+  box-shadow: 0 4px 0 rgba(44, 58, 47, 0.12);
+  padding: 14px;
+}
+
+.code-import-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.code-import-title {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #2C3A2F;
+}
+
+.code-import-close {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: #F2EBDA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.code-import-tip {
+  display: block;
+  margin-top: 8px;
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: #6B7A6E;
+}
+
+.code-import-input {
+  width: 100%;
+  margin-top: 9px;
+  min-height: 64px;
+  padding: 9px 11px;
+  border-radius: 11px;
+  background: #F7F1E3;
+  border: 1.5px solid #D9B96A;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2C3A2F;
+}
+
+.code-import-actions {
+  margin-top: 11px;
+  display: flex;
+  gap: 8px;
+}
+
+.code-import-btn {
+  flex: 1;
+  height: 36px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  font-weight: 800;
+}
+
+.code-import-btn.ghost {
+  background: #FBF3DD;
+  border: 1.5px solid #D9B96A;
+  color: #8A6A2C;
+}
+
+.code-import-btn.primary {
+  background: linear-gradient(135deg, #A97F35 0%, #C9A14E 100%);
+  border: 1.5px solid #8A6A2C;
+  color: #FFF9EC;
+}
+
+/* ===== 阵容速览 ===== */
+.insight-block {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.insight-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.insight-label {
+  flex-shrink: 0;
+  width: 58px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.insight-label.speed {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.insight-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.insight-tag {
+  height: 19px;
+  padding: 0 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 9.5px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.insight-tag.core {
+  background: linear-gradient(135deg, #C64B38, #E0604E);
+  border: 1px solid #9C3A2B;
+  color: #FFF5EC;
+}
+
+.insight-tag.starter {
+  background: #E4F3EA;
+  border: 1px solid #2F9E5F;
+  color: #1E7A46;
+}
+
+.speed-bar-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: #EAF1F7;
+  border: 1px solid #D8E2EC;
+  position: relative;
+  overflow: hidden;
+}
+
+.speed-bar-range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7FB0E0, #2C6FD1);
+}
+
+.insight-speed-text {
+  flex-shrink: 0;
+  width: 62px;
+  text-align: right;
+  font-size: 10px;
+  font-weight: 700;
+  color: #2C6FD1;
+}
+
+.insight-wish {
+  flex: 1;
+  min-width: 0;
+  font-size: 10px;
+  color: #6B7A6E;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bloodline-value {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.bloodline-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.skill-sub {
+  display: block;
+  margin-top: 1px;
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #8A6A2C;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hero-magic {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8A6A2C;
+}
+
+.insight-tag.wish {
+  background: #E8F0FB;
+  border: 1px solid #2C6FD1;
+  color: #1E56A8;
+}
+
+.insight-tag.wish-alt {
+  background: #F2EBDA;
+  border: 1px solid #D8D0BA;
+  color: #8A6A2C;
+}
+
+.insight-blood {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #8A6A2C;
+  white-space: nowrap;
+}
+
+.insight-role {
+  display: block;
+  font-size: 8px;
+  font-weight: 700;
+  color: #A3AE9F;
 }
 </style>

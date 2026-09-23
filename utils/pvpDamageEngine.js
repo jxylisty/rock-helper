@@ -1,5 +1,6 @@
 import { PVP_RULES } from '../config/pvpRuleConfig.js'
 import { normalizeAttr, normalizeAttrList, getAttrMultiplier } from '../data/config/typeChart.js'
+import { dynamicPowerRules } from '../data/skill/dynamicPowerRules.js'
 
 export { normalizeAttr, normalizeAttrList, getAttrMultiplier }
 
@@ -110,7 +111,8 @@ export function calculatePanelValue({
   if (natureUpKey && natureUpKey === attrKey) natureMod = 1 + natureUpBonus(star)
   else if (natureDownKey && natureDownKey === attrKey) natureMod = PVP_RULES.nature.down
 
-  const preNaturePanel = Math.floor(rawPanel)
+  // 基础面板四舍五入（对齐 roco-cal normal_round = floor(x+0.5)），再乘性格
+  const preNaturePanel = Math.floor(rawPanel + 0.5)
   const postNaturePanel = Math.round(preNaturePanel * natureMod + 0.0000001)
   const starBonus = attrKey === 'hp' ? toNumber(star, 0) * 20 : toNumber(star, 0) * 10
 
@@ -338,9 +340,16 @@ export function canActBeforeEnemy({
 
   return {
     result: 'tie',
-    reason: '双方先制和速度相同，先后手不确定',
+    reason: '双方先制和速度相同，同速随机先后（2026-09-10 版本规则）',
     compare: { myPriority, enemyPriority, mySpeed, enemySpeed }
   }
+}
+
+/**
+ * 等级伤害常量：口径对齐 roco-cal damresult.py（60 级 ≈ 0.9024）
+ */
+export function damageConstant(level = PVP_RULES.level) {
+  return (toNumber(level, PVP_RULES.level) * 45 / 100 + 10) / 41
 }
 
 export function calculateDamageFull({
@@ -354,8 +363,7 @@ export function calculateDamageFull({
   powerBuff = PVP_RULES.defaultScenario.powerBuff,
   weatherMod = PVP_RULES.defaultScenario.weatherMod,
   defenseReduction = PVP_RULES.defaultScenario.defenseReduction,
-  atkLevel = PVP_RULES.defaultScenario.atkLevel,
-  defLevel = PVP_RULES.defaultScenario.defLevel,
+  level = PVP_RULES.level,
   hits = PVP_RULES.defaultScenario.hits,
   skipAttrAndStab = false
 }) {
@@ -369,15 +377,16 @@ export function calculateDamageFull({
   const normalizedDefenderAttrs = normalizeAttrList(defenderAttrs)
   const sameTypeBonus = skipAttrAndStab ? 1 : (normalizedAttackerAttrs.includes(normalizedSkillAttr) ? PVP_RULES.damage.sameTypeBonus : 1)
   const attrMultiplier = skipAttrAndStab ? 1 : getAttrMultiplier(normalizedSkillAttr, normalizedDefenderAttrs)
-  const levelMod = 1.0 * (1 + toNumber(atkLevel, 0) / 10.0) * (1 + toNumber(defLevel, 0) / 10.0)
+  const levelConst = damageConstant(level)
   const hitCount = Math.max(1, toNumber(hits, 1))
   const reductionMultiplier = 1 - clamp(toNumber(defenseReduction, 0), 0, 1)
 
-  // 总伤害 = 单发伤害 × 连击数 × (1 - 减伤)，下限 1 在最终结果上钳位
+  // 总伤害 = 攻/防 × 常量 × 有效威力 × 修饰，下限 1 在最终结果上钳位
+  // 口径对齐 roco-cal：damage = effectivePower × atk × ((lv*0.45+10)/41) / defense × 减伤连乘
   const damage = Math.max(
     1,
-    (atkUsed / defUsed) * 0.9 * toNumber(skillPower, 0) * toNumber(powerBuff, 1)
-      * sameTypeBonus * attrMultiplier * levelMod * toNumber(weatherMod, 1)
+    (atkUsed / defUsed) * levelConst * toNumber(skillPower, 0) * toNumber(powerBuff, 1)
+      * sameTypeBonus * attrMultiplier * toNumber(weatherMod, 1)
       * hitCount * reductionMultiplier
   )
 
@@ -390,18 +399,93 @@ export function calculateDamageFull({
     hits: hitCount,
     formulaParts: {
       attackRatio: atkUsed / defUsed,
-      baseConstant: 0.9,
+      baseConstant: levelConst,
       skillPower: toNumber(skillPower, 0),
       powerBuff: toNumber(powerBuff, 1),
       sameTypeBonus,
       attrMultiplier,
-      levelMod,
       weatherMod: toNumber(weatherMod, 1),
       hits: hitCount,
       defenseReduction: clamp(toNumber(defenseReduction, 0), 0, 1),
       skillType: normalizedSkillType
     }
   }
+}
+
+/* ================================================================
+ * 星陨印记引爆（S4 现行社区公式）
+ * 附加威力 = 层数² + 24×层数 − 24（180sans/roco-cal 同步 S4 实现，
+ * 与 NGA 2026-04 实测拟合互证）；用非幻系技能攻击持有者时引爆全部层数，
+ * 按幻系独立结算克制、不吃本系加成，攻防取触发技能同类口径。
+ * ================================================================ */
+export function starfallPowerForStacks(stacks = 0) {
+  const n = Math.max(0, Math.floor(toNumber(stacks, 0)))
+  if (n <= 0) return 0
+  return n * n + 24 * n - 24
+}
+
+export function calculateStarfallDamage({
+  attackerPanel = {},
+  defenderPanel = {},
+  skillType = '',
+  skillAttr = '',
+  stacks = 0,
+  defenderAttrs = [],
+  powerBuff = 1,
+  defenseReduction = 0,
+  level = PVP_RULES.level
+}) {
+  const n = Math.max(0, Math.floor(toNumber(stacks, 0)))
+  if (n <= 0) {
+    return { stacks: 0, power: 0, damage: 0, attrMultiplier: 1, triggered: false, blocked: false, reason: '' }
+  }
+  if (normalizeAttr(skillAttr) === '幻') {
+    // 现行规则：幻系技能攻击不触发星陨引爆
+    return { stacks: n, power: 0, damage: 0, attrMultiplier: 1, triggered: false, blocked: true, reason: '幻系技能不触发星陨引爆' }
+  }
+  const power = starfallPowerForStacks(n)
+  const isPhysical = repairText(skillType).trim() === '物攻'
+  const atkUsed = isPhysical ? toNumber(attackerPanel.attack, 1) : toNumber(attackerPanel.mattack, 1)
+  const defUsed = Math.max(1, isPhysical ? toNumber(defenderPanel.defense, 1) : toNumber(defenderPanel.mdefense, 1))
+  const attrMultiplier = getAttrMultiplier('幻', normalizeAttrList(defenderAttrs))
+  const levelConst = damageConstant(level)
+  const reductionMultiplier = 1 - clamp(toNumber(defenseReduction, 0), 0, 1)
+  // 引爆按单次攻击动作结算一次，不随连击数放大（对齐 roco-cal 的附加项口径）
+  const damage = Math.max(
+    1,
+    (atkUsed / defUsed) * levelConst * power * toNumber(powerBuff, 1) * attrMultiplier * reductionMultiplier
+  )
+  return { stacks: n, power, damage, attrMultiplier, triggered: true, blocked: false, reason: '', isPhysical }
+}
+
+/* ================================================================
+ * 动态威力技能 · 分档查表（鸣沙陷阱/闪击等，S4 现行分档）
+ * 规则表：data/skill/dynamicPowerRules.js
+ * ================================================================ */
+export function getDynamicPowerRule(skillName = '') {
+  const name = repairText(skillName).trim()
+  if (!name) return null
+  return dynamicPowerRules[name] || null
+}
+
+export function resolveStatDiffTierPower(rule, diff = 0) {
+  if (!rule || rule.kind !== 'statDiffTier' || !Array.isArray(rule.tiers)) return null
+  const value = toNumber(diff, 0)
+  for (let i = 0; i < rule.tiers.length; i += 1) {
+    const tier = rule.tiers[i]
+    const min = tier.min === null || tier.min === undefined ? -Infinity : Number(tier.min)
+    const max = tier.max === null || tier.max === undefined ? Infinity : Number(tier.max)
+    if (value >= min && value <= max) {
+      const bonus = toNumber(tier.bonus, 0)
+      return {
+        bonus,
+        power: toNumber(rule.base, 0) + bonus,
+        tierIndex: i,
+        diff: value
+      }
+    }
+  }
+  return null
 }
 
 export default {
@@ -414,5 +498,9 @@ export default {
   getAttrMultiplier,
   isDamageSkill,
   canActBeforeEnemy,
-  calculateDamageFull
+  calculateDamageFull,
+  starfallPowerForStacks,
+  calculateStarfallDamage,
+  getDynamicPowerRule,
+  resolveStatDiffTierPower
 }

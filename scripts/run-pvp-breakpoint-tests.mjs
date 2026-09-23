@@ -9,7 +9,12 @@ import {
   calculatePanelValue,
   calculateAllPanels,
   calculateDamageFull,
-  normalizeBattleSkill
+  normalizeBattleSkill,
+  starfallPowerForStacks,
+  calculateStarfallDamage,
+  getDynamicPowerRule,
+  resolveStatDiffTierPower,
+  canActBeforeEnemy
 } from '../utils/pvpDamageEngine.js'
 import { buildOpponentFullConfig } from '../utils/buildOpponentFullConfig.js'
 import { buildSuggestedIvs } from '../utils/buildSuggestedIvs.js'
@@ -27,7 +32,8 @@ function referencePanel(raceValue, ivInput, level, star, attrKey, natureUpName, 
   let mod = 1
   if (NATURE_KEY[natureUpName] === attrKey) mod = 1.2
   else if (NATURE_KEY[natureDownName] === attrKey) mod = 0.9
-  return Math.round(Math.floor(raw) * mod + 0.0000001) + (attrKey === 'hp' ? star * 20 : star * 10)
+  // 基础面板四舍五入（对齐 roco-cal normal_round = floor(x+0.5)）
+  return Math.round(Math.floor(raw + 0.5) * mod + 0.0000001) + (attrKey === 'hp' ? star * 20 : star * 10)
 }
 
 let passed = 0
@@ -76,6 +82,7 @@ assertEqual(getAttrMultiplier('翼', ['草', '虫']), 3, '翼 打 草+虫 = 双�
 assertEqual(getAttrMultiplier('草', ['火', '龙']), 1 / 4, '草 打 火+龙 = 双抵抗 1/4')
 assertEqual(getAttrMultiplier('草', ['火', '水']), 1, '草 打 火(抗)+水(克) = 1 倍')
 assertEqual(getAttrMultiplier('火', ['水', '地']), 1 / 4, '火 打 水+地 = 双抵抗 1/4')
+assertEqual(getAttrMultiplier('地', ['翼', '草', '虫']), 0.5, '混合 1克+2抗 = 2×0.5×0.5 = 0.5（连乘口径）')
 assertEqual(getAttrMultiplier('不存在属性', ['火']), 1, '未知属性返回 1 倍')
 
 console.log('\n== 面板公式：引擎与规范口径一致（先截断再乘性格） ==')
@@ -179,6 +186,145 @@ console.log('\n== 满配配置 ==')
   assertEqual(magic.natureUp, '魔攻', '魔法技能满配性格提升魔攻')
   assertEqual(magic.ivs.mattack, 10, '魔法满配魔攻个体 10')
   assertEqual(magic.ivs.attack, 0, '魔法满配物攻（性格下降项）个体为 0')
+}
+
+console.log('\n== 伤害常量（对齐 roco-cal） ==')
+{
+  const attacker = { attack: 410, mattack: 200, defense: 100, mdefense: 100, hp: 1000, speed: 1 }
+  const defender = { attack: 100, mattack: 100, defense: 200, mdefense: 200, hp: 1000, speed: 1 }
+  const result = calculateDamageFull({
+    attackerPanel: attacker, defenderPanel: defender,
+    skillPower: 100, skillType: '物攻', skillAttr: '普通',
+    attackerAttrs: ['普通'], defenderAttrs: ['普通']
+  })
+  // 手工复算: 410/200 × ((60*0.45+10)/41) × 100 × 1.25(本系) = 2.05 × 0.90244 × 125 ≈ 231.25
+  const expected = (410 / 200) * ((60 * 45 / 100 + 10) / 41) * 100 * 1.25
+  assertClose(result.damage, expected, `伤害 = 攻/防 × 常量((lv*0.45+10)/41) × 威力 × 本系（${result.damage.toFixed(2)}）`)
+}
+
+console.log('\n== 愿力冲击推荐（wishPowerAdvisor） ==')
+{
+  const { analyzeWishOptions, threatTypesTo, estimateWishDamage, WISH_ELEMENTS } = await import('../utils/wishPowerAdvisor.js')
+
+  assertEqual(WISH_ELEMENTS.length, 18, '愿力属性共 18 系')
+
+  // 火系精灵：打它 >1 倍的威胁应含水/地（查表 火 weak 水地）
+  const firePet = { types: ['火'] }
+  const threats = threatTypesTo(['火'])
+  assertTrue(threats.includes('水') && threats.includes('地'), `火系威胁集合含水/地（实际: ${threats.join(',')}）`)
+
+  const options = analyzeWishOptions(firePet)
+  assertTrue(options.length === 18, '返回全部 18 系分析')
+  // 反克验证：电愿力克制水（打火系的威胁），应有反克命中
+  const electric = options.find((o) => o.attr === '电')
+  assertTrue(electric.counterThreats.includes('水'), '电愿力反克威胁属性"水"')
+  assertTrue(electric.score > 0, `电愿力分数为正（${electric.score}）`)
+
+  // 龙愿力应排在低位（仅克龙、被机械抵抗）
+  const dragon = options.find((o) => o.attr === '龙')
+  const rank = options.findIndex((o) => o.attr === '龙')
+  assertTrue(rank >= 12, `龙愿力排名靠后（第 ${rank + 1} 位）`)
+  assertTrue(dragon.strongCount <= 30, `龙愿力压制面小（${dragon.strongCount} 只）`)
+
+  // 推荐首位应有理由文案
+  assertTrue(options[0].reasons.length >= 1 && options[0].reasons[0].length > 0, 'Top1 推荐带理由')
+
+  // 伤害预估：物/魔走较高攻；应对 200 威力 = 基础 80 的 2.5 倍
+  const myPet = { types: ['火'] }
+  const myPanel = { attack: 300, mattack: 400, defense: 100, mdefense: 100, hp: 1000, speed: 1 }
+  const defender = { types: ['水', '翼'] }
+  const defPanel = { attack: 100, mattack: 100, defense: 150, mdefense: 150, hp: 1000, speed: 1 }
+  const base = estimateWishDamage({ wishAttr: '电', respond: false, myPet, myPanel: { ...myPanel, hp: 1000 }, defender, defenderPanel: defPanel })
+  assertEqual(base.skillType, '魔攻', '魔攻较高时愿力走魔攻')
+  const respond = estimateWishDamage({ wishAttr: '电', respond: true, myPet, myPanel: { ...myPanel, hp: 1000 }, defender, defenderPanel: defPanel })
+  assertClose(respond.damage, base.damage * 2.5, '应对状态伤害 = 基础 × 2.5')
+  // 电打水+翼 = 2×2 = 双克 (1+1+1)=... 电→水=2, 电→翼=2 → 连乘口径 (1+2)=3
+  assertEqual(base.attrMultiplier, 3, '电愿力打 水+翼 = 三倍（1+2 个克制）')
+}
+
+console.log('\n== 星陨印记引爆（S4：威力 = 层数² + 24×层数 − 24，roco-cal 拟合口径） ==')
+{
+  assertEqual(starfallPowerForStacks(0), 0, '0 层不产生附加威力')
+  assertEqual(starfallPowerForStacks(1), 1, '1 层威力 = 1')
+  assertEqual(starfallPowerForStacks(2), 28, '2 层威力 = 2²+48−24 = 28')
+  assertEqual(starfallPowerForStacks(10), 316, '10 层威力 = 316')
+  assertEqual(starfallPowerForStacks(20), 856, '20 层威力 = 856')
+
+  const attacker = { attack: 400, mattack: 200, defense: 100, mdefense: 100, hp: 1000, speed: 1 }
+  const defender = { attack: 100, mattack: 100, defense: 250, mdefense: 250, hp: 1000, speed: 1 }
+
+  // 物攻技能触发：无本系加成，按幻系独立查克制，攻防取物攻/物防口径
+  const sf = calculateStarfallDamage({
+    attackerPanel: attacker, defenderPanel: defender,
+    skillType: '物攻', skillAttr: '火', stacks: 2, defenderAttrs: ['普通']
+  })
+  assertTrue(sf.triggered, '非幻系攻击触发引爆')
+  const expected = (400 / 250) * ((60 * 45 / 100 + 10) / 41) * 28 * getAttrMultiplier('幻', ['普通'])
+  assertClose(sf.damage, expected, '附加伤害 = 物攻/物防 × 常量 × 28 × 幻系克制（无本系）')
+
+  const blocked = calculateStarfallDamage({
+    attackerPanel: attacker, defenderPanel: defender,
+    skillType: '魔攻', skillAttr: '幻', stacks: 10, defenderAttrs: ['普通']
+  })
+  assertTrue(!blocked.triggered && blocked.blocked, '幻系技能攻击不触发引爆')
+  assertEqual(blocked.damage, 0, '被拦阻时附加伤害为 0')
+
+  const none = calculateStarfallDamage({
+    attackerPanel: attacker, defenderPanel: defender,
+    skillType: '物攻', skillAttr: '火', stacks: 0, defenderAttrs: ['普通']
+  })
+  assertTrue(!none.triggered, '0 层不触发')
+
+  // 魔攻技能触发走魔攻/魔防口径
+  const magic = calculateStarfallDamage({
+    attackerPanel: attacker, defenderPanel: defender,
+    skillType: '魔攻', skillAttr: '地', stacks: 5, defenderAttrs: ['普通']
+  })
+  const expectedMagic = (200 / 250) * ((60 * 45 / 100 + 10) / 41) * 121 * getAttrMultiplier('幻', ['普通'])
+  assertClose(magic.damage, expectedMagic, '魔攻触发时取魔攻/魔防口径（5 层威力 121）')
+}
+
+console.log('\n== 动态威力分档（鸣沙陷阱=物防差 / 闪击=速度差，S4 现行表） ==')
+{
+  const mingsha = getDynamicPowerRule('鸣沙陷阱')
+  const shanji = getDynamicPowerRule('闪击')
+  assertTrue(!!mingsha && mingsha.stat === 'defense' && mingsha.base === 60, '鸣沙陷阱规则: 物防差 / 基础 60')
+  assertTrue(!!shanji && shanji.stat === 'speed' && shanji.base === 60, '闪击规则: 速度差 / 基础 60')
+  assertEqual(getDynamicPowerRule('不存在的技能'), null, '未知技能无规则')
+
+  // 全档边界（S2 起满档门槛 136→271，现行 ≥271 → 200 封顶）
+  const cases = [
+    [-5, 60], [0, 60], [1, 80], [30, 80], [31, 100], [60, 100], [61, 120], [90, 120],
+    [91, 140], [120, 140], [121, 150], [150, 150], [151, 160], [180, 160], [181, 170],
+    [210, 170], [211, 180], [240, 180], [241, 190], [270, 190], [271, 200], [999, 200]
+  ]
+  cases.forEach(([diff, power]) => {
+    const resolved = resolveStatDiffTierPower(mingsha, diff)
+    assertEqual(resolved.power, power, `物防差 ${diff} → 威力 ${power}`)
+  })
+  assertEqual(resolveStatDiffTierPower(shanji, 300).power, 200, '速度差 300 → 威力 200（封顶）')
+}
+
+console.log('\n== 先后手判定（S4 同速随机） ==')
+{
+  const tie = canActBeforeEnemy({
+    myPanel: { speed: 200 }, enemyPanel: { speed: 200 },
+    selectedSkill: {}, enemySelectedSkill: {}
+  })
+  assertEqual(tie.result, 'tie', '同速返回 tie')
+  assertTrue(/随机/.test(tie.reason), 'tie 文案标注同速随机（2026-09-10 版本规则）')
+
+  const prio = canActBeforeEnemy({
+    myPanel: { speed: 100 }, enemyPanel: { speed: 300 },
+    selectedSkill: { priority: 1 }, enemySelectedSkill: {}
+  })
+  assertEqual(prio.result, true, '先制值高无视速度差')
+
+  const speedWin = canActBeforeEnemy({
+    myPanel: { speed: 300 }, enemyPanel: { speed: 200 },
+    selectedSkill: {}, enemySelectedSkill: {}
+  })
+  assertEqual(speedWin.result, true, '同先制下速度高者先手')
 }
 
 console.log(`\n结果: ${passed} 通过, ${failed} 失败\n`)

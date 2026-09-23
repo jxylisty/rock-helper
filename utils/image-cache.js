@@ -81,6 +81,12 @@ export async function ensureCachedRemoteImage(cacheKey, remoteUrl) {
   if (!url) return ''
   if (isPackagedImage(url)) return resolveImageSource(url)
 
+  // #ifndef APP-PLUS
+  // 微信小程序/H5等环境由宿主平台原生 <image> 的 HTTP 磁盘缓存自动处理，不走 uni.downloadFile/uni.saveFile
+  return url
+  // #endif
+
+  // #ifdef APP-PLUS
   const key = String(cacheKey || url)
   const cacheMap = readImageCacheMap()
   const cachedPath = cacheMap[key]
@@ -94,6 +100,7 @@ export async function ensureCachedRemoteImage(cacheKey, remoteUrl) {
   cacheMap[key] = savedFilePath
   writeImageCacheMap(cacheMap)
   return savedFilePath
+  // #endif
 }
 
 export async function clearCachedRemoteImage(cacheKey) {

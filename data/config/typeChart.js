@@ -60,7 +60,10 @@ export function normalizeAttrList(attrs = []) {
 
 /**
  * 攻击属性对防守方属性组合的克制倍率
- * 单克制 2 / 单抵抗 0.5 / 双克制 3 / 双抵抗 1/4 / 克制+抵抗 1
+ * 口径对齐社区验证项目 roco-cal（github.com/180sans/roco-cal）ele_advantage.py：
+ * 每对攻/防独立查格（克制 2 / 抵抗 0.5），n 个克制相乘为 (1+n)（单克 2、双克 3），
+ * 其余倍率直接连乘——双抵抗 = 0.5×0.5 = 0.25，克制+抵抗 = 2×0.5 = 1，
+ * 混合情形如 1克+2抗 = 2×0.5×0.5 = 0.5。
  */
 export function getAttrMultiplier(attackAttr, defenseAttrs = []) {
   const atkType = normalizeAttr(attackAttr)
@@ -68,21 +71,17 @@ export function getAttrMultiplier(attackAttr, defenseAttrs = []) {
   if (!chart) return 1
 
   let strongCount = 0
-  let resistCount = 0
+  let otherProduct = 1
 
   normalizeAttrList(defenseAttrs).forEach((defType) => {
     if (chart.strong.includes(defType)) {
       strongCount += 1
     } else if (chart.resist.includes(defType)) {
-      resistCount += 1
+      otherProduct *= 0.5
     }
   })
 
-  if (strongCount >= 2) return 3
-  if (strongCount === 1 && resistCount === 0) return 2
-  if (resistCount >= 2 && strongCount === 0) return 1 / 4
-  if (resistCount === 1 && strongCount === 0) return 0.5
-  return 1
+  return (strongCount > 0 ? 1 + strongCount : 1) * otherProduct
 }
 
 // 属性图标文件名（英文，对应 static/static-web/icons/）。

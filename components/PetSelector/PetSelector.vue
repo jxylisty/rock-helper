@@ -31,22 +31,20 @@
           </view>
         </view>
 
-        <!-- 形态筛选标签 -->
-        <scroll-view scroll-x class="ui-tag-tabs" :show-scrollbar="false">
-          <view class="tag-tabs-inner">
-            <view
-              v-for="tag in uiTagOptions"
-              :key="tag.key"
-              class="ui-tag-tab"
-              :class="{ active: selectedUiTag === tag.key }"
-              hover-class="press-down"
-              @click="selectedUiTag = tag.key"
-            >
-              <text class="ui-tag-text">{{ tag.label }}</text>
-              <text class="ui-tag-count">{{ tag.count }}</text>
-            </view>
+        <!-- 形态筛选标签（换行平铺，不用横滑） -->
+        <view class="ui-tag-tabs">
+          <view
+            v-for="tag in uiTagOptions"
+            :key="tag.key"
+            class="ui-tag-tab"
+            :class="{ active: selectedUiTag === tag.key }"
+            hover-class="press-down"
+            @click="selectedUiTag = tag.key"
+          >
+            <text class="ui-tag-text">{{ tag.label }}</text>
+            <text class="ui-tag-count">{{ tag.count }}</text>
           </view>
-        </scroll-view>
+        </view>
 
         <!-- 属性筛选可展开面板 -->
         <view class="filter-head" hover-class="press-down" @click="filterExpanded = !filterExpanded">
@@ -415,17 +413,12 @@ export default {
   justify-content: center;
 }
 
-/* 形态筛选标签 - 与 catalog 页一致 */
+/* 形态筛选标签 - 与 catalog 页一致（换行平铺） */
 .ui-tag-tabs {
   margin-top: 10px;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-}
-
-.tag-tabs-inner {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   gap: 7px;
-  padding-right: 4px;
 }
 
 .ui-tag-tab {

@@ -7,6 +7,16 @@
 import { petIndex } from '@/data/pet/pet_index.js'
 import { petDetail } from '@/data/pet/pet_detail.js'
 import { petSkills } from '@/data/pet/pet_skills.js'
+import { getData } from '@/utils/dataHotUpdate.js'
+
+// 数据热更新覆盖层（2026-09-16）：热更版数据存在时优先使用，否则回退打包内置数据。
+// 热更机制见 utils/dataHotUpdate.js——仅更新数据，不改功能逻辑。
+const _hotPetIndex = getData('petIndex', null)
+const _hotPetDetail = getData('petDetail', null)
+const _hotPetSkills = getData('petSkills', null)
+const _petIndex = _hotPetIndex || petIndex
+const _petDetail = _hotPetDetail || petDetail
+const _petSkills = _hotPetSkills || petSkills
 
 /**
  * 构建基础精灵列表（每个 wikiId 只保留主形态）
@@ -15,10 +25,10 @@ import { petSkills } from '@/data/pet/pet_skills.js'
 export function buildBasePetList() {
   const seen = new Set()
   const result = []
-  for (const [k, v] of Object.entries(petIndex)) {
+  for (const [k, v] of Object.entries(_petIndex)) {
     if (!seen.has(v.wikiId)) {
       seen.add(v.wikiId)
-      const detail = petDetail[String(v.seq)]?.[0]
+      const detail = _petDetail[String(v.seq)]?.[0]
       result.push({
         id: v.seq,
         name: v.name,
@@ -39,7 +49,7 @@ export function buildBasePetList() {
  * @returns {string[]} 图片路径数组
  */
 export function getPetVariants(seq) {
-  const variants = petDetail[String(seq)]
+  const variants = _petDetail[String(seq)]
   if (!Array.isArray(variants)) return []
   return variants.map((v) => v.img).filter(Boolean)
 }
@@ -50,7 +60,7 @@ export function getPetVariants(seq) {
  * @returns {Array} 变体详情数组
  */
 export function getPetVariantDetails(seq) {
-  return petDetail[String(seq)] || []
+  return _petDetail[String(seq)] || []
 }
 
 /**
@@ -59,7 +69,7 @@ export function getPetVariantDetails(seq) {
  * @returns {Array<{name, level, skill_type}>}
  */
 export function getPetSkillNames(seq) {
-  const entry = petSkills[String(seq)]
+  const entry = _petSkills[String(seq)]
   if (!entry || !Array.isArray(entry.skills)) return []
   return entry.skills
 }
@@ -70,7 +80,7 @@ export function getPetSkillNames(seq) {
  * @returns {boolean}
  */
 export function hasMultipleForms(seq) {
-  const variants = petDetail[String(seq)]
+  const variants = _petDetail[String(seq)]
   return Array.isArray(variants) && variants.length > 1
 }
 

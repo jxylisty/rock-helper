@@ -1,4 +1,5 @@
-import { PRIMARY_ASSET_BASE, FALLBACK_ASSET_BASES } from '@/data/config/asset_config.js'
+import { PRIMARY_ASSET_BASE, FALLBACK_ASSET_BASES } from '../data/config/asset_config.js'
+import petIdMap from '../data/pet/pet_id_map.js'
 
 function normalizePath(src = '') {
   const value = String(src || '').trim()
@@ -25,17 +26,26 @@ function buildLocalStaticCandidates(src = '') {
   if (!value || !value.startsWith('/static/')) return []
 
   const originalValue = /%[0-9A-Fa-f]{2}/.test(value) ? value : encodeURI(value)
+  const decodedValue = decodeURI(value)
   const webValue = normalizeWebStaticPath(value)
   const encodedWebValue = /%[0-9A-Fa-f]{2}/.test(webValue) ? webValue : encodeURI(webValue)
+  const decodedWebValue = decodeURI(webValue)
 
   const webpValue = encodedWebValue.replace(/\.(png|jpg|jpeg|gif)$/i, '.webp')
   const webpOriginal = originalValue.replace(/\.(png|jpg|jpeg|gif)$/i, '.webp')
+  const webpDecoded = decodedWebValue.replace(/\.(png|jpg|jpeg|gif)$/i, '.webp')
+  const webpOrigDecoded = decodedValue.replace(/\.(png|jpg|jpeg|gif)$/i, '.webp')
 
-  if (typeof plus !== 'undefined') {
-    return uniqueUrls([webpValue, webpOriginal, encodedWebValue, originalValue])
-  }
-
-  return uniqueUrls([webpValue, webpOriginal, encodedWebValue, originalValue])
+  return uniqueUrls([
+    webpValue,
+    webpOriginal,
+    webpDecoded,
+    webpOrigDecoded,
+    encodedWebValue,
+    originalValue,
+    decodedWebValue,
+    decodedValue
+  ])
 }
 
 function buildRemoteStaticCandidates(relativePath = '') {
@@ -88,9 +98,62 @@ export function resolveAssetPath(src = '') {
   return value
 }
 
+// 从官方 API 路径中提取精灵信息，生成多层级备选地址（Biligame CDN + 本地 WebP 静态镜像）
+function getOfficialPetCandidates(url = '') {
+  const petMatch = url.match(/\/pets\/(\d+)\/(icon|shiny)\.png/i)
+  if (!petMatch) return []
+  const petId = petMatch[1]
+  const isShiny = petMatch[2].toLowerCase() === 'shiny'
+  const info = petIdMap && petIdMap[petId]
+  if (!info) return []
+
+  const paddedSeq = String(info.seq).padStart(3, '0')
+  const name = info.name || ''
+  const form = info.form || ''
+  const formSuffix = form ? `（${form}）` : ''
+  const shinySuffix = isShiny ? '_异色' : ''
+
+  const candidates = []
+
+  // 1. 本地 static/static-web/pets 全量镜像（离线可用、webp 体积小，优先命中）
+  if (name) {
+    const filenameWithForm = `${paddedSeq}_${name}${formSuffix}${shinySuffix}.webp`
+    const filenameSimple = `${paddedSeq}_${name}${shinySuffix}.webp`
+
+    candidates.push(
+      ...buildLocalStaticCandidates(`/static/static-web/pets/${filenameWithForm}`),
+      ...buildLocalStaticCandidates(`/static/static-web/pets/${filenameSimple}`)
+    )
+  }
+
+  // 2. Biligame 镜像 CDN（本地缺图时的远程兑底）
+  if (!isShiny && info.biliUrl) {
+    candidates.push(info.biliUrl)
+  }
+
+  // 3. 历史 static/pets 微镜像（仅 116/117，保留兼容）
+  if (name) {
+    const filenameWithForm2 = `${paddedSeq}_${name}${formSuffix}${shinySuffix}.webp`
+    const filenameSimple2 = `${paddedSeq}_${name}${shinySuffix}.webp`
+
+    candidates.push(
+      ...buildLocalStaticCandidates(`/static/pets/${filenameWithForm2}`),
+      ...buildLocalStaticCandidates(`/static/pets/${filenameSimple2}`)
+    )
+  }
+
+  return uniqueUrls(candidates)
+}
+
 export function getAssetCandidateUrls(src = '') {
   const value = normalizePath(src)
   if (!value) return []
+
+  // 针对官方精灵资源 URL，本地镜像优先，再依次回退 CDN 与原始 URL
+  if (value.includes('/pets/') && value.endsWith('.png')) {
+    const petFallbacks = getOfficialPetCandidates(value)
+    return uniqueUrls([...petFallbacks, value])
+  }
 
   if (!isLocalStaticAsset(value)) {
     const matchedBase = REMOTE_ASSET_BASES.find((base) => value.startsWith(base))

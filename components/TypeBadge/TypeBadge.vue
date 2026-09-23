@@ -1,6 +1,6 @@
 <template>
   <view class="badge" :class="{ compact }" :style="badgeStyle">
-    <RemoteImage class="icon" :src="iconSrc" mode="aspectFit" />
+    <image class="icon" :src="iconSrc" mode="aspectFit" />
     <text v-if="!compact && label" class="text">{{ label }}</text>
   </view>
 </template>
@@ -8,7 +8,6 @@
 <script>
 import { normalizeAttr } from '@/data/config/game_math.js'
 import { getAttrIconName } from '@/data/config/typeChart.js'
-import { resolveAssetPath } from '@/utils/asset-path.js'
 
 function tint(color, alpha) {
   const hex = String(color || '').replace('#', '')
@@ -30,7 +29,7 @@ export default {
   computed: {
     iconSrc() {
       const type = normalizeAttr(this.label) || this.label || '普通'
-      return resolveAssetPath(`/static/icons/${getAttrIconName(type)}.webp`)
+      return `/static/icons/${getAttrIconName(type)}.png`
     },
     badgeStyle() {
       return {

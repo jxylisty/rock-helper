@@ -121,7 +121,7 @@ export const petDetail = {
       },
       "trait": "最好的伙伴 造成克制伤害后，获得攻防速+20%，并回复2能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/001.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200191.png"
     },
     {
       "page_title": "圣光迪莫",
@@ -140,7 +140,7 @@ export const petDetail = {
       },
       "trait": "裁决 造成克制伤害后，获得攻防速+20%，回复2能量，首个技能替换为光系愿力冲击。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/001.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280025.png"
     },
     {
       "page_title": "圣草迪莫",
@@ -160,7 +160,7 @@ export const petDetail = {
       },
       "trait": "滋养 造成克制伤害后，获得攻防速+20%，回复2能量，首个技能替换为草系愿力冲击。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/001.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280026.png"
     },
     {
       "page_title": "圣火迪莫",
@@ -180,7 +180,7 @@ export const petDetail = {
       },
       "trait": "点燃 造成克制伤害后，获得攻防速+20%，回复2能量，首个技能替换为火系愿力冲击。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/001.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280027.png"
     },
     {
       "page_title": "圣水迪莫",
@@ -200,7 +200,7 @@ export const petDetail = {
       },
       "trait": "净化 造成克制伤害后，获得攻防速+20%，回复2能量，首个技能替换为水系愿力冲击。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/001.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280028.png"
     }
   ],
   "2": [
@@ -221,7 +221,7 @@ export const petDetail = {
       },
       "trait": "氧循环 使用草系技能后，回复10%生命。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/002.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200076.png"
     }
   ],
   "3": [
@@ -242,7 +242,7 @@ export const petDetail = {
       },
       "trait": "氧循环 使用草系技能后，回复10%生命。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/003.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200076.png"
     }
   ],
   "4": [
@@ -263,7 +263,7 @@ export const petDetail = {
       },
       "trait": "氧循环 使用草系技能后，回复10%生命。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/004.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200076.png"
     },
     {
       "page_title": "叶冕魔力猫（首领形态）",
@@ -282,7 +282,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/004.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "叶冕魔力猫",
@@ -301,7 +301,7 @@ export const petDetail = {
       },
       "trait": "深层氧循环 使用草系技能后，回复15%生命。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/004.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280002.png"
     },
     {
       "page_title": "武斗酷猫",
@@ -320,7 +320,7 @@ export const petDetail = {
       },
       "trait": "草木苏醒时 每回复1能量，物攻和魔攻永久+20%，攻击后重置。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/004.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280031.png"
     }
   ],
   "5": [
@@ -341,7 +341,7 @@ export const petDetail = {
       },
       "trait": "助燃 使用火系技能后，获得双攻+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/005.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200146.png"
     }
   ],
   "6": [
@@ -362,7 +362,7 @@ export const petDetail = {
       },
       "trait": "助燃 使用火系技能后，获得双攻+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/006.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200146.png"
     }
   ],
   "7": [
@@ -383,7 +383,7 @@ export const petDetail = {
       },
       "trait": "助燃 使用火系技能后，获得双攻+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/007.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200146.png"
     },
     {
       "page_title": "烈火战神（首领形态）",
@@ -402,7 +402,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/007.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "烈火战神",
@@ -421,7 +421,7 @@ export const petDetail = {
       },
       "trait": "爆燃 使用火系技能后，获得双攻永久+30%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/007.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280003.png"
     }
   ],
   "8": [
@@ -442,7 +442,7 @@ export const petDetail = {
       },
       "trait": "浸润 使用水系技能后，全技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/008.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200107.png"
     }
   ],
   "9": [
@@ -463,7 +463,7 @@ export const petDetail = {
       },
       "trait": "浸润 使用水系技能后，全技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/009.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200107.png"
     }
   ],
   "10": [
@@ -484,7 +484,7 @@ export const petDetail = {
       },
       "trait": "浸润 使用水系技能后，全技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/010.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200107.png"
     },
     {
       "page_title": "圣水守护（首领形态）",
@@ -503,7 +503,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/010.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "圣水守护",
@@ -522,7 +522,7 @@ export const petDetail = {
       },
       "trait": "浪潮 使用水系技能后，全技能能耗-2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/010.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280001.png"
     }
   ],
   "11": [
@@ -543,7 +543,7 @@ export const petDetail = {
       },
       "trait": "挺起胸脯 携带的能耗为1的技能，威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200088.png"
     },
     {
       "page_title": "鸭吉吉（紧实的样子）",
@@ -562,7 +562,7 @@ export const petDetail = {
       },
       "trait": "挺起胸脯 携带的能耗为1的技能，威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200088.png"
     },
     {
       "page_title": "鸭吉吉（急急急鸭）",
@@ -581,7 +581,7 @@ export const petDetail = {
       },
       "trait": "挺起胸脯 携带的能耗为1的技能，威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200088.png"
     },
     {
       "page_title": "鸭吉吉（等一等鸭）",
@@ -600,7 +600,7 @@ export const petDetail = {
       },
       "trait": "挺起胸脯 携带的能耗为1的技能，威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200088.png"
     },
     {
       "page_title": "鸭吉吉（燃了鸭）",
@@ -619,7 +619,7 @@ export const petDetail = {
       },
       "trait": "挺起胸脯 携带的能耗为1的技能，威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200088.png"
     },
     {
       "page_title": "鸭吉吉（起来鸭）",
@@ -638,7 +638,7 @@ export const petDetail = {
       },
       "trait": "挺起胸脯 携带的能耗为1的技能，威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200088.png"
     },
     {
       "page_title": "鸭吉吉国王（首领形态）",
@@ -657,7 +657,7 @@ export const petDetail = {
       },
       "trait": "挺起胸脯 携带的能耗为1的技能，威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200088.png"
     },
     {
       "page_title": "鸭吉吉国王（蓬松的样子）",
@@ -676,7 +676,7 @@ export const petDetail = {
       },
       "trait": "“国王”的威严 鸭吉吉国王的种族资质大幅增加，能耗为1的技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280004.png"
     },
     {
       "page_title": "鸭吉吉国王（紧实的样子）",
@@ -695,7 +695,7 @@ export const petDetail = {
       },
       "trait": "“国王”的威严 鸭吉吉国王的种族资质大幅增加，能耗为1的技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280004.png"
     },
     {
       "page_title": "鸭吉吉国王（急急急鸭）",
@@ -714,7 +714,7 @@ export const petDetail = {
       },
       "trait": "“国王”的威严 鸭吉吉国王的种族资质大幅增加，能耗为1的技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280004.png"
     },
     {
       "page_title": "鸭吉吉国王（等一等鸭）",
@@ -733,7 +733,7 @@ export const petDetail = {
       },
       "trait": "“国王”的威严 鸭吉吉国王的种族资质大幅增加，能耗为1的技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280004.png"
     },
     {
       "page_title": "鸭吉吉国王（燃了鸭）",
@@ -752,7 +752,7 @@ export const petDetail = {
       },
       "trait": "“国王”的威严 鸭吉吉国王的种族资质大幅增加，能耗为1的技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280004.png"
     },
     {
       "page_title": "鸭吉吉国王（起来鸭）",
@@ -771,7 +771,7 @@ export const petDetail = {
       },
       "trait": "“国王”的威严 鸭吉吉国王的种族资质大幅增加，能耗为1的技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/011.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280004.png"
     }
   ],
   "12": [
@@ -792,7 +792,7 @@ export const petDetail = {
       },
       "trait": "缩壳 携带的防御技能能耗-2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/012.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200108.png"
     },
     {
       "page_title": "板板壳（蜕皮时的样子）",
@@ -811,7 +811,7 @@ export const petDetail = {
       },
       "trait": "缩壳 携带的防御技能能耗-2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/012.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200108.png"
     }
   ],
   "13": [
@@ -832,7 +832,7 @@ export const petDetail = {
       },
       "trait": "缩壳 携带的防御技能能耗-2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/013.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200108.png"
     },
     {
       "page_title": "咔咔壳（蜕皮时的样子）",
@@ -851,7 +851,7 @@ export const petDetail = {
       },
       "trait": "缩壳 携带的防御技能能耗-2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/013.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200108.png"
     }
   ],
   "14": [
@@ -872,7 +872,7 @@ export const petDetail = {
       },
       "trait": "缩壳 携带的防御技能能耗-2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/014.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200108.png"
     },
     {
       "page_title": "水泡壳（蜕皮时的样子）",
@@ -891,7 +891,7 @@ export const petDetail = {
       },
       "trait": "缩壳 携带的防御技能能耗-2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/014.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200108.png"
     }
   ],
   "15": [
@@ -912,7 +912,7 @@ export const petDetail = {
       },
       "trait": "碰瓷 自己使用恶系技能后，敌方失去2能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/015.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200089.png"
     }
   ],
   "16": [
@@ -933,7 +933,7 @@ export const petDetail = {
       },
       "trait": "碰瓷 自己使用恶系技能后，敌方失去2能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/016.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200089.png"
     }
   ],
   "17": [
@@ -955,7 +955,7 @@ export const petDetail = {
       },
       "trait": "碰瓷 自己使用恶系技能后，敌方失去2能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/017.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200089.png"
     }
   ],
   "18": [
@@ -976,7 +976,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/018.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     },
     {
       "page_title": "雪绒鸟（春天的样子）",
@@ -995,7 +995,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/018.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     },
     {
       "page_title": "雪绒鸟（夏天的样子）",
@@ -1014,7 +1014,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/018.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     },
     {
       "page_title": "雪绒鸟（秋天的样子）",
@@ -1033,7 +1033,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/018.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     }
   ],
   "19": [
@@ -1054,7 +1054,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/019.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     },
     {
       "page_title": "冬羽雀（春天的样子）",
@@ -1073,7 +1073,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/019.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     },
     {
       "page_title": "冬羽雀（夏天的样子）",
@@ -1092,7 +1092,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/019.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     },
     {
       "page_title": "冬羽雀（秋天的样子）",
@@ -1111,7 +1111,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/019.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     }
   ],
   "20": [
@@ -1132,7 +1132,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/020.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     },
     {
       "page_title": "岚鸟（春天的样子）",
@@ -1151,7 +1151,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/020.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     },
     {
       "page_title": "岚鸟（夏天的样子）",
@@ -1170,7 +1170,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/020.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     },
     {
       "page_title": "岚鸟（秋天的样子）",
@@ -1189,7 +1189,7 @@ export const petDetail = {
       },
       "trait": "顺风 若先于敌方攻击，本次技能威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/020.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200124.png"
     },
     {
       "page_title": "霜翼领主（首领形态）",
@@ -1208,7 +1208,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/020.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "霜翼领主",
@@ -1227,7 +1227,7 @@ export const petDetail = {
       },
       "trait": "破空 若先于敌方攻击，本次技能威力+75%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/020.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280023.png"
     },
     {
       "page_title": "霜翼领主（春天的样子）",
@@ -1246,7 +1246,7 @@ export const petDetail = {
       },
       "trait": "破空 若先于敌方攻击，本次技能威力+75%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/020.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280023.png"
     },
     {
       "page_title": "霜翼领主（夏天的样子）",
@@ -1265,7 +1265,7 @@ export const petDetail = {
       },
       "trait": "破空 若先于敌方攻击，本次技能威力+75%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/020.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280023.png"
     },
     {
       "page_title": "霜翼领主（秋天的样子）",
@@ -1284,7 +1284,7 @@ export const petDetail = {
       },
       "trait": "破空 若先于敌方攻击，本次技能威力+75%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/020.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280023.png"
     }
   ],
   "21": [
@@ -1305,7 +1305,7 @@ export const petDetail = {
       },
       "trait": "毒蘑菇 回合结束时，偷取敌方场上所有精灵1能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/021.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200158.png"
     }
   ],
   "22": [
@@ -1327,7 +1327,7 @@ export const petDetail = {
       },
       "trait": "毒蘑菇 回合结束时，偷取敌方场上所有精灵1能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/022.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200158.png"
     }
   ],
   "23": [
@@ -1349,7 +1349,7 @@ export const petDetail = {
       },
       "trait": "毒蘑菇 回合结束时，偷取敌方场上所有精灵1能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/023.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200158.png"
     }
   ],
   "24": [
@@ -1370,7 +1370,7 @@ export const petDetail = {
       },
       "trait": "刺肤 每受到1次攻击伤害，对攻击自己的精灵造成50威力物理伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/024.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200103.png"
     },
     {
       "page_title": "石肤蜥（球球尾巴的样子）",
@@ -1389,7 +1389,7 @@ export const petDetail = {
       },
       "trait": "刺肤 每受到1次攻击伤害，对攻击自己的精灵造成50威力物理伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/024.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200103.png"
     }
   ],
   "25": [
@@ -1410,7 +1410,7 @@ export const petDetail = {
       },
       "trait": "刺肤 每受到1次攻击伤害，对攻击自己的精灵造成50威力物理伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/025.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200103.png"
     },
     {
       "page_title": "石刺蜥（球球尾巴的样子）",
@@ -1429,7 +1429,7 @@ export const petDetail = {
       },
       "trait": "刺肤 每受到1次攻击伤害，对攻击自己的精灵造成50威力物理伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/025.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200103.png"
     }
   ],
   "26": [
@@ -1450,7 +1450,7 @@ export const petDetail = {
       },
       "trait": "刺肤 每受到1次攻击伤害，对攻击自己的精灵造成50威力物理伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/026.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200103.png"
     },
     {
       "page_title": "石冠王蜥（球球尾巴的样子）",
@@ -1469,7 +1469,7 @@ export const petDetail = {
       },
       "trait": "刺肤 每受到1次攻击伤害，对攻击自己的精灵造成50威力物理伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/026.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200103.png"
     }
   ],
   "27": [
@@ -1490,7 +1490,7 @@ export const petDetail = {
       },
       "trait": "地脉 初始能量为0，入场前己方精灵每放1次地系技能，回复3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/027.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200102.png"
     }
   ],
   "28": [
@@ -1511,7 +1511,7 @@ export const petDetail = {
       },
       "trait": "地脉 初始能量为0，入场前己方精灵每放1次地系技能，回复3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/028.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200102.png"
     }
   ],
   "29": [
@@ -1532,7 +1532,7 @@ export const petDetail = {
       },
       "trait": "地脉 初始能量为0，入场前己方精灵每放1次地系技能，回复3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/029.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200102.png"
     },
     {
       "page_title": "迷嶂布莱克（首领形态）",
@@ -1551,7 +1551,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/029.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "迷嶂布莱克",
@@ -1570,7 +1570,7 @@ export const petDetail = {
       },
       "trait": "地脉馈赠 突破能量上限并立即回复10能量，入场前己方精灵每放1次地系技能，回复3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/029.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280007.png"
     }
   ],
   "30": [
@@ -1592,7 +1592,7 @@ export const petDetail = {
       },
       "trait": "渴求 入场时获得50%吸血。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3010/shiny.png",
-      "traitImg": "/static/static-web/traits/030.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200139.png"
     }
   ],
   "31": [
@@ -1614,7 +1614,7 @@ export const petDetail = {
       },
       "trait": "渴求 入场时获得50%吸血。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3039/shiny.png",
-      "traitImg": "/static/static-web/traits/031.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200139.png"
     },
     {
       "page_title": "恶魔男爵",
@@ -1634,7 +1634,7 @@ export const petDetail = {
       },
       "trait": "贪得无厌 入场时获得50%吸血，每过量回复5%生命转化为10%物攻。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5055/shiny.png",
-      "traitImg": "/static/static-web/traits/031.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280032.png"
     }
   ],
   "32": [
@@ -1656,7 +1656,7 @@ export const petDetail = {
       },
       "trait": "化茧 受到致命伤害时，获得1层萌化，并免疫此次伤害。（最多触发2次）",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/032.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200195.png"
     }
   ],
   "33": [
@@ -1678,7 +1678,7 @@ export const petDetail = {
       },
       "trait": "化茧 受到致命伤害时，获得1层萌化，并免疫此次伤害。（最多触发2次）",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/033.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200195.png"
     }
   ],
   "34": [
@@ -1700,7 +1700,7 @@ export const petDetail = {
       },
       "trait": "化茧 受到致命伤害时，获得1层萌化，并免疫此次伤害。（最多触发2次）",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/034.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200195.png"
     },
     {
       "page_title": "化蝶（幽冥眼的样子）",
@@ -1720,7 +1720,7 @@ export const petDetail = {
       },
       "trait": "化茧 受到致命伤害时，获得1层萌化，并免疫此次伤害。（最多触发2次）",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/034.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200195.png"
     },
     {
       "page_title": "化蝶（喵喵的样子）",
@@ -1740,7 +1740,7 @@ export const petDetail = {
       },
       "trait": "化茧 受到致命伤害时，获得1层萌化，并免疫此次伤害。（最多触发2次）",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/034.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200195.png"
     },
     {
       "page_title": "化蝶（奇丽花的样子）",
@@ -1760,7 +1760,7 @@ export const petDetail = {
       },
       "trait": "化茧 受到致命伤害时，获得1层萌化，并免疫此次伤害。（最多触发2次）",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/034.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200195.png"
     }
   ],
   "35": [
@@ -1782,7 +1782,7 @@ export const petDetail = {
       },
       "trait": "小偷小摸 入场时偷取敌方场上所有精灵2能量。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3064/shiny.png",
-      "traitImg": "/static/static-web/traits/035.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200155.png"
     },
     {
       "page_title": "幻影荆棘（首领形态）",
@@ -1802,7 +1802,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4064/shiny.png",
-      "traitImg": "/static/static-web/traits/035.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "幻影荆棘",
@@ -1822,7 +1822,27 @@ export const petDetail = {
       },
       "trait": "大捞一笔 入场时偷取敌方场上所有精灵3能量。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5019/shiny.png",
-      "traitImg": "/static/static-web/traits/035.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280015.png"
+    },
+    {
+      "page_title": "幽影树（突变的样子）",
+      "type": [
+        "幽",
+        "草"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3777/icon.png",
+      "race": {
+        "hp": 111,
+        "attack": 96,
+        "mattack": 96,
+        "defense": 65,
+        "mdefense": 123,
+        "speed": 80,
+        "total": 571
+      },
+      "trait": "小偷小摸 入场时偷取敌方场上所有精灵2能量。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3777/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200155.png"
     }
   ],
   "36": [
@@ -1844,7 +1864,7 @@ export const petDetail = {
       },
       "trait": "保守派 总技能能耗小于4时，自己获得双防+80%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/036.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200094.png"
     }
   ],
   "37": [
@@ -1866,7 +1886,7 @@ export const petDetail = {
       },
       "trait": "保守派 总技能能耗小于4时，自己获得双防+80%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/037.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200094.png"
     }
   ],
   "38": [
@@ -1888,7 +1908,7 @@ export const petDetail = {
       },
       "trait": "保守派 总技能能耗小于4时，自己获得双防+80%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/038.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200094.png"
     }
   ],
   "39": [
@@ -1910,7 +1930,7 @@ export const petDetail = {
       },
       "trait": "偏振 受到自己携带技能系别的攻击伤害-40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/039.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200074.png"
     }
   ],
   "40": [
@@ -1932,7 +1952,7 @@ export const petDetail = {
       },
       "trait": "偏振 受到自己携带技能系别的攻击伤害-40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200074.png"
     },
     {
       "page_title": "晶石蜗（莲花刚玉的样子）",
@@ -1952,7 +1972,7 @@ export const petDetail = {
       },
       "trait": "偏振 受到自己携带技能系别的攻击伤害-40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200074.png"
     },
     {
       "page_title": "晶石蜗（星彩榴石的样子）",
@@ -1972,7 +1992,7 @@ export const petDetail = {
       },
       "trait": "偏振 受到自己携带技能系别的攻击伤害-40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200074.png"
     },
     {
       "page_title": "晶石蜗（火山琉璃的样子）",
@@ -1992,7 +2012,7 @@ export const petDetail = {
       },
       "trait": "偏振 受到自己携带技能系别的攻击伤害-40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200074.png"
     },
     {
       "page_title": "晶石蜗（蓝锥矿的样子）",
@@ -2012,7 +2032,7 @@ export const petDetail = {
       },
       "trait": "偏振 受到自己携带技能系别的攻击伤害-40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200074.png"
     },
     {
       "page_title": "晶石蜗（烧蓝黄金的样子）",
@@ -2032,7 +2052,7 @@ export const petDetail = {
       },
       "trait": "偏振 受到自己携带技能系别的攻击伤害-40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200074.png"
     },
     {
       "page_title": "钻石蜗（首领形态）",
@@ -2052,7 +2072,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "钻石蜗（西瓜碧玺的样子）",
@@ -2072,7 +2092,7 @@ export const petDetail = {
       },
       "trait": "完全偏振 抵抗自己携带技能系别的攻击伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280010.png"
     },
     {
       "page_title": "钻石蜗（莲花刚玉的样子）",
@@ -2092,7 +2112,7 @@ export const petDetail = {
       },
       "trait": "完全偏振 抵抗自己携带技能系别的攻击伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280010.png"
     },
     {
       "page_title": "钻石蜗（星彩榴石的样子）",
@@ -2112,7 +2132,7 @@ export const petDetail = {
       },
       "trait": "完全偏振 抵抗自己携带技能系别的攻击伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280010.png"
     },
     {
       "page_title": "钻石蜗（火山琉璃的样子）",
@@ -2132,7 +2152,7 @@ export const petDetail = {
       },
       "trait": "完全偏振 抵抗自己携带技能系别的攻击伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280010.png"
     },
     {
       "page_title": "钻石蜗（蓝锥矿的样子）",
@@ -2152,7 +2172,7 @@ export const petDetail = {
       },
       "trait": "完全偏振 抵抗自己携带技能系别的攻击伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280010.png"
     },
     {
       "page_title": "钻石蜗（烧蓝黄金的样子）",
@@ -2172,7 +2192,7 @@ export const petDetail = {
       },
       "trait": "完全偏振 抵抗自己携带技能系别的攻击伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/040.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280010.png"
     }
   ],
   "41": [
@@ -2193,7 +2213,7 @@ export const petDetail = {
       },
       "trait": "养分重吸收 回合结束时，回复3能量。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3029/shiny.png",
-      "traitImg": "/static/static-web/traits/041.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200080.png"
     }
   ],
   "42": [
@@ -2214,7 +2234,7 @@ export const petDetail = {
       },
       "trait": "养分重吸收 回合结束时，回复3能量。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3030/shiny.png",
-      "traitImg": "/static/static-web/traits/042.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200080.png"
     }
   ],
   "43": [
@@ -2235,7 +2255,7 @@ export const petDetail = {
       },
       "trait": "养分重吸收 回合结束时，回复3能量。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3031/shiny.png",
-      "traitImg": "/static/static-web/traits/043.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200080.png"
     },
     {
       "page_title": "奇丽果（首领形态）",
@@ -2254,7 +2274,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4022/shiny.png",
-      "traitImg": "/static/static-web/traits/043.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "奇丽果",
@@ -2273,7 +2293,7 @@ export const petDetail = {
       },
       "trait": "养分内循环 回合结束时，回复6能量。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5005/shiny.png",
-      "traitImg": "/static/static-web/traits/043.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280013.png"
     }
   ],
   "44": [
@@ -2294,7 +2314,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/044.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     },
     {
       "page_title": "丢丢（沙地附近的样子）",
@@ -2314,7 +2334,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/044.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     },
     {
       "page_title": "丢丢（雪山附近的样子）",
@@ -2334,7 +2354,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/044.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     },
     {
       "page_title": "丢丢（火山附近的样子）",
@@ -2354,7 +2374,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/044.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     }
   ],
   "45": [
@@ -2375,7 +2395,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/045.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     },
     {
       "page_title": "卡卡虫（沙地附近的样子）",
@@ -2395,7 +2415,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/045.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     },
     {
       "page_title": "卡卡虫（雪山附近的样子）",
@@ -2415,7 +2435,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/045.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     },
     {
       "page_title": "卡卡虫（火山附近的样子）",
@@ -2435,7 +2455,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/045.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     }
   ],
   "46": [
@@ -2456,7 +2476,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/046.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     },
     {
       "page_title": "卡瓦重（沙地附近的样子）",
@@ -2476,7 +2496,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/046.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     },
     {
       "page_title": "卡瓦重（雪山附近的样子）",
@@ -2496,7 +2516,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/046.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     },
     {
       "page_title": "卡瓦重（火山附近的样子）",
@@ -2516,7 +2536,7 @@ export const petDetail = {
       },
       "trait": "诈死 自己力竭时，少损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/046.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200081.png"
     }
   ],
   "47": [
@@ -2537,7 +2557,7 @@ export const petDetail = {
       },
       "trait": "专注力 入场首回合，获得物攻+100%。",
       "yiseImg": "/cdn-assets/static-web/pets/047_护主犬_异色.webp",
-      "traitImg": "/static/static-web/traits/047.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200149.png"
     }
   ],
   "48": [
@@ -2558,7 +2578,7 @@ export const petDetail = {
       },
       "trait": "专注力 入场首回合，获得物攻+100%。",
       "yiseImg": "/cdn-assets/static-web/pets/048_音速犬_异色.webp",
-      "traitImg": "/static/static-web/traits/048.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200149.png"
     },
     {
       "page_title": "风暴战犬（首领形态）",
@@ -2577,7 +2597,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/048.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "风暴战犬",
@@ -2596,7 +2616,7 @@ export const petDetail = {
       },
       "trait": "全神贯注 入场时，获得物攻+100%，每次行动后-20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/048.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280014.png"
     }
   ],
   "49": [
@@ -2617,7 +2637,7 @@ export const petDetail = {
       },
       "trait": "囤积 每有1能量，获得双防+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/049.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200091.png"
     }
   ],
   "50": [
@@ -2638,7 +2658,7 @@ export const petDetail = {
       },
       "trait": "囤积 每有1能量，获得双防+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/050.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200091.png"
     }
   ],
   "51": [
@@ -2659,7 +2679,7 @@ export const petDetail = {
       },
       "trait": "囤积 每有1能量，获得双防+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/051.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200091.png"
     }
   ],
   "52": [
@@ -2680,7 +2700,7 @@ export const petDetail = {
       },
       "trait": "复方汤剂 在场时，双方回合结束时的中毒效果会额外触发1次。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3367/shiny.png",
-      "traitImg": "/static/static-web/traits/052.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200186.png"
     }
   ],
   "53": [
@@ -2701,7 +2721,7 @@ export const petDetail = {
       },
       "trait": "复方汤剂 在场时，双方回合结束时的中毒效果会额外触发1次。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3368/shiny.png",
-      "traitImg": "/static/static-web/traits/053.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200186.png"
     }
   ],
   "54": [
@@ -2722,7 +2742,7 @@ export const petDetail = {
       },
       "trait": "惊吓 能量等于0的精灵，无法对自己造成伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/054.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200157.png"
     }
   ],
   "55": [
@@ -2743,7 +2763,7 @@ export const petDetail = {
       },
       "trait": "惊吓 能量等于0的精灵，无法对自己造成伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/055.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200157.png"
     },
     {
       "page_title": "暗影灵面（闭眼的样子）",
@@ -2762,7 +2782,7 @@ export const petDetail = {
       },
       "trait": "惊吓 能量等于0的精灵，无法对自己造成伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/055.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200157.png"
     }
   ],
   "56": [
@@ -2783,7 +2803,7 @@ export const petDetail = {
       },
       "trait": "惊吓 能量等于0的精灵，无法对自己造成伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/056.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200157.png"
     },
     {
       "page_title": "幽冥眼（闭眼的样子）",
@@ -2802,7 +2822,7 @@ export const petDetail = {
       },
       "trait": "惊吓 能量等于0的精灵，无法对自己造成伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/056.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200157.png"
     }
   ],
   "57": [
@@ -2823,7 +2843,7 @@ export const petDetail = {
       },
       "trait": "做噩梦 敌方精灵离场后，更换入场的精灵失去3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/057.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200161.png"
     },
     {
       "page_title": "梦游（穿星星睡衣的样子）",
@@ -2843,7 +2863,7 @@ export const petDetail = {
       },
       "trait": "做噩梦 敌方精灵离场后，更换入场的精灵失去3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/057.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200161.png"
     }
   ],
   "58": [
@@ -2864,7 +2884,7 @@ export const petDetail = {
       },
       "trait": "做噩梦 敌方精灵离场后，更换入场的精灵失去3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/058.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200161.png"
     },
     {
       "page_title": "梦悠悠（穿星星睡衣的样子）",
@@ -2884,7 +2904,7 @@ export const petDetail = {
       },
       "trait": "做噩梦 敌方精灵离场后，更换入场的精灵失去3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/058.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200161.png"
     }
   ],
   "59": [
@@ -2906,7 +2926,7 @@ export const petDetail = {
       },
       "trait": "稀兽花宝 根据自己的血脉，入场时获得不同效果。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/059.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200220.png"
     }
   ],
   "60": [
@@ -2927,7 +2947,7 @@ export const petDetail = {
       },
       "trait": "壮胆 队伍存在虫系精灵，自己获得双攻+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/060.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200090.png"
     }
   ],
   "61": [
@@ -2948,7 +2968,7 @@ export const petDetail = {
       },
       "trait": "壮胆 队伍存在虫系精灵，自己获得双攻+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/061.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200090.png"
     }
   ],
   "62": [
@@ -2969,7 +2989,7 @@ export const petDetail = {
       },
       "trait": "壮胆 队伍存在虫系精灵，自己获得双攻+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/062.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200090.png"
     }
   ],
   "63": [
@@ -2991,7 +3011,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/063.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     },
     {
       "page_title": "蹦蹦种子（彩玉球形态）",
@@ -3011,7 +3031,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/063.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     },
     {
       "page_title": "蹦蹦种子（短毛球形态）",
@@ -3031,7 +3051,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/063.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     },
     {
       "page_title": "蹦蹦种子（象牙球形态）",
@@ -3051,7 +3071,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/063.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     }
   ],
   "64": [
@@ -3073,7 +3093,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/064.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     },
     {
       "page_title": "蹦蹦草（彩玉球形态）",
@@ -3093,7 +3113,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/064.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     },
     {
       "page_title": "蹦蹦草（短毛球形态）",
@@ -3113,7 +3133,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/064.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     },
     {
       "page_title": "蹦蹦草（象牙球形态）",
@@ -3133,7 +3153,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/064.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     }
   ],
   "65": [
@@ -3155,7 +3175,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/065.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     },
     {
       "page_title": "蹦蹦花（彩玉球形态）",
@@ -3175,7 +3195,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/065.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     },
     {
       "page_title": "蹦蹦花（短毛球形态）",
@@ -3195,7 +3215,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/065.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     },
     {
       "page_title": "蹦蹦花（象牙球形态）",
@@ -3215,7 +3235,7 @@ export const petDetail = {
       },
       "trait": "生物碱 使用草系技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/065.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200078.png"
     },
     {
       "page_title": "蹦蹦果（首领形态）",
@@ -3235,7 +3255,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/065.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "蹦蹦果（海神球形态）",
@@ -3255,7 +3275,7 @@ export const petDetail = {
       },
       "trait": "高浓生物碱 使用技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/065.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280008.png"
     },
     {
       "page_title": "蹦蹦果（彩玉球形态）",
@@ -3275,7 +3295,7 @@ export const petDetail = {
       },
       "trait": "高浓生物碱 使用技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/065.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280008.png"
     },
     {
       "page_title": "蹦蹦果（短毛球形态）",
@@ -3295,7 +3315,7 @@ export const petDetail = {
       },
       "trait": "高浓生物碱 使用技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/065.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280008.png"
     },
     {
       "page_title": "蹦蹦果（象牙球形态）",
@@ -3315,7 +3335,7 @@ export const petDetail = {
       },
       "trait": "高浓生物碱 使用技能时，敌方获得2层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/065.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280008.png"
     }
   ],
   "66": [
@@ -3336,7 +3356,7 @@ export const petDetail = {
       },
       "trait": "快充 离场时回复10能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/066.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200163.png"
     }
   ],
   "67": [
@@ -3357,7 +3377,7 @@ export const petDetail = {
       },
       "trait": "快充 离场时回复10能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/067.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200163.png"
     }
   ],
   "68": [
@@ -3378,7 +3398,7 @@ export const petDetail = {
       },
       "trait": "快充 离场时回复10能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/068.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200163.png"
     }
   ],
   "69": [
@@ -3400,7 +3420,7 @@ export const petDetail = {
       },
       "trait": "勇敢 携带的能耗大于3的技能，威力+40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/069.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200077.png"
     }
   ],
   "70": [
@@ -3422,7 +3442,7 @@ export const petDetail = {
       },
       "trait": "勇敢 携带的能耗大于3的技能，威力+40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/070.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200077.png"
     }
   ],
   "71": [
@@ -3443,7 +3463,7 @@ export const petDetail = {
       },
       "trait": "腐植循环 每回复1能量，同时回复5%生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3043/shiny.png",
-      "traitImg": "/static/static-web/traits/071.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200083.png"
     }
   ],
   "72": [
@@ -3464,7 +3484,7 @@ export const petDetail = {
       },
       "trait": "腐植循环 每回复1能量，同时回复5%生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3044/shiny.png",
-      "traitImg": "/static/static-web/traits/072.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200083.png"
     }
   ],
   "73": [
@@ -3485,7 +3505,7 @@ export const petDetail = {
       },
       "trait": "慢热型 初始能量为0，入场前己方精灵每成功应对1次，回复5能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/073.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200177.png"
     }
   ],
   "74": [
@@ -3507,7 +3527,7 @@ export const petDetail = {
       },
       "trait": "慢热型 初始能量为0，入场前己方精灵每成功应对1次，回复5能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/074.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200177.png"
     }
   ],
   "75": [
@@ -3529,7 +3549,7 @@ export const petDetail = {
       },
       "trait": "慢热型 初始能量为0，入场前己方精灵每成功应对1次，回复5能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/075.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200177.png"
     }
   ],
   "76": [
@@ -3551,7 +3571,7 @@ export const petDetail = {
       },
       "trait": "溶解扩散 每携带1个毒系技能进入战斗，水系技能使敌方获得1层中毒。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3330/shiny.png",
-      "traitImg": "/static/static-web/traits/076.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200111.png"
     },
     {
       "page_title": "海盔虫（磨损的样子）",
@@ -3571,7 +3591,7 @@ export const petDetail = {
       },
       "trait": "溶解扩散 每携带1个毒系技能进入战斗，水系技能使敌方获得1层中毒。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3475/shiny.png",
-      "traitImg": "/static/static-web/traits/076.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200111.png"
     }
   ],
   "77": [
@@ -3593,7 +3613,7 @@ export const petDetail = {
       },
       "trait": "溶解扩散 每携带1个毒系技能进入战斗，水系技能使敌方获得1层中毒。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3331/shiny.png",
-      "traitImg": "/static/static-web/traits/077.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200111.png"
     },
     {
       "page_title": "刺盔虫（磨损的样子）",
@@ -3613,7 +3633,7 @@ export const petDetail = {
       },
       "trait": "溶解扩散 每携带1个毒系技能进入战斗，水系技能使敌方获得1层中毒。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3476/shiny.png",
-      "traitImg": "/static/static-web/traits/077.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200111.png"
     }
   ],
   "78": [
@@ -3635,7 +3655,7 @@ export const petDetail = {
       },
       "trait": "溶解扩散 每携带1个毒系技能进入战斗，水系技能使敌方获得1层中毒。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3332/shiny.png",
-      "traitImg": "/static/static-web/traits/078.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200111.png"
     },
     {
       "page_title": "千棘盔（磨损的样子）",
@@ -3655,7 +3675,7 @@ export const petDetail = {
       },
       "trait": "溶解扩散 每携带1个毒系技能进入战斗，水系技能使敌方获得1层中毒。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3477/shiny.png",
-      "traitImg": "/static/static-web/traits/078.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200111.png"
     },
     {
       "page_title": "千棘海针（首领形态）",
@@ -3675,7 +3695,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4020/shiny.png",
-      "traitImg": "/static/static-web/traits/078.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "千棘海针",
@@ -3695,7 +3715,7 @@ export const petDetail = {
       },
       "trait": "溶解腐蚀 每携带1个毒系技能进入战斗，水系技能使敌方获得2层中毒。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5012/shiny.png",
-      "traitImg": "/static/static-web/traits/078.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280022.png"
     },
     {
       "page_title": "千棘海针（磨损的样子）",
@@ -3715,7 +3735,7 @@ export const petDetail = {
       },
       "trait": "溶解腐蚀 每携带1个毒系技能进入战斗，水系技能使敌方获得2层中毒。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5029/shiny.png",
-      "traitImg": "/static/static-web/traits/078.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280022.png"
     }
   ],
   "79": [
@@ -3736,7 +3756,7 @@ export const petDetail = {
       },
       "trait": "无忧无虑 可获得的萌化层数不受限制。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3227/shiny.png",
-      "traitImg": "/static/static-web/traits/079.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200182.png"
     }
   ],
   "80": [
@@ -3757,7 +3777,7 @@ export const petDetail = {
       },
       "trait": "电流刺激 携带的攻击技能获得迸发：威力+40。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/080.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200164.png"
     },
     {
       "page_title": "小星光（月光能量的样子）",
@@ -3777,7 +3797,7 @@ export const petDetail = {
       },
       "trait": "电流刺激 携带的攻击技能获得迸发：威力+40。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/080.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200164.png"
     }
   ],
   "81": [
@@ -3798,7 +3818,7 @@ export const petDetail = {
       },
       "trait": "电流刺激 携带的攻击技能获得迸发：威力+40。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/081.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200164.png"
     },
     {
       "page_title": "星光狮（月光能量的样子）",
@@ -3818,7 +3838,7 @@ export const petDetail = {
       },
       "trait": "电流刺激 携带的攻击技能获得迸发：威力+40。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/081.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200164.png"
     }
   ],
   "82": [
@@ -3840,7 +3860,7 @@ export const petDetail = {
       },
       "trait": "虫群鼓舞 队伍中每有1只其他的虫系精灵，自己入场时获得攻防速+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/082.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200132.png"
     }
   ],
   "83": [
@@ -3862,7 +3882,7 @@ export const petDetail = {
       },
       "trait": "虫群鼓舞 队伍中每有1只其他的虫系精灵，自己入场时获得攻防速+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/083.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200132.png"
     }
   ],
   "84": [
@@ -3884,7 +3904,7 @@ export const petDetail = {
       },
       "trait": "虫群鼓舞 队伍中每有1只其他的虫系精灵，自己入场时获得攻防速+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/084.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200132.png"
     },
     {
       "page_title": "女王蜂（首领形态）",
@@ -3904,7 +3924,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/084.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "女王蜂",
@@ -3924,7 +3944,7 @@ export const petDetail = {
       },
       "trait": "虫群突袭 队伍中每有1只其他的虫系精灵，自己入场时获得攻防速+15%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/084.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280006.png"
     }
   ],
   "85": [
@@ -3945,7 +3965,7 @@ export const petDetail = {
       },
       "trait": "嫁祸 自己每失去25%生命，连击数+2。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3142/shiny.png",
-      "traitImg": "/static/static-web/traits/085.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200143.png"
     }
   ],
   "86": [
@@ -3966,7 +3986,7 @@ export const petDetail = {
       },
       "trait": "嫁祸 自己每失去25%生命，连击数+2。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3143/shiny.png",
-      "traitImg": "/static/static-web/traits/086.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200143.png"
     }
   ],
   "87": [
@@ -3987,7 +4007,7 @@ export const petDetail = {
       },
       "trait": "嫁祸 自己每失去25%生命，连击数+2。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3144/shiny.png",
-      "traitImg": "/static/static-web/traits/087.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200143.png"
     }
   ],
   "88": [
@@ -4009,7 +4029,7 @@ export const petDetail = {
       },
       "trait": "洁癖 离场后，自己的增益和减益会被更换入场的精灵继承。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/088.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200126.png"
     }
   ],
   "89": [
@@ -4031,7 +4051,7 @@ export const petDetail = {
       },
       "trait": "洁癖 离场后，自己的增益和减益会被更换入场的精灵继承。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/089.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200126.png"
     }
   ],
   "90": [
@@ -4053,7 +4073,7 @@ export const petDetail = {
       },
       "trait": "洁癖 离场后，自己的增益和减益会被更换入场的精灵继承。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/090.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200126.png"
     }
   ],
   "91": [
@@ -4075,7 +4095,7 @@ export const petDetail = {
       },
       "trait": "孤傲 敌方精灵离场后，其增益和减益会被更换入场的精灵继承。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/091.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200231.png"
     }
   ],
   "92": [
@@ -4097,7 +4117,7 @@ export const petDetail = {
       },
       "trait": "快锤 携带的能耗小于3的技能，获得迅捷。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/092.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200129.png"
     }
   ],
   "93": [
@@ -4119,7 +4139,7 @@ export const petDetail = {
       },
       "trait": "木桶戏法 离场后，更换入场的精灵以木桶状态登场。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/093.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200082.png"
     }
   ],
   "94": [
@@ -4141,7 +4161,7 @@ export const petDetail = {
       },
       "trait": "木桶戏法 离场后，更换入场的精灵以木桶状态登场。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/094.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200082.png"
     }
   ],
   "95": [
@@ -4162,7 +4182,7 @@ export const petDetail = {
       },
       "trait": "不移 携带的无额外效果的攻击技能，威力+30%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/095.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200099.png"
     }
   ],
   "96": [
@@ -4184,7 +4204,7 @@ export const petDetail = {
       },
       "trait": "咔咔冲刺 若先于敌方行动，行动后获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/096.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200125.png"
     }
   ],
   "97": [
@@ -4206,7 +4226,7 @@ export const petDetail = {
       },
       "trait": "咔咔冲刺 若先于敌方行动，行动后获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/097.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200125.png"
     }
   ],
   "98": [
@@ -4228,7 +4248,7 @@ export const petDetail = {
       },
       "trait": "咔咔冲刺 若先于敌方行动，行动后获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/098.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200125.png"
     }
   ],
   "99": [
@@ -4250,7 +4270,7 @@ export const petDetail = {
       },
       "trait": "花精灵 回合结束时，己方队伍获得1次随机奉献。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3139/shiny.png",
-      "traitImg": "/static/static-web/traits/099.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200136.png"
     }
   ],
   "100": [
@@ -4272,7 +4292,7 @@ export const petDetail = {
       },
       "trait": "花精灵 回合结束时，己方队伍获得1次随机奉献。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3140/shiny.png",
-      "traitImg": "/static/static-web/traits/100.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200136.png"
     }
   ],
   "101": [
@@ -4294,7 +4314,7 @@ export const petDetail = {
       },
       "trait": "花精灵 回合结束时，己方队伍获得1次随机奉献。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3141/shiny.png",
-      "traitImg": "/static/static-web/traits/101.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200136.png"
     }
   ],
   "102": [
@@ -4316,7 +4336,7 @@ export const petDetail = {
       },
       "trait": "自由飘 自己每有1层萌化，获得连击数+3。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/102.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200183.png"
     }
   ],
   "103": [
@@ -4338,7 +4358,7 @@ export const petDetail = {
       },
       "trait": "自由飘 自己每有1层萌化，获得连击数+3。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/103.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200183.png"
     }
   ],
   "104": [
@@ -4360,7 +4380,7 @@ export const petDetail = {
       },
       "trait": "自由飘 自己每有1层萌化，获得连击数+3。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/104.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200183.png"
     }
   ],
   "105": [
@@ -4381,7 +4401,7 @@ export const petDetail = {
       },
       "trait": "石头大餐 能量不足时，消耗5%生命，代替1能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/105.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200100.png"
     }
   ],
   "106": [
@@ -4402,7 +4422,7 @@ export const petDetail = {
       },
       "trait": "石头大餐 能量不足时，消耗5%生命，代替1能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/106.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200100.png"
     }
   ],
   "107": [
@@ -4424,7 +4444,7 @@ export const petDetail = {
       },
       "trait": "石头大餐 能量不足时，消耗5%生命，代替1能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/107.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200100.png"
     },
     {
       "page_title": "深渊罗隐",
@@ -4444,7 +4464,7 @@ export const petDetail = {
       },
       "trait": "盛宴 能量不足时，消耗5%最大生命，代替1能量。生命低于50%时，获得吸血100%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/107.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280030.png"
     }
   ],
   "108": [
@@ -4466,7 +4486,7 @@ export const petDetail = {
       },
       "trait": "水翼推进 己方精灵每使用1次水系技能，自己入场时获得全技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/108.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200110.png"
     }
   ],
   "109": [
@@ -4488,7 +4508,7 @@ export const petDetail = {
       },
       "trait": "水翼推进 己方精灵每使用1次水系技能，自己入场时获得全技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/109.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200110.png"
     }
   ],
   "110": [
@@ -4510,7 +4530,7 @@ export const petDetail = {
       },
       "trait": "水翼推进 己方精灵每使用1次水系技能，自己入场时获得全技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/110.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200110.png"
     },
     {
       "page_title": "神谕鲨（首领形态）",
@@ -4530,7 +4550,7 @@ export const petDetail = {
       },
       "trait": "水翼推进 己方精灵每使用1次水系技能，自己入场时获得全技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/110.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200110.png"
     },
     {
       "page_title": "神谕鲨",
@@ -4550,7 +4570,7 @@ export const petDetail = {
       },
       "trait": "水翼飞升 己方精灵每使用1次水系技能，自己入场时获得全技能能耗-1，且能耗为0的技能威力+30%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/110.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280005.png"
     }
   ],
   "111": [
@@ -4571,7 +4591,7 @@ export const petDetail = {
       },
       "trait": "石天平 若使用技能能耗高于敌方，回合结束敌方失去能耗之差的能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/111.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200104.png"
     }
   ],
   "112": [
@@ -4593,7 +4613,7 @@ export const petDetail = {
       },
       "trait": "石天平 若使用技能能耗高于敌方，回合结束敌方失去能耗之差的能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/112.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200104.png"
     }
   ],
   "113": [
@@ -4615,7 +4635,7 @@ export const petDetail = {
       },
       "trait": "观星 敌方每有1层星陨印记，自己的地系技能威力+20%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200106.png"
     }
   ],
   "114": [
@@ -4637,7 +4657,7 @@ export const petDetail = {
       },
       "trait": "观星 敌方每有1层星陨印记，自己的地系技能威力+20%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200106.png"
     }
   ],
   "115": [
@@ -4659,7 +4679,7 @@ export const petDetail = {
       },
       "trait": "观星 敌方每有1层星陨印记，自己的地系技能威力+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/115.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200106.png"
     },
     {
       "page_title": "祭礼巨像（首领形态）",
@@ -4679,7 +4699,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/115.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "祭礼巨像",
@@ -4699,7 +4719,7 @@ export const petDetail = {
       },
       "trait": "坠星 敌方每有1层星陨印记，自己的技能威力+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/115.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280011.png"
     }
   ],
   "116": [
@@ -4720,7 +4740,7 @@ export const petDetail = {
       },
       "trait": "目空 携带的非光系技能，威力+25%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3062/shiny.png",
-      "traitImg": "/static/static-web/traits/116.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200075.png"
     }
   ],
   "117": [
@@ -4741,7 +4761,7 @@ export const petDetail = {
       },
       "trait": "目空 携带的非光系技能，威力+25%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3063/shiny.png",
-      "traitImg": "/static/static-web/traits/117.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200075.png"
     },
     {
       "page_title": "彩虹独角兽",
@@ -4760,7 +4780,7 @@ export const petDetail = {
       },
       "trait": "夺目 额外获得三个未携带的随机技能，且非光系技能威力+25%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5002/shiny.png",
-      "traitImg": "/static/static-web/traits/117.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280009.png"
     }
   ],
   "118": [
@@ -4782,7 +4802,7 @@ export const petDetail = {
       },
       "trait": "共鸣 携带的「虫鸣」技能威力+20。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/118.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200098.png"
     },
     {
       "page_title": "旋叶虫（枯叶的样子）",
@@ -4802,7 +4822,7 @@ export const petDetail = {
       },
       "trait": "共鸣 携带的「虫鸣」技能威力+20。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/118.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200098.png"
     }
   ],
   "119": [
@@ -4824,7 +4844,7 @@ export const petDetail = {
       },
       "trait": "共鸣 携带的「虫鸣」技能威力+20。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/119.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200098.png"
     },
     {
       "page_title": "蓬叶虫（枯叶的样子）",
@@ -4844,7 +4864,7 @@ export const petDetail = {
       },
       "trait": "共鸣 携带的「虫鸣」技能威力+20。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/119.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200098.png"
     }
   ],
   "120": [
@@ -4866,7 +4886,7 @@ export const petDetail = {
       },
       "trait": "共鸣 携带的「虫鸣」技能威力+20。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/120.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200098.png"
     },
     {
       "page_title": "风滚暮虫（枯叶的样子）",
@@ -4886,7 +4906,7 @@ export const petDetail = {
       },
       "trait": "共鸣 携带的「虫鸣」技能威力+20。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/120.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200098.png"
     },
     {
       "page_title": "暮风隐者（首领形态）",
@@ -4906,7 +4926,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/120.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "暮风隐者（金黄的样子）",
@@ -4926,7 +4946,7 @@ export const petDetail = {
       },
       "trait": "齐鸣 自己携带的「虫鸣」技能威力+20，己方精灵携带的虫系技能获得巧变：虫鸣。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/120.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280034.png"
     },
     {
       "page_title": "暮风隐者（枯叶的样子）",
@@ -4946,7 +4966,7 @@ export const petDetail = {
       },
       "trait": "齐鸣 自己携带的「虫鸣」技能威力+20，己方精灵携带的虫系技能获得巧变：虫鸣。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/120.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280034.png"
     }
   ],
   "121": [
@@ -4967,7 +4987,7 @@ export const petDetail = {
       },
       "trait": "预警 若敌方技能足够击败自己，回合开始时自己获得速度+50。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/121.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200222.png"
     }
   ],
   "122": [
@@ -4988,7 +5008,7 @@ export const petDetail = {
       },
       "trait": "预警 若敌方技能足够击败自己，回合开始时自己获得速度+50。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/122.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200222.png"
     },
     {
       "page_title": "黑猫密探（首领形态）",
@@ -5007,7 +5027,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/122.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "黑猫密探",
@@ -5026,7 +5046,7 @@ export const petDetail = {
       },
       "trait": "先知 若敌方技能足够击败自己，回合开始时自己获得速度+50，双攻+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/122.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280021.png"
     }
   ],
   "123": [
@@ -5048,7 +5068,7 @@ export const petDetail = {
       },
       "trait": "下黑手 敌方精灵离场后，更换入场的精灵获得5层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/123.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200156.png"
     }
   ],
   "124": [
@@ -5070,7 +5090,7 @@ export const petDetail = {
       },
       "trait": "下黑手 敌方精灵离场后，更换入场的精灵获得5层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/124.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200156.png"
     }
   ],
   "125": [
@@ -5092,7 +5112,7 @@ export const petDetail = {
       },
       "trait": "毒牙 使敌方获得中毒时，也会使其获得物攻-40%和速度-40。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/125.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200185.png"
     }
   ],
   "126": [
@@ -5114,7 +5134,7 @@ export const petDetail = {
       },
       "trait": "毒牙 使敌方获得中毒时，也会使其获得物攻-40%和速度-40。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/126.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200185.png"
     }
   ],
   "127": [
@@ -5136,7 +5156,7 @@ export const petDetail = {
       },
       "trait": "毒牙 使敌方获得中毒时，也会使其获得物攻-40%和速度-40。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/127.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200185.png"
     }
   ],
   "128": [
@@ -5157,7 +5177,7 @@ export const petDetail = {
       },
       "trait": "吸积盘 回合结束时，敌方获得2层星陨印记。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/128.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200189.png"
     }
   ],
   "129": [
@@ -5178,7 +5198,7 @@ export const petDetail = {
       },
       "trait": "吸积盘 回合结束时，敌方获得2层星陨印记。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/129.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200189.png"
     }
   ],
   "130": [
@@ -5199,7 +5219,7 @@ export const petDetail = {
       },
       "trait": "吸积盘 回合结束时，敌方获得2层星陨印记。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/130.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200189.png"
     }
   ],
   "131": [
@@ -5220,7 +5240,7 @@ export const petDetail = {
       },
       "trait": "悲悯 己方队伍中每有1只力竭的精灵，自己获得双攻+30%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3011/shiny.png",
-      "traitImg": "/static/static-web/traits/131.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200140.png"
     },
     {
       "page_title": "恶魔狼王（首领形态）",
@@ -5239,7 +5259,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4011/shiny.png",
-      "traitImg": "/static/static-web/traits/131.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "恶魔狼王",
@@ -5258,7 +5278,7 @@ export const petDetail = {
       },
       "trait": "悼亡 双方队伍中每有1只力竭的精灵，自己获得双攻+30%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5016/shiny.png",
-      "traitImg": "/static/static-web/traits/131.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280024.png"
     }
   ],
   "132": [
@@ -5280,7 +5300,7 @@ export const petDetail = {
       },
       "trait": "超负荷 攻击技能获得迸发：敌方获得全技能能耗+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/132.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200278.png"
     }
   ],
   "133": [
@@ -5302,7 +5322,7 @@ export const petDetail = {
       },
       "trait": "超负荷 攻击技能获得迸发：敌方获得全技能能耗+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/133.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200278.png"
     }
   ],
   "134": [
@@ -5323,7 +5343,7 @@ export const petDetail = {
       },
       "trait": "结晶水 初始能量为0，入场前己方精灵每放1次冰系技能，回复3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/134.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200118.png"
     }
   ],
   "135": [
@@ -5344,7 +5364,7 @@ export const petDetail = {
       },
       "trait": "结晶水 初始能量为0，入场前己方精灵每放1次冰系技能，回复3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/135.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200118.png"
     }
   ],
   "136": [
@@ -5365,7 +5385,7 @@ export const petDetail = {
       },
       "trait": "结晶水 初始能量为0，入场前己方精灵每放1次冰系技能，回复3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/136.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200118.png"
     }
   ],
   "137": [
@@ -5387,7 +5407,7 @@ export const petDetail = {
       },
       "trait": "冻土 每携带1个冰系技能进入战斗，地系技能威力+10%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3262/shiny.png",
-      "traitImg": "/static/static-web/traits/137.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200120.png"
     }
   ],
   "138": [
@@ -5409,7 +5429,7 @@ export const petDetail = {
       },
       "trait": "冻土 每携带1个冰系技能进入战斗，地系技能威力+10%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3263/shiny.png",
-      "traitImg": "/static/static-web/traits/138.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200120.png"
     }
   ],
   "139": [
@@ -5430,7 +5450,7 @@ export const petDetail = {
       },
       "trait": "冰封 在场时，敌方全技能能耗+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/139.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200123.png"
     }
   ],
   "140": [
@@ -5451,7 +5471,7 @@ export const petDetail = {
       },
       "trait": "冰封 在场时，敌方全技能能耗+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/140.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200123.png"
     }
   ],
   "141": [
@@ -5472,7 +5492,7 @@ export const petDetail = {
       },
       "trait": "冰封 在场时，敌方全技能能耗+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/141.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200123.png"
     }
   ],
   "142": [
@@ -5494,7 +5514,7 @@ export const petDetail = {
       },
       "trait": "捉迷藏 使敌方获得冻结时，也会使其获得全技能能耗+1。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3121/shiny.png",
-      "traitImg": "/static/static-web/traits/142.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200116.png"
     }
   ],
   "143": [
@@ -5516,7 +5536,7 @@ export const petDetail = {
       },
       "trait": "捉迷藏 使敌方获得冻结时，也会使其获得全技能能耗+1。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3122/shiny.png",
-      "traitImg": "/static/static-web/traits/143.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200116.png"
     }
   ],
   "144": [
@@ -5538,7 +5558,7 @@ export const petDetail = {
       },
       "trait": "捉迷藏 使敌方获得冻结时，也会使其获得全技能能耗+1。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3123/shiny.png",
-      "traitImg": "/static/static-web/traits/144.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200116.png"
     },
     {
       "page_title": "雪影冰灵（首领形态）",
@@ -5558,7 +5578,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4085/shiny.png",
-      "traitImg": "/static/static-web/traits/144.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "雪影冰灵",
@@ -5578,7 +5598,7 @@ export const petDetail = {
       },
       "trait": "抓到你了 自己入场时敌方获得2层冻结，使敌方获得冻结时，也会使其获得全技能能耗+1。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5013/shiny.png",
-      "traitImg": "/static/static-web/traits/144.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280012.png"
     }
   ],
   "145": [
@@ -5599,7 +5619,7 @@ export const petDetail = {
       },
       "trait": "机械变式 若回合内自己携带的技能位置发生变化，该技能能耗永久-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/145.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200197.png"
     }
   ],
   "146": [
@@ -5620,7 +5640,7 @@ export const petDetail = {
       },
       "trait": "机械变式 若回合内自己携带的技能位置发生变化，该技能能耗永久-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/146.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200197.png"
     }
   ],
   "147": [
@@ -5642,7 +5662,7 @@ export const petDetail = {
       },
       "trait": "灵魂灼伤 冰系技能使敌方获得4层灼烧，火系技能使敌方获得2层冻结。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3075/shiny.png",
-      "traitImg": "/static/static-web/traits/147.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200150.png"
     }
   ],
   "148": [
@@ -5664,7 +5684,7 @@ export const petDetail = {
       },
       "trait": "灵魂灼伤 冰系技能使敌方获得4层灼烧，火系技能使敌方获得2层冻结。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3076/shiny.png",
-      "traitImg": "/static/static-web/traits/148.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200150.png"
     }
   ],
   "149": [
@@ -5686,7 +5706,7 @@ export const petDetail = {
       },
       "trait": "灵魂灼伤 冰系技能使敌方获得4层灼烧，火系技能使敌方获得2层冻结。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3077/shiny.png",
-      "traitImg": "/static/static-web/traits/149.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200150.png"
     }
   ],
   "150": [
@@ -5707,7 +5727,7 @@ export const petDetail = {
       },
       "trait": "飓风 对本精灵的技能，若其他翼系精灵携带相同技能，则获得迅捷。被敌方精灵击败时，自己额外损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/150.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200211.png"
     }
   ],
   "151": [
@@ -5728,7 +5748,7 @@ export const petDetail = {
       },
       "trait": "飓风 对本精灵的技能，若其他翼系精灵携带相同技能，则获得迅捷。被敌方精灵击败时，自己额外损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/151.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200211.png"
     }
   ],
   "152": [
@@ -5749,7 +5769,7 @@ export const petDetail = {
       },
       "trait": "飓风 对本精灵的技能，若其他翼系精灵携带相同技能，则获得迅捷。被敌方精灵击败时，自己额外损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/152.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200211.png"
     }
   ],
   "153": [
@@ -5771,7 +5791,7 @@ export const petDetail = {
       },
       "trait": "野性感官 应对成功后，下次行动先手+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/153.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200249.png"
     }
   ],
   "154": [
@@ -5793,7 +5813,7 @@ export const petDetail = {
       },
       "trait": "野性感官 应对成功后，下次行动先手+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/154.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200249.png"
     }
   ],
   "155": [
@@ -5815,7 +5835,7 @@ export const petDetail = {
       },
       "trait": "野性感官 应对成功后，下次行动先手+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/155.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200249.png"
     }
   ],
   "156": [
@@ -5837,7 +5857,7 @@ export const petDetail = {
       },
       "trait": "圣火骑士 应对成功后，下次攻击威力翻倍。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/156.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200247.png"
     }
   ],
   "157": [
@@ -5859,7 +5879,7 @@ export const petDetail = {
       },
       "trait": "圣火骑士 应对成功后，下次攻击威力翻倍。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/157.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200247.png"
     }
   ],
   "158": [
@@ -5881,7 +5901,7 @@ export const petDetail = {
       },
       "trait": "圣火骑士 应对成功后，下次攻击威力翻倍。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/158.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200247.png"
     }
   ],
   "159": [
@@ -5903,7 +5923,7 @@ export const petDetail = {
       },
       "trait": "思维之盾 应对成功后，下次行动技能能耗-5。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/159.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200248.png"
     }
   ],
   "160": [
@@ -5925,7 +5945,7 @@ export const petDetail = {
       },
       "trait": "思维之盾 应对成功后，下次行动技能能耗-5。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/160.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200248.png"
     }
   ],
   "161": [
@@ -5947,7 +5967,7 @@ export const petDetail = {
       },
       "trait": "思维之盾 应对成功后，下次行动技能能耗-5。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/161.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200248.png"
     }
   ],
   "162": [
@@ -5968,7 +5988,7 @@ export const petDetail = {
       },
       "trait": "衡量 入场时，复制敌方的增益。在场时，若敌方获得增益自己也会获得。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3499/shiny.png",
-      "traitImg": "/static/static-web/traits/162.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200221.png"
     }
   ],
   "163": [
@@ -5989,7 +6009,7 @@ export const petDetail = {
       },
       "trait": "威慑 打断敌方时，被打断的技能进入2回合冷却。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/163.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200180.png"
     }
   ],
   "164": [
@@ -6010,7 +6030,7 @@ export const petDetail = {
       },
       "trait": "威慑 打断敌方时，被打断的技能进入2回合冷却。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/164.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200180.png"
     }
   ],
   "165": [
@@ -6031,7 +6051,7 @@ export const petDetail = {
       },
       "trait": "乘风连击 使用翼系技能后，获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/165.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200128.png"
     },
     {
       "page_title": "小狮鹫（高山地的样子）",
@@ -6050,7 +6070,7 @@ export const petDetail = {
       },
       "trait": "乘风连击 使用翼系技能后，获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/165.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200128.png"
     }
   ],
   "166": [
@@ -6071,7 +6091,7 @@ export const petDetail = {
       },
       "trait": "乘风连击 使用翼系技能后，获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/166.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200128.png"
     },
     {
       "page_title": "神圣狮鹫（高山地的样子）",
@@ -6090,7 +6110,7 @@ export const petDetail = {
       },
       "trait": "乘风连击 使用翼系技能后，获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/166.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200128.png"
     }
   ],
   "167": [
@@ -6111,7 +6131,7 @@ export const petDetail = {
       },
       "trait": "乘风连击 使用翼系技能后，获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/167.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200128.png"
     },
     {
       "page_title": "皇家狮鹫（高山地的样子）",
@@ -6130,7 +6150,7 @@ export const petDetail = {
       },
       "trait": "乘风连击 使用翼系技能后，获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/167.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200128.png"
     }
   ],
   "168": [
@@ -6151,7 +6171,7 @@ export const petDetail = {
       },
       "trait": "毒腺 使用能耗小于等于1的技能时，敌方获得4层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/168.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200131.png"
     }
   ],
   "169": [
@@ -6173,7 +6193,7 @@ export const petDetail = {
       },
       "trait": "毒腺 使用能耗小于等于1的技能时，敌方获得4层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/169.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200131.png"
     }
   ],
   "170": [
@@ -6195,7 +6215,7 @@ export const petDetail = {
       },
       "trait": "毒腺 使用能耗小于等于1的技能时，敌方获得4层中毒。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/170.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200131.png"
     }
   ],
   "171": [
@@ -6217,7 +6237,7 @@ export const petDetail = {
       },
       "trait": "消波块 每携带1个水系技能进入战斗，地系技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/171.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200224.png"
     },
     {
       "page_title": "波波螺（被污染的样子）",
@@ -6237,7 +6257,7 @@ export const petDetail = {
       },
       "trait": "消波块 每携带1个水系技能进入战斗，地系技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/171.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200224.png"
     }
   ],
   "172": [
@@ -6259,7 +6279,7 @@ export const petDetail = {
       },
       "trait": "消波块 每携带1个水系技能进入战斗，地系技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/172.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200224.png"
     },
     {
       "page_title": "消波螺（被污染的样子）",
@@ -6279,7 +6299,7 @@ export const petDetail = {
       },
       "trait": "消波块 每携带1个水系技能进入战斗，地系技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/172.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200224.png"
     }
   ],
   "173": [
@@ -6301,7 +6321,7 @@ export const petDetail = {
       },
       "trait": "消波块 每携带1个水系技能进入战斗，地系技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/173.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200224.png"
     },
     {
       "page_title": "嗜波螺（被污染的样子）",
@@ -6321,7 +6341,7 @@ export const petDetail = {
       },
       "trait": "消波块 每携带1个水系技能进入战斗，地系技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/173.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200224.png"
     }
   ],
   "174": [
@@ -6343,7 +6363,7 @@ export const petDetail = {
       },
       "trait": "多人宿舍 自己的能量可以超过能量上限。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/174.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200215.png"
     }
   ],
   "175": [
@@ -6365,7 +6385,7 @@ export const petDetail = {
       },
       "trait": "多人宿舍 自己的能量可以超过能量上限。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/175.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200215.png"
     }
   ],
   "176": [
@@ -6387,7 +6407,7 @@ export const petDetail = {
       },
       "trait": "多人宿舍 自己的能量可以超过能量上限。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/176.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200215.png"
     }
   ],
   "177": [
@@ -6408,7 +6428,7 @@ export const petDetail = {
       },
       "trait": "逐魂鸟 能耗小于等于1的攻击技能，无法对自己造成伤害。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3534/shiny.png",
-      "traitImg": "/static/static-web/traits/177.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200232.png"
     }
   ],
   "178": [
@@ -6429,7 +6449,7 @@ export const petDetail = {
       },
       "trait": "逐魂鸟 能耗小于等于1的攻击技能，无法对自己造成伤害。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3535/shiny.png",
-      "traitImg": "/static/static-web/traits/178.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200232.png"
     }
   ],
   "179": [
@@ -6450,7 +6470,7 @@ export const petDetail = {
       },
       "trait": "得寸进尺 天气为雨天，或处于其他水系环境中时，获得双攻+100%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/179.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200213.png"
     }
   ],
   "180": [
@@ -6472,7 +6492,7 @@ export const petDetail = {
       },
       "trait": "得寸进尺 天气为雨天，或处于其他水系环境中时，获得双攻+100%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/180.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200213.png"
     }
   ],
   "181": [
@@ -6494,7 +6514,7 @@ export const petDetail = {
       },
       "trait": "身经百练 己方精灵每应对1次，自己入场时水系和武系技能威力+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/181.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200178.png"
     }
   ],
   "182": [
@@ -6516,7 +6536,7 @@ export const petDetail = {
       },
       "trait": "身经百练 己方精灵每应对1次，自己入场时水系和武系技能威力+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/182.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200178.png"
     }
   ],
   "183": [
@@ -6537,7 +6557,7 @@ export const petDetail = {
       },
       "trait": "泛音列 使用状态技能后，敌方获得「聒噪」技能的效果，持续3回合。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/183.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200227.png"
     }
   ],
   "184": [
@@ -6558,7 +6578,7 @@ export const petDetail = {
       },
       "trait": "泛音列 使用状态技能后，敌方获得「聒噪」技能的效果，持续3回合。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/184.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200227.png"
     }
   ],
   "185": [
@@ -6580,7 +6600,7 @@ export const petDetail = {
       },
       "trait": "守护者 己方其他精灵每有1层萌化，自己入场时全技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/185.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200109.png"
     }
   ],
   "186": [
@@ -6602,7 +6622,7 @@ export const petDetail = {
       },
       "trait": "守护者 己方其他精灵每有1层萌化，自己入场时全技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/186.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200109.png"
     }
   ],
   "187": [
@@ -6624,7 +6644,7 @@ export const petDetail = {
       },
       "trait": "守护者 己方其他精灵每有1层萌化，自己入场时全技能能耗-1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/187.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200109.png"
     }
   ],
   "188": [
@@ -6646,7 +6666,7 @@ export const petDetail = {
       },
       "trait": "腾挪 攻击技能应对1次后，回满能量和生命，变为棋绮后。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/188.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200281.png"
     },
     {
       "page_title": "棋棋（黑子）",
@@ -6666,7 +6686,7 @@ export const petDetail = {
       },
       "trait": "腾挪 攻击技能应对1次后，回满能量和生命，变为棋绮后。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/188.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200236.png"
     }
   ],
   "189": [
@@ -6688,7 +6708,7 @@ export const petDetail = {
       },
       "trait": "腾挪 攻击技能应对1次后，回满能量和生命，变为棋绮后。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/189.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200281.png"
     },
     {
       "page_title": "棋骑士（黑子）",
@@ -6708,7 +6728,7 @@ export const petDetail = {
       },
       "trait": "腾挪 攻击技能应对1次后，回满能量和生命，变为棋绮后。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/189.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200236.png"
     },
     {
       "page_title": "棋契陛下（首领形态）",
@@ -6728,7 +6748,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/189.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "棋契陛下（白子）",
@@ -6748,7 +6768,7 @@ export const petDetail = {
       },
       "trait": "御驾亲征 棋契陛下大幅提升种族资质，力竭时扣除4魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/189.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280019.png"
     },
     {
       "page_title": "棋契陛下（黑子）",
@@ -6768,7 +6788,7 @@ export const petDetail = {
       },
       "trait": "御驾亲征 棋契陛下大幅提升种族资质，力竭时扣除4魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/189.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280019.png"
     }
   ],
   "190": [
@@ -6790,7 +6810,7 @@ export const petDetail = {
       },
       "trait": "保卫 防御技能应对2次后，回满能量和生命，变为棋绮后。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/190.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200282.png"
     },
     {
       "page_title": "棋齐垒（黑子）",
@@ -6810,7 +6830,7 @@ export const petDetail = {
       },
       "trait": "保卫 防御技能应对2次后，回满能量和生命，变为棋绮后。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/190.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200237.png"
     },
     {
       "page_title": "棋契陛下（白子）",
@@ -6830,7 +6850,7 @@ export const petDetail = {
       },
       "trait": "御驾亲征 棋契陛下大幅提升种族资质，力竭时扣除4魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/190.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280019.png"
     },
     {
       "page_title": "棋契陛下（黑子）",
@@ -6850,7 +6870,7 @@ export const petDetail = {
       },
       "trait": "御驾亲征 棋契陛下大幅提升种族资质，力竭时扣除4魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/190.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280019.png"
     }
   ],
   "191": [
@@ -6872,7 +6892,7 @@ export const petDetail = {
       },
       "trait": "好象坏象 状态技能应对1次后，回满能量和生命，变为棋绮后。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/191.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200283.png"
     },
     {
       "page_title": "棋祈督（黑子）",
@@ -6892,7 +6912,7 @@ export const petDetail = {
       },
       "trait": "好象坏象 状态技能应对1次后，回满能量和生命，变为棋绮后。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/191.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200238.png"
     },
     {
       "page_title": "棋契陛下（白子）",
@@ -6912,7 +6932,7 @@ export const petDetail = {
       },
       "trait": "御驾亲征 棋契陛下大幅提升种族资质，力竭时扣除4魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/191.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280019.png"
     },
     {
       "page_title": "棋契陛下（黑子）",
@@ -6932,7 +6952,7 @@ export const petDetail = {
       },
       "trait": "御驾亲征 棋契陛下大幅提升种族资质，力竭时扣除4魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/191.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280019.png"
     }
   ],
   "192": [
@@ -6954,7 +6974,7 @@ export const petDetail = {
       },
       "trait": "渗透 己方精灵每使用1次武系或地系技能，自己入场时获得攻防+5%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/192.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200212.png"
     },
     {
       "page_title": "棋绮后（黑子）",
@@ -6974,7 +6994,7 @@ export const petDetail = {
       },
       "trait": "渗透 己方精灵每使用1次武系或地系技能，自己入场时获得攻防+5%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/192.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200212.png"
     },
     {
       "page_title": "棋契陛下（白子）",
@@ -6994,7 +7014,7 @@ export const petDetail = {
       },
       "trait": "御驾亲征 棋契陛下大幅提升种族资质，力竭时扣除4魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/192.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280019.png"
     },
     {
       "page_title": "棋契陛下（黑子）",
@@ -7014,7 +7034,7 @@ export const petDetail = {
       },
       "trait": "御驾亲征 棋契陛下大幅提升种族资质，力竭时扣除4魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/192.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280019.png"
     }
   ],
   "193": [
@@ -7035,7 +7055,7 @@ export const petDetail = {
       },
       "trait": "奔波命 使用防御技能后，回合结束时脱离。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/193.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200105.png"
     }
   ],
   "194": [
@@ -7056,7 +7076,7 @@ export const petDetail = {
       },
       "trait": "奔波命 使用防御技能后，回合结束时脱离。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/194.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200105.png"
     }
   ],
   "195": [
@@ -7078,7 +7098,7 @@ export const petDetail = {
       },
       "trait": "营养液泡 获得增益时，额外获得层数+2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/195.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200084.png"
     }
   ],
   "196": [
@@ -7100,7 +7120,7 @@ export const petDetail = {
       },
       "trait": "营养液泡 获得增益时，额外获得层数+2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/196.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200084.png"
     }
   ],
   "197": [
@@ -7122,7 +7142,7 @@ export const petDetail = {
       },
       "trait": "营养液泡 获得增益时，额外获得层数+2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/197.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200084.png"
     }
   ],
   "198": [
@@ -7143,7 +7163,7 @@ export const petDetail = {
       },
       "trait": "鼓气 使用能耗为3的技能时，获得攻防+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/198.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200096.png"
     }
   ],
   "199": [
@@ -7164,7 +7184,7 @@ export const petDetail = {
       },
       "trait": "鼓气 使用能耗为3的技能时，获得攻防+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/199.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200096.png"
     }
   ],
   "200": [
@@ -7185,7 +7205,7 @@ export const petDetail = {
       },
       "trait": "鼓气 使用能耗为3的技能时，获得攻防+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/200.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200096.png"
     },
     {
       "page_title": "奇梦咪（首领形态）",
@@ -7204,7 +7224,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/200.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "奇梦咪",
@@ -7223,7 +7243,7 @@ export const petDetail = {
       },
       "trait": "三鼓作气 使用能耗为3的技能后，获得攻防永久+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/200.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280020.png"
     }
   ],
   "201": [
@@ -7245,7 +7265,7 @@ export const petDetail = {
       },
       "trait": "铃兰晚钟 首次入场时，失去自己一半的当前生命。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/201.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200223.png"
     }
   ],
   "202": [
@@ -7267,7 +7287,7 @@ export const petDetail = {
       },
       "trait": "铃兰晚钟 首次入场时，失去自己一半的当前生命。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/202.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200223.png"
     }
   ],
   "203": [
@@ -7288,7 +7308,7 @@ export const petDetail = {
       },
       "trait": "嫉妒 蓄力状态下，可以使用任一携带技能。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/203.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200174.png"
     }
   ],
   "204": [
@@ -7309,7 +7329,7 @@ export const petDetail = {
       },
       "trait": "嫉妒 蓄力状态下，可以使用任一携带技能。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/204.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200174.png"
     },
     {
       "page_title": "伊兰龙（首领形态）",
@@ -7328,7 +7348,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/204.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "伊兰龙",
@@ -7347,7 +7367,7 @@ export const petDetail = {
       },
       "trait": "游弋 蓄力时可以使用任一携带技能，且获得双防+100%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/204.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280018.png"
     }
   ],
   "205": [
@@ -7368,7 +7388,7 @@ export const petDetail = {
       },
       "trait": "噼啪！ 入场后首次行动，所选技能使用次数+1。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3188/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200162.png"
     }
   ],
   "206": [
@@ -7389,7 +7409,7 @@ export const petDetail = {
       },
       "trait": "噼啪！ 入场后首次行动，所选技能使用次数+1。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3189/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200162.png"
     },
     {
       "page_title": "风暴酷拉",
@@ -7408,7 +7428,7 @@ export const petDetail = {
       },
       "trait": "噼啪噼啪！ 入场后首次行动，所选技能使用次数+1，且该回合每次行动后回复2能量。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5060/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280033.png"
     }
   ],
   "207": [
@@ -7429,7 +7449,7 @@ export const petDetail = {
       },
       "trait": "防过载保护 每次行动后脱离。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/207.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200165.png"
     }
   ],
   "208": [
@@ -7450,7 +7470,7 @@ export const petDetail = {
       },
       "trait": "防过载保护 每次行动后脱离。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/208.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200165.png"
     }
   ],
   "209": [
@@ -7471,7 +7491,7 @@ export const petDetail = {
       },
       "trait": "防过载保护 每次行动后脱离。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/209.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200165.png"
     }
   ],
   "210": [
@@ -7493,7 +7513,7 @@ export const petDetail = {
       },
       "trait": "虚假宝箱 自己力竭时，敌方获得攻防+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/210.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200235.png"
     }
   ],
   "211": [
@@ -7515,7 +7535,7 @@ export const petDetail = {
       },
       "trait": "虚假宝箱 自己力竭时，敌方获得攻防+20%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/211.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200235.png"
     }
   ],
   "212": [
@@ -7537,7 +7557,7 @@ export const petDetail = {
       },
       "trait": "拨浪鼓 己方精灵每使用1次状态技能，自己入场时毒系和萌系技能威力+10。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/212.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200181.png"
     }
   ],
   "213": [
@@ -7559,7 +7579,7 @@ export const petDetail = {
       },
       "trait": "拨浪鼓 己方精灵每使用1次状态技能，自己入场时毒系和萌系技能威力+10。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/213.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200181.png"
     }
   ],
   "214": [
@@ -7580,7 +7600,7 @@ export const petDetail = {
       },
       "trait": "振奋虫心 主动击败敌方后，己方队伍获得5次随机奉献。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/214.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200133.png"
     }
   ],
   "215": [
@@ -7602,7 +7622,7 @@ export const petDetail = {
       },
       "trait": "振奋虫心 主动击败敌方后，己方队伍获得5次随机奉献。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/215.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200133.png"
     }
   ],
   "216": [
@@ -7623,7 +7643,7 @@ export const petDetail = {
       },
       "trait": "蒸汽膨胀 己方精灵每使用1次火系技能，自己入场时获得全技能威力+10。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/216.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200153.png"
     }
   ],
   "217": [
@@ -7644,7 +7664,7 @@ export const petDetail = {
       },
       "trait": "蒸汽膨胀 己方精灵每使用1次火系技能，自己入场时获得全技能威力+10。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/217.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200153.png"
     }
   ],
   "218": [
@@ -7665,7 +7685,26 @@ export const petDetail = {
       },
       "trait": "蒸汽膨胀 己方精灵每使用1次火系技能，自己入场时获得全技能威力+10。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/218.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200153.png"
+    },
+    {
+      "page_title": "烈焰狂战士",
+      "type": [
+        "火"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5063/icon.png",
+      "race": {
+        "hp": 105,
+        "attack": 79,
+        "mattack": 13,
+        "defense": 110,
+        "mdefense": 93,
+        "speed": 65,
+        "total": 465
+      },
+      "trait": "蒸汽革命 己方精灵每使用1次火系技能，自己入场时获得全技能威力+10和物防+5%",
+      "yiseImg": null,
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280037.png"
     }
   ],
   "219": [
@@ -7686,7 +7725,7 @@ export const petDetail = {
       },
       "trait": "吟游之弦 赋予的印记不会替换其他印记，而是同时生效。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/219.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200225.png"
     }
   ],
   "220": [
@@ -7708,7 +7747,7 @@ export const petDetail = {
       },
       "trait": "珊瑚骨 敌方精灵离场时，自己获得全技能能耗-3。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/220.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200216.png"
     },
     {
       "page_title": "海枝枝（杏黄百合）",
@@ -7728,7 +7767,7 @@ export const petDetail = {
       },
       "trait": "珊瑚骨 敌方精灵离场时，自己获得全技能能耗-3。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/220.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200216.png"
     },
     {
       "page_title": "海枝枝（洋红沙丁）",
@@ -7748,7 +7787,7 @@ export const petDetail = {
       },
       "trait": "珊瑚骨 敌方精灵离场时，自己获得全技能能耗-3。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/220.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200216.png"
     },
     {
       "page_title": "海枝枝（翠绿纶布）",
@@ -7768,7 +7807,7 @@ export const petDetail = {
       },
       "trait": "珊瑚骨 敌方精灵离场时，自己获得全技能能耗-3。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/220.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200216.png"
     }
   ],
   "221": [
@@ -7790,7 +7829,7 @@ export const petDetail = {
       },
       "trait": "定向精炼 己方精灵每使用1次防御技能，自己入场时机械系和地系技能威力+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/221.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200172.png"
     }
   ],
   "222": [
@@ -7812,7 +7851,7 @@ export const petDetail = {
       },
       "trait": "定向精炼 己方精灵每使用1次防御技能，自己入场时机械系和地系技能威力+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/222.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200172.png"
     }
   ],
   "223": [
@@ -7834,7 +7873,7 @@ export const petDetail = {
       },
       "trait": "定向精炼 己方精灵每使用1次防御技能，自己入场时机械系和地系技能威力+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/223.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200172.png"
     }
   ],
   "224": [
@@ -7856,7 +7895,7 @@ export const petDetail = {
       },
       "trait": "暴食 携带的龙系技能获得迅捷。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/224.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200173.png"
     }
   ],
   "225": [
@@ -7878,7 +7917,7 @@ export const petDetail = {
       },
       "trait": "暴食 携带的龙系技能获得迅捷。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/225.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200173.png"
     }
   ],
   "226": [
@@ -7899,7 +7938,7 @@ export const petDetail = {
       },
       "trait": "蓄电池 每入场1次，永久获得双攻+30%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/226.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200169.png"
     }
   ],
   "227": [
@@ -7920,7 +7959,7 @@ export const petDetail = {
       },
       "trait": "蓄电池 每入场1次，永久获得双攻+30%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/227.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200169.png"
     }
   ],
   "228": [
@@ -7941,7 +7980,7 @@ export const petDetail = {
       },
       "trait": "蓄电池 每入场1次，永久获得双攻+30%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/228.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200169.png"
     },
     {
       "page_title": "波普鹿（首领形态）",
@@ -7960,7 +7999,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/228.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "波普鹿",
@@ -7979,7 +8018,7 @@ export const petDetail = {
       },
       "trait": "超级电池 每入场1次，获得双攻永久+40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/228.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280016.png"
     }
   ],
   "229": [
@@ -8000,7 +8039,7 @@ export const petDetail = {
       },
       "trait": "向心力 1号和2号位技能获得传动1和威力+30。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/229.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200228.png"
     }
   ],
   "230": [
@@ -8021,7 +8060,7 @@ export const petDetail = {
       },
       "trait": "向心力 1号和2号位技能获得传动1和威力+30。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/230.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200228.png"
     }
   ],
   "231": [
@@ -8042,7 +8081,7 @@ export const petDetail = {
       },
       "trait": "起飞加速 本场战斗首次使用的技能获得迅捷。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3250/shiny.png",
-      "traitImg": "/static/static-web/traits/231.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200093.png"
     }
   ],
   "232": [
@@ -8063,7 +8102,7 @@ export const petDetail = {
       },
       "trait": "起飞加速 本场战斗首次使用的技能获得迅捷。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3251/shiny.png",
-      "traitImg": "/static/static-web/traits/232.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200093.png"
     }
   ],
   "233": [
@@ -8084,7 +8123,7 @@ export const petDetail = {
       },
       "trait": "起飞加速 本场战斗首次使用的技能获得迅捷。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3252/shiny.png",
-      "traitImg": "/static/static-web/traits/233.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200093.png"
     },
     {
       "page_title": "高帽鹬者",
@@ -8103,7 +8142,7 @@ export const petDetail = {
       },
       "trait": "相争 本场战斗首次使用的技能获得迅捷。拥有迅捷效果的技能先手+1。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5054/shiny.png",
-      "traitImg": "/static/static-web/traits/233.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280029.png"
     }
   ],
   "234": [
@@ -8124,12 +8163,12 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/234.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     }
   ],
   "235": [
     {
-      "page_title": "香草甜甜",
+      "page_title": "香草甜甜（樱桃饰品）",
       "type": [
         "冰"
       ],
@@ -8145,7 +8184,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/235.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     },
     {
       "page_title": "香草甜甜（杨桃饰品）",
@@ -8164,7 +8203,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/235.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     },
     {
       "page_title": "香草甜甜（蓝莓饰品）",
@@ -8183,12 +8222,12 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/235.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     }
   ],
   "236": [
     {
-      "page_title": "圣代甜甜",
+      "page_title": "圣代甜甜（樱桃巧克力口味）",
       "type": [
         "冰"
       ],
@@ -8204,7 +8243,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/236.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     },
     {
       "page_title": "圣代甜甜（樱桃草莓口味）",
@@ -8223,7 +8262,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/236.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     },
     {
       "page_title": "圣代甜甜（樱桃抹茶口味）",
@@ -8242,7 +8281,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/236.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     },
     {
       "page_title": "圣代甜甜（蓝莓巧克力口味）",
@@ -8261,7 +8300,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/236.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     },
     {
       "page_title": "圣代甜甜（蓝莓草莓口味）",
@@ -8280,7 +8319,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/236.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     },
     {
       "page_title": "圣代甜甜（蓝莓抹茶口味）",
@@ -8299,7 +8338,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/236.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     },
     {
       "page_title": "圣代甜甜（杨桃巧克力口味）",
@@ -8318,7 +8357,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/236.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     },
     {
       "page_title": "圣代甜甜（杨桃草莓口味）",
@@ -8337,7 +8376,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/236.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     },
     {
       "page_title": "圣代甜甜（杨桃抹茶口味）",
@@ -8356,7 +8395,7 @@ export const petDetail = {
       },
       "trait": "加个雪球 使敌方获得冻结时，也会使其获得2层冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/236.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200122.png"
     }
   ],
   "237": [
@@ -8378,7 +8417,7 @@ export const petDetail = {
       },
       "trait": "耐活王 敌方受到中毒效果伤害时，自己回复等量生命。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/237.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200240.png"
     },
     {
       "page_title": "刺轮砣（下弦的样子）",
@@ -8398,7 +8437,7 @@ export const petDetail = {
       },
       "trait": "耐活王 敌方受到中毒效果伤害时，自己回复等量生命。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/237.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200240.png"
     }
   ],
   "238": [
@@ -8419,8 +8458,8 @@ export const petDetail = {
         "total": 609
       },
       "trait": "耐活王 敌方受到中毒效果伤害时，自己回复等量生命。",
-      "yiseImg": null,
-      "traitImg": "/static/static-web/traits/238.webp"
+      "yiseImg": "/cdn-assets/static-web/pets/238_月亮砣（上弦的样子）_异色.webp",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200240.png"
     },
     {
       "page_title": "月亮砣（下弦的样子）",
@@ -8440,7 +8479,47 @@ export const petDetail = {
       },
       "trait": "耐活王 敌方受到中毒效果伤害时，自己回复等量生命。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/238.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200240.png"
+    },
+    {
+      "page_title": "满月砣（上弦的样子）",
+      "type": [
+        "毒",
+        "萌"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5064/icon.png",
+      "race": {
+        "hp": 140,
+        "attack": 111,
+        "mattack": 108,
+        "defense": 100,
+        "mdefense": 81,
+        "speed": 105,
+        "total": 645
+      },
+      "trait": "月相 敌方受到中毒效果伤害时，自己回复等量生命。每过量回复10%生命敌方获得1层中毒。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5064/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280038.png"
+    },
+    {
+      "page_title": "满月砣（下弦的样子）",
+      "type": [
+        "毒",
+        "萌"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5065/icon.png",
+      "race": {
+        "hp": 140,
+        "attack": 108,
+        "mattack": 111,
+        "defense": 81,
+        "mdefense": 100,
+        "speed": 105,
+        "total": 645
+      },
+      "trait": "月相 敌方受到中毒效果伤害时，自己回复等量生命。每过量回复10%生命敌方获得1层中毒。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5065/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280038.png"
     }
   ],
   "239": [
@@ -8462,7 +8541,7 @@ export const petDetail = {
       },
       "trait": "洄游 每次进入蓄力状态，获得全技能能耗永久-2。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3384/shiny.png",
-      "traitImg": "/static/static-web/traits/239.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200114.png"
     }
   ],
   "240": [
@@ -8484,7 +8563,7 @@ export const petDetail = {
       },
       "trait": "洄游 每次进入蓄力状态，获得全技能能耗永久-2。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3385/shiny.png",
-      "traitImg": "/static/static-web/traits/240.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200114.png"
     }
   ],
   "241": [
@@ -8506,7 +8585,7 @@ export const petDetail = {
       },
       "trait": "洄游 每次进入蓄力状态，获得全技能能耗永久-2。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3386/shiny.png",
-      "traitImg": "/static/static-web/traits/241.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200114.png"
     }
   ],
   "242": [
@@ -8528,7 +8607,7 @@ export const petDetail = {
       },
       "trait": "生物电 携带的电系技能获得迸发：能耗-2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/242.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200167.png"
     }
   ],
   "243": [
@@ -8550,7 +8629,7 @@ export const petDetail = {
       },
       "trait": "生物电 携带的电系技能获得迸发：能耗-2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/243.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200167.png"
     }
   ],
   "244": [
@@ -8572,7 +8651,7 @@ export const petDetail = {
       },
       "trait": "扩散侵蚀 使用水系技能后，敌方获得中毒，获得层数等于中毒印记层数的2倍。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/244.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200115.png"
     }
   ],
   "245": [
@@ -8594,7 +8673,7 @@ export const petDetail = {
       },
       "trait": "扩散侵蚀 使用水系技能后，敌方获得中毒，获得层数等于中毒印记层数的2倍。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/245.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200115.png"
     }
   ],
   "246": [
@@ -8615,7 +8694,7 @@ export const petDetail = {
       },
       "trait": "蚀刻 回合结束时，敌方每2层中毒转化为1层中毒印记。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/246.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200187.png"
     }
   ],
   "247": [
@@ -8636,7 +8715,7 @@ export const petDetail = {
       },
       "trait": "蚀刻 回合结束时，敌方每2层中毒转化为1层中毒印记。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/247.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200187.png"
     }
   ],
   "248": [
@@ -8657,7 +8736,7 @@ export const petDetail = {
       },
       "trait": "蚀刻 回合结束时，敌方每2层中毒转化为1层中毒印记。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/248.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200187.png"
     }
   ],
   "249": [
@@ -8678,7 +8757,7 @@ export const petDetail = {
       },
       "trait": "散热 初始能量为0，入场前己方精灵每放1次火系技能，回复3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/249.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200147.png"
     }
   ],
   "250": [
@@ -8699,7 +8778,7 @@ export const petDetail = {
       },
       "trait": "散热 初始能量为0，入场前己方精灵每放1次火系技能，回复3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/250.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200147.png"
     }
   ],
   "251": [
@@ -8720,7 +8799,7 @@ export const petDetail = {
       },
       "trait": "散热 初始能量为0，入场前己方精灵每放1次火系技能，回复3能量。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/251.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200147.png"
     }
   ],
   "252": [
@@ -8741,7 +8820,7 @@ export const petDetail = {
       },
       "trait": "冰钻 敌方携带技能总能耗每有1点，自己攻击时威力+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/252.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200117.png"
     }
   ],
   "253": [
@@ -8762,7 +8841,7 @@ export const petDetail = {
       },
       "trait": "冰钻 敌方携带技能总能耗每有1点，自己攻击时威力+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/253.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200117.png"
     }
   ],
   "254": [
@@ -8783,7 +8862,7 @@ export const petDetail = {
       },
       "trait": "冰钻 敌方携带技能总能耗每有1点，自己攻击时威力+10%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/254.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200117.png"
     }
   ],
   "255": [
@@ -8805,7 +8884,7 @@ export const petDetail = {
       },
       "trait": "仁心 敌方受到灼烧伤害时，自己回复等量生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3081/shiny.png",
-      "traitImg": "/static/static-web/traits/255.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200152.png"
     }
   ],
   "256": [
@@ -8827,7 +8906,7 @@ export const petDetail = {
       },
       "trait": "仁心 敌方受到灼烧伤害时，自己回复等量生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3082/shiny.png",
-      "traitImg": "/static/static-web/traits/256.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200152.png"
     }
   ],
   "257": [
@@ -8849,7 +8928,7 @@ export const petDetail = {
       },
       "trait": "仁心 敌方受到灼烧伤害时，自己回复等量生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3350/shiny.png",
-      "traitImg": "/static/static-web/traits/257.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200152.png"
     }
   ],
   "258": [
@@ -8871,7 +8950,7 @@ export const petDetail = {
       },
       "trait": "恶魔的晚宴 主动击败敌方精灵时，自己永久获得双攻+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/258.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200257.png"
     },
     {
       "page_title": "乌达（极夜的样子）",
@@ -8891,7 +8970,7 @@ export const petDetail = {
       },
       "trait": "恶魔的晚宴 主动击败敌方精灵时，自己永久获得双攻+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/258.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200257.png"
     }
   ],
   "259": [
@@ -8913,7 +8992,7 @@ export const petDetail = {
       },
       "trait": "恶魔的晚宴 主动击败敌方精灵时，自己永久获得双攻+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/259.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200257.png"
     },
     {
       "page_title": "迷你乌（极夜的样子）",
@@ -8933,7 +9012,7 @@ export const petDetail = {
       },
       "trait": "恶魔的晚宴 主动击败敌方精灵时，自己永久获得双攻+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/259.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200257.png"
     }
   ],
   "260": [
@@ -8955,7 +9034,7 @@ export const petDetail = {
       },
       "trait": "恶魔的晚宴 主动击败敌方精灵时，自己永久获得双攻+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/260.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200257.png"
     },
     {
       "page_title": "乌拉塔（极夜的样子）",
@@ -8975,7 +9054,7 @@ export const petDetail = {
       },
       "trait": "恶魔的晚宴 主动击败敌方精灵时，自己永久获得双攻+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/260.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200257.png"
     }
   ],
   "261": [
@@ -8997,7 +9076,7 @@ export const petDetail = {
       },
       "trait": "翼轴 1号位技能获得迅捷和传动1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/261.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200234.png"
     }
   ],
   "262": [
@@ -9019,7 +9098,7 @@ export const petDetail = {
       },
       "trait": "翼轴 1号位技能获得迅捷和传动1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/262.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200234.png"
     }
   ],
   "263": [
@@ -9040,7 +9119,7 @@ export const petDetail = {
       },
       "trait": "盲拧 回合开始时，技能顺序打乱，4号位的技能能耗-4。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3200/shiny.png",
-      "traitImg": "/static/static-web/traits/263.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200170.png"
     }
   ],
   "264": [
@@ -9061,7 +9140,7 @@ export const petDetail = {
       },
       "trait": "盲拧 回合开始时，技能顺序打乱，4号位的技能能耗-4。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3201/shiny.png",
-      "traitImg": "/static/static-web/traits/264.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200170.png"
     }
   ],
   "265": [
@@ -9082,7 +9161,7 @@ export const petDetail = {
       },
       "trait": "盲拧 回合开始时，技能顺序打乱，4号位的技能能耗-4。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3202/shiny.png",
-      "traitImg": "/static/static-web/traits/265.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200170.png"
     }
   ],
   "266": [
@@ -9103,7 +9182,7 @@ export const petDetail = {
       },
       "trait": "斗技 应对成功后，获得全技能威力永久+30。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3086/shiny.png",
-      "traitImg": "/static/static-web/traits/266.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200148.png"
     }
   ],
   "267": [
@@ -9124,7 +9203,7 @@ export const petDetail = {
       },
       "trait": "斗技 应对成功后，获得全技能威力永久+30。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3087/shiny.png",
-      "traitImg": "/static/static-web/traits/267.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200148.png"
     }
   ],
   "268": [
@@ -9146,7 +9225,7 @@ export const petDetail = {
       },
       "trait": "指挥家 应对成功后，永久获得双攻+30%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3088/shiny.png",
-      "traitImg": "/static/static-web/traits/268.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200218.png"
     }
   ],
   "269": [
@@ -9168,7 +9247,7 @@ export const petDetail = {
       },
       "trait": "斗技 应对成功后，获得全技能威力永久+30。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3089/shiny.png",
-      "traitImg": "/static/static-web/traits/269.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200148.png"
     }
   ],
   "270": [
@@ -9190,7 +9269,7 @@ export const petDetail = {
       },
       "trait": "哨兵 回合开始时若敌方技能足够击败自己，自己获得速度+50，行动后脱离。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/270.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200262.png"
     }
   ],
   "271": [
@@ -9212,7 +9291,7 @@ export const petDetail = {
       },
       "trait": "哨兵 回合开始时若敌方技能足够击败自己，自己获得速度+50，行动后脱离。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/271.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200262.png"
     }
   ],
   "272": [
@@ -9234,7 +9313,7 @@ export const petDetail = {
       },
       "trait": "连续负荷 自己技能的迸发效果延长1回合。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/272.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200219.png"
     }
   ],
   "273": [
@@ -9255,7 +9334,7 @@ export const petDetail = {
       },
       "trait": "倾轧 携带的技能受能耗变化效果的影响翻倍。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/273.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200112.png"
     }
   ],
   "274": [
@@ -9276,7 +9355,7 @@ export const petDetail = {
       },
       "trait": "生长 回合结束时，回复12%生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3072/shiny.png",
-      "traitImg": "/static/static-web/traits/274.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200087.png"
     }
   ],
   "275": [
@@ -9297,7 +9376,7 @@ export const petDetail = {
       },
       "trait": "生长 回合结束时，回复12%生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3073/shiny.png",
-      "traitImg": "/static/static-web/traits/275.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200087.png"
     }
   ],
   "276": [
@@ -9318,7 +9397,7 @@ export const petDetail = {
       },
       "trait": "生长 回合结束时，回复12%生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3074/shiny.png",
-      "traitImg": "/static/static-web/traits/276.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200087.png"
     }
   ],
   "277": [
@@ -9339,7 +9418,7 @@ export const petDetail = {
       },
       "trait": "警惕 回合结束时，若自己能量为0则脱离。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3020/shiny.png",
-      "traitImg": "/static/static-web/traits/277.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200092.png"
     },
     {
       "page_title": "地鼠（储水时的样子）",
@@ -9358,7 +9437,7 @@ export const petDetail = {
       },
       "trait": "警惕 回合结束时，若自己能量为0则脱离。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3454/shiny.png",
-      "traitImg": "/static/static-web/traits/277.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200092.png"
     }
   ],
   "278": [
@@ -9379,7 +9458,7 @@ export const petDetail = {
       },
       "trait": "警惕 回合结束时，若自己能量为0则脱离。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3021/shiny.png",
-      "traitImg": "/static/static-web/traits/278.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200092.png"
     },
     {
       "page_title": "遁鼠（储水时的样子）",
@@ -9398,7 +9477,7 @@ export const petDetail = {
       },
       "trait": "警惕 回合结束时，若自己能量为0则脱离。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3455/shiny.png",
-      "traitImg": "/static/static-web/traits/278.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200092.png"
     }
   ],
   "279": [
@@ -9419,7 +9498,7 @@ export const petDetail = {
       },
       "trait": "警惕 回合结束时，若自己能量为0则脱离。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3022/shiny.png",
-      "traitImg": "/static/static-web/traits/279.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200092.png"
     },
     {
       "page_title": "遁地鼠（储水时的样子）",
@@ -9438,7 +9517,7 @@ export const petDetail = {
       },
       "trait": "警惕 回合结束时，若自己能量为0则脱离。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3456/shiny.png",
-      "traitImg": "/static/static-web/traits/279.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200092.png"
     }
   ],
   "280": [
@@ -9459,7 +9538,7 @@ export const petDetail = {
       },
       "trait": "涂鸦 使用非本系技能时威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/280.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200267.png"
     }
   ],
   "281": [
@@ -9481,7 +9560,7 @@ export const petDetail = {
       },
       "trait": "涂鸦 使用非本系技能时威力+50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/281.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200267.png"
     }
   ],
   "282": [
@@ -9503,7 +9582,7 @@ export const petDetail = {
       },
       "trait": "绝对秩序 受到非敌方系别的技能攻击时伤害-50%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/282.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200268.png"
     }
   ],
   "283": [
@@ -9524,7 +9603,7 @@ export const petDetail = {
       },
       "trait": "坚韧铠甲 每受到1次攻击伤害，己方队伍获得1次随机奉献。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/283.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200138.png"
     }
   ],
   "284": [
@@ -9545,7 +9624,7 @@ export const petDetail = {
       },
       "trait": "坚韧铠甲 每受到1次攻击伤害，己方队伍获得1次随机奉献。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/284.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200138.png"
     }
   ],
   "285": [
@@ -9566,7 +9645,7 @@ export const petDetail = {
       },
       "trait": "正位宝剑 仅可以使用1号位技能。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/285.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200208.png"
     }
   ],
   "286": [
@@ -9587,7 +9666,7 @@ export const petDetail = {
       },
       "trait": "正位宝剑 仅可以使用1号位技能。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/286.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200208.png"
     },
     {
       "page_title": "圣剑骑士（首领形态）",
@@ -9606,7 +9685,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/286.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "圣剑骑士",
@@ -9625,7 +9704,7 @@ export const petDetail = {
       },
       "trait": "宝剑王牌 仅可使用1号和3号位技能。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/286.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280017.png"
     }
   ],
   "287": [
@@ -9647,7 +9726,7 @@ export const petDetail = {
       },
       "trait": "无差别过滤 在场时，所有精灵连击数固定为2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/287.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200209.png"
     }
   ],
   "288": [
@@ -9669,7 +9748,7 @@ export const petDetail = {
       },
       "trait": "无差别过滤 在场时，所有精灵连击数固定为2。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/288.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200209.png"
     },
     {
       "page_title": "淤泥乌泽（首领形态）",
@@ -9689,7 +9768,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/288.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "淤泥乌泽",
@@ -9709,7 +9788,7 @@ export const petDetail = {
       },
       "trait": "强制过滤 在场时，所有精灵连击数固定为1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/288.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280035.png"
     }
   ],
   "289": [
@@ -9731,7 +9810,7 @@ export const petDetail = {
       },
       "trait": "不朽 力竭4回合后复活。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/289.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200230.png"
     }
   ],
   "290": [
@@ -9753,7 +9832,7 @@ export const petDetail = {
       },
       "trait": "不朽 力竭4回合后复活。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/290.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200230.png"
     }
   ],
   "291": [
@@ -9775,7 +9854,7 @@ export const petDetail = {
       },
       "trait": "侵蚀 敌方每有1层中毒效果，自己获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/291.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200204.png"
     }
   ],
   "292": [
@@ -9797,7 +9876,7 @@ export const petDetail = {
       },
       "trait": "侵蚀 敌方每有1层中毒效果，自己获得连击数+1。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/292.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200204.png"
     }
   ],
   "293": [
@@ -9818,7 +9897,7 @@ export const petDetail = {
       },
       "trait": "付给恶魔的赎价 击败敌方精灵时，敌方额外损失1点魔力。被敌方精灵击败时，自己额外损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/293.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200141.png"
     }
   ],
   "294": [
@@ -9839,7 +9918,7 @@ export const petDetail = {
       },
       "trait": "付给恶魔的赎价 击败敌方精灵时，敌方额外损失1点魔力。被敌方精灵击败时，自己额外损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/294.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200141.png"
     }
   ],
   "295": [
@@ -9860,7 +9939,7 @@ export const petDetail = {
       },
       "trait": "付给恶魔的赎价 击败敌方精灵时，敌方额外损失1点魔力。被敌方精灵击败时，自己额外损失1点魔力。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/295.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200141.png"
     }
   ],
   "296": [
@@ -9882,7 +9961,7 @@ export const petDetail = {
       },
       "trait": "扫拖一体 回合结束时驱散敌方1层印记，且驱散后己方队伍获得1次随机奉献。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/296.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200255.png"
     }
   ],
   "297": [
@@ -9904,7 +9983,7 @@ export const petDetail = {
       },
       "trait": "扫拖一体 回合结束时驱散敌方1层印记，且驱散后己方队伍获得1次随机奉献。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/297.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200255.png"
     }
   ],
   "298": [
@@ -9926,7 +10005,7 @@ export const petDetail = {
       },
       "trait": "特殊清洁场景 回合结束时偷取敌方1层印记。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/298.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200256.png"
     }
   ],
   "299": [
@@ -9947,7 +10026,7 @@ export const petDetail = {
       },
       "trait": "灰色肖像 攻击会使敌方已有的减益层数+3。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/299.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200242.png"
     }
   ],
   "300": [
@@ -9968,7 +10047,7 @@ export const petDetail = {
       },
       "trait": "灰色肖像 攻击会使敌方已有的减益层数+3。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/300.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200242.png"
     }
   ],
   "301": [
@@ -9990,7 +10069,7 @@ export const petDetail = {
       },
       "trait": "灰色肖像 攻击会使敌方已有的减益层数+3。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/301.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200242.png"
     }
   ],
   "302": [
@@ -10012,7 +10091,7 @@ export const petDetail = {
       },
       "trait": "变形活画 行动时，敌方每有1层增益，本次行动技能威力+10%，速度+5。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/302.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200243.png"
     }
   ],
   "303": [
@@ -10033,7 +10112,7 @@ export const petDetail = {
       },
       "trait": "图书守卫者 入场时，若自己魔力值为1，自己获得双攻+100%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/303.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200244.png"
     }
   ],
   "304": [
@@ -10054,7 +10133,7 @@ export const petDetail = {
       },
       "trait": "图书守卫者 入场时，若自己魔力值为1，自己获得双攻+100%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/304.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200244.png"
     }
   ],
   "305": [
@@ -10076,7 +10155,7 @@ export const petDetail = {
       },
       "trait": "图书守卫者 入场时，若自己魔力值为1，自己获得双攻+100%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/305.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200244.png"
     }
   ],
   "306": [
@@ -10098,7 +10177,7 @@ export const petDetail = {
       },
       "trait": "构装契约者 入场时，若敌方魔力值为1，自己获得双防+100%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/306.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200245.png"
     }
   ],
   "307": [
@@ -10120,7 +10199,7 @@ export const petDetail = {
       },
       "trait": "绒粉星光 攻击时，若敌方血脉是非本系的系别血脉，技能威力+100%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3244/shiny.png",
-      "traitImg": "/static/static-web/traits/307.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200192.png"
     }
   ],
   "308": [
@@ -10142,7 +10221,7 @@ export const petDetail = {
       },
       "trait": "绒粉星光 攻击时，若敌方血脉是非本系的系别血脉，技能威力+100%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3245/shiny.png",
-      "traitImg": "/static/static-web/traits/308.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200192.png"
     }
   ],
   "309": [
@@ -10164,7 +10243,7 @@ export const petDetail = {
       },
       "trait": "绒粉星光 攻击时，若敌方血脉是非本系的系别血脉，技能威力+100%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3246/shiny.png",
-      "traitImg": "/static/static-web/traits/309.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200192.png"
     }
   ],
   "310": [
@@ -10185,7 +10264,7 @@ export const petDetail = {
       },
       "trait": "月光审判 攻击时，若敌方血脉是首领血脉，技能威力+100%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3309/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200193.png"
     }
   ],
   "311": [
@@ -10206,7 +10285,7 @@ export const petDetail = {
       },
       "trait": "月光审判 攻击时，若敌方血脉是首领血脉，技能威力+100%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3310/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200193.png"
     }
   ],
   "312": [
@@ -10227,7 +10306,7 @@ export const petDetail = {
       },
       "trait": "月光审判 攻击时，若敌方血脉是首领血脉，技能威力+100%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3311/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200193.png"
     }
   ],
   "313": [
@@ -10248,7 +10327,7 @@ export const petDetail = {
       },
       "trait": "茶多酚 离场后，更换入场的精灵回复20%生命且免疫寄生。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/313.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200202.png"
     }
   ],
   "314": [
@@ -10270,7 +10349,7 @@ export const petDetail = {
       },
       "trait": "茶多酚 离场后，更换入场的精灵回复20%生命且免疫寄生。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/314.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200202.png"
     }
   ],
   "315": [
@@ -10292,7 +10371,7 @@ export const petDetail = {
       },
       "trait": "吉利丁片 离场后，更换入场的精灵获得双防+20%且免疫冻结。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/315.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200253.png"
     }
   ],
   "316": [
@@ -10314,7 +10393,7 @@ export const petDetail = {
       },
       "trait": "美拉德反应 离场后，更换入场的精灵获得双攻+20%且免疫灼烧。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/316.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200254.png"
     }
   ],
   "317": [
@@ -10335,7 +10414,7 @@ export const petDetail = {
       },
       "trait": "契约的形状 根据捕捉所用的咕噜球，入场时获得不同效果。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/317.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200137.png"
     }
   ],
   "318": [
@@ -10356,7 +10435,7 @@ export const petDetail = {
       },
       "trait": "契约的形状 根据捕捉所用的咕噜球，入场时获得不同效果。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/318.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200137.png"
     }
   ],
   "319": [
@@ -10377,7 +10456,7 @@ export const petDetail = {
       },
       "trait": "契约的形状 根据捕捉所用的咕噜球，入场时获得不同效果。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/319.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200137.png"
     }
   ],
   "320": [
@@ -10399,7 +10478,7 @@ export const petDetail = {
       },
       "trait": "对流 自己的能耗增加变为能耗降低；能耗降低变为能耗增加。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3382/shiny.png",
-      "traitImg": "/static/static-web/traits/320.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200113.png"
     }
   ],
   "321": [
@@ -10421,7 +10500,7 @@ export const petDetail = {
       },
       "trait": "对流 自己的能耗增加变为能耗降低；能耗降低变为能耗增加。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3383/shiny.png",
-      "traitImg": "/static/static-web/traits/321.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200113.png"
     }
   ],
   "322": [
@@ -10443,7 +10522,7 @@ export const petDetail = {
       },
       "trait": "月牙雪糕 使用攻击技能时，敌方每有1层冻结，在攻击前使其获得1层星陨印记。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3457/shiny.png",
-      "traitImg": "/static/static-web/traits/322.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200205.png"
     }
   ],
   "323": [
@@ -10465,7 +10544,7 @@ export const petDetail = {
       },
       "trait": "血型吸引 敌方每携带1种系别的技能，自己攻击时威力+10。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3614/shiny.png",
-      "traitImg": "/static/static-web/traits/323.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200251.png"
     }
   ],
   "324": [
@@ -10487,7 +10566,7 @@ export const petDetail = {
       },
       "trait": "血型吸引 敌方每携带1种系别的技能，自己攻击时威力+10。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3615/shiny.png",
-      "traitImg": "/static/static-web/traits/324.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200251.png"
     }
   ],
   "325": [
@@ -10509,7 +10588,7 @@ export const petDetail = {
       },
       "trait": "煤渣草 在场时，所有灼烧的衰减变为增长。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3436/shiny.png",
-      "traitImg": "/static/static-web/traits/325.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200203.png"
     }
   ],
   "326": [
@@ -10531,7 +10610,7 @@ export const petDetail = {
       },
       "trait": "煤渣草 在场时，所有灼烧的衰减变为增长。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3437/shiny.png",
-      "traitImg": "/static/static-web/traits/326.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200203.png"
     }
   ],
   "327": [
@@ -10552,7 +10631,7 @@ export const petDetail = {
       },
       "trait": "搜刮 敌方每使用1次「聚能」技能或更换精灵，自己入场时获得魔攻+20%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3148/shiny.png",
-      "traitImg": "/static/static-web/traits/327.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200160.png"
     }
   ],
   "328": [
@@ -10573,7 +10652,7 @@ export const petDetail = {
       },
       "trait": "搜刮 敌方每使用1次「聚能」技能或更换精灵，自己入场时获得魔攻+20%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3149/shiny.png",
-      "traitImg": "/static/static-web/traits/328.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200160.png"
     }
   ],
   "329": [
@@ -10594,7 +10673,7 @@ export const petDetail = {
       },
       "trait": "搜刮 敌方每使用1次「聚能」技能或更换精灵，自己入场时获得魔攻+20%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3150/shiny.png",
-      "traitImg": "/static/static-web/traits/329.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200160.png"
     },
     {
       "page_title": "暗夜颅主（首领形态）",
@@ -10613,7 +10692,7 @@ export const petDetail = {
       },
       "trait": "？？？ 散发着危险气息的精灵，看不出特性",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/4104/shiny.png",
-      "traitImg": "/static/static-web/traits/329.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/299002.png"
     },
     {
       "page_title": "暗夜颅主",
@@ -10632,7 +10711,7 @@ export const petDetail = {
       },
       "trait": "扫荡 敌方每使用1次「聚能」技能或更换精灵，自己入场时获得魔攻+20%和魔防+10%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/5059/shiny.png",
-      "traitImg": "/static/static-web/traits/329.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/280036.png"
     }
   ],
   "330": [
@@ -10654,7 +10733,7 @@ export const petDetail = {
       },
       "trait": "星地善良 回合结束时，若场上的己方精灵能量等于0，自己立即替换此精灵。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3198/shiny.png",
-      "traitImg": "/static/static-web/traits/330.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200166.png"
     }
   ],
   "331": [
@@ -10676,7 +10755,7 @@ export const petDetail = {
       },
       "trait": "星地善良 回合结束时，若场上的己方精灵能量等于0，自己立即替换此精灵。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3199/shiny.png",
-      "traitImg": "/static/static-web/traits/331.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200166.png"
     }
   ],
   "332": [
@@ -10698,7 +10777,7 @@ export const petDetail = {
       },
       "trait": "贪心算法 1号位技能获得传动1，且使用后使敌方获得6层灼烧。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3203/shiny.png",
-      "traitImg": "/static/static-web/traits/332.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200171.png"
     }
   ],
   "333": [
@@ -10720,7 +10799,7 @@ export const petDetail = {
       },
       "trait": "贪心算法 1号位技能获得传动1，且使用后使敌方获得6层灼烧。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3204/shiny.png",
-      "traitImg": "/static/static-web/traits/333.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200171.png"
     }
   ],
   "334": [
@@ -10742,7 +10821,7 @@ export const petDetail = {
       },
       "trait": "贪心算法 1号位技能获得传动1，且使用后使敌方获得6层灼烧。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3205/shiny.png",
-      "traitImg": "/static/static-web/traits/334.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200171.png"
     }
   ],
   "335": [
@@ -10763,7 +10842,7 @@ export const petDetail = {
       },
       "trait": "双向光速 在场时，双方回合结束时的效果会额外触发1次。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3319/shiny.png",
-      "traitImg": "/static/static-web/traits/335.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200095.png"
     }
   ],
   "336": [
@@ -10784,7 +10863,7 @@ export const petDetail = {
       },
       "trait": "双向光速 在场时，双方回合结束时的效果会额外触发1次。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3320/shiny.png",
-      "traitImg": "/static/static-web/traits/336.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200095.png"
     }
   ],
   "337": [
@@ -10806,7 +10885,7 @@ export const petDetail = {
       },
       "trait": "陨落 在场时，双方回合结束时的效果不会触发。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3485/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200241.png"
     }
   ],
   "338": [
@@ -10827,7 +10906,7 @@ export const petDetail = {
       },
       "trait": "张弛有度 周末时自己获得双攻+40%，其他时间获得双防+40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/338.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200269.png"
     }
   ],
   "339": [
@@ -10848,7 +10927,7 @@ export const petDetail = {
       },
       "trait": "张弛有度 周末时自己获得双攻+40%，其他时间获得双防+40%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/339.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200269.png"
     }
   ],
   "340": [
@@ -10869,7 +10948,7 @@ export const petDetail = {
       },
       "trait": "天通地明 攻击时，若敌方血脉是污染血脉，技能威力+100%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3744/shiny.png",
-      "traitImg": "/static/static-web/traits/340.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200285.png"
     }
   ],
   "341": [
@@ -10890,7 +10969,7 @@ export const petDetail = {
       },
       "trait": "天通地明 攻击时，若敌方血脉是污染血脉，技能威力+100%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3745/shiny.png",
-      "traitImg": "/static/static-web/traits/341.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200285.png"
     }
   ],
   "342": [
@@ -10911,7 +10990,7 @@ export const petDetail = {
       },
       "trait": "系统发育 获得能量或生命时，会将等量的能量或生命随机分配给场下的精灵。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/342.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200085.png"
     }
   ],
   "343": [
@@ -10932,7 +11011,7 @@ export const petDetail = {
       },
       "trait": "系统发育 获得能量或生命时，会将等量的能量或生命随机分配给场下的精灵。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/343.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200085.png"
     }
   ],
   "344": [
@@ -10953,7 +11032,7 @@ export const petDetail = {
       },
       "trait": "系统发育 获得能量或生命时，会将等量的能量或生命随机分配给场下的精灵。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/344.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200085.png"
     }
   ],
   "345": [
@@ -10974,7 +11053,7 @@ export const petDetail = {
       },
       "trait": "守望星 触发星陨印记时仅消耗一半层数，仍造成满层伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/345.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200210.png"
     }
   ],
   "346": [
@@ -10996,7 +11075,7 @@ export const petDetail = {
       },
       "trait": "守望星 触发星陨印记时仅消耗一半层数，仍造成满层伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/346.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200210.png"
     }
   ],
   "347": [
@@ -11018,7 +11097,7 @@ export const petDetail = {
       },
       "trait": "守望星 触发星陨印记时仅消耗一半层数，仍造成满层伤害。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/347.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200210.png"
     }
   ],
   "348": [
@@ -11039,7 +11118,7 @@ export const petDetail = {
       },
       "trait": "狂欢开始 在场时，背包里会变化出随机精灵，随机精灵只能与本精灵相互更换。本精灵受到的克制伤害+25%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/348.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200286.png"
     }
   ],
   "349": [
@@ -11060,7 +11139,7 @@ export const petDetail = {
       },
       "trait": "狂欢开始 在场时，背包里会变化出随机精灵，随机精灵只能与本精灵相互更换。本精灵受到的克制伤害+25%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/349.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200286.png"
     }
   ],
   "350": [
@@ -11081,7 +11160,7 @@ export const petDetail = {
       },
       "trait": "狂欢开始 在场时，背包里会变化出随机精灵，随机精灵只能与本精灵相互更换。本精灵受到的克制伤害+25%。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/350.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200286.png"
     }
   ],
   "351": [
@@ -11102,7 +11181,7 @@ export const petDetail = {
       },
       "trait": "展翅 在场时，自己携带的普通系技能变为翼系技能，若后于对手行动，自己受到的伤害+25%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200127.png"
     }
   ],
   "352": [
@@ -11123,7 +11202,7 @@ export const petDetail = {
       },
       "trait": "展翅 在场时，自己携带的普通系技能变为翼系技能，若后于对手行动，自己受到的伤害+25%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200127.png"
     }
   ],
   "353": [
@@ -11144,7 +11223,7 @@ export const petDetail = {
       },
       "trait": "展翅 在场时，自己携带的普通系技能变为翼系技能，若后于对手行动，自己受到的伤害+25%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200127.png"
     }
   ],
   "354": [
@@ -11165,7 +11244,7 @@ export const petDetail = {
       },
       "trait": "大雪球 自己使用2次不同的冰系技能后，对手获得4层冻结，随后特性重置。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3531/shiny.png",
-      "traitImg": "/static/static-web/traits/354.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200291.png"
     }
   ],
   "355": [
@@ -11186,7 +11265,7 @@ export const petDetail = {
       },
       "trait": "大雪球 自己使用2次不同的冰系技能后，对手获得4层冻结，随后特性重置。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3532/shiny.png",
-      "traitImg": "/static/static-web/traits/355.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200291.png"
     }
   ],
   "356": [
@@ -11208,7 +11287,7 @@ export const petDetail = {
       },
       "trait": "大火球 自己使用2次不同的火系技能后，下次技能无需蓄力，随后特性重置。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3572/shiny.png",
-      "traitImg": "/static/static-web/traits/356.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200292.png"
     }
   ],
   "357": [
@@ -11230,7 +11309,7 @@ export const petDetail = {
       },
       "trait": "大火球 自己使用2次不同的火系技能后，下次技能无需蓄力，随后特性重置。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3573/shiny.png",
-      "traitImg": "/static/static-web/traits/357.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200292.png"
     }
   ],
   "358": [
@@ -11252,7 +11331,7 @@ export const petDetail = {
       },
       "trait": "换碟 自己携带的音波弹/音爆/金属噪音/午夜噪音威力提升，且获得巧变：同系别技能。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3729/shiny.png",
-      "traitImg": "/static/static-web/traits/358.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200287.png"
     }
   ],
   "359": [
@@ -11274,7 +11353,7 @@ export const petDetail = {
       },
       "trait": "换碟 自己携带的音波弹/音爆/金属噪音/午夜噪音威力提升，且获得巧变：同系别技能。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3730/shiny.png",
-      "traitImg": "/static/static-web/traits/359.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200287.png"
     }
   ],
   "360": [
@@ -11296,12 +11375,12 @@ export const petDetail = {
       },
       "trait": "拉拉队长 若自己在萌化状态下再获得萌化会解除萌化。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3659/shiny.png",
-      "traitImg": "/static/static-web/traits/360.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200288.png"
     }
   ],
   "361": [
     {
-      "page_title": "加油蟹",
+      "page_title": "加油蟹（两只海葵的样子）",
       "type": [
         "水",
         "萌"
@@ -11318,7 +11397,7 @@ export const petDetail = {
       },
       "trait": "拉拉队长 若自己在萌化状态下再获得萌化会解除萌化。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3660/shiny.png",
-      "traitImg": "/static/static-web/traits/361.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200288.png"
     },
     {
       "page_title": "加油蟹（单只海葵的样子）",
@@ -11338,7 +11417,7 @@ export const petDetail = {
       },
       "trait": "拉拉队长 若自己在萌化状态下再获得萌化会解除萌化。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3743/shiny.png",
-      "traitImg": "/static/static-web/traits/361.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200288.png"
     }
   ],
   "362": [
@@ -11359,7 +11438,7 @@ export const petDetail = {
       },
       "trait": "戏耍 自己无法回复生命，而是将回复生命变为敌方扣除等量生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3487/shiny.png",
-      "traitImg": "/static/static-web/traits/362.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200289.png"
     }
   ],
   "363": [
@@ -11380,7 +11459,7 @@ export const petDetail = {
       },
       "trait": "戏耍 自己无法回复生命，而是将回复生命变为敌方扣除等量生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3488/shiny.png",
-      "traitImg": "/static/static-web/traits/363.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200289.png"
     }
   ],
   "364": [
@@ -11401,7 +11480,7 @@ export const petDetail = {
       },
       "trait": "戏耍 自己无法回复生命，而是将回复生命变为敌方扣除等量生命。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3489/shiny.png",
-      "traitImg": "/static/static-web/traits/364.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200289.png"
     }
   ],
   "365": [
@@ -11423,7 +11502,7 @@ export const petDetail = {
       },
       "trait": "焰色反应 在场时，衰减的灼烧变为相同层数的中毒。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3677/shiny.png",
-      "traitImg": "/static/static-web/traits/365.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200273.png"
     }
   ],
   "366": [
@@ -11445,7 +11524,7 @@ export const petDetail = {
       },
       "trait": "焰色反应 在场时，衰减的灼烧变为相同层数的中毒。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3678/shiny.png",
-      "traitImg": "/static/static-web/traits/366.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200273.png"
     }
   ],
   "367": [
@@ -11466,7 +11545,7 @@ export const petDetail = {
       },
       "trait": "魔术帽 在场时，场上双方携带的技能获得巧变：同系别技能。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3683/shiny.png",
-      "traitImg": "/static/static-web/traits/367.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200272.png"
     }
   ],
   "368": [
@@ -11487,7 +11566,7 @@ export const petDetail = {
       },
       "trait": "魔术帽 在场时，场上双方携带的技能获得巧变：同系别技能。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3684/shiny.png",
-      "traitImg": "/static/static-web/traits/368.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200272.png"
     }
   ],
   "369": [
@@ -11509,7 +11588,7 @@ export const petDetail = {
       },
       "trait": "安可 使用光系技能后，回合结束时自己返场。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3736/shiny.png",
-      "traitImg": "/static/static-web/traits/369.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200290.png"
     }
   ],
   "370": [
@@ -11531,7 +11610,7 @@ export const petDetail = {
       },
       "trait": "安可 使用光系技能后，回合结束时自己返场。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3737/shiny.png",
-      "traitImg": "/static/static-web/traits/370.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200290.png"
     }
   ],
   "371": [
@@ -11552,7 +11631,7 @@ export const petDetail = {
       },
       "trait": "合拍 本回合与敌方使用的技能在系别/类型/能耗上每有1项相同，回合结束时获得物攻和物防永久+10%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3708/shiny.png",
-      "traitImg": "/static/static-web/traits/371.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200275.png"
     }
   ],
   "372": [
@@ -11573,7 +11652,7 @@ export const petDetail = {
       },
       "trait": "合拍 本回合与敌方使用的技能在系别/类型/能耗上每有1项相同，回合结束时获得物攻和物防永久+10%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3709/shiny.png",
-      "traitImg": "/static/static-web/traits/372.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200275.png"
     }
   ],
   "373": [
@@ -11594,7 +11673,7 @@ export const petDetail = {
       },
       "trait": "盲从 可以携带多个复写/借用/取念技能，非幻系技能能耗-2。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3234/shiny.png",
-      "traitImg": "/static/static-web/traits/373.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200188.png"
     }
   ],
   "374": [
@@ -11615,7 +11694,7 @@ export const petDetail = {
       },
       "trait": "盲从 可以携带多个复写/借用/取念技能，非幻系技能能耗-2。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3235/shiny.png",
-      "traitImg": "/static/static-web/traits/374.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200188.png"
     }
   ],
   "375": [
@@ -11636,7 +11715,7 @@ export const petDetail = {
       },
       "trait": "留学生 自己全技能能耗+2，可以学习全部攻击技能石。",
       "yiseImg": null,
-      "traitImg": "/static/static-web/traits/375.webp"
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200252.png"
     }
   ],
   "376": [
@@ -11658,7 +11737,7 @@ export const petDetail = {
       },
       "trait": "不死鸟 每场战斗1次，受到致命伤害时保留1血，且敌方获得15层灼烧。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200151.png"
     }
   ],
   "377": [
@@ -11680,7 +11759,7 @@ export const petDetail = {
       },
       "trait": "不死鸟 每场战斗1次，受到致命伤害时保留1血，且敌方获得15层灼烧。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200151.png"
     }
   ],
   "378": [
@@ -11702,7 +11781,7 @@ export const petDetail = {
       },
       "trait": "不死鸟 每场战斗1次，受到致命伤害时保留1血，且敌方获得15层灼烧。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200151.png"
     }
   ],
   "379": [
@@ -11724,7 +11803,7 @@ export const petDetail = {
       },
       "trait": "上锁 对手本回合使用的技能，冷却1回合。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200300.png"
     }
   ],
   "380": [
@@ -11746,7 +11825,7 @@ export const petDetail = {
       },
       "trait": "上锁 对手本回合使用的技能，冷却1回合。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200300.png"
     }
   ],
   "381": [
@@ -11768,7 +11847,7 @@ export const petDetail = {
       },
       "trait": "流沙统治者 天气为沙暴时，自己获得速度+50。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200298.png"
     }
   ],
   "382": [
@@ -11790,7 +11869,7 @@ export const petDetail = {
       },
       "trait": "流沙统治者 天气为沙暴时，自己获得速度+50。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200298.png"
     }
   ],
   "383": [
@@ -11812,7 +11891,7 @@ export const petDetail = {
       },
       "trait": "流沙统治者 天气为沙暴时，自己获得速度+50。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200298.png"
     }
   ],
   "384": [
@@ -11833,7 +11912,7 @@ export const petDetail = {
       },
       "trait": "盘根木 初始生命为10%，入场前己方精灵每使用1次草系技能，回复30%生命。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200299.png"
     }
   ],
   "385": [
@@ -11854,7 +11933,7 @@ export const petDetail = {
       },
       "trait": "盘根木 初始生命为10%，入场前己方精灵每使用1次草系技能，回复30%生命。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200299.png"
     }
   ],
   "386": [
@@ -11875,7 +11954,7 @@ export const petDetail = {
       },
       "trait": "盘根木 初始生命为10%，入场前己方精灵每使用1次草系技能，回复30%生命。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200299.png"
     }
   ],
   "387": [
@@ -11896,7 +11975,7 @@ export const petDetail = {
       },
       "trait": "电子音乐 天气为雷鸣时，使用电系技能后敌方获得引电。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200303.png"
     }
   ],
   "388": [
@@ -11917,7 +11996,7 @@ export const petDetail = {
       },
       "trait": "电子音乐 天气为雷鸣时，使用电系技能后敌方获得引电。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200303.png"
     }
   ],
   "389": [
@@ -11938,7 +12017,7 @@ export const petDetail = {
       },
       "trait": "电子音乐 天气为雷鸣时，使用电系技能后敌方获得引电。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200303.png"
     }
   ],
   "390": [
@@ -11959,7 +12038,7 @@ export const petDetail = {
       },
       "trait": "冰雪魂魄 天气为暴风雪时，冰系技能威力+100%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200311.png"
     }
   ],
   "391": [
@@ -11980,7 +12059,7 @@ export const petDetail = {
       },
       "trait": "冰雪魂魄 天气为暴风雪时，冰系技能威力+100%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200311.png"
     }
   ],
   "392": [
@@ -12001,7 +12080,7 @@ export const petDetail = {
       },
       "trait": "冰雪魂魄 天气为暴风雪时，冰系技能威力+100%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200311.png"
     }
   ],
   "393": [
@@ -12022,7 +12101,7 @@ export const petDetail = {
       },
       "trait": "淬炼火 入场前己方精灵每使用1次火系技能，获得攻防+10%，速度+10。（最多触发10次）",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200302.png"
     }
   ],
   "394": [
@@ -12043,7 +12122,7 @@ export const petDetail = {
       },
       "trait": "淬炼火 入场前己方精灵每使用1次火系技能，获得攻防+10%，速度+10。（最多触发10次）",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200302.png"
     }
   ],
   "395": [
@@ -12064,7 +12143,7 @@ export const petDetail = {
       },
       "trait": "淬炼火 入场前己方精灵每使用1次火系技能，获得攻防+10%，速度+10。（最多触发10次）",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200302.png"
     }
   ],
   "396": [
@@ -12085,7 +12164,7 @@ export const petDetail = {
       },
       "trait": "友谊之果 回合结束时，双方队伍中的所有精灵回复1能量。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200301.png"
     }
   ],
   "397": [
@@ -12106,7 +12185,7 @@ export const petDetail = {
       },
       "trait": "友谊之果 回合结束时，双方队伍中的所有精灵回复1能量。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200301.png"
     }
   ],
   "398": [
@@ -12128,7 +12207,7 @@ export const petDetail = {
       },
       "trait": "莫比乌斯 回合结束时，若自己的能量为0，则回复10能量。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200297.png"
     }
   ],
   "399": [
@@ -12150,7 +12229,7 @@ export const petDetail = {
       },
       "trait": "莫比乌斯 回合结束时，若自己的能量为0，则回复10能量。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200297.png"
     }
   ],
   "400": [
@@ -12172,7 +12251,7 @@ export const petDetail = {
       },
       "trait": "瞳中倒影 自己或其他精灵离场时，自己与更换入场的精灵交换血量百分比。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200142.png"
     }
   ],
   "401": [
@@ -12194,7 +12273,7 @@ export const petDetail = {
       },
       "trait": "瞳中倒影 自己或其他精灵离场时，自己与更换入场的精灵交换血量百分比。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200142.png"
     }
   ],
   "402": [
@@ -12216,7 +12295,7 @@ export const petDetail = {
       },
       "trait": "瞳中倒影 自己或其他精灵离场时，自己与更换入场的精灵交换血量百分比。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200142.png"
     }
   ],
   "403": [
@@ -12237,7 +12316,7 @@ export const petDetail = {
       },
       "trait": "异类 携带的翼系攻击技能获得选择：能耗+1，攻击时吸血50%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200130.png"
     }
   ],
   "404": [
@@ -12258,7 +12337,7 @@ export const petDetail = {
       },
       "trait": "异类 携带的翼系攻击技能获得选择：能耗+1，攻击时吸血50%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200130.png"
     }
   ],
   "405": [
@@ -12280,7 +12359,7 @@ export const petDetail = {
       },
       "trait": "异类 携带的翼系攻击技能获得选择：能耗+1，攻击时吸血50%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200130.png"
     }
   ],
   "406": [
@@ -12302,7 +12381,7 @@ export const petDetail = {
       },
       "trait": "滴眼液 天气为雨天时，使用水系攻击技能时吸血50%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200144.png"
     }
   ],
   "407": [
@@ -12324,7 +12403,7 @@ export const petDetail = {
       },
       "trait": "滴眼液 天气为雨天时，使用水系攻击技能时吸血50%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200144.png"
     }
   ],
   "408": [
@@ -12346,7 +12425,7 @@ export const petDetail = {
       },
       "trait": "滴眼液 天气为雨天时，使用水系攻击技能时吸血50%。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200144.png"
     }
   ],
   "409": [
@@ -12368,7 +12447,7 @@ export const petDetail = {
       },
       "trait": "与星星同行 攻击时，将敌方所有印记变为相同层数的星陨印记。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200217.png"
     }
   ],
   "410": [
@@ -12389,7 +12468,7 @@ export const petDetail = {
       },
       "trait": "迎宾 自己或其他精灵离场时，更换入场的精灵获得萌化。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200304.png"
     }
   ],
   "411": [
@@ -12410,7 +12489,7 @@ export const petDetail = {
       },
       "trait": "迎宾 自己或其他精灵离场时，更换入场的精灵获得萌化。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200304.png"
     }
   ],
   "412": [
@@ -12432,7 +12511,7 @@ export const petDetail = {
       },
       "trait": "整点报时 每场战斗1次，回合结束时，若自己累计消耗的能量恰好为12，则回满能量和生命。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200246.png"
     }
   ],
   "413": [
@@ -12454,7 +12533,7 @@ export const petDetail = {
       },
       "trait": "整点报时 每场战斗1次，回合结束时，若自己累计消耗的能量恰好为12，则回满能量和生命。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200246.png"
     }
   ],
   "414": [
@@ -12476,7 +12555,7 @@ export const petDetail = {
       },
       "trait": "有求必应 使用「选择」技能后，会额外使用1次另一种「选择」效果。使用任意技能后，该技能冷却1回合。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200306.png"
     }
   ],
   "415": [
@@ -12498,7 +12577,7 @@ export const petDetail = {
       },
       "trait": "有求必应 使用「选择」技能后，会额外使用1次另一种「选择」效果。使用任意技能后，该技能冷却1回合。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200306.png"
     }
   ],
   "416": [
@@ -12520,7 +12599,7 @@ export const petDetail = {
       },
       "trait": "有求必应 使用「选择」技能后，会额外使用1次另一种「选择」效果。使用任意技能后，该技能冷却1回合。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200306.png"
     }
   ],
   "417": [
@@ -12542,7 +12621,7 @@ export const petDetail = {
       },
       "trait": "一意孤行 使用「选择」技能后，会额外使用1次相同的「选择」效果。使用任意技能后，该技能冷却1回合。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200305.png"
     }
   ],
   "418": [
@@ -12563,7 +12642,7 @@ export const petDetail = {
       },
       "trait": "守护之心 双方场上每有1种不同的增益，自己获得物防+20%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3710/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200309.png"
     }
   ],
   "419": [
@@ -12584,7 +12663,7 @@ export const petDetail = {
       },
       "trait": "守护之心 双方场上每有1种不同的增益，自己获得物防+20%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3711/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200309.png"
     }
   ],
   "420": [
@@ -12606,7 +12685,7 @@ export const petDetail = {
       },
       "trait": "和弦共振 双方场上每有1种不同的印记，自己获得魔攻+50%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3718/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200310.png"
     }
   ],
   "421": [
@@ -12628,7 +12707,7 @@ export const petDetail = {
       },
       "trait": "和弦共振 双方场上每有1种不同的印记，自己获得魔攻+50%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3719/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200310.png"
     }
   ],
   "422": [
@@ -12649,7 +12728,7 @@ export const petDetail = {
       },
       "trait": "猫精灵的礼物 己方精灵每完整使用1次「选择」技能（「明」和「暗」各1次），自己入场时获得物攻+40%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3360/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200307.png"
     }
   ],
   "423": [
@@ -12671,7 +12750,7 @@ export const petDetail = {
       },
       "trait": "猫精灵的礼物 己方精灵每完整使用1次「选择」技能（「明」和「暗」各1次），自己入场时获得物攻+40%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3361/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200307.png"
     }
   ],
   "424": [
@@ -12693,7 +12772,7 @@ export const petDetail = {
       },
       "trait": "猫精灵的礼物 己方精灵每完整使用1次「选择」技能（「明」和「暗」各1次），自己入场时获得物攻+40%。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3362/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200307.png"
     }
   ],
   "425": [
@@ -12715,7 +12794,7 @@ export const petDetail = {
       },
       "trait": "爆裂玉米 草系技能使敌方获得4层灼烧，火系技能使敌方获得1层寄生。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3759/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200293.png"
     }
   ],
   "426": [
@@ -12737,7 +12816,7 @@ export const petDetail = {
       },
       "trait": "爆裂玉米 草系技能使敌方获得4层灼烧，火系技能使敌方获得1层寄生。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3760/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200293.png"
     }
   ],
   "427": [
@@ -12758,7 +12837,7 @@ export const petDetail = {
       },
       "trait": "王子的诺言 每回合各1次，获得增益时，同时获得全技能能耗-1，获得减益时，同时获得全技能能耗+1。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3591/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200294.png"
     }
   ],
   "428": [
@@ -12779,7 +12858,7 @@ export const petDetail = {
       },
       "trait": "王子的诺言 每回合各1次，获得增益时，同时获得全技能能耗-1，获得减益时，同时获得全技能能耗+1。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3592/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200294.png"
     }
   ],
   "429": [
@@ -12801,7 +12880,7 @@ export const petDetail = {
       },
       "trait": "王子的诺言 每回合各1次，获得增益时，同时获得全技能能耗-1，获得减益时，同时获得全技能能耗+1。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3593/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200294.png"
     }
   ],
   "430": [
@@ -12822,7 +12901,7 @@ export const petDetail = {
       },
       "trait": "诅咒 每受到1次技能攻击（不含连击），敌方获得1层暗涌印记。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3264/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200296.png"
     }
   ],
   "431": [
@@ -12843,7 +12922,7 @@ export const petDetail = {
       },
       "trait": "诅咒 每受到1次技能攻击（不含连击），敌方获得1层暗涌印记。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3265/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200296.png"
     }
   ],
   "432": [
@@ -12865,7 +12944,7 @@ export const petDetail = {
       },
       "trait": "光度换算 携带的火系技能获得选择：使用后失去15%生命，光系技能威力永久+30。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3675/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200312.png"
     }
   ],
   "433": [
@@ -12887,7 +12966,7 @@ export const petDetail = {
       },
       "trait": "光度换算 携带的火系技能获得选择：使用后失去15%生命，光系技能威力永久+30。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3676/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200312.png"
     }
   ],
   "434": [
@@ -12909,7 +12988,7 @@ export const petDetail = {
       },
       "trait": "长久保存制法 自己的聚能获得选择：偷取敌方3能量。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3706/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200264.png"
     }
   ],
   "435": [
@@ -12931,7 +13010,7 @@ export const petDetail = {
       },
       "trait": "长久保存制法 自己的聚能获得选择：偷取敌方3能量。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3707/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200264.png"
     }
   ],
   "436": [
@@ -12953,7 +13032,7 @@ export const petDetail = {
       },
       "trait": "守望者 自己防御应对成功时，敌方获得萌化。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3697/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200295.png"
     }
   ],
   "437": [
@@ -12975,7 +13054,7 @@ export const petDetail = {
       },
       "trait": "守望者 自己防御应对成功时，敌方获得萌化。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3698/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200295.png"
     }
   ],
   "438": [
@@ -12997,7 +13076,7 @@ export const petDetail = {
       },
       "trait": "扎手 每受到1次技能攻击（不含连击），敌方获得1层棘刺印记。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3565/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200239.png"
     }
   ],
   "439": [
@@ -13019,7 +13098,7 @@ export const petDetail = {
       },
       "trait": "扎手 每受到1次技能攻击（不含连击），敌方获得1层棘刺印记。",
       "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3566/shiny.png",
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200239.png"
     }
   ],
   "440": [
@@ -13041,7 +13120,7 @@ export const petDetail = {
       },
       "trait": "安眠 王国入夜后，进入战斗时获得全技能能耗+2，回合结束时自己回复5%生命和1能量。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200308.png"
     }
   ],
   "441": [
@@ -13062,7 +13141,7 @@ export const petDetail = {
       },
       "trait": "博物 在场时，识破精灵的变化效果，解除其伪装。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200313.png"
     }
   ],
   "442": [
@@ -13083,7 +13162,570 @@ export const petDetail = {
       },
       "trait": "博物 在场时，识破精灵的变化效果，解除其伪装。",
       "yiseImg": null,
-      "traitImg": null
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200313.png"
+    }
+  ],
+  "443": [
+    {
+      "page_title": "诅咒狼灵",
+      "type": [
+        "幽",
+        "幻"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3761/icon.png",
+      "race": {
+        "hp": 69,
+        "attack": 77,
+        "mattack": 31,
+        "defense": 77,
+        "mdefense": 59,
+        "speed": 78,
+        "total": 391
+      },
+      "trait": "铭记于月亮 获得自己击败的精灵的特性，每次攻击后自己失去5%生命。",
+      "yiseImg": null,
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200314.png"
+    }
+  ],
+  "444": [
+    {
+      "page_title": "新月狼灵",
+      "type": [
+        "幽",
+        "幻"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3762/icon.png",
+      "race": {
+        "hp": 92,
+        "attack": 103,
+        "mattack": 41,
+        "defense": 102,
+        "mdefense": 78,
+        "speed": 104,
+        "total": 520
+      },
+      "trait": "铭记于月亮 获得自己击败的精灵的特性，每次攻击后自己失去5%生命。",
+      "yiseImg": null,
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200314.png"
+    }
+  ],
+  "445": [
+    {
+      "page_title": "银月狼王",
+      "type": [
+        "幽",
+        "幻"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3763/icon.png",
+      "race": {
+        "hp": 115,
+        "attack": 128,
+        "mattack": 51,
+        "defense": 128,
+        "mdefense": 98,
+        "speed": 130,
+        "total": 650
+      },
+      "trait": "铭记于月亮 获得自己击败的精灵的特性，每次攻击后自己失去5%生命。",
+      "yiseImg": null,
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200314.png"
+    }
+  ],
+  "446": [
+    {
+      "page_title": "新月鹭",
+      "type": [
+        "翼",
+        "冰"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3764/icon.png",
+      "race": {
+        "hp": 50,
+        "attack": 59,
+        "mattack": 60,
+        "defense": 62,
+        "mdefense": 68,
+        "speed": 69,
+        "total": 368
+      },
+      "trait": "冷光源 若上回合双方有精灵使用翼系技能，本回合自己携带的冰系技能威力+100%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3764/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200316.png"
+    }
+  ],
+  "447": [
+    {
+      "page_title": "月辉鹭",
+      "type": [
+        "翼",
+        "冰"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3765/icon.png",
+      "race": {
+        "hp": 66,
+        "attack": 79,
+        "mattack": 80,
+        "defense": 83,
+        "mdefense": 90,
+        "speed": 92,
+        "total": 490
+      },
+      "trait": "冷光源 若上回合双方有精灵使用翼系技能，本回合自己携带的冰系技能威力+100%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3765/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200316.png"
+    }
+  ],
+  "448": [
+    {
+      "page_title": "月使鹭纳",
+      "type": [
+        "翼",
+        "冰"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3766/icon.png",
+      "race": {
+        "hp": 83,
+        "attack": 99,
+        "mattack": 100,
+        "defense": 104,
+        "mdefense": 113,
+        "speed": 115,
+        "total": 614
+      },
+      "trait": "冷光源 若上回合双方有精灵使用翼系技能，本回合自己携带的冰系技能威力+100%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3766/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200316.png"
+    }
+  ],
+  "449": [
+    {
+      "page_title": "热团团",
+      "type": [
+        "火",
+        "虫"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3574/icon.png",
+      "race": {
+        "hp": 48,
+        "attack": 69,
+        "mattack": 18,
+        "defense": 72,
+        "mdefense": 72,
+        "speed": 63,
+        "total": 342
+      },
+      "trait": "热成像 若上回合双方有精灵使用火系技能，本回合自己携带的虫系技能威力+100%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3574/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200315.png"
+    }
+  ],
+  "450": [
+    {
+      "page_title": "焰米龙",
+      "type": [
+        "火",
+        "虫"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3575/icon.png",
+      "race": {
+        "hp": 63,
+        "attack": 92,
+        "mattack": 23,
+        "defense": 96,
+        "mdefense": 96,
+        "speed": 84,
+        "total": 454
+      },
+      "trait": "热成像 若上回合双方有精灵使用火系技能，本回合自己携带的虫系技能威力+100%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3575/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200315.png"
+    }
+  ],
+  "451": [
+    {
+      "page_title": "圣凯布米龙",
+      "type": [
+        "火",
+        "虫"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3576/icon.png",
+      "race": {
+        "hp": 79,
+        "attack": 116,
+        "mattack": 29,
+        "defense": 120,
+        "mdefense": 120,
+        "speed": 105,
+        "total": 569
+      },
+      "trait": "热成像 若上回合双方有精灵使用火系技能，本回合自己携带的虫系技能威力+100%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3576/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200315.png"
+    }
+  ],
+  "452": [
+    {
+      "page_title": "章脑丸",
+      "type": [
+        "光",
+        "水"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3767/icon.png",
+      "race": {
+        "hp": 89,
+        "attack": 42,
+        "mattack": 99,
+        "defense": 69,
+        "mdefense": 99,
+        "speed": 80,
+        "total": 478
+      },
+      "trait": "基因编辑 自己携带技能的基础能耗，变为上回合双方使用的技能能耗之和。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3767/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200318.png"
+    }
+  ],
+  "453": [
+    {
+      "page_title": "智辉章脑",
+      "type": [
+        "光",
+        "水"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3768/icon.png",
+      "race": {
+        "hp": 112,
+        "attack": 53,
+        "mattack": 123,
+        "defense": 87,
+        "mdefense": 124,
+        "speed": 100,
+        "total": 599
+      },
+      "trait": "基因编辑 自己携带技能的基础能耗，变为上回合双方使用的技能能耗之和。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3768/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200318.png"
+    }
+  ],
+  "454": [
+    {
+      "page_title": "未完虫",
+      "type": [
+        "幽",
+        "虫"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3542/icon.png",
+      "race": {
+        "hp": 86,
+        "attack": 102,
+        "mattack": 111,
+        "defense": 68,
+        "mdefense": 100,
+        "speed": 100,
+        "total": 567
+      },
+      "trait": "正模标本 自己队伍中的其他精灵，在力竭1回合后会变为未完虫。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3542/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200321.png"
+    }
+  ],
+  "455": [
+    {
+      "page_title": "玳龟",
+      "type": [
+        "幻"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3589/icon.png",
+      "race": {
+        "hp": 101,
+        "attack": 37,
+        "mattack": 85,
+        "defense": 58,
+        "mdefense": 93,
+        "speed": 40,
+        "total": 414
+      },
+      "trait": "乌龟塔理论 每受到1次攻击伤害，敌方获得3层星陨印记。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3589/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200324.png"
+    }
+  ],
+  "456": [
+    {
+      "page_title": "玳塔",
+      "type": [
+        "幻"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3590/icon.png",
+      "race": {
+        "hp": 127,
+        "attack": 47,
+        "mattack": 107,
+        "defense": 72,
+        "mdefense": 116,
+        "speed": 50,
+        "total": 519
+      },
+      "trait": "乌龟塔理论 每受到1次攻击伤害，敌方获得3层星陨印记。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3590/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200324.png"
+    }
+  ],
+  "457": [
+    {
+      "page_title": "量风碗",
+      "type": [
+        "翼",
+        "机械"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3663/icon.png",
+      "race": {
+        "hp": 78,
+        "attack": 79,
+        "mattack": 77,
+        "defense": 93,
+        "mdefense": 67,
+        "speed": 96,
+        "total": 490
+      },
+      "trait": "风速仪 携带的技能每累计传动8，自己获得1层风起印记。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3663/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200319.png"
+    }
+  ],
+  "458": [
+    {
+      "page_title": "测风蝉",
+      "type": [
+        "翼",
+        "机械"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3664/icon.png",
+      "race": {
+        "hp": 98,
+        "attack": 98,
+        "mattack": 97,
+        "defense": 116,
+        "mdefense": 84,
+        "speed": 120,
+        "total": 613
+      },
+      "trait": "风速仪 携带的技能每累计传动8，自己获得1层风起印记。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3664/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200319.png"
+    }
+  ],
+  "459": [
+    {
+      "page_title": "小浣蛋",
+      "type": [
+        "恶"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3771/icon.png",
+      "race": {
+        "hp": 78,
+        "attack": 93,
+        "mattack": 88,
+        "defense": 99,
+        "mdefense": 92,
+        "speed": 96,
+        "total": 546
+      },
+      "trait": "翻垃圾桶 入场时自己未携带的技能位置会变为敌方最近使用过的技能，且能耗-2。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3771/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200320.png"
+    }
+  ],
+  "460": [
+    {
+      "page_title": "黑手浣熊",
+      "type": [
+        "恶"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3772/icon.png",
+      "race": {
+        "hp": 97,
+        "attack": 116,
+        "mattack": 110,
+        "defense": 124,
+        "mdefense": 115,
+        "speed": 120,
+        "total": 682
+      },
+      "trait": "翻垃圾桶 入场时自己未携带的技能位置会变为敌方最近使用过的技能，且能耗-2。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3772/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200320.png"
+    }
+  ],
+  "461": [
+    {
+      "page_title": "幽铃",
+      "type": [
+        "幽"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3773/icon.png",
+      "race": {
+        "hp": 99,
+        "attack": 37,
+        "mattack": 93,
+        "defense": 80,
+        "mdefense": 105,
+        "speed": 76,
+        "total": 490
+      },
+      "trait": "盗魂铃 初始能量为0，首次入场前敌方每聚能1次，回复5能量（可突破上限），在场时自己回复的能量-4。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3773/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200322.png"
+    }
+  ],
+  "462": [
+    {
+      "page_title": "摇铃魔偶",
+      "type": [
+        "幽"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3774/icon.png",
+      "race": {
+        "hp": 123,
+        "attack": 46,
+        "mattack": 117,
+        "defense": 99,
+        "mdefense": 131,
+        "speed": 95,
+        "total": 611
+      },
+      "trait": "盗魂铃 初始能量为0，首次入场前敌方每聚能1次，回复5能量（可突破上限），在场时自己回复的能量-4。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3774/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200322.png"
+    }
+  ],
+  "463": [
+    {
+      "page_title": "星星眼",
+      "type": [
+        "幻"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3236/icon.png",
+      "race": {
+        "hp": 116,
+        "attack": 97,
+        "mattack": 120,
+        "defense": 116,
+        "mdefense": 71,
+        "speed": 85,
+        "total": 605
+      },
+      "trait": "宇宙之眼 敌方每有1层星陨印记，自己获得物防+10%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3236/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200323.png"
+    }
+  ],
+  "464": [
+    {
+      "page_title": "布灵",
+      "type": [
+        "幻",
+        "光"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3775/icon.png",
+      "race": {
+        "hp": 66,
+        "attack": 92,
+        "mattack": 32,
+        "defense": 98,
+        "mdefense": 77,
+        "speed": 100,
+        "total": 465
+      },
+      "trait": "旧玩具 己方精灵每使用过1个不同系别的技能，自己入场时获得双攻+10%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3775/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200325.png"
+    }
+  ],
+  "465": [
+    {
+      "page_title": "布灵布灵",
+      "type": [
+        "幻",
+        "光"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3776/icon.png",
+      "race": {
+        "hp": 83,
+        "attack": 115,
+        "mattack": 40,
+        "defense": 123,
+        "mdefense": 96,
+        "speed": 125,
+        "total": 582
+      },
+      "trait": "旧玩具 己方精灵每使用过1个不同系别的技能，自己入场时获得双攻+10%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3776/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200325.png"
+    }
+  ],
+  "466": [
+    {
+      "page_title": "果实立方人",
+      "type": [
+        "机械",
+        "草"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3796/icon.png",
+      "race": {
+        "hp": 105,
+        "attack": 132,
+        "mattack": 50,
+        "defense": 120,
+        "mdefense": 98,
+        "speed": 95,
+        "total": 600
+      },
+      "trait": "秋收 处于草系环境中时，机械系技能威力+50%。",
+      "yiseImg": null,
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200317.png"
+    }
+  ],
+  "467": [
+    {
+      "page_title": "云梦豚",
+      "type": [
+        "水"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3784/icon.png",
+      "race": {
+        "hp": 77,
+        "attack": 37,
+        "mattack": 101,
+        "defense": 87,
+        "mdefense": 94,
+        "speed": 84,
+        "total": 480
+      },
+      "trait": "吐水 使用技能水弹后，敌方获得双攻+10%，双防-10%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3784/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200326.png"
+    }
+  ],
+  "468": [
+    {
+      "page_title": "长江豚",
+      "type": [
+        "水"
+      ],
+      "img": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3785/icon.png",
+      "race": {
+        "hp": 96,
+        "attack": 46,
+        "mattack": 126,
+        "defense": 109,
+        "mdefense": 117,
+        "speed": 105,
+        "total": 599
+      },
+      "trait": "吐水 使用技能水弹后，敌方获得双攻+10%，双防-10%。",
+      "yiseImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/pets/3785/shiny.png",
+      "traitImg": "https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/200326.png"
     }
   ]
 };

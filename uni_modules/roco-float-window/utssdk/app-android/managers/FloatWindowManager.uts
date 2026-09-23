@@ -10,23 +10,28 @@ import View from "android.view.View";
 import WebView from "android.webkit.WebView";
 import Color from "android.graphics.Color";
 import LinearLayout from "android.widget.LinearLayout";
+import Toast from "android.widget.Toast";
+import GradientDrawable from "android.graphics.drawable.GradientDrawable";
 import MATCH_PARENT from "android.view.ViewGroup.LayoutParams.MATCH_PARENT";
 import { getUniActivity } from "io.dcloud.uts.android";
 import { BallTouchListener, PanelTouchListener } from "../touch/BallTouchListener";
 
 // 悬浮球尺寸（dp）
-const BALL_SIZE_DP: Int = 44;
-// 面板尺寸（dp）：抓手条 + 页面内容
-const PANEL_W_DP: Int = 304;
-const PANEL_H_DP: Int = 440;
-const GRABBER_DP: Int = 20;
+const BALL_SIZE_DP: Int = 40;
+// 面板尺寸（dp）：适配手机屏幕与对战画面，小巧紧凑不遮挡技能栏与战场
+const PANEL_W_MAX_DP: Int = 185;
+const PANEL_H_MAX_DP: Int = 230;
+const GRABBER_DP: Int = 14;
 // 屏幕边距（dp）
-const GAP_DP: Int = 8;
+const GAP_DP: Int = 6;
 
 export class FloatWindowManager {
     mContext: Context | null;
     mWindowManager: WindowManager | null = null;
     mDensity: number = 3;
+    // 屏幕宽高（dp），用于面板自适应
+    mScreenWDp: Int = 360;
+    mScreenHDp: Int = 640;
 
     mBallUrl: string = "";
     mPanelUrl: string = "";
@@ -49,12 +54,62 @@ export class FloatWindowManager {
             if (metrics != null) {
                 this.mDensity = metrics.density;
             }
+            // 屏幕宽高（dp）：直接读系统 Configuration 现成的 dp 值，避免像素/density 除法的类型坑
+            try {
+                const config = activity.getResources().getConfiguration();
+                if (config.screenWidthDp > 0) {
+                    this.mScreenWDp = config.screenWidthDp;
+                }
+                if (config.screenHeightDp > 0) {
+                    this.mScreenHDp = config.screenHeightDp;
+                }
+            } catch (e) {
+                console.error("读取屏幕 dp 尺寸失败:", e);
+            }
         }
+    }
+
+    // 面板宽度（dp）：根据屏幕宽度自适应，夹在 165~185dp
+    panelWidthDp(): Int {
+        const byScreen: number = this.mScreenWDp * 0.44;
+        let w: Int = byScreen.toInt();
+        if (w > PANEL_W_MAX_DP) {
+            w = PANEL_W_MAX_DP;
+        }
+        if (w < 165) {
+            w = 165;
+        }
+        return w;
+    }
+
+    // 面板高度（dp）：根据屏幕高度自适应，夹在 190~230dp（避免横屏时填满屏幕）
+    panelHeightDp(): Int {
+        const byScreen: number = this.mScreenHDp * 0.36;
+        let h: Int = byScreen.toInt();
+        if (h > PANEL_H_MAX_DP) {
+            h = PANEL_H_MAX_DP;
+        }
+        if (h < 190) {
+            h = 190;
+        }
+        return h;
     }
 
     // dp 转 px
     dp(value: Int): Int {
         return (this.mDensity * value).toInt();
+    }
+
+    // 失败点 toast（本类方法均在 UI 线程执行，可直接 show）
+    toast(msg: string) {
+        try {
+            const context = this.mContext;
+            if (context != null) {
+                Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+            }
+        } catch (e) {
+            console.error("toast error:", e);
+        }
     }
 
     // 刷新页面地址（悬浮窗已存在时重新打开用）
@@ -71,7 +126,8 @@ export class FloatWindowManager {
         settings.setAllowFileAccess(true);
         settings.setAllowFileAccessFromFileURLs(true);
         settings.setAllowUniversalAccessFromFileURLs(true);
-        webView.setBackgroundColor(Color.TRANSPARENT);
+        webView.setBackgroundColor(0);
+        webView.setBackgroundResource(0);
     }
 
     // 窗口参数：type 按 Android 版本选择；ball 不获取焦点，面板可获取焦点（输入框需要）
@@ -87,7 +143,7 @@ export class FloatWindowManager {
         } else {
             params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         }
-        params.format = PixelFormat.TRANSLUCENT;
+        params.format = PixelFormat.RGBA_8888;
         params.gravity = Gravity.TOP;
         params.width = widthPx;
         params.height = heightPx;
@@ -111,6 +167,8 @@ export class FloatWindowManager {
 
         const ball = new WebView(activity);
         this.setupWebView(ball);
+        ball.setBackgroundColor(0);
+        ball.setBackgroundResource(0);
         this.mBallParams = this.makeParams(
             this.dp(BALL_SIZE_DP), this.dp(BALL_SIZE_DP),
             this.dp(GAP_DP), this.dp(200), false
@@ -127,6 +185,7 @@ export class FloatWindowManager {
         } catch (e) {
             // 无悬浮窗权限时这里会抛 BadTokenException
             console.error("showBall: addView 失败: " + e);
+            this.toast("悬浮球添加失败，请检查悬浮窗权限是否已开启");
             this.mBallView = null;
         }
     }
@@ -142,24 +201,48 @@ export class FloatWindowManager {
         if (activity == null) return;
 
         if (this.mPanelContainer == null) {
-            // 面板 = 纵向容器（原生抓手条 + 页面 WebView）
-            // 抓手条用纯色 View（避免 TextView.setTextSize 的 Float 参数兼容问题），
-            // 标题与操作提示由页面自身渲染
+            // 面板 = 纵向容器（原生集成式抓手条 + 页面 WebView）
+            // 整个外层容器统一使用圆角卡片背景与描金边框，消除黑条割裂感
+            const panelW = this.panelWidthDp();
+            const panelH = this.panelHeightDp();
             const container = new LinearLayout(activity);
             container.setOrientation(LinearLayout.VERTICAL);
 
-            const grabber = new View(activity);
-            grabber.setBackgroundColor(Color.argb(255, 44, 58, 47));
+            const cardBg = new GradientDrawable();
+            cardBg.setColor(Color.argb(245, 18, 24, 20));
+            cardBg.setCornerRadius(this.dp(12).toFloat());
+            cardBg.setStroke(this.dp(1), Color.argb(100, 217, 185, 106));
+            container.setBackground(cardBg);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                container.setClipToOutline(true);
+            }
+
+            // 抓手条：透明背景，居中细长金色小药丸抓手，与整体电竞黑金融为一体
+            const grabber = new LinearLayout(activity);
+            grabber.setOrientation(LinearLayout.HORIZONTAL);
+            grabber.setGravity(Gravity.CENTER);
+            grabber.setBackgroundColor(0);
+
+            const pill = new View(activity);
+            const pillBg = new GradientDrawable();
+            pillBg.setColor(Color.argb(140, 217, 185, 106));
+            pillBg.setCornerRadius(this.dp(99).toFloat());
+            pill.setBackground(pillBg);
+            const pillLp = new LinearLayout.LayoutParams(this.dp(28), this.dp(3));
+            grabber.addView(pill, pillLp);
+
             container.addView(grabber, new LinearLayout.LayoutParams(MATCH_PARENT, this.dp(GRABBER_DP)));
 
             const web = new WebView(activity);
             this.setupWebView(web);
-            container.addView(web, new LinearLayout.LayoutParams(MATCH_PARENT, this.dp(PANEL_H_DP)));
+            web.setBackgroundColor(0);
+            web.setBackgroundResource(0);
+            container.addView(web, new LinearLayout.LayoutParams(MATCH_PARENT, this.dp(panelH)));
 
             this.mPanelContainer = container;
             this.mPanelWebView = web;
             this.mPanelParams = this.makeParams(
-                this.dp(PANEL_W_DP), this.dp(PANEL_H_DP + GRABBER_DP),
+                this.dp(panelW), this.dp(panelH + GRABBER_DP),
                 this.dp(GAP_DP), this.dp(120), true
             );
             grabber.setOnTouchListener(new PanelTouchListener(this, container));
@@ -185,8 +268,8 @@ export class FloatWindowManager {
             screenH = metrics.heightPixels;
         }
         const margin = this.dp(GAP_DP);
-        const maxW = screenW - this.dp(PANEL_W_DP) - margin;
-        const maxH = screenH - this.dp(PANEL_H_DP + GRABBER_DP) - margin;
+        const maxW = screenW - this.dp(this.panelWidthDp()) - margin;
+        const maxH = screenH - this.dp(this.panelHeightDp() + GRABBER_DP) - margin;
         if (x > maxW) { x = maxW; }
         if (x < margin) { x = margin; }
         if (y > maxH) { y = maxH; }
@@ -205,6 +288,7 @@ export class FloatWindowManager {
             console.log("togglePanel: panel shown ✓");
         } catch (e) {
             console.error("togglePanel: addView 失败: " + e);
+            this.toast("悬浮面板打开失败：" + e);
         }
     }
 

@@ -66,7 +66,6 @@ export default {
           items: [
             { title: '图鉴', sub: '查看全部精灵', url: '/pages/catalog', icon: 'book', color: '#1E7A46', bg: '#E4F2E8' },
             { title: '孵蛋', sub: '蛋种预测', url: '/pages/egg', icon: 'egg', color: '#A97F35', bg: '#F6EEDB' },
-            { title: '地图', sub: '本地瓦片地图', url: '/pages/map', icon: 'map', color: '#2C6FD1', bg: '#E7F1FE' },
             { title: '属性克制', sub: '克制倍率计算', url: '/pages/restriction', icon: 'shield', color: '#C64B38', bg: '#FBE9E4' }
           ]
         },
@@ -75,8 +74,8 @@ export default {
           items: [
             { title: '技能查询', sub: '按技能找精灵', url: '/pages/skill-search', icon: 'zap', color: '#A97F35', bg: '#F6EEDB' },
             { title: '速度排行', sub: '按速度种族值查找', url: '/pages/speed-rank', icon: 'wind', color: '#2C6FD1', bg: '#E7F1FE' },
-            { title: '阵容编辑', sub: '保存你的队伍', url: '/pages/team-editor', icon: 'users', color: '#1E7A46', bg: '#E4F2E8' },
-            { title: '愿力冲击', sub: '血脉与克制建议', url: '/pages/bloodline-guide', icon: 'sparkles', color: '#A97F35', bg: '#F6EEDB' }
+            { title: '繁育摆窝', sub: '沙盘规划与炫彩', url: '/pages/breeding-planner', icon: 'sparkles', color: '#1E7A46', bg: '#E4F2E8' },
+            { title: '阵容编辑', sub: '保存你的队伍', url: '/pages/team-editor', icon: 'users', color: '#1E7A46', bg: '#E4F2E8' }
           ]
         }
       ]

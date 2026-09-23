@@ -17,43 +17,95 @@
     </AppHeader>
 
     <scroll-view scroll-y class="content" enhanced :show-scrollbar="false">
-      <view class="welcome" hover-class="press-down" @click="goTeamEditor">
-        <view class="welcome-crest">
-          <AppIcon name="star" :size="22" color="#1E7A46" :stroke-width="2" />
+      <!-- 顶部全图鉴快速搜索栏 -->
+      <view class="quick-search-box" hover-class="press-down" @click="goCatalog">
+        <view class="quick-search-left">
+          <AppIcon name="search" :size="15" color="#8A6A2C" :stroke-width="2.4" />
+          <text class="quick-search-placeholder">搜索精灵名称、系别、技能...</text>
         </view>
-        <view class="welcome-text">
-          <text class="welcome-title">欢迎回来，训练师</text>
-          <text class="welcome-sub">图鉴、孵蛋、技能、属性、阵容和地图都在本地</text>
-        </view>
-        <view class="welcome-go">
-          <text class="welcome-go-text">继续编辑</text>
-          <AppIcon name="arrow-right" :size="12" color="#1E7A46" :stroke-width="2.4" />
+        <view class="quick-search-tag">
+          <text class="quick-search-tag-text">全图鉴</text>
         </view>
       </view>
 
-      <view class="section">
-        <view class="section-head">
-          <view class="section-title-row">
-            <view class="section-dot"></view>
-            <text class="section-title">快捷入口</text>
-          </view>
-        </view>
-        <view class="shortcut-grid">
+      <!-- 4x2 游戏快捷功能入口 (金刚区) -->
+      <view class="core-grid-card">
+        <view class="core-grid">
           <view
             v-for="item in shortcuts"
             :key="item.title"
-            class="shortcut-card"
+            class="core-grid-item"
             hover-class="press-down"
             @click="item.action"
           >
-            <view class="shortcut-icon" :style="{ background: item.bg }">
-              <AppIcon :name="item.icon" :size="17" :color="item.color" :stroke-width="2.2" />
+            <view
+              class="core-grid-icon-wrap"
+              :style="{
+                background: item.gradient || item.bg,
+                borderColor: item.border || 'rgba(0, 0, 0, 0.06)',
+                boxShadow: item.glow ? `0 4px 10px ${item.glow}, inset 0 1px 1px rgba(255, 255, 255, 0.85)` : '0 2px 0 rgba(44, 58, 47, 0.10)'
+              }"
+            >
+              <image v-if="item.gameIcon" class="core-grid-game-icon" :src="item.gameIcon" mode="aspectFit" />
+              <AppIcon v-else :name="item.icon" :size="23" :color="item.color" :stroke-width="2.3" />
             </view>
-            <view class="shortcut-text">
-              <text class="shortcut-title">{{ item.title }}</text>
-              <text class="shortcut-sub">{{ item.sub }}</text>
+            <text class="core-grid-title">{{ item.title }}</text>
+            <text v-if="item.sub" class="core-grid-sub">{{ item.sub }}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 热门精灵速查 横向滑块 -->
+      <view class="section">
+        <view class="section-head">
+          <view class="section-title-row">
+            <view class="section-dot gold"></view>
+            <text class="section-title">热门精灵速查</text>
+          </view>
+          <view class="section-link-btn" hover-class="press-down" @click="goCatalog">
+            <text class="section-link">全部图鉴</text>
+            <AppIcon name="arrow-right" :size="10" color="#1E7A46" :stroke-width="2.4" />
+          </view>
+        </view>
+
+        <scroll-view scroll-x class="hot-pets-scroll" :show-scrollbar="false">
+          <view class="hot-pets-row">
+            <view
+              v-for="pet in hotPets"
+              :key="pet.id"
+              class="hot-pet-card"
+              hover-class="press-down"
+              @click="goDetail(pet.id)"
+            >
+              <view class="hot-pet-art">
+                <RemoteImage class="hot-pet-img" :src="resolvePetImage(pet.img)" mode="aspectFit" />
+              </view>
+              <text class="hot-pet-name">{{ pet.name }}</text>
+              <view class="hot-pet-badges">
+                <TypeBadge
+                  v-for="type in pet.type"
+                  :key="`${pet.id}-${type}`"
+                  :label="type"
+                  :color="getTypeColor(type)"
+                  compact
+                />
+              </view>
             </view>
           </view>
+        </scroll-view>
+      </view>
+
+      <view class="welcome" hover-class="press-down" @click="goTeamEditor">
+        <view class="welcome-crest">
+          <AppIcon name="star" :size="18" color="#C9A14E" :stroke-width="2.2" />
+        </view>
+        <view class="welcome-text">
+          <text class="welcome-title">{{ draftTeamName || '我的阵容' }}</text>
+          <text class="welcome-sub">六宠战队配置 · 实战面板推演与配招</text>
+        </view>
+        <view class="welcome-go">
+          <text class="welcome-go-text">去调整</text>
+          <AppIcon name="arrow-right" :size="12" color="#1E7A46" :stroke-width="2.4" />
         </view>
       </view>
 
@@ -183,14 +235,14 @@
 
         <view v-else class="empty">
           <view class="empty-plus-ring">
-            <AppIcon name="plus" :size="20" color="#A3AE9F" :stroke-width="2.4" />
+            <AppIcon name="sparkles" :size="20" color="#C9A14E" :stroke-width="2.2" />
           </view>
-          <text class="empty-card-title">无自定义阵容</text>
-          <text class="empty-card-sub">先新建一个空阵容，再去阵容编辑页添加精灵。</text>
+          <text class="empty-card-title">暂未编排战斗队伍</text>
+          <text class="empty-card-sub">挑选 6 只出战精灵，组建你的专属洛克战队吧！</text>
           <view class="empty-actions">
             <view class="empty-btn primary" hover-class="press-down" @click="createNewTeamDraft">
               <AppIcon name="plus" :size="13" color="#FFFFFF" :stroke-width="2.6" />
-              <text>新建阵容</text>
+              <text>创建首套阵容</text>
             </view>
           </view>
         </view>
@@ -321,10 +373,10 @@
 
         <view v-else class="empty">
           <view class="empty-plus-ring">
-            <AppIcon name="book" :size="20" color="#A3AE9F" :stroke-width="2.2" />
+            <AppIcon name="book" :size="20" color="#C9A14E" :stroke-width="2.2" />
           </view>
-          <text class="empty-card-title">还没有已保存阵容</text>
-          <text class="empty-card-sub">点击“另存”后，会在这里新增一套阵容，不会覆盖当前编辑。</text>
+          <text class="empty-card-title">阵容收藏册尚无记录</text>
+          <text class="empty-card-sub">在上方点击「另存」即可将战队保存到收藏册，方便随时切换推演。</text>
         </view>
       </view>
 
@@ -375,6 +427,7 @@
       </view>
     </view>
 
+    <!-- #ifdef APP-PLUS -->
     <view v-if="floatGuideVisible" class="rename-mask" @click="closeFloatGuide">
       <view class="rename-panel" @click.stop>
         <view class="dialog-grabber"></view>
@@ -386,18 +439,25 @@
         </view>
         <view class="float-guide-body">
           <view v-if="floatGuideStep === 'permission'" class="float-guide-text">
-            <text>首次使用需要"显示在其他应用上层"权限。</text>
+            <text>首次使用需要开启「悬浮窗」权限。</text>
+            <text>vivo 等部分机型设置里叫"悬浮窗"（非"显示在其他应用上层"），在权限页找到本应用并打开即可。</text>
             <text>点击下方按钮去开启，返回后再点一次"实时伤害悬浮窗"即可。</text>
+            <text>已开启仍提示？点"我已开启，直接打开"试一次——系统级悬浮窗以真实结果为准，失败会有具体提示。</text>
             <text>若设置里找不到本应用，请先制作自定义调试基座（UTS 插件必须）。</text>
+            <text v-if="floatDebugInfo" class="float-debug-info">检测详情：{{ floatDebugInfo }}</text>
           </view>
           <view v-else class="float-guide-text">
             <text>悬浮窗为系统级窗口（UTS 插件实现），可覆盖到游戏等其他应用之上，仅支持 Android App。</text>
             <text>悬浮球：单击展开/收起面板，拖动移动位置，长按关闭。</text>
             <text>若提示不可用：请制作自定义调试基座后运行（运行 → 运行到手机或模拟器 → 制作自定义调试基座）。</text>
+            <text>当前基座不含 UTS 插件时会自动降级为应用内悬浮窗（仅覆盖本App页面，打开时有 toast 提示）。</text>
           </view>
           <view class="rename-actions">
             <view v-if="floatGuideStep === 'permission'" class="rename-btn ghost" hover-class="press-down" @click="closeFloatGuide">
               <text>取消</text>
+            </view>
+            <view v-if="floatGuideStep === 'permission'" class="rename-btn ghost" hover-class="press-down" @click="forceOpenFloatWindow">
+              <text>我已开启，直接打开</text>
             </view>
             <view v-if="floatGuideStep === 'permission'" class="rename-btn primary" hover-class="press-down" @click="goFloatPermissionSettings">
               <text>去开启权限</text>
@@ -409,6 +469,7 @@
         </view>
       </view>
     </view>
+    <!-- #endif -->
   </view>
 </template>
 
@@ -418,10 +479,11 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
 import AppIcon from '@/components/AppIcon/AppIcon.vue'
 import StatPanel from '@/components/StatPanel/StatPanel.vue'
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
-import { petTypes } from '@/data/pet/pet_detail.js'
+import { petTypes, petDetail } from '@/data/pet/pet_detail.js'
 import { readStorage, writeStorage } from '@/utils/nav.js'
+import { petIndex } from '@/data/pet/pet_index.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
-import { openDamageFloatWindow, isSystemOverlayAvailable, hasOverlayPermission, openOverlayPermissionSettings } from '@/utils/floatWindow.js'
+import { openDamageFloatWindow, isSystemOverlayAvailable, hasOverlayPermission, openOverlayPermissionSettings, getOverlayDebugInfo } from '@/utils/floatWindow.js'
 
 const DRAFT_STORAGE_KEY = 'team_draft'
 const PRESET_STORAGE_KEY = 'team_presets'
@@ -451,20 +513,152 @@ export default {
       renameTeamKey: '',
       renameValue: '',
       floatGuideVisible: false,
-      floatGuideStep: 'info'
+      floatGuideStep: 'info',
+      floatDebugInfo: ''
     }
   },
   computed: {
     shortcuts() {
       return [
-        { title: '属性值计算', sub: '攻守双模式工具页', icon: 'wand', color: '#A97F35', bg: '#F6EEDB', action: this.goAttributeCalculator },
-        { title: '实时伤害悬浮面板', sub: '对方满配实时算', icon: 'window', color: '#2C6FD1', bg: '#E7F1FE', action: this.goFloatWindow },
-        { title: '技能查询', sub: '按技能查精灵', icon: 'zap', color: '#A97F35', bg: '#F6EEDB', action: this.goSkillSearch },
-        { title: '速度排行', sub: '按速度种族值看', icon: 'wind', color: '#2C6FD1', bg: '#E7F1FE', action: this.goSpeedRank },
-        { title: '属性克制', sub: '看倍率和例子', icon: 'shield', color: '#C64B38', bg: '#FBE9E4', action: this.goRestriction },
-        { title: '孵蛋', sub: '预测可能精灵', icon: 'egg', color: '#A97F35', bg: '#F6EEDB', action: this.goEgg },
-        { title: '图鉴', sub: '查看全部精灵', icon: 'book', color: '#1E7A46', bg: '#E4F2E8', action: this.goCatalog }
+        {
+          title: '全图鉴',
+          sub: '1180+ 精灵',
+          icon: 'book',
+          gameIcon: '/static/game-icons/card.png',
+          color: '#1E7A46',
+          gradient: 'linear-gradient(145deg, #F0FAF4 0%, #D8F0E2 100%)',
+          border: '#BFE4CF',
+          glow: 'rgba(30, 122, 70, 0.16)',
+          action: this.goCatalog
+        },
+        {
+          title: '伤害推演',
+          sub: '实战极值',
+          icon: 'wand',
+          gameIcon: '/static/game-icons/wish.png',
+          color: '#8A45B8',
+          gradient: 'linear-gradient(145deg, #F9F3FD 0%, #ECDCFA 100%)',
+          border: '#DDC5F4',
+          glow: 'rgba(138, 69, 184, 0.16)',
+          action: this.goAttributeCalculator
+        },
+        {
+          title: '技能速查',
+          sub: '威力·PP',
+          icon: 'zap',
+          color: '#A97F35',
+          gradient: 'linear-gradient(145deg, #FFF9EB 0%, #F5E6C6 100%)',
+          border: '#EAD7B2',
+          glow: 'rgba(169, 127, 53, 0.18)',
+          action: this.goSkillSearch
+        },
+        {
+          title: '速度天梯',
+          sub: '先手时序',
+          icon: 'wind',
+          color: '#216AC8',
+          gradient: 'linear-gradient(145deg, #F0F6FF 0%, #D8E8FC 100%)',
+          border: '#C0D9FA',
+          glow: 'rgba(33, 106, 200, 0.16)',
+          action: this.goSpeedRank
+        },
+        {
+          title: '属性克制',
+          sub: '相克表',
+          icon: 'shield',
+          gameIcon: '/static/game-icons/stone-grass.png',
+          color: '#C64B38',
+          gradient: 'linear-gradient(145deg, #FFF3F0 0%, #FCDCD6 100%)',
+          border: '#F4C4BA',
+          glow: 'rgba(198, 75, 56, 0.16)',
+          action: this.goRestriction
+        },
+        {
+          title: '大块头',
+          sub: '孵化体重',
+          icon: 'egg',
+          gameIcon: '/static/game-icons/egg-white.png',
+          color: '#A97F35',
+          gradient: 'linear-gradient(145deg, #FFF9EB 0%, #F5E6C6 100%)',
+          border: '#EAD7B2',
+          glow: 'rgba(169, 127, 53, 0.18)',
+          action: this.goEgg
+        },
+        {
+          title: '孵蛋摆窝',
+          sub: '繁育求解',
+          icon: 'home',
+          gameIcon: '/static/game-icons/egg-green.png',
+          color: '#1E7A46',
+          gradient: 'linear-gradient(145deg, #F0FAF4 0%, #D8F0E2 100%)',
+          border: '#BFE4CF',
+          glow: 'rgba(30, 122, 70, 0.16)',
+          action: this.goBreedingPlanner
+        },
+        {
+          title: '阵容编辑',
+          sub: '6只编队',
+          icon: 'users',
+          color: '#216AC8',
+          gradient: 'linear-gradient(145deg, #F0F6FF 0%, #D8E8FC 100%)',
+          border: '#C0D9FA',
+          glow: 'rgba(33, 106, 200, 0.16)',
+          action: this.goTeamEditor
+        },
+        // #ifdef APP-PLUS
+        {
+          title: '对局浮窗',
+          sub: '悬浮辅助',
+          icon: 'window',
+          color: '#216AC8',
+          gradient: 'linear-gradient(145deg, #F0F6FF 0%, #D8E8FC 100%)',
+          border: '#C0D9FA',
+          glow: 'rgba(33, 106, 200, 0.16)',
+          action: this.goFloatWindow
+        }
+        // #endif
       ]
+    },
+    hotPets() {
+      // 名称 → seq（官方编号曾整体偏移，禁止写死编号）
+      const seqByName = {}
+      for (const entry of Object.values(petIndex)) {
+        if (entry.name && !seqByName[entry.name]) seqByName[entry.name] = entry.seq
+      }
+      const resolve = (seq) => {
+        const first = (petDetail[String(seq)] || [])[0] || {}
+        return {
+          id: seq,
+          name: first.page_title || '',
+          img: first.img || '',
+          type: first.type || []
+        }
+      }
+
+      const cards = []
+      const seen = new Set()
+      const push = (seq) => {
+        if (!seq || seen.has(seq)) return
+        const card = resolve(seq)
+        if (card.name) {
+          seen.add(seq)
+          cards.push(card)
+        }
+      }
+
+      // 最近配置过的精灵排最前（对用户而言才是真"热门"，零维护）
+      const configMap = readStorage('pet_config_cache_v1', {}) || {}
+      Object.entries(configMap)
+        .filter(([, cfg]) => cfg && cfg.cachedAt)
+        .sort((a, b) => (b[1].cachedAt || 0) - (a[1].cachedAt || 0))
+        .slice(0, 2)
+        .forEach(([pid]) => push(Number(pid)))
+
+      // 常青高人气名单
+      const HOT_NAMES = ['迪莫', '火神', '白金独角兽', '罗隐', '魔力猫', '水灵', '暗影灵面']
+      HOT_NAMES.forEach((name) => push(seqByName[name]))
+
+      return cards.slice(0, 8)
     },
     currentDraftSlots() {
       return this.toSixSlots(this.draftTeam)
@@ -755,8 +949,14 @@ export default {
     goEgg() {
       uni.navigateTo({ url: '/pages/egg' })
     },
+    goBreedingPlanner() {
+      uni.navigateTo({ url: '/pages/breeding-planner' })
+    },
     goCatalog() {
       uni.navigateTo({ url: '/pages/catalog' })
+    },
+    goDetail(id) {
+      uni.navigateTo({ url: '/pages/detail?id=' + id })
     },
     goFloatWindow() {
       // #ifdef APP-PLUS
@@ -767,11 +967,14 @@ export default {
       }
       if (!hasOverlayPermission()) {
         this.floatGuideStep = 'permission'
+        this.floatDebugInfo = getOverlayDebugInfo()
         this.floatGuideVisible = true
         return
       }
       const result = openDamageFloatWindow()
-      if (!result.ok && result.reason === 'error') {
+      if (result.ok && result.mode === 'inapp') {
+        uni.showToast({ title: '应用内悬浮窗：仅覆盖本App。悬浮到游戏需自定义调试基座', icon: 'none', duration: 2500 })
+      } else if (!result.ok && result.reason === 'error') {
         uni.showToast({ title: '悬浮窗打开失败：' + (result.message || ''), icon: 'none' })
       } else if (!result.ok) {
         this.floatGuideStep = 'info'
@@ -780,6 +983,20 @@ export default {
       // #endif
       // #ifndef APP-PLUS
       this.floatGuideVisible = true
+      // #endif
+    },
+    forceOpenFloatWindow() {
+      // 跳过权限检测直接打开：厂商权限检测在 vivo 等机型不可靠，
+      // 以 WindowManager.addView 的真实结果为准（失败会有 toast 提示）
+      this.floatGuideVisible = false
+      // #ifdef APP-PLUS
+      const result = openDamageFloatWindow()
+      if (!result.ok && result.reason === 'error') {
+        uni.showToast({ title: '悬浮窗打开失败：' + (result.message || ''), icon: 'none' })
+      } else if (!result.ok) {
+        this.floatGuideStep = 'info'
+        this.floatGuideVisible = true
+      }
       // #endif
     },
     goFloatPermissionSettings() {
@@ -824,6 +1041,113 @@ export default {
   font-weight: 700;
   color: #FFFFFF;
   letter-spacing: 0.02em;
+}
+
+/* ===== 顶部快速搜索栏 ===== */
+.quick-search-box {
+  margin: 14px 14px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 14px;
+  background: var(--paper-card, #FFFDF7);
+  border: 1.5px solid var(--paper-line, #E3DCC8);
+  border-radius: 999px;
+  box-shadow: 0 2px 0 rgba(44, 58, 47, 0.10);
+  transition: transform 0.12s ease;
+}
+
+.quick-search-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.quick-search-placeholder {
+  font-size: 13px;
+  color: var(--ink-muted, #A3AE9F);
+}
+
+.quick-search-tag {
+  flex-shrink: 0;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--brand-green-mist, #E4F2E8);
+  border: 1px solid var(--brand-green, #2F9E5F);
+  display: flex;
+  align-items: center;
+}
+
+.quick-search-tag-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--brand-green-deep, #1E7A46);
+}
+
+/* ===== 核心功能金刚区 (4x2) ===== */
+.core-grid-card {
+  margin: 14px 14px 0;
+  padding: 14px 6px 12px;
+  border-radius: 20px;
+  background: var(--paper-card, #FFFDF7);
+  border: 1.5px solid var(--paper-line, #E3DCC8);
+  box-shadow: var(--sticker-shadow, 0 3px 0 rgba(44, 58, 47, 0.10));
+}
+
+.core-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px 2px;
+}
+
+.core-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  transition: transform 0.12s ease;
+}
+
+.core-grid-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.core-grid-game-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  filter: drop-shadow(0 2px 3px rgba(44, 58, 47, 0.25));
+}
+
+.core-grid-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ink, #2C3A2F);
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.25;
+  margin-top: 2px;
+}
+
+.core-grid-sub {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #8C998B;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 /* ===== 欢迎贴纸卡 ===== */
@@ -904,7 +1228,7 @@ export default {
 
 /* ===== 区块 ===== */
 .section {
-  margin: 22px 14px 0;
+  margin: 14px 14px 0;
 }
 
 .section-head {
@@ -965,52 +1289,64 @@ export default {
   font-weight: 700;
 }
 
-/* ===== 快捷入口 ===== */
-.shortcut-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 11px;
+/* ===== 热门精灵速查横向滑块 ===== */
+.hot-pets-scroll {
+  width: 100%;
+  white-space: nowrap;
 }
 
-.shortcut-card {
-  padding: 13px 14px;
-  border-radius: 16px;
+.hot-pets-row {
+  display: inline-flex;
+  gap: 10px;
+  padding: 2px 0 6px;
+}
+
+.hot-pet-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 92px;
+  padding: 10px 6px;
+  border-radius: 15px;
   background: var(--paper-card, #FFFDF7);
   border: 1.5px solid var(--paper-line, #E3DCC8);
-  box-shadow: var(--sticker-shadow, 0 3px 0 rgba(44, 58, 47, 0.10));
-  display: flex;
-  align-items: center;
-  gap: 11px;
+  box-shadow: 0 2px 0 rgba(44, 58, 47, 0.10);
   transition: transform 0.12s ease;
 }
 
-.shortcut-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 11px;
+.hot-pet-art {
+  width: 58px;
+  height: 58px;
+  border-radius: 12px;
+  background: var(--paper-tint, #F6EEDB);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  margin-bottom: 6px;
+  overflow: hidden;
 }
 
-.shortcut-text {
-  flex: 1;
-  min-width: 0;
+.hot-pet-img {
+  width: 50px;
+  height: 50px;
 }
 
-.shortcut-title {
-  display: block;
-  font-size: 13.5px;
+.hot-pet-name {
+  font-size: 12px;
   font-weight: 700;
   color: var(--ink, #2C3A2F);
+  max-width: 82px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 4px;
 }
 
-.shortcut-sub {
-  display: block;
-  margin-top: 2px;
-  font-size: 11px;
-  color: var(--ink-soft, #6B7A6E);
+.hot-pet-badges {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 /* ===== 阵容贴纸卡 ===== */
@@ -1184,7 +1520,7 @@ export default {
   border-radius: 14px;
   background: var(--paper-card, #FFFDF7);
   border: 1.5px solid var(--paper-line, #E3DCC8);
-  box-shadow: 0 2px 0 rgba(44, 58, 47, 0.08);
+  box-shadow: 0 2px 0 rgba(44, 58, 47, 0.10);
   padding: 12px;
 }
 
@@ -1644,6 +1980,13 @@ export default {
   margin-bottom: 12px;
 }
 
+.float-debug-info {
+  font-size: 10px;
+  line-height: 1.5;
+  color: #A3AE9F;
+  word-break: break-all;
+}
+
 .bottom-space {
   height: calc(28rpx + env(safe-area-inset-bottom));
 }
@@ -1654,8 +1997,8 @@ export default {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .shortcut-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .core-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
   }
 }
 </style>

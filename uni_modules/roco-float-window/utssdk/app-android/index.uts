@@ -8,6 +8,11 @@ import Intent from "android.content.Intent";
 import Uri from "android.net.Uri";
 import Settings from "android.provider.Settings";
 import Runnable from "java.lang.Runnable";
+import Build from "android.os.Build";
+import Cursor from "android.database.Cursor";
+import Context from "android.content.Context";
+import Activity from "android.app.Activity";
+import Toast from "android.widget.Toast";
 import { getUniActivity, getAppContext } from "io.dcloud.uts.android";
 import { FloatWindowManager } from "./managers/FloatWindowManager";
 
@@ -35,6 +40,30 @@ class CloseTask extends Runnable {
     }
     override run() {
         this.mManager.removeViews();
+    }
+}
+
+/** UI 线程任务：toast 提示（用户看不到 console，失败必须可见） */
+class ToastTask extends Runnable {
+    mActivity: Activity;
+    mMsg: string;
+    constructor(activity: Activity, msg: string) {
+        super();
+        this.mActivity = activity;
+        this.mMsg = msg;
+    }
+    override run() {
+        Toast.makeText(this.mActivity, this.mMsg, Toast.LENGTH_LONG).show();
+    }
+}
+
+/** 悬浮窗失败点 toast 到界面（Toast 必须在 UI 线程 show；activity 可能为 null） */
+function toastOnUi(activity: Activity | null, msg: string) {
+    if (activity == null) return;
+    try {
+        activity.runOnUiThread(new ToastTask(activity, msg));
+    } catch (e) {
+        console.error("toastOnUi error:", e);
     }
 }
 
@@ -76,6 +105,7 @@ export function startFloat(options: UTSJSONObject, success: UTSCallback | null) 
         }
     } catch (e) {
         console.error("startFloat error:", e);
+        toastOnUi(getUniActivity(), "悬浮窗启动异常：" + e);
         if (success != null) {
             success({ code: -3, message: "启动悬浮窗异常: " + e });
         }
@@ -96,28 +126,144 @@ export function closeFloat() {
     }
 }
 
-/** 是否已授予“显示在其他应用上层”权限 */
+/**
+ * 是否已授予悬浮窗权限。
+ * 策略：以 WindowManager.addView 的真实结果为最终裁判，本检测仅作引导参考。
+ * vivo 特例：厂商权限库（content provider）的明确状态优先于标准 API——
+ * 老机型 canDrawOverlays 可能恒 true（实际未授权），新 OriginOS 机型标准 API
+ * 又可能滞后于 vivo 自己的"悬浮窗"开关；仅当所有信号都查不到时才信标准 API。
+ */
 export function isOverlayPermissionGranted(): boolean {
     const context = getAppContext();
     if (context == null) return false;
+    let standard = false;
     try {
-        return Settings.canDrawOverlays(context);
+        standard = Settings.canDrawOverlays(context);
+    } catch (e) {
+        standard = false;
+    }
+    if (isVivo()) {
+        const r1 = queryVivoProvider(context, VIVO_URI_IQOO, "currentlmode");
+        const r2 = queryVivoProvider(context, VIVO_URI_PM, "currentmode");
+        // 1=明确允许 2=明确拒绝 0=查不到（provider 不存在或无记录）
+        if (r1 == 1 || r2 == 1) return true;
+        if (r1 == 2 || r2 == 2) return false;
+    }
+    return standard;
+}
+
+/** 悬浮窗权限诊断信息（真机排查用：显示各检测信号的真实状态） */
+export function getOverlayPermissionDebugInfo(): string {
+    const context = getAppContext();
+    if (context == null) return "无上下文";
+    let standard = false;
+    try {
+        standard = Settings.canDrawOverlays(context);
+    } catch (e) {
+        standard = false;
+    }
+    const model = (Build.MANUFACTURER ?? "?") + " " + (Build.MODEL ?? "?");
+    const sdk = Build.VERSION.SDK_INT;
+    if (isVivo()) {
+        const r1 = queryVivoProvider(context, VIVO_URI_IQOO, "currentlmode");
+        const r2 = queryVivoProvider(context, VIVO_URI_PM, "currentmode");
+        return model + " Android" + sdk + " | 系统开关=" + (standard ? "开" : "关")
+            + " | iqoo库=" + vivoStateText(r1) + " | 权限库=" + vivoStateText(r2);
+    }
+    return model + " Android" + sdk + " | 系统开关=" + (standard ? "开" : "关");
+}
+
+/** 跳转系统悬浮窗权限设置页（vivo 专用 iqoo.secure 兜底） */
+export function openOverlayPermissionSetting() {
+    try {
+        const activity = getUniActivity();
+        if (activity == null) return;
+        // vivo：标准 MANAGE_OVERLAY_PERMISSION 常失效，依次尝试 i管家 的权限页
+        if (isVivo()) {
+            // 候选1：软件权限详情页（i管家"悬浮窗"权限所在页）
+            const soft = new Intent();
+            soft.setClassName("com.iqoo.secure", "com.iqoo.secure.safeguard.SoftPermissionDetailActivity");
+            if (tryStartActivity(activity, soft)) return;
+            // 候选2：后台优化页（部分机型的悬浮窗入口）
+            const bg = new Intent();
+            bg.setClassName("com.iqoo.secure", "com.iqoo.secure.ui.phoneoptimize.BgOptimizeActivity");
+            if (tryStartActivity(activity, bg)) return;
+        }
+        // 通用：标准"显示在其他应用上层"设置页
+        const intent = new Intent(
+            "android.settings.action.MANAGE_OVERLAY_PERMISSION",
+            Uri.parse("package:" + activity.getPackageName())
+        );
+        if (tryStartActivity(activity, intent)) return;
+        // 最终兜底：应用详情页（用户手动找权限）
+        const detail = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        detail.setData(Uri.parse("package:" + activity.getPackageName()));
+        activity.startActivity(detail);
+    } catch (e) {
+        console.error("openOverlayPermissionSetting error:", e);
+    }
+}
+
+// ===== vivo 厂商判定与权限检测 =====
+
+// vivo 厂商权限库双源（0=允许 非0=拒绝 查不到=回退标准API）
+const VIVO_URI_IQOO = "content://com.iqoo.secure.provider.secureprovider/allowfloatwindowapp";
+const VIVO_URI_PM = "content://com.vivo.permissionmanager.provider.permission/float_window_apps";
+
+function isVivo(): boolean {
+    try {
+        // UTS 的 || 只能用于布尔值，字符串兜底必须用 ??
+        const raw = Build.MANUFACTURER ?? "";
+        const m = raw.toLowerCase();
+        return m.contains("vivo") || m.contains("iqoo");
     } catch (e) {
         return false;
     }
 }
 
-/** 跳转系统“显示在其他应用上层”设置页 */
-export function openOverlayPermissionSetting() {
+function vivoStateText(r: Int): string {
+    if (r == 1) return "允许";
+    if (r == 2) return "拒绝";
+    return "未知";
+}
+
+/** 查 vivo 权限库：0=未知（provider不存在/无记录） 1=明确允许 2=明确拒绝 */
+function queryVivoProvider(context: Context, uriStr: string, column: string): Int {
     try {
-        const activity = getUniActivity();
-        if (activity == null) return;
-        const intent = new Intent(
-            "android.settings.action.MANAGE_OVERLAY_PERMISSION",
-            Uri.parse("package:" + activity.getPackageName())
+        // 原生 API 要 Array<String>，数组字面量会生成 UTSArray（error17），必须用 arrayOf
+        const selectionArgs = arrayOf(context.getPackageName());
+        const cursor: Cursor | null = context.getContentResolver().query(
+            Uri.parse(uriStr), null, "pkgname = ?",
+            selectionArgs, null
         );
-        activity.startActivity(intent);
+        if (cursor == null) return 0;
+        // 必须显式标注 Int：字面量 0 会被推断成 Number，与返回类型 Int 不匹配
+        let result: Int = 0;
+        if (cursor.moveToFirst()) {
+            const idx = cursor.getColumnIndex(column);
+            if (idx >= 0) {
+                // 0 = 允许，非 0 = 拒绝/询问
+                if (cursor.getInt(idx) == 0) {
+                    result = 1;
+                } else {
+                    result = 2;
+                }
+            }
+        }
+        cursor.close();
+        return result;
     } catch (e) {
-        console.error("openOverlayPermissionSetting error:", e);
+        return 0;
+    }
+}
+
+/** 安全启动 Activity：异常（无匹配页面等）时返回 false 走下一候选。
+ *  不用 resolveActivity 预检：Android 11+ 包可见性限制下对第三方应用恒返回 null，会误判失败 */
+function tryStartActivity(activity: Activity, intent: Intent): boolean {
+    try {
+        activity.startActivity(intent);
+        return true;
+    } catch (e) {
+        return false;
     }
 }

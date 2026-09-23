@@ -1,41 +1,1097 @@
 [
   {
-    "id": "4",
-    "key": "pet:4",
-    "name": "魔力猫",
-    "variantName": "默认",
-    "role": ["魔攻输出", "热门对手"],
-    "commonSkills": [],
-    "defaultBuild": "魔攻",
-    "asAttacker": true,
-    "asDefender": true,
-    "targetTags": ["热门", "输出检测"],
-    "note": "数据后续人工维护"
-  },
-  {
-    "id": "7",
-    "key": "pet:7",
-    "name": "火神",
-    "variantName": "默认",
-    "role": ["物攻输出", "高速压制"],
-    "commonSkills": ["火云车", "火焰切割"],
-    "defaultBuild": "物攻",
-    "asAttacker": true,
-    "asDefender": true,
-    "targetTags": ["热门", "输出检测", "速度线"],
-    "note": "数据后续人工维护"
+    "_meta": {
+      "updated": "2026-09-18",
+      "口径": "S4 环境调研为主（2026-07-18 之后的 S3 末期 + S4 开赛首周资料）；S4 新宠条目来自 BWIKI nrc 站(2026-09-09 编辑)与 B站赛季环境视频(09-02~09-17)",
+      "赛季状态": "S4月涌狂想(2026-09-10开启，11-05结束)进行中；环境三足鼎立：星陨队(玳塔核心)、狼王体系(银月狼王高幻抗反制)、布灵龙平衡队(榜一)；9-10平衡：削音速犬/烈火守护/加油蟹/火羽/巨鼓象/教练，强布克棱岩/爵士鹿/独角兽/水蛇/缇塔/深蓝鲸/虫队",
+      "规则变化": "2026-09-10 起双方速度相同时改为随机顺序出手；星陨印记=非幻系攻击引爆全部层数，附加威力按层数²+24×层数−24(roco-cal 拟合口径)",
+      "时效警告": "PVP强度随赛季平衡性调整波动大；本次入池新宠基于开赛首周(09-10~09-17)天梯环境，9-17 银月狼王已遭 bug 修复式削弱，后续随赛季更新复核",
+      "维护方式": "更新一律走 tools/map-meta-pets.mjs 映射，禁止手填 seq"
+    }
   },
   {
     "id": "1",
     "key": "pet:1",
     "name": "迪莫",
     "variantName": "默认",
-    "role": ["综合输出"],
+    "role": [
+      "综合输出",
+      "滚雪球"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "综合输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "输出检测"
+    ],
+    "source": "diyiyou.com 2026-04-13",
+    "confidence": "高",
+    "note": "光系全能主C免费T0零氪战神，被动最好的伙伴克制后攻防速+20%并回能，滚雪球极强，七日登录赠送"
+  },
+  {
+    "id": "4",
+    "key": "pet:4",
+    "name": "魔力猫",
+    "variantName": "默认",
+    "role": [
+      "魔攻输出"
+    ],
     "commonSkills": [],
     "defaultBuild": "魔攻",
     "asAttacker": true,
     "asDefender": true,
-    "targetTags": ["热门"],
-    "note": "数据后续人工维护"
+    "targetTags": [
+      "热门",
+      "原有手工维护"
+    ],
+    "source": "原 metaTargetPets 手工条目（2026-09 前已存在）",
+    "confidence": "人工维护",
+    "note": "原手工维护条目，调研未见社区集中提及，保留观察"
+  },
+  {
+    "id": "7",
+    "key": "pet:7",
+    "name": "火神",
+    "variantName": "默认",
+    "role": [
+      "物攻输出"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "物攻输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "输出检测",
+      "速度线"
+    ],
+    "source": "diyiyou.com 2026-04-13; 网易 2026-03",
+    "confidence": "高",
+    "note": "零氪平民必练3只之一，火花进化开荒至毕业不换，T1强力主力"
+  },
+  {
+    "id": "20",
+    "key": "pet:20",
+    "name": "岚鸟",
+    "variantName": "默认",
+    "role": [
+      "速度",
+      "跑图"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "速度",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "速度线"
+    ],
+    "source": "游民星空 首日必抓神宠 2026-03; 知乎",
+    "confidence": "高",
+    "note": "开荒宠物前期跑图飞行最强之一，必抓精灵，新飞行系王者"
+  },
+  {
+    "id": "34",
+    "key": "pet:34",
+    "name": "化蝶",
+    "variantName": "默认",
+    "role": [
+      "辅助",
+      "中转轮换",
+      "异常"
+    ],
+    "commonSkills": [
+      "生日蛋糕",
+      "晒太阳"
+    ],
+    "defaultBuild": "辅助",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "辅助检测",
+      "PVP"
+    ],
+    "source": "diyiyou.com 2026-04-13 | PVP: 4399高阶攻略; 游民星空 2026-04-01",
+    "confidence": "中",
+    "note": "多命机制三命，辅助与中转位实用，对手处理麻烦，适合多精灵轮换阵容"
+  },
+  {
+    "id": "43",
+    "key": "pet:43",
+    "name": "奇丽花",
+    "variantName": "默认",
+    "role": [
+      "辅助",
+      "续航回能"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "辅助",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "续航"
+    ],
+    "source": "diyiyou.com 2026-04-13; gc.com.cn T0榜",
+    "confidence": "高",
+    "note": "草系永动机自洽回蓝零耗技能可无限连招，开荒省资源中后期依然实用，T0榜成员"
+  },
+  {
+    "id": "48",
+    "key": "pet:48",
+    "name": "音速犬",
+    "variantName": "默认",
+    "role": [
+      "物攻输出",
+      "输出",
+      "速度"
+    ],
+    "commonSkills": [
+      "火雨",
+      "当头棒喝"
+    ],
+    "defaultBuild": "物攻输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP",
+      "S4被削"
+    ],
+    "source": "diyiyou.com 2026-04-13; 游民星空 2026-03 | PVP: 游民星空 2026-04-01; 搜狐大师队 2026-04-04",
+    "confidence": "中",
+    "note": "T2优质过渡/补位，跑图+战斗兼顾的早期神宠，陆地跑图精灵里很强",
+    "s3Status": "✅ S3星陨登顶构筑联防位使用火狗；火队为保值体系队"
+  },
+  {
+    "id": "53",
+    "key": "pet:53",
+    "name": "嘟嘟锅",
+    "variantName": "默认",
+    "role": [
+      "坦克"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "坦克",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "坦克检测"
+    ],
+    "source": "diyiyou.com 2026-04-13",
+    "confidence": "中",
+    "note": "氪金天花板优先级第三位，最强肉盾"
+  },
+  {
+    "id": "81",
+    "key": "pet:81",
+    "name": "星光狮",
+    "variantName": "默认",
+    "role": [
+      "物攻输出"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "物攻输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "输出检测"
+    ],
+    "source": "diyiyou.com 2026-04-13",
+    "confidence": "中",
+    "note": "T1强力主力，暴击收割"
+  },
+  {
+    "id": "87",
+    "key": "pet:87",
+    "name": "朔夜伊芙",
+    "variantName": "默认",
+    "role": [
+      "坦克",
+      "慢速叠buff"
+    ],
+    "commonSkills": [
+      "机械齿轮",
+      "蝙蝠"
+    ],
+    "defaultBuild": "坦克",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP"
+    ],
+    "source": "游民星空 2026-04-01",
+    "confidence": "中",
+    "note": "坦克/辅助，够肉挡一轮非满血彗星，挂buff接蝙蝠回血，叠机械齿轮后速度快过狼王（文章称'伊芙'）"
+  },
+  {
+    "id": "90",
+    "key": "pet:90",
+    "name": "翠顶夫人",
+    "variantName": "默认",
+    "role": [
+      "辅助",
+      "增益传递"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "辅助",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "辅助检测"
+    ],
+    "source": "diyiyou.com 2026-04-13",
+    "confidence": "高",
+    "note": "增益传递最强辅助，阵亡后所有增益传给下一只，强化队核心发动机，翠顶祭天法力无边",
+    "s3Status": "✅ S3星陨队联防位在役"
+  },
+  {
+    "id": "91",
+    "key": "pet:91",
+    "name": "黑羽夫人",
+    "variantName": "默认",
+    "role": [
+      "辅助",
+      "能耗压制"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "辅助",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "辅助检测"
+    ],
+    "source": "diyiyou.com 2026-04-13",
+    "confidence": "中",
+    "note": "PVP最强3只之一，能耗压制，与白羽夫人同家族的辅助/干扰位"
+  },
+  {
+    "id": "107",
+    "key": "pet:107",
+    "name": "罗隐",
+    "variantName": "默认",
+    "role": [
+      "坦克",
+      "物攻副C"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "坦克",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "坦克检测",
+      "续航"
+    ],
+    "source": "diyiyou.com 2026-04-13; gc.com.cn T0榜",
+    "confidence": "高",
+    "note": "地+恶坦克/副C平民真神，特性生命代偿+吸血+防御叠加，站场永动机，PVE万金油，PVP单挑之王"
+  },
+  {
+    "id": "117",
+    "key": "pet:117",
+    "name": "白金独角兽",
+    "variantName": "默认",
+    "role": [
+      "输出",
+      "单核推队"
+    ],
+    "commonSkills": [
+      "折射",
+      "气泡",
+      "阻断"
+    ],
+    "defaultBuild": "输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP",
+      "首领血脉",
+      "S2被削",
+      "S4加强"
+    ],
+    "source": "游心网 2026-04-01; 游民星空; 豌豆荚",
+    "confidence": "中",
+    "note": "独角兽单核冲分队阵眼，天梯常见，需首领血脉，最好额外学草系技能处理同行 | ⚠️ S2平衡性调整曾被削弱(独角兽/黑猫/骨龙一波全削)，强度可能低于调研原文描述，用前对照当前版本"
+  },
+  {
+    "id": "130",
+    "key": "pet:130",
+    "name": "怖哭菇",
+    "variantName": "默认",
+    "role": [
+      "辅助",
+      "挂印工具人"
+    ],
+    "commonSkills": [
+      "错乱",
+      "超维透射"
+    ],
+    "defaultBuild": "辅助",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP"
+    ],
+    "source": "搜狐S2 2026-06-08; 游民星空 2026-04-01",
+    "confidence": "中",
+    "note": "星陨队首发挂印工具人，错乱/超维透射上印记；天梯常见起手",
+    "s3Status": "✅ S3星陨队成员，登顶构筑在役"
+  },
+  {
+    "id": "131",
+    "key": "pet:131",
+    "name": "恶魔狼",
+    "variantName": "默认",
+    "role": [
+      "输出",
+      "自爆流"
+    ],
+    "commonSkills": [
+      "魔力爆",
+      "彗星"
+    ],
+    "defaultBuild": "输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP",
+      "S2被削"
+    ],
+    "source": "smzdm 2026-03-26; 游民星空 2026-04-01; 豌豆荚天梯",
+    "confidence": "高",
+    "note": "恶魔狼王（首领化）新手特化输出，狼王自爆队核心，起手黑猫挂魔攻buff等切狼王一招秒 | ⚠️ S2平衡性调整曾被削弱(独角兽/黑猫/骨龙一波全削)，强度可能低于调研原文描述，用前对照当前版本"
+  },
+  {
+    "id": "141",
+    "key": "pet:141",
+    "name": "雪灵",
+    "variantName": "默认",
+    "role": [
+      "控制"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "控制",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "控制"
+    ],
+    "source": "diyiyou.com 2026-04-13",
+    "confidence": "中",
+    "note": "T1强力主力，控场罚站"
+  },
+  {
+    "id": "144",
+    "key": "pet:144",
+    "name": "雪影娃娃",
+    "variantName": "默认",
+    "role": [
+      "控制",
+      "辅助",
+      "冰冻开场"
+    ],
+    "commonSkills": [
+      "赤子之心",
+      "击鼓传花"
+    ],
+    "defaultBuild": "控制",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP"
+    ],
+    "source": "gc.com.cn 强度榜 | PVP: 搜狐S2 2026-06-08; 游民星空 2026-04-01",
+    "confidence": "中",
+    "note": "准T0梯度，阵容主力核心成员",
+    "s3Status": "✅ S3雪影平衡队打到国二；但评价两极(晋级局被雪影开局秒的也有)"
+  },
+  {
+    "id": "146",
+    "key": "pet:146",
+    "name": "权杖-V",
+    "variantName": "默认",
+    "role": [
+      "输出",
+      "印记爆发"
+    ],
+    "commonSkills": [
+      "错乱",
+      "超维透射",
+      "啮合",
+      "钢铁洪流"
+    ],
+    "defaultBuild": "输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP"
+    ],
+    "source": "搜狐S2三套T0 2026-06-08",
+    "confidence": "中",
+    "note": "龙王星陨队核心，错乱/超维透挂星陨印记，啮合提速后钢铁洪流引爆印记高额AOE",
+    "s3Status": "✅ S3环境文(8/22):星陨队登顶榜一，仍为主流"
+  },
+  {
+    "id": "149",
+    "key": "pet:149",
+    "name": "尖嘴狐仙",
+    "variantName": "默认",
+    "role": [
+      "辅助",
+      "控场"
+    ],
+    "commonSkills": [
+      "引燃",
+      "火盾"
+    ],
+    "defaultBuild": "辅助",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP",
+      "联防"
+    ],
+    "source": "搜狐S2三套T0 2026-06-08; 游民星空 2026-04-01",
+    "confidence": "高",
+    "note": "切狐仙开盾清强化，挂引燃接火盾退场；电鹿轮转队联防位，雪天队必带"
+  },
+  {
+    "id": "152",
+    "key": "pet:152",
+    "name": "圣羽翼王",
+    "variantName": "默认",
+    "role": [
+      "物攻输出",
+      "速攻收割"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "物攻输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "输出检测",
+      "速度线"
+    ],
+    "source": "diyiyou.com 中后期精灵推荐 2026-04-13",
+    "confidence": "高",
+    "note": "翼系主C/速攻版本天花板，翼系队友同技能触发迅捷，进场四技能连发，PVE/PVP双神",
+    "s3Status": "✅ S3星陨队残局收割位在役；星陨联防位用火狗(音速犬)"
+  },
+  {
+    "id": "184",
+    "key": "pet:184",
+    "name": "圆号鱼",
+    "variantName": "默认",
+    "role": [
+      "辅助",
+      "能量压制"
+    ],
+    "commonSkills": [
+      "湿润",
+      "泡影"
+    ],
+    "defaultBuild": "辅助",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP",
+      "辅助检测"
+    ],
+    "source": "smzdm PVP强度排行 2026-03-26; 游民星空万金油队 2026-04-01",
+    "confidence": "高",
+    "note": "版本最强辅助，特性泛音列增加敌方技能能耗，为队伍后排减轻压力；万金油队开局挂湿润接泡影切人"
+  },
+  {
+    "id": "206",
+    "key": "pet:206",
+    "name": "酷拉",
+    "variantName": "默认",
+    "role": [
+      "物攻输出",
+      "机制克制"
+    ],
+    "commonSkills": [
+      "热身运动",
+      "三连破",
+      "闪电折返"
+    ],
+    "defaultBuild": "物攻输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP针对"
+    ],
+    "source": "diyiyou.com 2026-04-13; gc.com.cn",
+    "confidence": "高",
+    "note": "电系机制克制圣羽翼王绝对克星，热身运动三连破闪电折返固定连招99%无脑击败翼王，PVP针对性极强"
+  },
+  {
+    "id": "213",
+    "key": "pet:213",
+    "name": "寒音蛇",
+    "variantName": "默认",
+    "role": [
+      "控制",
+      "工具人"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "控制",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP",
+      "控制"
+    ],
+    "source": "4399高阶攻略; 豌豆荚天梯",
+    "confidence": "高",
+    "note": "风起队工具人/撒钉手，冰系技能提供控制和消耗；高爆发后期成长足"
+  },
+  {
+    "id": "225",
+    "key": "pet:225",
+    "name": "翼龙",
+    "variantName": "默认",
+    "role": [
+      "物攻输出"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "物攻输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门"
+    ],
+    "source": "gc.com.cn 强度榜",
+    "confidence": "中",
+    "note": "准T0梯度，阵容主力核心成员"
+  },
+  {
+    "id": "228",
+    "key": "pet:228",
+    "name": "爵士鹿",
+    "variantName": "默认",
+    "role": [
+      "输出",
+      "叠伤核心"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP",
+      "S4加强"
+    ],
+    "source": "搜狐S2三套T0 2026-06-08",
+    "confidence": "中",
+    "note": "电鹿轮转队双核之一，首领化后根据敌方属性灵活切换联防，持续叠被动增伤，越打越强"
+  },
+  {
+    "id": "245",
+    "key": "pet:245",
+    "name": "琉璃水母",
+    "variantName": "默认",
+    "role": [
+      "魔攻输出"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "魔攻输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门"
+    ],
+    "source": "gc.com.cn 强度榜",
+    "confidence": "中",
+    "note": "准T0梯度，阵容主力核心成员"
+  },
+  {
+    "id": "254",
+    "key": "pet:254",
+    "name": "冰钻布鲁斯",
+    "variantName": "默认",
+    "role": [
+      "控制",
+      "控场核心"
+    ],
+    "commonSkills": [
+      "极寒领域"
+    ],
+    "defaultBuild": "控制",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "控制"
+    ],
+    "source": "diyiyou.com 精灵强度排行 2026-04",
+    "confidence": "中",
+    "note": "控场核心，技能极寒领域可封锁全场，竞技场凭独特机制表现出色"
+  },
+  {
+    "id": "271",
+    "key": "pet:271",
+    "name": "绒光优优",
+    "variantName": "默认",
+    "role": [
+      "控制",
+      "控场核心"
+    ],
+    "commonSkills": [
+      "流沙",
+      "摇篮曲"
+    ],
+    "defaultBuild": "控制",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "控制"
+    ],
+    "source": "diyiyou.com 2026-04-13",
+    "confidence": "高",
+    "note": "光系战术核心全能控场，折返高频上下场控节奏，配合流沙/摇篮曲控场链，高端局必带"
+  },
+  {
+    "id": "290",
+    "key": "pet:290",
+    "name": "寂灭骨龙",
+    "variantName": "默认",
+    "role": [
+      "物攻输出",
+      "残局收割"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "物攻输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "残局",
+      "S2被削"
+    ],
+    "source": "diyiyou.com 2026-04-13",
+    "confidence": "高",
+    "note": "龙系残局战神PVP特化，血量互换机制敌方血越高越优，龙威压制战后回魔，单宠压制力强 | ⚠️ S2平衡性调整曾被削弱(独角兽/黑猫/骨龙一波全削)，强度可能低于调研原文描述，用前对照当前版本"
+  },
+  {
+    "id": "295",
+    "key": "pet:295",
+    "name": "龙息帕尔",
+    "variantName": "默认",
+    "role": [
+      "输出",
+      "残局收割"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP"
+    ],
+    "source": "搜狐S2 2026-06-08; diyiyou 2026-03-29",
+    "confidence": "中",
+    "note": "残局收割位，对手残血能量枯竭时登场清场；中期培养推荐",
+    "s3Status": "✅ S3星陨队残局收割位在役"
+  },
+  {
+    "id": "302",
+    "key": "pet:302",
+    "name": "画间沉铁兽",
+    "variantName": "默认",
+    "role": [
+      "辅助",
+      "克制强化流"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "辅助",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP"
+    ],
+    "source": "搜狐大师队 2026-04-04; 游民星空 2026-04-01",
+    "confidence": "中",
+    "note": "大师队成员，作用是压制强化队，带武系应对技能"
+  },
+  {
+    "id": "321",
+    "key": "pet:321",
+    "name": "利灯鱼",
+    "variantName": "默认",
+    "role": [
+      "辅助",
+      "治疗"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "辅助",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP",
+      "辅助检测"
+    ],
+    "source": "搜狐S2三套T0 2026-06-08",
+    "confidence": "中",
+    "note": "每回合稳定为队友回复血量，与小丑公爵联动是治疗反伤队的阵容灵魂"
+  },
+  {
+    "id": "326",
+    "key": "pet:326",
+    "name": "燃薪虫",
+    "variantName": "默认",
+    "role": [
+      "魔攻输出",
+      "真伤爆发"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "魔攻输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "输出检测"
+    ],
+    "source": "diyiyou.com 2026-04-13; gc.com.cn T0榜首位",
+    "confidence": "高",
+    "note": "火系PVE真伤爆发，入场叠10层灼烧3回合翻倍至30层百分比真伤，非火系BOSS几乎一刀秒"
+  },
+  {
+    "id": "337",
+    "key": "pet:337",
+    "name": "落陨星兔",
+    "variantName": "默认",
+    "role": [
+      "输出",
+      "单点爆发"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP"
+    ],
+    "source": "搜狐S2 2026-06-08; 游民星空 2026-04-01",
+    "confidence": "中",
+    "note": "星陨队单点伤害天花板，完成化劲后四层星陨印记即可打出巨额单体爆发",
+    "s3Status": "✅ S3星陨队成员，登顶构筑在役"
+  },
+  {
+    "id": "364",
+    "key": "pet:364",
+    "name": "小丑公爵",
+    "variantName": "默认",
+    "role": [
+      "辅助",
+      "反伤"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "辅助",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP"
+    ],
+    "source": "搜狐S2三套T0 2026-06-08",
+    "confidence": "中",
+    "note": "特性戏耍将受到的治疗量全额转化为敌方全体掉血，克制站桩不死队"
+  },
+  {
+    "id": "370",
+    "key": "pet:370",
+    "name": "霹雳迪迪",
+    "variantName": "默认",
+    "role": [
+      "输出",
+      "速度"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "输出",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "热门",
+      "PVP"
+    ],
+    "source": "搜狐S2三套T0 2026-06-08",
+    "confidence": "中",
+    "note": "特性安可+超高速度站桩收割，接受雪影娃娃击鼓传花转移增益的后期主力输出"
+  },
+  {
+    "id": "445",
+    "key": "pet:445",
+    "name": "银月狼王",
+    "variantName": "默认",
+    "role": [
+      "物攻输出",
+      "先手压制"
+    ],
+    "commonSkills": [
+      "月蚀",
+      "叠加态",
+      "重组",
+      "力量增效",
+      "量子涨落",
+      "天体吸积"
+    ],
+    "defaultBuild": "物攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "S4热门",
+      "S4新宠"
+    ],
+    "source": "BWIKI nrc 银月狼王页(2026-09-09，种族650/速130/幽幻)；B站龙王星陨队2.0榜2(2026-09-13)；9-17 bug修复变相削弱(2026-09-17)",
+    "confidence": "中",
+    "note": "S4第一数值怪：130速大多先手，月蚀130威力(敌<50%能耗-3)，高幻抗克制星陨/幻系体系；9-17 修复bug后强度略有回落"
+  },
+  {
+    "variantName": "默认",
+    "id": "456",
+    "key": "pet:456",
+    "name": "玳塔",
+    "matchedSeq": 456,
+    "matchHow": "exact",
+    "role": [
+      "坦克",
+      "印记爆发"
+    ],
+    "commonSkills": [
+      "超维投射",
+      "心灵洞悉",
+      "奇点",
+      "错乱",
+      "引力偏转",
+      "多维击打"
+    ],
+    "defaultBuild": "魔攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "S4热门",
+      "S4新宠"
+    ],
+    "note": "S4星陨队核心：特性「乌龟塔理论」每受1次攻击伤害敌方+3层星陨印记，印记引爆构成S4第一体系，开赛首日星陨队28局26胜登顶大师",
+    "source": "BWIKI nrc 玳龟页(2026-09-09)；B站洛克时报41.0(2026-09-12)、星陨队登顶记录(2026-09-10后)",
+    "confidence": "高"
+  },
+  {
+    "variantName": "默认",
+    "id": "455",
+    "key": "pet:455",
+    "name": "玳龟",
+    "matchedSeq": 455,
+    "matchHow": "exact",
+    "role": [
+      "坦克",
+      "印记爆发"
+    ],
+    "commonSkills": [
+      "超维投射",
+      "心灵洞悉",
+      "奇点"
+    ],
+    "defaultBuild": "魔攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "S4新宠"
+    ],
+    "note": "玳塔前置形态（LV42进化），代币商店蛋可孵完美天分，星陨体系入门载体",
+    "source": "BWIKI nrc 玳龟页(2026-09-09)",
+    "confidence": "中"
+  },
+  {
+    "variantName": "默认",
+    "id": "463",
+    "key": "pet:463",
+    "name": "星星眼",
+    "matchedSeq": 463,
+    "matchHow": "exact",
+    "role": [
+      "魔攻输出",
+      "辅助"
+    ],
+    "commonSkills": [
+      "四维降解",
+      "星痕",
+      "许愿池",
+      "观测者效应",
+      "无畏之心"
+    ],
+    "defaultBuild": "魔攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "S4热门",
+      "S4新宠"
+    ],
+    "note": "S4幻系特化：特性「宇宙之眼」敌方每1层星陨印记自身物防+10%，四维降解/星痕吃印记层数，星陨队副核心",
+    "source": "BWIKI nrc 星星眼页(2026-09-09)；星星眼星陨队阵容视频(2026-09-10后)",
+    "confidence": "中"
+  },
+  {
+    "variantName": "默认",
+    "id": "465",
+    "key": "pet:465",
+    "name": "布灵布灵",
+    "matchedSeq": 465,
+    "matchHow": "exact",
+    "role": [
+      "物攻输出",
+      "辅助"
+    ],
+    "commonSkills": [
+      "叠加态",
+      "量子涨落",
+      "超维投射",
+      "示弱",
+      "破绽",
+      "爆米花爆破"
+    ],
+    "defaultBuild": "物攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "S4热门",
+      "S4新宠"
+    ],
+    "note": "S4榜一「布灵龙平衡队」引擎：特性「旧玩具」己方每用过1个不同系别技能入场双攻+10%，示弱萌化速度永久+130",
+    "source": "BWIKI nrc 布灵页(2026-09-09)；B站S4榜一阵容布灵龙平衡队(2026-09-13)",
+    "confidence": "高"
+  },
+  {
+    "variantName": "默认",
+    "id": "464",
+    "key": "pet:464",
+    "name": "布灵",
+    "matchedSeq": 464,
+    "matchHow": "exact",
+    "role": [
+      "辅助"
+    ],
+    "commonSkills": [
+      "叠加态",
+      "量子涨落",
+      "示弱"
+    ],
+    "defaultBuild": "魔攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "S4新宠"
+    ],
+    "note": "布灵布灵前置形态（LV42进化），S4代币商店蛋可自选性格个体",
+    "source": "BWIKI nrc 布灵页(2026-09-09)",
+    "confidence": "中"
+  },
+  {
+    "variantName": "默认",
+    "id": "448",
+    "key": "pet:448",
+    "name": "月使鹭纳",
+    "matchedSeq": 448,
+    "matchHow": "exact",
+    "role": [
+      "魔攻输出",
+      "控制"
+    ],
+    "commonSkills": [
+      "冰晶坠",
+      "冰锋横扫",
+      "瞬间零度",
+      "锐利眼神",
+      "血脉霜降"
+    ],
+    "defaultBuild": "魔攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "S4热门",
+      "S4新宠"
+    ],
+    "note": "S4通行证翼/冰双系：特性「冷光源」上回合双方用过翼系技能→本回合冰系威力+100%，冰锋横扫威力=敌方技能总能耗×10，冰锋/雪天体系核心",
+    "source": "BWIKI nrc 月使鹭纳页(2026-09-09)；S4雪天队环境视频(2026-09-10后)",
+    "confidence": "中"
+  },
+  {
+    "variantName": "默认",
+    "id": "451",
+    "key": "pet:451",
+    "name": "圣凯布米龙",
+    "matchedSeq": 451,
+    "matchHow": "exact",
+    "role": [
+      "物攻输出",
+      "功能"
+    ],
+    "commonSkills": [
+      "星火",
+      "天火",
+      "热身",
+      "翅刃",
+      "暖阳"
+    ],
+    "defaultBuild": "物攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "S4热门",
+      "S4新宠"
+    ],
+    "note": "S4通行证火/虫：特性「热成像」上回合有火系技能→虫系威力+100%，翅刃可驱散敌方星陨印记，是对星陨队的功能位答案",
+    "source": "BWIKI nrc 圣凯布米龙页(2026-09-09)；S4平衡调整解读视频(2026-09-02后)",
+    "confidence": "中"
+  },
+  {
+    "variantName": "默认",
+    "id": "29",
+    "key": "pet:29",
+    "name": "布克棱岩",
+    "matchedSeq": 29,
+    "matchHow": "exact",
+    "role": [
+      "物攻输出",
+      "坦克"
+    ],
+    "commonSkills": [],
+    "defaultBuild": "物攻",
+    "asAttacker": true,
+    "asDefender": true,
+    "targetTags": [
+      "S4加强",
+      "热门"
+    ],
+    "note": "9-10 S4平衡大加强（种族699：生命124/物攻153），岩石物理核心，S4环境上位选择",
+    "source": "B站S4平衡性调整解析(2026-09-02，胡歌/爱心尾巴等UP)",
+    "confidence": "中"
   }
 ]

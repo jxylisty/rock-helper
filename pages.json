@@ -25,17 +25,17 @@
       }
     },
     {
-      "path": "pages/detail",
+      "path": "pages/breeding-planner",
       "style": {
-        "navigationBarTitleText": "精灵详情",
+        "navigationBarTitleText": "孵蛋摆窝",
         "navigationStyle": "custom",
         "navigationBarTextStyle": "white"
       }
     },
     {
-      "path": "pages/map",
+      "path": "pages/detail",
       "style": {
-        "navigationBarTitleText": "世界地图",
+        "navigationBarTitleText": "精灵详情",
         "navigationStyle": "custom",
         "navigationBarTextStyle": "white"
       }
@@ -68,6 +68,14 @@
       "path": "pages/pvp-breakpoint",
       "style": {
         "navigationBarTitleText": "属性值计算",
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/team-report",
+      "style": {
+        "navigationBarTitleText": "阵容报告",
         "navigationStyle": "custom",
         "navigationBarTextStyle": "white"
       }

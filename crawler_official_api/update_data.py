@@ -51,6 +51,9 @@ DATA_CONFIG_DIR = PROJECT_ROOT / "data" / "config"
 STATIC_PETS_DIR = PROJECT_ROOT / "cdn-assets" / "static-web" / "pets"
 STATIC_TRAITS_DIR = PROJECT_ROOT / "cdn-assets" / "static-web" / "traits"
 STATIC_SKILLS_DIR = PROJECT_ROOT / "cdn-assets" / "static-web" / "skills"
+# 运行时兜底镜像目录：前端 asset-path.js 的本地回退链读取 static/static-web/pets，
+# 必须与 cdn-assets 产物保持同步，否则远程加载失败时会因本地缺文件而白图
+RUNTIME_MIRROR_DIR = PROJECT_ROOT / "static" / "static-web" / "pets"
 
 MAX_WORKERS = 4
 REQUEST_INTERVAL = 0.12  # 每个工作线程请求间隔（秒）
@@ -187,6 +190,78 @@ def write_js(path, exports):
     for name, obj in exports:
         parts.append(f"export const {name} = {json.dumps(obj, ensure_ascii=False, indent=2)};")
     path.write_text("\n\n".join(parts) + "\n", encoding="utf-8")
+
+
+def write_compact_pet_skills_js(path, pet_skills):
+    """输出字典化压缩的 pet_skills.js，确保微信小程序包体积小于 1.5MB"""
+    all_names = []
+    name_map = {}
+    type_map = {"精灵技能": 0, "血脉技能": 1, "可学技能石": 2}
+
+    def get_name_idx(name):
+        if name not in name_map:
+            name_map[name] = len(all_names)
+            all_names.append(name)
+        return name_map[name]
+
+    compact = {}
+    for pid, obj in pet_skills.items():
+        compact[str(pid)] = [
+            [get_name_idx(s["name"]), str(s.get("level", "")), type_map.get(s.get("skill_type"), 0)]
+            for s in (obj.get("skills") or [])
+        ]
+
+    content = f"""// Compact skill table to ensure WeChat Mini Program bundle remains <= 1.5MB
+const SKILL_NAMES = {json.dumps(all_names, ensure_ascii=False)};
+const SKILL_TYPES = ['精灵技能', '血脉技能', '可学技能石'];
+const PET_SKILLS_RAW = {json.dumps(compact, ensure_ascii=False)};
+
+function decodeEntry(rawList) {{
+  if (!rawList) return {{ skills: [] }};
+  return {{
+    skills: rawList.map(([nameIdx, level, typeIdx]) => ({{
+      name: SKILL_NAMES[nameIdx],
+      level: String(level),
+      skill_type: SKILL_TYPES[typeIdx] || '精灵技能'
+    }}))
+  }};
+}}
+
+const cache = {{}};
+export const petSkills = new Proxy(PET_SKILLS_RAW, {{
+  get(target, prop) {{
+    if (typeof prop !== 'string' && typeof prop !== 'number') return target[prop];
+    const key = String(prop);
+    if (key in cache) return cache[key];
+    if (key in target) {{
+      const entry = decodeEntry(target[key]);
+      cache[key] = entry;
+      return entry;
+    }}
+    return target[prop];
+  }},
+  has(target, prop) {{
+    return String(prop) in target;
+  }},
+  ownKeys(target) {{
+    return Reflect.ownKeys(target);
+  }},
+  getOwnPropertyDescriptor(target, prop) {{
+    const key = String(prop);
+    if (key in target) {{
+      return {{
+        configurable: true,
+        enumerable: true,
+        value: this.get(target, key),
+        writable: false
+      }};
+    }}
+    return Reflect.getOwnPropertyDescriptor(target, prop);
+  }}
+}});
+"""
+    path.write_text(content, encoding="utf-8")
+
 
 
 def load_cache_json(path):
@@ -388,6 +463,26 @@ export function predictEgg(height, weight) {
 	return predictions.sort((a, b) => b.score - a.score).slice(0, 10)
 }
 
+const BULK_RATIO = 0.98
+
+export function judgeBulkEgg(egg, height, weight) {
+	const rangeH = (egg.maxHeight - egg.minHeight) || 0
+	const rangeW = (egg.maxWeight - egg.minWeight) || 0
+	const heightThreshold = egg.minHeight + rangeH * BULK_RATIO
+	const weightThreshold = egg.minWeight + rangeW * BULK_RATIO
+	const heightOk = height >= heightThreshold
+	const weightOk = weight >= weightThreshold
+	return {
+		isBulk: heightOk && weightOk,
+		heightOk,
+		weightOk,
+		heightThreshold,
+		weightThreshold,
+		heightRatio: rangeH ? (height - egg.minHeight) / rangeH : 0,
+		weightRatio: rangeW ? (weight - egg.minWeight) / rangeW : 0
+	}
+}
+
 export function getEggColor(types) {
 	const typeColors = {
 		fire: '#FF6B35',
@@ -565,7 +660,8 @@ def skills_from_cache(skills_cache):
     result = []
     if not skills_cache:
         return result
-    for key, skill_type in (("level", "精灵技能"), ("blood", "血脉技能"), ("machine", "可学技能石")):
+    # legendary = 专属技能（传说精灵招牌技，如 S4 银月狼王「月蚀」），官方独立桶，此前漏合
+    for key, skill_type in (("level", "精灵技能"), ("blood", "血脉技能"), ("machine", "可学技能石"), ("legendary", "专属技能")):
         for s in skills_cache.get(key) or []:
             name = sanitize(s.get("name"))
             if not name:
@@ -677,7 +773,8 @@ def aggregate_official_skills():
         data = load_cache_json(f)
         if not data:
             continue
-        for bucket in ("level", "blood", "machine"):
+        # legendary（专属技能）同样进库：传说精灵招牌技不进 skills.js 会让图鉴/计算器缺技能条目
+        for bucket in ("level", "blood", "machine", "legendary"):
             for s in data.get(bucket) or []:
                 name = sanitize(s.get("name"))
                 if name and name not in official:
@@ -872,6 +969,9 @@ def fetch_pet_images(force_all=False, seq_filter=None):
             response.raise_for_status()
             image = Image.open(io.BytesIO(response.content)).convert("RGBA")
             image.save(STATIC_PETS_DIR / fname, "WEBP", quality=90)
+            # 同步写入运行时兜底镜像目录，保证本地回退链可用
+            RUNTIME_MIRROR_DIR.mkdir(parents=True, exist_ok=True)
+            (RUNTIME_MIRROR_DIR / fname).write_bytes((STATIC_PETS_DIR / fname).read_bytes())
             done += 1
         except Exception as e:
             failed += 1
@@ -964,8 +1064,10 @@ def build_all(pets, handbooks):
             if not yise:
                 yise = match_local_yise(seq3, title, name)
 
-            trait_img = (f"/static/static-web/traits/{seq3}.webp"
-                         if (STATIC_TRAITS_DIR / f"{seq3}.webp").exists() else None)
+            feat = (overview or {}).get("feature") or {}
+            feat_skill_id = feat.get("skill_id")
+            trait_img = (f"https://wegame.shallow.ink/api/v1/resources/wiki/assets/skills/{feat_skill_id}.png"
+                         if feat_skill_id else None)
 
             variants.append({
                 "page_title": title,
@@ -1096,7 +1198,7 @@ def build_all(pets, handbooks):
         ("petDetail", pet_detail),
     ])
     write_js(GENERATED_DIR / "pet_index.js", [("petIndex", pet_index)])
-    write_js(GENERATED_DIR / "pet_skills.js", [("petSkills", pet_skills)])
+    write_compact_pet_skills_js(GENERATED_DIR / "pet_skills.js", pet_skills)
     write_js(GENERATED_DIR / "pet_race_speed.js", [("petRaceSpeed", pet_race_speed)])
     write_js(GENERATED_DIR / "skills.js", [("skillsData", skill_library)])
     write_js(GENERATED_DIR / "skill_icons.js", [("skillIcons", icon_map)])
@@ -1179,6 +1281,80 @@ def run_fetch_skill_icons():
     print(f"  ✅ skill_icons.js 已更新：本地 {local_count} / 远程 {remote_count}")
 
 
+# ==================== build-hotupdate ====================
+# 产出数据热更新包：把 build 生成的数据文件序列化为 JSON + manifest，
+# 上传到静态托管（Cloudflare Worker / 备案域名）即可供小程序启动时热更。
+# 仅更新数据，不注入代码——功能更新照常走微信版本审核。
+
+HOTUPDATE_OUTPUT_DIR = GENERATED_DIR / "hotupdate"
+# 小程序热更白名单键（与 utils/dataHotUpdate.js 的 KNOWN_KEYS 对应）
+HOTUPDATE_KEYS = {
+    "petIndex": ("pet_index.js", "petIndex"),
+    "petDetail": ("pet_detail.js", "petDetail"),
+    "petSkills": ("pet_skills.js", "petSkills"),
+    "skillsData": ("skills.js", "skillsData"),
+    "skillIcons": ("skill_icons.js", "skillIcons"),
+}
+
+
+def run_build_hotupdate(version=None):
+    import hashlib
+    import time
+    HOTUPDATE_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    files_meta = {}
+
+    for hot_key, (js_name, export_name) in HOTUPDATE_KEYS.items():
+        js_path = GENERATED_DIR / js_name
+        if not js_path.exists():
+            print(f"  ? {js_name} 不存在，跳过（先运行 build）")
+            continue
+        src = js_path.read_text(encoding="utf-8")
+        # 提取 export const <name> = { ... }; 或数组 —— 用 Node 做可靠序列化
+        json_bytes = None
+        try:
+            import subprocess
+            import tempfile
+            with tempfile.NamedTemporaryFile("w", suffix=".mjs", delete=False, encoding="utf-8") as tf:
+                tf.write(f"import {{ {export_name} }} from './{js_name}';\n")
+                tf.write(f"process.stdout.write(JSON.stringify({export_name}))")
+                tmp_mjs = tf.name
+            res = subprocess.run(
+                ["node", "--input-type=module", "-e",
+                 f"import {{ {export_name} }} from './{js_name}'; process.stdout.write(JSON.stringify({export_name}))"],
+                cwd=str(GENERATED_DIR), capture_output=True, timeout=120)
+            if res.returncode == 0 and res.stdout:
+                json_bytes = res.stdout
+        except Exception as e:
+            print(f"  ? {hot_key}: 序列化失败 {e}")
+        if not json_bytes:
+            continue
+        out_name = f"{hot_key}.json"
+        out_path = HOTUPDATE_OUTPUT_DIR / out_name
+        out_path.write_bytes(json_bytes)
+        sha = hashlib.sha256(json_bytes).hexdigest()
+        files_meta[hot_key] = {
+            "url": f"./{out_name}",
+            "sha256": sha,
+            "bytes": len(json_bytes)
+        }
+        print(f"  ? {out_name}: {len(json_bytes)} bytes")
+
+    if not files_meta:
+        print("? 无可导出数据，中止")
+        return
+
+    manifest = {
+        "version": int(time.time()),  # 默认用时间戳做版本号，也可手动指定
+        "updatedAt": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "files": files_meta
+    }
+    manifest_path = HOTUPDATE_OUTPUT_DIR / "manifest.json"
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"\n? 热更包已产出 → {HOTUPDATE_OUTPUT_DIR}")
+    print("  上传方式：把该目录下所有文件原样上传到 https 托管点（保持相对路径），")
+    print("  然后把 utils/dataHotUpdate.js 的 HOTUPDATE_MANIFEST_URL 指向 manifest.json 的完整 URL。")
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "all"
     if cmd in ("fetch", "all"):
@@ -1205,6 +1381,8 @@ def main():
         run_fetch_skill_icons()
     elif cmd == "fetch-pet-images":
         run_fetch_pet_images()
+    elif cmd == "build-hotupdate":
+        run_build_hotupdate()
     else:
         print(__doc__)
 

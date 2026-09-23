@@ -96,7 +96,9 @@ const petRaceSpeed = require(path.join(tmpDir, 'data', 'pet', 'pet_race_speed.cj
 const skillsData = require(path.join(tmpDir, 'data', 'skill', 'skills.cjs'))
 const decisionEngine = require(path.join(tmpDir, 'data', 'config', 'decision_engine.cjs'))
 const eggData = require(path.join(tmpDir, 'data', 'config', 'eggData.cjs'))
+const petEvolutionSizes = require(path.join(tmpDir, 'data', 'config', 'petEvolutionSizes.cjs'))
 const petListBuilder = require(path.join(tmpDir, 'utils', 'petListBuilder.cjs'))
+const breedingPlanner = require(path.join(tmpDir, 'utils', 'breedingPlanner.cjs'))
 
 let pass = 0, fail = 0
 function test(name, fn) {
@@ -176,6 +178,15 @@ test('predictEgg 孵蛋预测 (页面形状: h, w 双参数)', () => {
   const r2 = eggData.predictEgg(30, 25)
   return `p(50,50)=${Array.isArray(r) ? r.length : '?'}条, p(30,25)=${Array.isArray(r2) ? r2.length : '?'}条`
 })
+test('judgeBulkEgg 大块头判定 (egg.vue 依赖, 防管线 apply 丢失)', () => {
+  if (typeof eggData.judgeBulkEgg !== 'function') throw new Error('judgeBulkEgg 未导出(egg.vue 会构建失败)')
+  const egg = eggData.eggData.find(e => e.maxHeight && e.maxWeight && e.name === '迪莫')
+  const atMax = eggData.judgeBulkEgg(egg, egg.maxHeight, egg.maxWeight)
+  const atMin = eggData.judgeBulkEgg(egg, egg.minHeight, egg.minWeight)
+  if (atMax.isBulk !== true) throw new Error('最大值应为 isBulk=true (98% 双指标)')
+  if (atMin.isBulk !== false) throw new Error('最小值应为 isBulk=false')
+  return `迪莫 max→${atMax.isBulk}, min→${atMin.isBulk}, 阈值 ${atMax.heightThreshold.toFixed(3)}m/${atMax.weightThreshold.toFixed(3)}kg`
+})
 
 console.log('--- skill-search 反向索引链路 ---')
 test('技能->精灵索引有命中', () => {
@@ -184,6 +195,70 @@ test('技能->精灵索引有命中', () => {
     if (gameMath.searchPetsBySkill(skill.name, pets, detailMap).length) covered++
   }
   return `${covered}/${Object.keys(skillsData.skillsData).length} 技能可查`
+})
+
+console.log('--- petEvolutionSizes (大块头图鉴数据链) ---')
+test('petEvolutionSizes 覆盖 422 只精灵', () => {
+  const count = Object.keys(petEvolutionSizes.petEvolutionSizes).length
+  return count >= 422 ? `${count} 只精灵` : `only ${count}`
+})
+test('罗隐 (107) 包含完整形态与大块头标准', () => {
+  const p107 = petEvolutionSizes.petEvolutionSizes['107']
+  if (!p107) throw new Error('pet 107 not found')
+  if (p107.eggBulkH !== 0.328 || p107.eggBulkW !== 19.556) throw new Error(`egg bulk mismatch: ${p107.eggBulkH}/${p107.eggBulkW}`)
+  if (!p107.glassPiece || p107.glassPiece.name !== '阿米亚特蛋') throw new Error('glass piece mismatch')
+  const finalStage = p107.stages.find(s => s.name === '罗隐')
+  if (!finalStage || !finalStage.bulkH) throw new Error('final stage bulk missing')
+  return `蛋大块头(${p107.eggBulkH}m/${p107.eggBulkW}kg), 终阶(${finalStage.bulkH}m/${finalStage.bulkW}kg), 蛋种: ${p107.glassPiece.name}`
+})
+
+console.log('--- breedingPlanner (32种异色/炫彩繁育求解器) ---')
+test('solveBreedingPlan 异色/炫彩优先模式 (10窝 4公6母)', () => {
+  const plan = breedingPlanner.solveBreedingPlan({ nestCount: 10, maleCount: 4, mode: 'probability' })
+  if (!plan || !plan.nests || plan.nests.length !== 10) throw new Error('nests count mismatch')
+  if (!plan.pairs || plan.pairs.length === 0) throw new Error('no valid pairs found')
+  if (plan.metrics.solveTimeMs > 100) throw new Error(`solve took too long: ${plan.metrics.solveTimeMs}ms`)
+  return `配对=${plan.metrics.validPairsCount}对, 连通率=${plan.metrics.connectivityRate}%, 异色率=${plan.metrics.avgShinyRate}%, 耗时=${plan.metrics.solveTimeMs}ms`
+})
+test('solveBreedingPlan 多补异色图鉴模式 (想生: 雪影娃娃)', () => {
+  const wishes = { '雪影娃娃': 'missing' }
+  const res = breedingPlanner.solveShinyBreedingPlan({ nestCount: 10, maleCount: 4, mode: 'variety', wishes })
+  const sol = res.solutions[0]
+  if (!sol || !sol.pairs.length) throw new Error('no solution pairs')
+  const targetPair = sol.pairs.find(p => p.femalePet.name === '雪影娃娃')
+  if (!targetPair) throw new Error('雪影娃娃 not placed in female nest')
+  return `成功排布雪影娃娃母窝, 匹配公窝=${targetPair.maleNestId + 1}♂(${targetPair.malePet.name}), 共享蛋组=${targetPair.sharedGroups.join('/')}`
+})
+test('摆法图新字段 (distance/coords/wishStatus/概率构成/累计/死窝)', () => {
+  const inventory = { '雪影娃娃': { shinyM: 1, shinyF: 2 }, '菊花梨': { shinyM: 2 } }
+  const wishes = { '雪影娃娃': 'missing', '治愈兔': 'missing' }
+  const res = breedingPlanner.solveShinyBreedingPlan({ nestCount: 11, maleCount: 5, mode: 'variety', inventory, wishes })
+  const sol = res.solutions[0]
+  if (sol.nests.length !== 11) throw new Error('11 窝应有 11 个窝位')
+  if (!sol.nests.every(n => n.y === 0 || n.y === 2)) throw new Error('2xN 布局 y 应只有 0/2')
+  for (const p of sol.pairs) {
+    if (typeof p.distance !== 'number' || p.distance <= 0 || p.distance > 5) throw new Error('pair.distance 异常: ' + p.distance)
+    if (!p.maleCoord || !p.femaleCoord) throw new Error('pair 缺少窝坐标')
+  }
+  for (const n of sol.nests) {
+    if (['missing', 'owned', 'ignore'].indexOf(n.wishStatus) === -1) throw new Error('nest.wishStatus 异常: ' + n.wishStatus)
+  }
+  const s = sol.summary
+  const parts = (s.hiddenOnlyPairs || 0) + (s.singleShinyPairs || 0) + (s.doubleShinyPairs || 0)
+  if (parts !== s.validPairs) throw new Error(`概率构成加总 ${parts} != 配对数 ${s.validPairs}`)
+  if (typeof s.cumulativeShinyChance !== 'number' || s.cumulativeShinyChance <= 0) throw new Error('累计异色概率异常')
+  if (!Array.isArray(s.deadNestIds)) throw new Error('缺少 deadNestIds')
+  const target = sol.nests.find(n => n.pet && n.pet.name === '雪影娃娃' && n.gender === 'F')
+  if (!target || target.wishStatus !== 'missing') throw new Error('想生目标应落母窝且 wishStatus=missing')
+  if (!sol.pairs.some(p => p.femalePet.name === '雪影娃娃')) throw new Error('想生目标母窝应有配对')
+  return `配对=${s.validPairs} (隐性${s.hiddenOnlyPairs}/单异${s.singleShinyPairs}/双异${s.doubleShinyPairs}), 累计=${(s.cumulativeShinyChance * 100).toFixed(1)}%, 死窝=${s.deadNestIds.length}个`
+})
+test('零库存退化: 全部走隐性通道', () => {
+  const res = breedingPlanner.solveShinyBreedingPlan({ nestCount: 10, maleCount: 4, mode: 'variety' })
+  const s = res.solutions[0].summary
+  if (s.singleShinyPairs !== 0 || s.doubleShinyPairs !== 0) throw new Error('零库存不应有外显异色配对')
+  if (s.hiddenOnlyPairs !== s.validPairs) throw new Error('零库存应全部为隐性通道')
+  return `隐性通道 ${s.hiddenOnlyPairs}/${s.validPairs}, 累计=${(s.cumulativeShinyChance * 100).toFixed(2)}%`
 })
 
 console.log(`\n结果: ${pass} 通过, ${fail} 失败`)

@@ -3092,5 +3092,187 @@ export const petIndex = {
     "name": "宝藏沙狐",
     "page_title": "宝藏沙狐",
     "uiTag": "最终形态"
+  },
+  "443_诅咒狼灵": {
+    "wikiId": "443",
+    "seq": 443,
+    "name": "诅咒狼灵",
+    "page_title": "诅咒狼灵",
+    "uiTag": "I阶"
+  },
+  "444_新月狼灵": {
+    "wikiId": "444",
+    "seq": 444,
+    "name": "新月狼灵",
+    "page_title": "新月狼灵",
+    "uiTag": "II阶"
+  },
+  "445_银月狼王": {
+    "wikiId": "445",
+    "seq": 445,
+    "name": "银月狼王",
+    "page_title": "银月狼王",
+    "uiTag": "最终形态"
+  },
+  "446_新月鹭": {
+    "wikiId": "446",
+    "seq": 446,
+    "name": "新月鹭",
+    "page_title": "新月鹭",
+    "uiTag": "I阶"
+  },
+  "447_月辉鹭": {
+    "wikiId": "447",
+    "seq": 447,
+    "name": "月辉鹭",
+    "page_title": "月辉鹭",
+    "uiTag": "II阶"
+  },
+  "448_月使鹭纳": {
+    "wikiId": "448",
+    "seq": 448,
+    "name": "月使鹭纳",
+    "page_title": "月使鹭纳",
+    "uiTag": "最终形态"
+  },
+  "449_热团团": {
+    "wikiId": "449",
+    "seq": 449,
+    "name": "热团团",
+    "page_title": "热团团",
+    "uiTag": "I阶"
+  },
+  "450_焰米龙": {
+    "wikiId": "450",
+    "seq": 450,
+    "name": "焰米龙",
+    "page_title": "焰米龙",
+    "uiTag": "II阶"
+  },
+  "451_圣凯布米龙": {
+    "wikiId": "451",
+    "seq": 451,
+    "name": "圣凯布米龙",
+    "page_title": "圣凯布米龙",
+    "uiTag": "最终形态"
+  },
+  "452_章脑丸": {
+    "wikiId": "452",
+    "seq": 452,
+    "name": "章脑丸",
+    "page_title": "章脑丸",
+    "uiTag": "I阶"
+  },
+  "453_智辉章脑": {
+    "wikiId": "453",
+    "seq": 453,
+    "name": "智辉章脑",
+    "page_title": "智辉章脑",
+    "uiTag": "最终形态"
+  },
+  "454_未完虫": {
+    "wikiId": "454",
+    "seq": 454,
+    "name": "未完虫",
+    "page_title": "未完虫",
+    "uiTag": "最终形态"
+  },
+  "455_玳龟": {
+    "wikiId": "455",
+    "seq": 455,
+    "name": "玳龟",
+    "page_title": "玳龟",
+    "uiTag": "I阶"
+  },
+  "456_玳塔": {
+    "wikiId": "456",
+    "seq": 456,
+    "name": "玳塔",
+    "page_title": "玳塔",
+    "uiTag": "最终形态"
+  },
+  "457_量风碗": {
+    "wikiId": "457",
+    "seq": 457,
+    "name": "量风碗",
+    "page_title": "量风碗",
+    "uiTag": "I阶"
+  },
+  "458_测风蝉": {
+    "wikiId": "458",
+    "seq": 458,
+    "name": "测风蝉",
+    "page_title": "测风蝉",
+    "uiTag": "最终形态"
+  },
+  "459_小浣蛋": {
+    "wikiId": "459",
+    "seq": 459,
+    "name": "小浣蛋",
+    "page_title": "小浣蛋",
+    "uiTag": "I阶"
+  },
+  "460_黑手浣熊": {
+    "wikiId": "460",
+    "seq": 460,
+    "name": "黑手浣熊",
+    "page_title": "黑手浣熊",
+    "uiTag": "最终形态"
+  },
+  "461_幽铃": {
+    "wikiId": "461",
+    "seq": 461,
+    "name": "幽铃",
+    "page_title": "幽铃",
+    "uiTag": "I阶"
+  },
+  "462_摇铃魔偶": {
+    "wikiId": "462",
+    "seq": 462,
+    "name": "摇铃魔偶",
+    "page_title": "摇铃魔偶",
+    "uiTag": "最终形态"
+  },
+  "463_星星眼": {
+    "wikiId": "463",
+    "seq": 463,
+    "name": "星星眼",
+    "page_title": "星星眼",
+    "uiTag": "最终形态"
+  },
+  "464_布灵": {
+    "wikiId": "464",
+    "seq": 464,
+    "name": "布灵",
+    "page_title": "布灵",
+    "uiTag": "I阶"
+  },
+  "465_布灵布灵": {
+    "wikiId": "465",
+    "seq": 465,
+    "name": "布灵布灵",
+    "page_title": "布灵布灵",
+    "uiTag": "最终形态"
+  },
+  "466_果实立方人": {
+    "wikiId": "466",
+    "seq": 466,
+    "name": "果实立方人",
+    "page_title": "果实立方人",
+    "uiTag": "最终形态"
+  },
+  "467_云梦豚": {
+    "wikiId": "467",
+    "seq": 467,
+    "name": "云梦豚",
+    "page_title": "云梦豚",
+    "uiTag": "I阶"
+  },
+  "468_长江豚": {
+    "wikiId": "468",
+    "seq": 468,
+    "name": "长江豚",
+    "page_title": "长江豚",
+    "uiTag": "最终形态"
   }
 };

@@ -496,7 +496,8 @@ export function calculatePanelValue(raceValue, ivValue, level, star, attrKey, na
   }
 
   const starBonus = attrKey === 'hp' ? star * 20 : star * 10;
-  let preNaturePanel = Math.floor(panel);
+  // 基础面板四舍五入（对齐 roco-cal normal_round = floor(x+0.5)），再乘性格，最后加星级裸加成
+  let preNaturePanel = Math.floor(panel + 0.5);
   let postNaturePanel = Math.round(preNaturePanel * natureMod + 0.0000001);
   let finalPanel = postNaturePanel + starBonus;
 

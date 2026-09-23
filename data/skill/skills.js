@@ -243,6 +243,14 @@ export const skillsData = {
     "power": "60",
     "describe": "对敌方精灵造成魔法伤害。"
   },
+  "分光": {
+    "name": "分光",
+    "type": "状态",
+    "attr": "光系",
+    "consume": "1",
+    "power": "0",
+    "describe": "自己获得魔攻+20%，己方队伍中精灵每有1个不同的系别，额外获得魔攻+10%。"
+  },
   "刺盾": {
     "name": "刺盾",
     "type": "防御",
@@ -459,6 +467,14 @@ export const skillsData = {
     "power": "60",
     "describe": "对敌方精灵造成物理伤害。"
   },
+  "回收": {
+    "name": "回收",
+    "type": "魔攻",
+    "attr": "幽系",
+    "consume": "3",
+    "power": "80",
+    "describe": "造成魔伤，若敌方本回合更换精灵，敌方失去4能量。"
+  },
   "困兽": {
     "name": "困兽",
     "type": "物攻",
@@ -547,6 +563,14 @@ export const skillsData = {
     "power": "0",
     "describe": "敌方获得10层灼烧，应对防御：改为获得30层。"
   },
+  "奇点": {
+    "name": "奇点",
+    "type": "魔攻",
+    "attr": "幻系",
+    "consume": "4",
+    "power": "60",
+    "describe": "造成魔伤，若上回合双方有精灵使用水系技能，敌方获得4层星陨印记。"
+  },
   "委屈": {
     "name": "委屈",
     "type": "防御",
@@ -602,6 +626,14 @@ export const skillsData = {
     "consume": "1",
     "power": "60",
     "describe": "对敌方精灵造成物理伤害。"
+  },
+  "广播": {
+    "name": "广播",
+    "type": "魔攻",
+    "attr": "机械系",
+    "consume": "5",
+    "power": "140",
+    "describe": "对敌方精灵造成魔法伤害。"
   },
   "引燃": {
     "name": "引燃",
@@ -811,6 +843,14 @@ export const skillsData = {
     "power": "0",
     "describe": "减伤90%，应对攻击：敌方获得1层萌化。"
   },
+  "掉包": {
+    "name": "掉包",
+    "type": "状态",
+    "attr": "恶系",
+    "consume": "2",
+    "power": "0",
+    "describe": "敌方的属性增益变为对应的属性减益。"
+  },
   "排气": {
     "name": "排气",
     "type": "状态",
@@ -826,6 +866,14 @@ export const skillsData = {
     "consume": "1",
     "power": "60",
     "describe": "对敌方精灵造成魔法伤害。"
+  },
+  "掠影": {
+    "name": "掠影",
+    "type": "物攻",
+    "attr": "幽系",
+    "consume": "3",
+    "power": "65",
+    "describe": "造成物伤，若上回合双方有精灵使用火系技能，偷取敌方3能量。"
   },
   "掩护": {
     "name": "掩护",
@@ -915,6 +963,22 @@ export const skillsData = {
     "power": "70",
     "describe": "造成物伤，应对状态：额外打断被应对技能。"
   },
+  "无风": {
+    "name": "无风",
+    "type": "防御",
+    "attr": "翼系",
+    "consume": "2",
+    "power": "0",
+    "describe": "减伤50%，应对攻击：敌方和自己均脱离。"
+  },
+  "星火": {
+    "name": "星火",
+    "type": "状态",
+    "attr": "火系",
+    "consume": "3",
+    "power": "0",
+    "describe": "敌方获得8层灼烧，若上回合双方有精灵使用光系技能，敌方额外获得12层灼烧。"
+  },
   "星痕": {
     "name": "星痕",
     "type": "魔攻",
@@ -938,6 +1002,30 @@ export const skillsData = {
     "consume": "2",
     "power": "0",
     "describe": "减伤70%，应对攻击：下一次攻击时，技能威力+50。"
+  },
+  "暖阳": {
+    "name": "暖阳",
+    "type": "物攻",
+    "attr": "火系",
+    "consume": "2",
+    "power": "70",
+    "describe": "造成物伤，每使用1次其他火系技能，威力永久+40，使用本技能后重置。"
+  },
+  "暴打": {
+    "name": "暴打",
+    "type": "魔攻",
+    "attr": "恶系",
+    "consume": "3",
+    "power": "100",
+    "describe": "对敌方精灵造成魔法伤害。"
+  },
+  "月蚀": {
+    "name": "月蚀",
+    "type": "物攻",
+    "attr": "幻系",
+    "consume": "5",
+    "power": "130",
+    "describe": "造成物伤，若敌方生命低于50%，本次技能能耗-3。"
   },
   "杂耍": {
     "name": "杂耍",
@@ -1102,6 +1190,14 @@ export const skillsData = {
     "consume": "8耗能",
     "power": "-技能威力",
     "describe": "✦  将天气变为雨天，本技能能耗降低效果收益翻倍。"
+  },
+  "汇流": {
+    "name": "汇流",
+    "type": "状态",
+    "attr": "水系",
+    "consume": "1",
+    "power": "0",
+    "describe": "雨天的回合数延长4回合，应对防御：改为延长8回合。"
   },
   "汲取": {
     "name": "汲取",
@@ -2027,6 +2123,14 @@ export const skillsData = {
     "power": "140",
     "describe": "造成物伤，每次使用后，本技能能耗永久+1。"
   },
+  "重组": {
+    "name": "重组",
+    "type": "状态",
+    "attr": "幻系",
+    "consume": "1",
+    "power": "0",
+    "describe": "下一次攻击时，额外造成100%幻系伤害，应对防御：改为额外造成300%幻系伤害。"
+  },
   "野火": {
     "name": "野火",
     "type": "状态",
@@ -2387,6 +2491,14 @@ export const skillsData = {
     "power": "60",
     "describe": "对敌方精灵造成物理伤害。"
   },
+  "麦芒": {
+    "name": "麦芒",
+    "type": "物攻",
+    "attr": "草系",
+    "consume": "5",
+    "power": "105",
+    "describe": "造成物伤，若上回合双方有精灵使用萌系技能，自己回复7能量。"
+  },
   "麻痹": {
     "name": "麻痹",
     "type": "状态",
@@ -2483,6 +2595,22 @@ export const skillsData = {
     "power": "20",
     "describe": "造成物伤，2连击，本技能位于1号或3号位时连击+1，传动1。"
   },
+  "信息素": {
+    "name": "信息素",
+    "type": "状态",
+    "attr": "虫系",
+    "consume": "4",
+    "power": "0",
+    "describe": "己方队伍获得1次随机奉献，若上回合双方有精灵使用地系技能，额外获得3次随机奉献。"
+  },
+  "做好事": {
+    "name": "做好事",
+    "type": "魔攻",
+    "attr": "萌系",
+    "consume": "3",
+    "power": "80",
+    "describe": "造成魔伤，自己每使用过1次选择技能，自己获得3层随机永久属性增益，使用后重置。"
+  },
   "光之矛": {
     "name": "光之矛",
     "type": "物攻",
@@ -2556,6 +2684,14 @@ export const skillsData = {
     "consume": "1",
     "power": "0",
     "describe": "自己获得随机16层属性增益，巧变：幻系攻击技能。"
+  },
+  "吃独食": {
+    "name": "吃独食",
+    "type": "魔攻",
+    "attr": "幽系",
+    "consume": "3",
+    "power": "80",
+    "describe": "造成魔伤，自己每使用过1次选择技能，敌方获得3层随机永久属性减益，使用后重置。"
   },
   "回旋踢": {
     "name": "回旋踢",
@@ -2662,6 +2798,14 @@ export const skillsData = {
     "consume": "3",
     "power": "50",
     "describe": "造成物伤，若敌方有萌化，本次技能威力+100。"
+  },
+  "拖拉机": {
+    "name": "拖拉机",
+    "type": "物攻",
+    "attr": "机械系",
+    "consume": "3",
+    "power": "85",
+    "describe": "造成物伤，位于1号位时，先手+1。传动1。"
   },
   "拟寄生": {
     "name": "拟寄生",
@@ -2903,6 +3047,14 @@ export const skillsData = {
     "power": "60",
     "describe": "对敌方精灵造成魔法伤害。"
   },
+  "离魂术": {
+    "name": "离魂术",
+    "type": "状态",
+    "attr": "幽系",
+    "consume": "3",
+    "power": "0",
+    "describe": "偷取敌方2能量，脱离。"
+  },
   "种子弹": {
     "name": "种子弹",
     "type": "物攻",
@@ -3033,6 +3185,14 @@ export const skillsData = {
     "power": "85",
     "describe": "造成魔伤，若敌方本回合更换精灵，本次攻击使敌方获得萌化。"
   },
+  "过山车": {
+    "name": "过山车",
+    "type": "状态",
+    "attr": "机械系",
+    "consume": "8",
+    "power": "0",
+    "describe": "使己方队伍中的所有精灵携带的技能跨精灵向下移动1个位置，巧变：机械系技能。"
+  },
   "过敏原": {
     "name": "过敏原",
     "type": "魔攻",
@@ -3056,6 +3216,14 @@ export const skillsData = {
     "consume": "3",
     "power": "85",
     "describe": "造成魔伤，应对状态：本次伤害翻倍。"
+  },
+  "闪光弹": {
+    "name": "闪光弹",
+    "type": "物攻",
+    "attr": "光系",
+    "consume": "2",
+    "power": "40",
+    "describe": "造成物伤，自己脱离。"
   },
   "雪替身": {
     "name": "雪替身",
@@ -3186,6 +3354,14 @@ export const skillsData = {
     "consume": "3",
     "power": "0",
     "describe": "造成物伤，敌方体重越高，本次技能威力越高。"
+  },
+  "仰望夜空": {
+    "name": "仰望夜空",
+    "type": "状态",
+    "attr": "幻系",
+    "consume": "2",
+    "power": "0",
+    "describe": "自己获得魔攻和魔防+70%。"
   },
   "休息回复": {
     "name": "休息回复",
@@ -3477,6 +3653,14 @@ export const skillsData = {
     "power": "-技能威力",
     "describe": "✦  偷取敌方3能量。"
   },
+  "小型打劫": {
+    "name": "小型打劫",
+    "type": "状态",
+    "attr": "幽系",
+    "consume": "2",
+    "power": "0",
+    "describe": "敌方队伍中所有精灵失去1能量。"
+  },
   "岩土暴击": {
     "name": "岩土暴击",
     "type": "物攻",
@@ -3518,6 +3702,14 @@ export const skillsData = {
     "consume": "2",
     "power": "0",
     "describe": "自己回复25%生命，应对防御：改为回复50%生命。"
+  },
+  "引力偏转": {
+    "name": "引力偏转",
+    "type": "防御",
+    "attr": "幻系",
+    "consume": "2",
+    "power": "0",
+    "describe": "减伤80%，应对攻击：以魔法伤害触发敌方的星陨效果。"
   },
   "强制重启": {
     "name": "强制重启",
@@ -3594,12 +3786,10 @@ export const skillsData = {
   "恶念交换": {
     "name": "恶念交换",
     "type": "状态",
-    "type_icon": "图标 技能 技能分类 状态.png",
     "attr": "恶系",
-    "attr_icon": "图标 宠物 属性 恶.png",
-    "consume": "4耗能",
-    "power": "0技能威力",
-    "describe": "✦  与敌方交换生命比例。"
+    "consume": "4",
+    "power": "0",
+    "describe": "与敌方交换生命比例。"
   },
   "恶意逃离": {
     "name": "恶意逃离",
@@ -3616,6 +3806,14 @@ export const skillsData = {
     "consume": "3",
     "power": "80",
     "describe": "造成物伤，应对状态：使敌方失去6能量。"
+  },
+  "惊鸿一瞥": {
+    "name": "惊鸿一瞥",
+    "type": "状态",
+    "attr": "翼系",
+    "consume": "2",
+    "power": "0",
+    "describe": "自己获得连击数+1，迅捷。"
   },
   "技巧打击": {
     "name": "技巧打击",
@@ -3714,6 +3912,14 @@ export const skillsData = {
     "consume": "3",
     "power": "30",
     "describe": "造成物伤，1连击，双方携带的所有精灵每有1层萌化，本次技能连击数+1。"
+  },
+  "月影交错": {
+    "name": "月影交错",
+    "type": "物攻",
+    "attr": "翼系",
+    "consume": "2",
+    "power": "25",
+    "describe": "造成物伤，2连击，若上回合双方有精灵使用幻系技能，本技能获得迅捷。"
   },
   "有效预防": {
     "name": "有效预防",
@@ -4002,22 +4208,18 @@ export const skillsData = {
   "疾风涡轮": {
     "name": "疾风涡轮",
     "type": "物攻",
-    "type_icon": "图标 技能 技能分类 物攻.png",
     "attr": "翼系",
-    "attr_icon": "图标 宠物 属性 翼.png",
-    "consume": "7耗能",
-    "power": "115技能威力",
-    "describe": "✦  造成物伤，先手+1。"
+    "consume": "0",
+    "power": "100",
+    "describe": "造成物伤，无法主动使用，在使用3次翼系技能后会自动使用此技能。"
   },
   "疾风连袭": {
     "name": "疾风连袭",
     "type": "状态",
-    "type_icon": "图标 技能 技能分类 状态.png",
     "attr": "翼系",
-    "attr_icon": "图标 宠物 属性 翼.png",
-    "consume": "0耗能",
-    "power": "0技能威力",
-    "describe": "✦  释放自己释放过的迅捷技能，其能耗之和的二分之一加至本技能能耗，每次使用后能耗+1。"
+    "consume": "0",
+    "power": "0",
+    "describe": "释放自己释放过的迅捷技能，其能耗之和的二分之一加至本技能能耗，每次使用后能耗+1。"
   },
   "瘴气喷射": {
     "name": "瘴气喷射",
@@ -4331,6 +4533,14 @@ export const skillsData = {
     "power": "0",
     "describe": "主动：本技能被动永久额外-1能耗，被动：两侧技能能耗-1，传动1。"
   },
+  "迁飞扩散": {
+    "name": "迁飞扩散",
+    "type": "物攻",
+    "attr": "虫系",
+    "consume": "3",
+    "power": "55",
+    "describe": "造成物伤，若敌方本回合更换精灵，己方队伍获得3次随机奉献。"
+  },
   "过载回路": {
     "name": "过载回路",
     "type": "状态",
@@ -4388,6 +4598,14 @@ export const skillsData = {
     "consume": "4",
     "power": "115",
     "describe": "造成物伤，选择：敌方携带光系技能时威力+50或应对状态时被应对的技能变为透射。"
+  },
+  "量子涨落": {
+    "name": "量子涨落",
+    "type": "物攻",
+    "attr": "幻系",
+    "consume": "3",
+    "power": "75",
+    "describe": "造成物伤，若敌方没有星陨印记，则敌方获得3层星陨印记。"
   },
   "金属噪音": {
     "name": "金属噪音",
@@ -4580,6 +4798,14 @@ export const skillsData = {
     "consume": "1",
     "power": "0",
     "describe": "选择：自己获得速度+60或物攻+90%。"
+  },
+  "观测者效应": {
+    "name": "观测者效应",
+    "type": "状态",
+    "attr": "幻系",
+    "consume": "3",
+    "power": "0",
+    "describe": "自己脱离，更换入场的精灵以月陨星状态登场。"
   },
   "超新星馈赠": {
     "name": "超新星馈赠",

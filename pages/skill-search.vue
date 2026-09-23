@@ -32,6 +32,7 @@
           <view v-for="skill in visibleSkills" :key="skill.name" class="skill-row-slot">
             <SkillRow
               :skill="skill"
+              compact
               :active="currentSkill && currentSkill.name === skill.name"
               @click="selectSkill(skill)"
             />
@@ -65,7 +66,12 @@
                     <text class="badge-text">{{ currentSkill.type }}</text>
                   </view>
                   <TypeBadge v-if="currentSkill.attr" :label="currentSkill.attr" :color="getTypeColor(currentSkill.attr)" compact />
-                  <text class="panel-consume mono">{{ currentSkill.consume || '-' }}</text>
+                  <view v-if="currentSkillPowerText" class="badge badge-power">
+                    <text class="badge-text mono">威力 {{ currentSkillPowerText }}</text>
+                  </view>
+                  <view v-if="currentSkillConsumeText" class="badge badge-cost">
+                    <text class="badge-text mono">{{ currentSkillConsumeText }}</text>
+                  </view>
                 </view>
               </view>
             </view>
@@ -141,6 +147,7 @@ import { petTypes, petDetail } from '@/data/pet/pet_detail.js'
 import { petSkills } from '@/data/pet/pet_skills.js'
 import { getFinalForm } from '@/data/config/game_math.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
+import { goDetailPage } from '@/utils/nav.js'
 import { buildBasePetList, getPetSkillNames } from '@/utils/petListBuilder.js'
 
 const SKILL_RENDER_STEP = 80
@@ -201,6 +208,22 @@ export default {
     },
     visibleSkillPets() {
       return this.skillPets.slice(0, this.petRenderCount)
+    },
+    currentSkillPowerText() {
+      if (!this.currentSkill) return ''
+      if (['状态', '防御', '变化'].includes(this.currentSkill.type)) return ''
+      const p = this.currentSkill.power
+      if (p === undefined || p === null || p === '' || p === '-') return ''
+      const n = Number(p)
+      if (Number.isFinite(n) && n <= 0) return ''
+      return String(p)
+    },
+    currentSkillConsumeText() {
+      if (!this.currentSkill) return ''
+      const c = this.currentSkill.consume
+      if (c === undefined || c === null || c === '' || c === '-') return ''
+      const n = Number(c)
+      return Number.isFinite(n) && n === 0 ? '无能耗' : `能耗 ${c}`
     }
   },
   watch: {
@@ -289,7 +312,7 @@ export default {
       return petTypes.find((item) => item.key === type)?.color || '#5b7cf5'
     },
     goToDetail(id) {
-      uni.navigateTo({ url: '/pages/detail?id=' + id })
+      goDetailPage(id)
     }
   }
 }
@@ -518,6 +541,24 @@ export default {
   border: 1px solid #E3DCC8;
   display: inline-flex;
   align-items: center;
+}
+
+.badge.badge-power {
+  background: #FBE9E4;
+  border-color: rgba(224, 96, 78, 0.55);
+}
+
+.badge.badge-power .badge-text {
+  color: #C64B38;
+}
+
+.badge.badge-cost {
+  background: #FBF3DD;
+  border-color: #D9B96A;
+}
+
+.badge.badge-cost .badge-text {
+  color: #8A6A2C;
 }
 
 .badge-text {

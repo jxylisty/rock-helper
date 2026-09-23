@@ -1,5 +1,5 @@
 {
-    "name" : "洛克王国助手",
+    "name" : "洛克物语",
     "appid" : "__UNI__72DB00C",
     "description" : "",
     "versionName" : "1.0.0",
@@ -89,11 +89,35 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wxd027a8dc17d0d1f9",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "es6" : true,
+            "minified" : true,
+            "postcss" : true
         },
-        "usingComponents" : true
+        "lazyCodeLoading" : "requiredComponents",
+        "usingComponents" : true,
+        "packOptions" : {
+            "ignore" : [
+                {
+                    "type" : "folder",
+                    "value" : "static/float"
+                },
+                {
+                    "type" : "folder",
+                    "value" : "static/static-web/traits"
+                },
+                {
+                    "type" : "folder",
+                    "value" : "static/web"
+                },
+                {
+                    "type" : "folder",
+                    "value" : "static/static-web/pets"
+                }
+            ]
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true

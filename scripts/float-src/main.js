@@ -41,13 +41,13 @@ const state = {
   oppId: null,
   oppSkill: '',
   myId: null,
-  myNatureUp: '无',
-  myNatureDown: '无',
+  myNatureUp: '魔攻',
+  myNatureDown: '物攻',
   // 对方配置：auto=满配（同计算页一键满配口径）；custom=用户自定（个体/性格）
   oppCfgMode: 'auto',
   oppIvs: null,
-  oppNatureUp: '物攻',
-  oppNatureDown: '魔攻'
+  oppNatureUp: '魔攻',
+  oppNatureDown: '物攻'
 }
 
 function el(id) {
@@ -111,39 +111,187 @@ function findPet(id) {
   return state.pets.find((pet) => Number(pet.id) === Number(id)) || null
 }
 
-function currentSkill(pet) {
-  if (!pet || !pet.skills || !pet.skills.length) return null
-  const saved = pet.skills.find((skill) => skill.name === state.oppSkill)
-  if (saved) return saved
-  const ordered = orderedSkills(pet)
-  return ordered[0] || null
+/** 计算攻击方面板（用于物攻/魔攻倾向判定） */
+function getAttackerPanel(pet) {
+  if (!pet || !pet.race) return { attack: 0, mattack: 0 }
+  const cfg = state.oppCfgMode === 'custom' && state.oppIvs
+    ? {
+        level: 60,
+        star: 5,
+        ivs: state.oppIvs,
+        natureUp: state.oppNatureUp,
+        natureDown: state.oppNatureDown
+      }
+    : buildOpponentFullConfig(pet)
+  return calculateAllPanels({
+    race: pet.race,
+    ivs: cfg.ivs,
+    level: cfg.level || 60,
+    star: cfg.star || 5,
+    natureUp: cfg.natureUp,
+    natureDown: cfg.natureDown
+  })
 }
 
-/** 技能展示顺序：非血脉优先 → 克制我方优先 → 有效威力降序 */
-function orderedSkills(pet) {
-  if (!pet || !pet.skills) return []
+/**
+ * 技能分组与过滤逻辑（全面对齐伤害计算页 pages/pvp-breakpoint.vue）：
+ * 1. 过滤威力 <= 60 的初级无机制技能；
+ * 2. 物攻/魔攻面板差距过大时，隐藏不匹配类型的技能（双刀全显示）；
+ * 3. 血脉技能中"升龙咆哮"仅龙系显示；
+ * 4. 计算有效威力（基础 × 克制倍率 × 本系 1.25 倍）；
+ * 5. 按来源分组（常用精灵技能最多 5 个、血脉技能、优质技能石最多 6 个），组内按计算威力降序。
+ */
+function getPetSkillGroups(pet) {
+  if (!pet || !pet.skills || !pet.skills.length) {
+    return { level: [], blood: [], stone: [] }
+  }
   const mine = findPet(state.myId)
   const myTypes = (mine && mine.types ? mine.types : []).map((type) => normalizeAttr(type)).filter(Boolean)
-  return pet.skills
-    .map((skill) => {
-      const mult = myTypes.length ? getAttrMultiplier(normalizeAttr(skill.attr), myTypes) : 1
-      return { skill, mult }
+  const oppTypes = (pet.types || []).map((type) => normalizeAttr(type)).filter(Boolean)
+  const isDragon = oppTypes.includes('龙')
+
+  // 攻击方物攻 / 魔攻判定
+  const panel = getAttackerPanel(pet)
+  const atk = Math.round(Number(panel.attack) || Number(pet.race && pet.race.attack) || 0)
+  const matk = Math.round(Number(panel.mattack) || Number(pet.race && pet.race.mattack) || 0)
+
+  // 1. 基础过滤
+  let usable = pet.skills.filter((skill) => {
+    const p = Number(skill.power) || 0
+    const hits = Number(skill.baseHits) || 1
+    // 威力过滤：总威力 <= 60 过滤
+    if (!(p > 60 || (hits > 1 && p * hits > 60))) return false
+    // 血脉技能限制：升龙咆哮仅龙系显示
+    if (skill.src === 1 && skill.name === '升龙咆哮' && !isDragon) return false
+    // 物攻/魔攻类型过滤（若攻魔面板不等，隐藏副攻技能）
+    if (atk > matk && skill.type !== '物攻') return false
+    if (matk > atk && skill.type !== '魔攻') return false
+    return true
+  })
+
+  // 兜底：若过滤后无可用技能（罕见极端），回退到物/魔攻匹配的所有技能
+  if (!usable.length) {
+    usable = pet.skills.filter((skill) => {
+      if (atk > matk && skill.type !== '物攻') return false
+      if (matk > atk && skill.type !== '魔攻') return false
+      return true
     })
-    .sort((a, b) => {
-      const bloodA = a.skill.src === 1 ? 1 : 0
-      const bloodB = b.skill.src === 1 ? 1 : 0
-      if (bloodA !== bloodB) return bloodA - bloodB
-      if (a.mult !== b.mult) return b.mult - a.mult
-      return (b.skill.power * b.skill.baseHits) - (a.skill.power * a.skill.baseHits)
-    })
-    .map((item) => item.skill)
+  }
+  if (!usable.length) {
+    usable = pet.skills
+  }
+
+  // 2. 计算有效计算威力 autoCalculatedPower（含克制与本系倍率）
+  const enriched = usable.map((skill) => {
+    const skillAttr = normalizeAttr(skill.attr) || ''
+    const attrMultiplier = myTypes.length ? getAttrMultiplier(skillAttr, myTypes) : 1
+    const sameTypeMultiplier = skillAttr && oppTypes.includes(skillAttr) ? 1.25 : 1.0
+    const autoCalculatedPower = Math.round(Number(skill.power || 0) * attrMultiplier * sameTypeMultiplier)
+    return {
+      ...skill,
+      attrMultiplier,
+      sameTypeMultiplier,
+      autoCalculatedPower
+    }
+  })
+
+  // 3. 分组排序（组内按计算威力降序）
+  const bySource = (srcVal) => enriched
+    .filter((s) => s.src === srcVal)
+    .sort((a, b) => (b.autoCalculatedPower || 0) - (a.autoCalculatedPower || 0))
+
+  return {
+    level: bySource(0).slice(0, 5), // 常用等级技能最多 5 个
+    blood: bySource(1),             // 血脉技能
+    stone: bySource(2).slice(0, 6)  // 优质技能石最多 6 个
+  }
 }
 
-/** 数据已在构建期筛为"最终形态 + 多形态条目"，这里只做关键词过滤 */
+/** 扁平化可用技能列表（用于顺序查找与默认选中） */
+function orderedSkills(pet) {
+  const groups = getPetSkillGroups(pet)
+  return [...groups.level, ...groups.blood, ...groups.stone]
+}
+
+/** 获取当前选中技能：优先沿用已选（若仍在可用列表中），否则默认选常用技能中计算威力最高者 */
+function currentSkill(pet) {
+  if (!pet || !pet.skills || !pet.skills.length) return null
+  const ordered = orderedSkills(pet)
+  if (!ordered.length) return pet.skills[0] || null
+  const saved = ordered.find((skill) => skill.name === state.oppSkill)
+  if (saved) return saved
+  return ordered[0]
+}
+
+
+/**
+ * 精灵过滤逻辑：
+ * 1. 默认无搜索词：剔除首领化与带括号变体（如"鸭吉吉（紧实的样子）"），按名称去重，
+ *    仅展示纯净的常规最终形态代表；
+ * 2. 有搜索词时：支持全量搜索匹配，非首领化优先，名称越短越靠前。
+ */
 function filteredPets() {
   const keyword = String(state.keyword || '').trim().toLowerCase()
-  if (!keyword) return state.pets.slice(0, 40)
-  return state.pets.filter((pet) => String(pet.name || '').toLowerCase().includes(keyword)).slice(0, 40)
+  if (!keyword) {
+    const seen = new Set()
+    const result = []
+    for (const pet of state.pets) {
+      if (pet.isLeader) continue
+      if (pet.name.includes('（') || pet.name.includes('(')) continue
+      if (seen.has(pet.name)) continue
+      seen.add(pet.name)
+      result.push(pet)
+    }
+    return result
+  }
+  return state.pets
+    .filter((pet) => String(pet.name || '').toLowerCase().includes(keyword))
+    .sort((a, b) => {
+      const aLeader = a.isLeader ? 1 : 0
+      const bLeader = b.isLeader ? 1 : 0
+      if (aLeader !== bLeader) return aLeader - bLeader
+      return a.name.length - b.name.length
+    })
+    .slice(0, 50)
+}
+
+/**
+ * 根据精灵的主攻倾向（魔攻 vs 物攻）自适应最优性格：
+ * 魔攻 >= 物攻 -> +魔攻 -物攻
+ * 物攻 > 魔攻 -> +物攻 -魔攻
+ */
+function getOptimalNature(pet, preferSkillType) {
+  if (!pet) return { up: '魔攻', down: '物攻' }
+  const race = pet.race || {}
+  const attack = Number(race.attack) || 0
+  const mattack = Number(race.mattack) || 0
+  let prefer = preferSkillType
+  if (!prefer) {
+    prefer = mattack >= attack ? '魔攻' : '物攻'
+  }
+  if (prefer === '魔攻') {
+    return { up: '魔攻', down: '物攻' }
+  } else {
+    return { up: '物攻', down: '魔攻' }
+  }
+}
+
+/** 换对方精灵或技能时，自适应最优对方配置 */
+function applyAutoOpponentConfig(pet) {
+  if (!pet) return
+  const skill = currentSkill(pet)
+  const fullCfg = buildOpponentFullConfig(pet, { skillType: skill ? skill.type : '' })
+  state.oppNatureUp = fullCfg.natureUp
+  state.oppNatureDown = fullCfg.natureDown
+  state.oppIvs = { ...fullCfg.ivs }
+}
+
+/** 换我方精灵时，自适应最优我方性格与加点 */
+function applyAutoMyConfig(pet) {
+  if (!pet) return
+  const nature = getOptimalNature(pet)
+  state.myNatureUp = nature.up
+  state.myNatureDown = nature.down
 }
 
 function escapeHtml(text) {
@@ -273,19 +421,77 @@ function renderTypes(boxId, types) {
 function renderOppRow() {
   const pet = findPet(state.oppId)
   el('opp-name').textContent = pet ? pet.name : '未选择'
+  const imgEl = el('opp-avatar')
+  if (imgEl) {
+    if (pet && pet.avatar) {
+      imgEl.src = pet.avatar
+      imgEl.style.display = 'block'
+    } else {
+      imgEl.removeAttribute('src')
+      imgEl.style.display = 'none'
+    }
+  }
   renderTypes('opp-types', pet && pet.types)
   renderSkillChips(pet)
   renderOppCfg()
 }
 
 function renderSkillChips(pet) {
-  const skills = orderedSkills(pet)
+  const groups = getPetSkillGroups(pet)
   const current = currentSkill(pet)
-  el('opp-skills').innerHTML = skills.map((skill) => `
-    <div class="skill-chip ${current && current.name === skill.name ? 'active' : ''}" data-skill="${escapeHtml(skill.name)}">
-      ${typeIconHtml(skill.attr, 'sc-icon')}${escapeHtml(skill.name)}${skill.src === 1 ? '<i class="blood-tag">脉</i>' : ''}<span class="power mono">${skill.power}${skill.baseHits > 1 ? '×' + skill.baseHits : ''}</span>
-    </div>
-  `).join('')
+  if (current && current.name !== state.oppSkill) {
+    state.oppSkill = current.name
+    saveState()
+  }
+
+  const renderChip = (skill) => {
+    const isActive = current && current.name === skill.name
+    const isMulti = skill.baseHits > 1
+    const pwr = skill.autoCalculatedPower || skill.power || 0
+    let multBadge = ''
+    if (skill.attrMultiplier > 1) {
+      multBadge = `<i class="adv-tag">克</i>`
+    } else if (skill.attrMultiplier < 1) {
+      multBadge = `<i class="disadv-tag">抗</i>`
+    }
+    return `
+      <div class="skill-chip ${isActive ? 'active' : ''}" data-skill="${escapeHtml(skill.name)}" title="${escapeHtml(skill.name)} 基础${skill.power} 计算${pwr}">
+        ${typeIconHtml(skill.attr, 'sc-icon')}
+        <span class="sc-name">${escapeHtml(skill.name)}</span>
+        ${skill.src === 1 ? '<i class="blood-tag">脉</i>' : ''}
+        ${multBadge}
+        <span class="power mono">${pwr}${isMulti ? '×' + skill.baseHits : ''}</span>
+      </div>
+    `
+  }
+
+  const sections = []
+  if (groups.level.length) {
+    sections.push(`
+      <div class="ss-group">
+        <span class="ss-group-label">常用</span>
+        <div class="ss-chip-row">${groups.level.map(renderChip).join('')}</div>
+      </div>
+    `)
+  }
+  if (groups.blood.length) {
+    sections.push(`
+      <div class="ss-group">
+        <span class="ss-group-label gold">血脉</span>
+        <div class="ss-chip-row">${groups.blood.map(renderChip).join('')}</div>
+      </div>
+    `)
+  }
+  if (groups.stone.length) {
+    sections.push(`
+      <div class="ss-group">
+        <span class="ss-group-label">技能石</span>
+        <div class="ss-chip-row">${groups.stone.map(renderChip).join('')}</div>
+      </div>
+    `)
+  }
+
+  el('opp-skills').innerHTML = sections.join('') || '<div class="empty-tip">暂无可用技能</div>'
 }
 
 /** 对方配置区：满配/自定切换 + 自定编辑器 + 口径提示 */
@@ -303,15 +509,13 @@ function renderOppCfg() {
     if (pet) {
       const skill = currentSkill(pet)
       const cfg = buildOpponentFullConfig(pet, { skillType: skill ? skill.type : '' })
-      hint = `满配 ${cfg.natureUp}+ ${cfg.natureDown}- · 60级5星`
-    } else {
-      hint = '满配 · 60级5星'
+      hint = `${cfg.natureUp}+ ${cfg.natureDown}-`
     }
   } else {
     const ivText = state.oppIvs
-      ? Object.entries(state.oppIvs).filter(([, v]) => Number(v) > 0).map(([k]) => IV_LABELS[k] || k).join('/') || '无个体'
-      : '无个体'
-    hint = `自定 ${state.oppNatureUp}+ ${state.oppNatureDown}- · ${ivText}`
+      ? Object.entries(state.oppIvs).filter(([, v]) => Number(v) > 0).map(([k]) => IV_LABELS[k] || k).join('/') || '0个体'
+      : '0个体'
+    hint = `${state.oppNatureUp}+ ${state.oppNatureDown}- · ${ivText}`
   }
   el('opp-cfg-hint').textContent = hint
 
@@ -328,6 +532,16 @@ function renderOppCfg() {
 function renderMyRow() {
   const pet = findPet(state.myId)
   el('my-name').textContent = pet ? pet.name : '未选择'
+  const imgEl = el('my-avatar')
+  if (imgEl) {
+    if (pet && pet.avatar) {
+      imgEl.src = pet.avatar
+      imgEl.style.display = 'block'
+    } else {
+      imgEl.removeAttribute('src')
+      imgEl.style.display = 'none'
+    }
+  }
   renderTypes('my-types', pet && pet.types)
 }
 
@@ -344,7 +558,10 @@ function renderPickList(listId, activeId) {
   }
   box.innerHTML = pets.map((pet) => `
     <div class="pick-item ${Number(pet.id) === Number(activeId) ? 'active' : ''}" data-id="${pet.id}">
-      <span class="pick-name">${escapeHtml(pet.name)}</span>
+      <div class="pick-avatar-wrap">
+        ${pet.avatar ? `<img class="pick-avatar" src="${escapeHtml(pet.avatar)}" onerror="this.style.display='none'" alt="" />` : ''}
+      </div>
+      <span class="pick-name">${escapeHtml(pet.name)}${pet.isLeader ? '<span class="leader-badge">首领</span>' : ''}</span>
       <span class="type-badges">${(pet.types || []).slice(0, 2).map(typeBadgeHtml).join('')}</span>
       <span class="pick-speed mono">速${Number(pet.race && pet.race.speed) || 0}</span>
     </div>
@@ -360,10 +577,20 @@ function renderResult() {
   }
   const chips = [
     `<span class="chip type" style="background:${typeColor(data.skill.attr)}">${escapeHtml(data.skill.attr)}</span>`,
-    `<span class="chip">${escapeHtml(data.skill.type)} · 威力${data.skill.power}</span>`
+    `<span class="chip">${escapeHtml(data.skill.type)} · 基础${data.skill.power}</span>`
   ]
-  if (data.attrMultiplier !== 1) chips.push(`<span class="chip">克制 ${Number(data.attrMultiplier.toFixed(2))}x</span>`)
-  if (data.sameTypeMultiplier !== 1) chips.push(`<span class="chip">本系 1.25x</span>`)
+  if (data.power !== data.skill.power) {
+    chips.push(`<span class="chip gold mono">计算${data.power}</span>`)
+  }
+  if (data.attrMultiplier !== 1) {
+    chips.push(`<span class="chip ${data.attrMultiplier > 1 ? 'adv' : 'disadv'}">克制 ${Number(data.attrMultiplier.toFixed(2))}x</span>`)
+  }
+  if (data.sameTypeMultiplier !== 1) {
+    chips.push(`<span class="chip stab">本系 1.25x</span>`)
+  }
+  if (data.hits > 1) {
+    chips.push(`<span class="chip">${data.hits}连击</span>`)
+  }
   const overflow = data.damage - data.hp
   const pct = Math.min(data.percent, 100)
   box.innerHTML = `
@@ -379,15 +606,16 @@ function renderResult() {
       <span class="result-damage ${data.kill ? 'kill' : ''} mono">${data.damage}</span>
       <span class="result-hp mono">/ ${data.hp}</span>
       <span class="result-pct mono">${data.percent}%</span>
-      <span class="verdict ${data.kill ? 'kill' : 'survive'}">${data.kill ? '可击杀' + (overflow > 0 ? ' 溢出' + overflow : '') : '存活'}</span>
+      <span class="verdict ${data.kill ? 'kill' : 'survive'}">${data.kill ? '可击杀' + (overflow > 0 ? ' +' + overflow : '') : '存活'}</span>
     </div>
-    <div class="result-note">对方${state.oppCfgMode === 'custom' ? '自定' : '满配'} ${escapeHtml(data.oppConfig.natureUp)}+ ${escapeHtml(data.oppConfig.natureDown)}- · 60级5星${data.hits > 1 ? ` · 单发 ${data.perHit}×${data.hits}连击` : ''}</div>
+    ${data.hits > 1 ? `<div class="result-note">单发 ${data.perHit} × ${data.hits}连击</div>` : ''}
   `
 }
 
 function renderSides() {
   renderOppRow()
   renderMyRow()
+  refreshNatures()
 }
 
 function render() {
@@ -395,15 +623,21 @@ function render() {
   renderResult()
 }
 
-/** 攻守互换：双方精灵对调，技能切到新对方的推荐技能 */
+/** 攻守互换：双方精灵对调，技能与主攻配置自动适配 */
 function swapSides() {
   if (!state.oppId && !state.myId) return
   const prevOpp = state.oppId
   state.oppId = state.myId
   state.myId = prevOpp
+
   const opp = findPet(state.oppId)
   const ordered = orderedSkills(opp)
   state.oppSkill = ordered.length ? ordered[0].name : ''
+  applyAutoOpponentConfig(opp)
+
+  const mine = findPet(state.myId)
+  applyAutoMyConfig(mine)
+
   saveState()
   renderSides()
   renderResult()
@@ -411,7 +645,15 @@ function swapSides() {
 
 /** 切换对方配置模式；转自定时用当前满配值预填 */
 function setOppCfgMode(mode) {
-  if (state.oppCfgMode === mode) return
+  if (state.oppCfgMode === mode && mode === 'auto') {
+    applyAutoOpponentConfig(findPet(state.oppId))
+    saveState()
+    renderSkillChips(findPet(state.oppId))
+    renderOppCfg()
+    refreshNatures()
+    renderResult()
+    return
+  }
   if (mode === 'custom') {
     const pet = findPet(state.oppId)
     const skill = currentSkill(pet)
@@ -419,10 +661,14 @@ function setOppCfgMode(mode) {
     state.oppIvs = { ...cfg.ivs }
     state.oppNatureUp = cfg.natureUp
     state.oppNatureDown = cfg.natureDown
+  } else {
+    applyAutoOpponentConfig(findPet(state.oppId))
   }
   state.oppCfgMode = mode
   saveState()
+  renderSkillChips(findPet(state.oppId))
   renderOppCfg()
+  refreshNatures()
   renderResult()
 }
 
@@ -439,53 +685,89 @@ function toggleOppIv(key) {
   renderResult()
 }
 
+let natureRefreshers = []
+function refreshNatures() {
+  natureRefreshers.forEach((fn) => {
+    try { fn() } catch (e) {}
+  })
+}
+
 /** 静态 DOM 的事件绑定（选精灵内联展开 / 技能 chips / 性格），启动时执行一次 */
 function bindStatic() {
-  // ---- 自绘下拉（替代原生 select，样式与面板统一） ----
-  const ddLayer = el('dd-layer')
-  let openDropdown = null
-  const closeDropdown = () => {
-    if (openDropdown) {
-      openDropdown.box.classList.remove('active')
-      ddLayer.classList.remove('open')
-      openDropdown = null
+  const popover = el('nature-popover')
+  const popoverTitle = el('nature-popover-title')
+  const popoverClose = el('nature-popover-close')
+  const popoverGrid = el('nature-popover-grid')
+  let currentNatureTarget = null
+
+  const closeNaturePopover = () => {
+    if (popover) popover.classList.remove('open')
+    currentNatureTarget = null
+  }
+  if (popoverClose) {
+    popoverClose.addEventListener('click', (e) => {
+      e.stopPropagation()
+      closeNaturePopover()
+    })
+  }
+  if (popover) {
+    popover.addEventListener('click', (e) => e.stopPropagation())
+  }
+  el('panel').addEventListener('click', (e) => {
+    if (!e.target.closest('.dd-box') && !e.target.closest('.nature-popover')) {
+      closeNaturePopover()
     }
-  }
-  const bindDropdown = (boxId, options, prefix, get, set) => {
-    const box = el(boxId)
-    const refresh = () => { box.textContent = prefix + get() }
-    refresh()
-    box.addEventListener('click', (event) => {
-      event.stopPropagation()
-      if (openDropdown && openDropdown.box === box) { closeDropdown(); return }
-      closeDropdown()
-      const rect = box.getBoundingClientRect()
-      ddLayer.innerHTML = options.map((option) => `
-        <div class="dd-item${option === get() ? ' active' : ''}" data-v="${escapeHtml(option)}">${prefix}${escapeHtml(option)}</div>
-      `).join('')
-      ddLayer.style.left = Math.max(4, rect.left) + 'px'
-      ddLayer.style.top = (rect.bottom + 3) + 'px'
-      ddLayer.style.minWidth = Math.max(rect.width, 84) + 'px'
-      ddLayer.classList.add('open')
-      openDropdown = { box, set }
-    })
-    return refresh
-  }
-  ddLayer.addEventListener('click', (event) => {
-    event.stopPropagation()
-    const item = event.target.closest('.dd-item')
-    if (!item || !openDropdown) { closeDropdown(); return }
-    const set = openDropdown.set
-    closeDropdown()
-    set(item.dataset.v)
   })
-  el('panel').addEventListener('click', closeDropdown)
-  el('panel').addEventListener('scroll', closeDropdown, true)
-  const natureBox = (boxId, options, prefix, get, set) => {
-    const refresh = bindDropdown(boxId, options, prefix, get, (value) => {
-      set(value)
-      refresh()
+
+  const openNaturePopover = (title, prefix, get, set, refresh) => {
+    closePickers()
+    currentNatureTarget = { get, set, prefix, title, refresh }
+    const currentVal = get()
+    if (popoverTitle) popoverTitle.textContent = title
+    if (popoverGrid) {
+      popoverGrid.innerHTML = NATURE_OPTIONS.map((opt) => `
+        <div class="nature-chip ${opt === currentVal ? 'active' : ''}" data-v="${escapeHtml(opt)}">
+          ${prefix}${escapeHtml(opt)}
+        </div>
+      `).join('')
+    }
+    if (popover) popover.classList.add('open')
+  }
+
+  if (popoverGrid) {
+    popoverGrid.addEventListener('click', (e) => {
+      e.stopPropagation()
+      const chip = e.target.closest('.nature-chip')
+      if (!chip || !currentNatureTarget) return
+      const chosen = chip.dataset.v
+      const target = currentNatureTarget
+      closeNaturePopover()
+      target.set(chosen)
+      target.refresh()
     })
+  }
+
+  const natureBox = (boxId, title, prefix, get, set) => {
+    const box = el(boxId)
+    if (!box) return () => {}
+    const valEl = box.querySelector('.dd-val') || box
+
+    const refresh = () => {
+      const current = get()
+      valEl.textContent = prefix + current
+    }
+    refresh()
+
+    box.addEventListener('click', (e) => {
+      e.stopPropagation()
+      if (popover && popover.classList.contains('open') && currentNatureTarget && currentNatureTarget.get === get) {
+        closeNaturePopover()
+      } else {
+        openNaturePopover(title, prefix, get, set, refresh)
+      }
+    })
+
+    return refresh
   }
 
   const closePickers = (exceptId) => {
@@ -494,6 +776,7 @@ function bindStatic() {
     })
   }
   const togglePicker = (pickerId, listId, activeId, searchId) => {
+    closeNaturePopover()
     state.keyword = ''
     el(searchId).value = ''
     const picker = el(pickerId)
@@ -523,6 +806,7 @@ function bindStatic() {
     const opp = findPet(state.oppId)
     const skill = currentSkill(opp)
     state.oppSkill = skill ? skill.name : ''
+    applyAutoOpponentConfig(opp)
     saveState()
     el('opp-picker').classList.remove('open')
     renderSides()
@@ -532,15 +816,20 @@ function bindStatic() {
     const chip = event.target.closest('.skill-chip')
     if (!chip) return
     state.oppSkill = chip.dataset.skill
+    if (state.oppCfgMode === 'auto') {
+      applyAutoOpponentConfig(findPet(state.oppId))
+    }
     saveState()
     renderSkillChips(findPet(state.oppId))
+    renderOppCfg()
+    refreshNatures()
     renderResult()
   })
 
   // 我方：换精灵（整行可点）/ 搜索 / 选中 / 性格
   el('btn-my-change').addEventListener('click', () => togglePicker('my-picker', 'my-list', state.myId, 'my-search'))
   el('my-row').addEventListener('click', (event) => {
-    if (event.target.closest('.side-action') || event.target.closest('.nature-select')) return
+    if (event.target.closest('.side-action') || event.target.closest('.nature-row') || event.target.closest('.dd-box')) return
     togglePicker('my-picker', 'my-list', state.myId, 'my-search')
   })
 
@@ -550,18 +839,33 @@ function bindStatic() {
   // 对方配置：满配 / 自定
   el('opp-cfg-auto').addEventListener('click', () => setOppCfgMode('auto'))
   el('opp-cfg-custom').addEventListener('click', () => setOppCfgMode('custom'))
-  natureBox('opp-nature-up', NATURE_OPTIONS, '+', () => state.oppNatureUp, (v) => {
+
+  natureRefreshers = []
+  natureRefreshers.push(natureBox('opp-nature-up', '对方加成性格 (+)', '+', () => state.oppNatureUp, (v) => {
     state.oppNatureUp = v
     saveState()
+    renderSkillChips(findPet(state.oppId))
     renderOppCfg()
     renderResult()
-  })
-  natureBox('opp-nature-down', NATURE_OPTIONS, '−', () => state.oppNatureDown, (v) => {
+  }))
+  natureRefreshers.push(natureBox('opp-nature-down', '对方减益性格 (−)', '−', () => state.oppNatureDown, (v) => {
     state.oppNatureDown = v
     saveState()
+    renderSkillChips(findPet(state.oppId))
     renderOppCfg()
     renderResult()
-  })
+  }))
+  natureRefreshers.push(natureBox('my-nature-up', '我方加成性格 (+)', '+', () => state.myNatureUp, (v) => {
+    state.myNatureUp = v
+    saveState()
+    renderResult()
+  }))
+  natureRefreshers.push(natureBox('my-nature-down', '我方减益性格 (−)', '−', () => state.myNatureDown, (v) => {
+    state.myNatureDown = v
+    saveState()
+    renderResult()
+  }))
+
   el('opp-iv-toggles').addEventListener('click', (event) => {
     const item = event.target.closest('.iv-toggle')
     if (!item) return
@@ -575,19 +879,11 @@ function bindStatic() {
     const item = event.target.closest('.pick-item')
     if (!item) return
     state.myId = Number(item.dataset.id)
+    const mine = findPet(state.myId)
+    applyAutoMyConfig(mine)
     saveState()
     el('my-picker').classList.remove('open')
     renderSides()
-    renderResult()
-  })
-  natureBox('my-nature-up', NATURE_OPTIONS, '+', () => state.myNatureUp, (v) => {
-    state.myNatureUp = v
-    saveState()
-    renderResult()
-  })
-  natureBox('my-nature-down', NATURE_OPTIONS, '−', () => state.myNatureDown, (v) => {
-    state.myNatureDown = v
-    saveState()
     renderResult()
   })
 }
@@ -607,6 +903,8 @@ function expandPets(rawList) {
       types: raw[2] || [],
       race,
       uiTag: raw[5] || '其他',
+      isLeader: Boolean(raw[6]),
+      avatar: raw[7] || '',
       // src: 0=精灵技能 1=血脉技能 2=可学技能石；展示顺序由 orderedSkills 按对方/克制动态决定
       skills: (raw[4] || []).map((skill) => ({
         name: skill[0],
@@ -632,8 +930,13 @@ function loadData() {
     }
     const opp = findPet(state.oppId)
     const skill = currentSkill(opp)
-    if (opp && skill && !opp.skills.some((item) => item.name === state.oppSkill)) {
-      state.oppSkill = skill.name
+    state.oppSkill = skill ? skill.name : ''
+    const mine = findPet(state.myId)
+    if (!state.oppNatureUp || !state.oppNatureDown || !state.oppIvs) {
+      applyAutoOpponentConfig(opp)
+    }
+    if (!state.myNatureUp || state.myNatureUp === '无' || !state.myNatureDown || state.myNatureDown === '无') {
+      applyAutoMyConfig(mine)
     }
   } catch (error) {
     state.loadError = `数据加载失败：${error.message}`
@@ -674,7 +977,7 @@ function postCommand(command) {
 /**
  * App 内悬浮模式（plus.webview 子窗口）：页面自管理窗口尺寸与位置。
  * - 球 56px：拖动移动（screenX/Y 增量，rAF 合帧）/ 单击展开 / 长按 600ms 关闭
- * - 面板最大 340×480，出现在球下方（空间不足改上方），边缘夹紧
+ * - 面板最大 230×300，出现在球下方（空间不足改上方），边缘夹紧
  * - 关闭/拖动后把球位置写入 plus.storage，下次打开恢复
  */
 function initInApp() {
@@ -688,8 +991,9 @@ function initInApp() {
   // plus 晚注入时 main() 可能已按浏览器模式初始化，这里补上自管理样式
   document.body.classList.add('self-mode')
 
-  const BALL = 44
-  const GAP = 8
+  // 窗口单位是逻辑像素（1 逻辑 px ≈ 1dp），不乘 dpr
+  const BALL = 40
+  const GAP = 6
   let W = 360
   let H = 640
   // 屏幕尺寸：App 侧创建窗口前预写入；读不到时回退 plus.screen 分辨率估算
@@ -745,8 +1049,8 @@ function initInApp() {
   let expanded = false
   function expand() {
     expanded = true
-    const pw = Math.min(304, W - GAP * 2)
-    const ph = Math.min(440, H - GAP * 2)
+    const pw = Math.min(185, Math.max(160, Math.round(W * 0.44)))
+    const ph = Math.min(230, Math.max(180, Math.round(H * 0.50)))
     let px = clamp(ballX + BALL / 2 - pw / 2, GAP, W - pw - GAP)
     let py = ballY + BALL + GAP
     if (py + ph > H - GAP) py = clamp(ballY - ph - GAP, GAP, H - ph - GAP)
@@ -842,6 +1146,11 @@ function startInApp() {
 }
 
 function main() {
+  const ballImg = document.querySelector('.ball-img')
+  if (ballImg && (ballImg.complete || ballImg.naturalWidth > 0)) {
+    el('ball') && el('ball').classList.add('has-img')
+  }
+
   // UTS 系统悬浮窗模式：球窗口与面板窗口由原生 WindowManager 分开承载，
   // 拖动/单击切换/长按关闭全部在原生触摸层处理，页面只负责渲染
   // 注：file:// 页面经原生 loadUrl 传入的模式标记在 #fragment 里（?query 在部分 WebView 会破坏文件解析）

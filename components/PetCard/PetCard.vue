@@ -219,9 +219,9 @@ export default {
 
 .name {
   display: block;
-  font-size: 24rpx;
-  font-weight: 700;
-  color: #2C3A2F;
+  font-size: 26rpx;
+  font-weight: 800;
+  color: #243026;
 }
 
 .name-row {
@@ -244,13 +244,15 @@ export default {
 }
 
 .pet-card.compact .name {
-  font-size: 21rpx;
+  font-size: 23rpx;
+  font-weight: 800;
   line-height: 1.3;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: center;
+  color: #243026;
 }
 
 .code {

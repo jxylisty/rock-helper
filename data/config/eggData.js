@@ -8533,8 +8533,6 @@ export function predictEgg(height, weight) {
 	return predictions.sort((a, b) => b.score - a.score).slice(0, 10)
 }
 
-// 大块头判定口径：身高与体重须同时达到该精灵蛋范围的 98% 分位（双维度缺一不可）。
-// 校准依据：罗隐蛋官方区间 13.475~19.68kg，社区实测准入 >19.556kg = min + 0.98×(max-min)，完全吻合。
 const BULK_RATIO = 0.98
 
 export function judgeBulkEgg(egg, height, weight) {

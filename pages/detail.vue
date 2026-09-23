@@ -3,7 +3,7 @@
     <AppHeader title="精灵详情" leftAction="back" :background="headerGradient">
       <template #right>
         <view class="header-capsule">
-          <text class="header-capsule-text">图鉴 #{{ petId ? String(petId).padStart(3, '0') : '—' }}</text>
+          <text class="header-capsule-text">{{ variantLabel || '官方图鉴' }}</text>
         </view>
       </template>
 
@@ -15,10 +15,10 @@
           </view>
           <view class="det-info">
             <text class="det-name">{{ petInfo.name }}</text>
-            <text class="det-id">#{{ petId ? String(petId).padStart(3, '0') : '—' }}{{ variantLabel ? ' · ' + variantLabel : '' }}</text>
+            <text v-if="variantLabel" class="det-variant-tag">{{ variantLabel }}</text>
             <view class="det-pills">
               <view v-for="(type, index) in petInfo.type" :key="index" class="det-pill">
-                <RemoteImage class="det-pill-icon" :src="getTypeIconPath(type)" mode="aspectFit" />
+                <image class="det-pill-icon" :src="getTypeIconPath(type)" mode="aspectFit" />
                 <text class="det-pill-text">{{ type }}</text>
               </view>
             </view>
@@ -180,6 +180,31 @@
       </view>
     </view>
 
+    <view class="section" v-if="wishTop.length">
+      <view class="section-head">
+        <view class="section-title-row">
+          <view class="section-dot"></view>
+          <text class="section-title">愿力冲击推荐</text>
+        </view>
+        <text class="wish-toggle" @click="wishExpanded = !wishExpanded">{{ wishExpanded ? '收起' : '展开全部' }}</text>
+      </view>
+      <view class="wish-list">
+        <view
+          v-for="(opt, index) in (wishExpanded ? wishTop : wishTop.slice(0, 1))"
+          :key="opt.attr"
+          class="wish-row"
+        >
+          <text class="wish-rank mono">{{ index + 1 }}</text>
+          <view class="wish-pill" :style="{ background: getTypeColor(opt.attr) }">{{ opt.attr }}</view>
+          <view class="wish-info">
+            <text class="wish-reasons">{{ opt.reasons.join(' · ') }}</text>
+          </view>
+          <text class="wish-score mono">{{ opt.score }}</text>
+        </view>
+        <text class="wish-note">威力80 · 应对后200（80×2.5）· 物魔走较高攻 · 每场2次</text>
+      </view>
+    </view>
+
     <view class="section" v-if="petInfo.trait">
       <view class="section-head">
         <view class="section-title-row">
@@ -267,7 +292,7 @@
           <view class="skill-info-row" v-if="currentSkillDetail.attr && currentSkillDetail.attr !== '-'">
             <text class="skill-info-label">属性</text>
             <view class="skill-info-attr">
-              <RemoteImage class="skill-detail-attr-icon" :src="getTypeIconPath(currentSkillDetail.attr)" mode="aspectFit" v-if="currentSkillDetail.attr"></RemoteImage>
+              <image v-if="currentSkillDetail.attr" class="skill-detail-attr-icon" :src="getTypeIconPath(currentSkillDetail.attr)" mode="aspectFit" />
               <text class="skill-info-value">{{ currentSkillDetail.attr }}</text>
             </view>
           </view>
@@ -275,7 +300,7 @@
             <text class="skill-info-label">消耗</text>
             <text class="skill-info-value">{{ currentSkillDetail.consume !== 0 ? '能耗' + currentSkillDetail.consume : '无消耗' }}</text>
           </view>
-          <view class="skill-info-row" v-if="(currentSkillDetail.type === '物攻' || currentSkillDetail.type === '魔攻') && currentSkillDetail.power && currentSkillDetail.power !== '-'">
+          <view class="skill-info-row" v-if="(currentSkillDetail.type === '物攻' || currentSkillDetail.type === '魔攻') && Number(currentSkillDetail.power) > 0">
             <text class="skill-info-label">威力</text>
             <text class="skill-info-value">{{ currentSkillDetail.power }}</text>
           </view>
@@ -306,6 +331,7 @@ import { skillsData } from '@/data/skill/skills.js'
 import { safeBack } from '@/utils/nav.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
 import { getAttrIconName } from '@/data/config/typeChart.js'
+import { analyzeWishOptions } from '@/utils/wishPowerAdvisor.js'
 
 function shade(hex, percent) {
   const raw = String(hex || '').replace('#', '')
@@ -362,6 +388,7 @@ export default {
       variants: [],
       currentVariantIndex: 0,
       basePet: null,
+      wishExpanded: false,
       showYise: false,
       showSkillModal: false,
       currentSkillDetail: {},
@@ -399,6 +426,12 @@ export default {
         image,
         name: this.getVariantDisplayName(image)
       }))
+    },
+    // 愿力冲击推荐（Top3，评分来自纯克制规则计算）
+    wishTop() {
+      const types = this.petInfo.type || []
+      if (!Array.isArray(types) || !types.length) return []
+      return analyzeWishOptions({ types }).slice(0, 3)
     },
     currentVariantImage() {
       if (this.showYise && this.yiseImage) {
@@ -647,7 +680,7 @@ export default {
         trait: String(currentVariant?.trait || '').trim() || base.trait || '',
         type: currentVariant?.type || base.type || [],
         img: this.currentVariantImage,
-        traitImage: base.traitImage || '',
+        traitImage: resolveAssetPath(currentVariant?.traitImg || base.traitImage || ''),
         skills: hasUsableSkills(skills) ? skills : (base.skills || []),
         skill_types: Object.keys(buildSkillTypes(skills)).length
           ? buildSkillTypes(skills)
@@ -677,7 +710,7 @@ export default {
         '萌系': '萌', '恶系': '恶', '幻系': '幻'
       }
       const iconName = attrMap[type] || type
-      return resolveAssetPath('/static/icons/' + getAttrIconName(iconName) + '.webp')
+      return `/static/icons/${getAttrIconName(iconName)}.png`
     },
     onImageError(e) {
       if (this.variants.length > 0) {
@@ -887,12 +920,18 @@ export default {
   line-height: 1.25;
 }
 
-.det-id {
-  display: block;
-  margin-top: 3px;
-  font-size: 11.5px;
-  color: rgba(255, 255, 255, 0.85);
-  font-family: Monaco, Consolas, 'Courier New', monospace;
+.det-variant-tag {
+  display: inline-block;
+  margin-top: 5px;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 1px 9px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .det-pills {
@@ -1527,5 +1566,82 @@ export default {
 
 .bottom-space {
   height: 28px;
+}
+
+/* ===== 愿力冲击推荐 ===== */
+.mono {
+  font-family: Monaco, Consolas, 'Courier New', monospace;
+}
+
+.wish-toggle {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #8A6A2C;
+}
+
+.wish-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.wish-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+}
+
+.wish-rank {
+  flex-shrink: 0;
+  width: 20px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #A97F35;
+  text-align: center;
+}
+
+.wish-pill {
+  flex-shrink: 0;
+  min-width: 34px;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #FFF9EC;
+}
+
+.wish-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.wish-reasons {
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: #6B7A6E;
+  font-weight: 700;
+}
+
+.wish-score {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: #C64B38;
+}
+
+.wish-note {
+  font-size: 9.5px;
+  color: #A3AE9F;
+  line-height: 1.5;
 }
 </style>

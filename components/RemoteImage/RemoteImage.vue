@@ -1,16 +1,15 @@
 <template>
   <view class="remote-image-wrap" :class="wrapperClass" :style="wrapperStyle">
     <image
-      v-if="!showFailureHint && !showCompactFallback"
+      v-if="displaySrc && !showFailureHint && !showCompactFallback"
       class="remote-image-el"
-      v-bind="imageAttrs"
       :src="displaySrc"
       :mode="mode"
       @error="onImageError"
       @load="onImageLoad"
     />
     <view v-else-if="showCompactFallback" class="compact-fallback" />
-    <view v-else class="image-fallback" :class="{ compact: compactHint }">
+    <view v-else-if="showFailureHint" class="image-fallback" :class="{ compact: compactHint }">
       <text class="fallback-title">{{ fallbackTitle }}</text>
       <text class="fallback-reason">{{ failureReason }}</text>
       <text v-if="debugPathLabel" class="fallback-path">{{ debugPathLabel }}</text>
@@ -20,14 +19,19 @@
 
 <script>
 import { getAssetCandidateUrls, isLocalStaticAsset, resolveAssetPath } from '@/utils/asset-path.js'
-import { ensureCachedRemoteImage, isPackagedImage } from '@/utils/image-cache.js'
+// #ifdef APP-PLUS
+import { ensureCachedRemoteImage, readImageCacheMap, isPackagedImage } from '@/utils/image-cache.js'
+// #endif
 
 export default {
   name: 'RemoteImage',
-  inheritAttrs: false,
+  options: {
+    virtualHost: true
+  },
   props: {
     src: { type: String, default: '' },
-    mode: { type: String, default: 'aspectFit' }
+    mode: { type: String, default: 'aspectFit' },
+    compact: { type: Boolean, default: false }
   },
   emits: ['error', 'load'],
   data() {
@@ -42,21 +46,16 @@ export default {
   },
   computed: {
     wrapperClass() {
-      return this.$attrs.class
+      return this.$attrs ? this.$attrs.class : ''
     },
     wrapperStyle() {
-      return this.$attrs.style
-    },
-    imageAttrs() {
-      const attrs = { ...this.$attrs }
-      delete attrs.class
-      delete attrs.style
-      return attrs
+      return this.$attrs ? this.$attrs.style : ''
     },
     fallbackTitle() {
-      return '\u56fe\u7247\u672a\u663e\u793a'
+      return '图片未显示'
     },
     compactHint() {
+      if (this.compact) return true
       const value = String(this.wrapperClass || '')
       return /icon|badge|type-icon|skill-icon/i.test(value)
     },
@@ -75,15 +74,15 @@ export default {
     },
     failureReason() {
       if (!this.originalSource) {
-        return '\u56fe\u7247\u5730\u5740\u4e3a\u7a7a'
+        return '图片地址为空'
       }
       if (isLocalStaticAsset(this.originalSource)) {
-        return '\u8fdc\u7a0b\u8d44\u6e90\u7ad9\u52a0\u8f7d\u5931\u8d25\uff0c\u672c\u5730 static \u56fe\u7247\u4e5f\u672a\u547d\u4e2d'
+        return '远程资源站加载失败，本地 static 图片也未命中'
       }
       if (/^https?:\/\//i.test(this.originalSource)) {
-        return '\u8fdc\u7a0b\u56fe\u7247\u5730\u5740\u8bf7\u6c42\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc\u6216\u8d44\u6e90\u662f\u5426\u5b58\u5728'
+        return '远程图片地址请求失败，请检查网络或资源是否存在'
       }
-      return '\u56fe\u7247\u8d44\u6e90\u4e0d\u53ef\u7528'
+      return '图片资源不可用'
     }
   },
   watch: {
@@ -95,57 +94,66 @@ export default {
     }
   },
   methods: {
-    async loadCachedCandidate(candidateUrl) {
-      if (!candidateUrl) return ''
-      if (isPackagedImage(candidateUrl)) return ''
-      try {
-        const cached = await ensureCachedRemoteImage(candidateUrl, candidateUrl)
-        return cached || ''
-      } catch (error) {
-        // Cache failure must never break rendering: fall back to direct remote URL
-        return ''
-      }
-    },
-    async refreshSource() {
+    refreshSource() {
       const nextRequestId = this.requestId + 1
       this.requestId = nextRequestId
       this.failed = false
       this.lastFailedSrc = ''
 
       const originalSource = String(this.src || '').trim()
+      if (!originalSource) {
+        this.candidates = []
+        this.candidateIndex = 0
+        this.displaySrc = ''
+        return
+      }
+
       this.candidates = getAssetCandidateUrls(originalSource)
       this.candidateIndex = 0
 
-      // 优先尝试远程资源本地化缓存：首次下载后存本地，避免重复请求 CDN
-      for (let i = 0; i < this.candidates.length; i++) {
-        const candidate = this.candidates[i]
-        const isRemote = /^https?:\/\//i.test(candidate)
-        if (!isRemote) continue
-        if (nextRequestId !== this.requestId) return
-        const cached = await this.loadCachedCandidate(candidate)
-        if (nextRequestId !== this.requestId) return
-        if (cached) {
-          this.candidateIndex = i
-          this.displaySrc = cached
-          this.$emit('load', {})
-          return
-        }
-      }
+      let initialSrc = this.candidates[0] || resolveAssetPath(originalSource)
 
-      const resolved = this.candidates[0] || resolveAssetPath(originalSource)
-      this.displaySrc = resolved || ''
-      if (!resolved) {
+      // #ifdef APP-PLUS
+      if (initialSrc && /^https?:\/\//i.test(initialSrc)) {
+        try {
+          const cacheMap = readImageCacheMap()
+          if (cacheMap && cacheMap[initialSrc]) {
+            initialSrc = cacheMap[initialSrc]
+          }
+        } catch (e) {}
+      }
+      // #endif
+
+      this.displaySrc = initialSrc || ''
+      if (!initialSrc) {
         this.failed = true
         return
       }
+
+      // #ifdef APP-PLUS
+      this.triggerAppBackgroundCache(initialSrc, nextRequestId)
+      // #endif
     },
+    // #ifdef APP-PLUS
+    async triggerAppBackgroundCache(targetUrl, currentReqId) {
+      if (!targetUrl || !/^https?:\/\//i.test(targetUrl) || isPackagedImage(targetUrl)) return
+      try {
+        const cached = await ensureCachedRemoteImage(targetUrl, targetUrl)
+        if (cached && this.requestId === currentReqId && this.displaySrc === targetUrl) {
+          this.displaySrc = cached
+        }
+      } catch (e) {}
+    },
+    // #endif
     onImageLoad(event) {
       this.failed = false
       this.lastFailedSrc = ''
       this.$emit('load', event)
     },
-    async onImageError(event) {
+    onImageError(event) {
+      if (!this.displaySrc || this.displaySrc === this.lastFailedSrc) return
       this.lastFailedSrc = this.displaySrc
+
       if (this.candidateIndex + 1 < this.candidates.length) {
         this.candidateIndex += 1
         const nextSrc = this.candidates[this.candidateIndex]
@@ -162,9 +170,21 @@ export default {
 </script>
 
 <style scoped>
+:host {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
 .remote-image-wrap {
-  display: block;
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .remote-image-el {

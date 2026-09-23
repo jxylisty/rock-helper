@@ -4,28 +4,67 @@
       <template #right>
         <view class="header-capsule">
           <AppIcon name="wind" :size="11" color="#FFFFFF" :stroke-width="2.4" />
-          <text class="header-capsule-text">{{ speedGroups.length }} 档</text>
+          <text class="header-capsule-text">{{ stageFilteredGroups.length }} 档</text>
         </view>
       </template>
     </AppHeader>
 
-    <scroll-view scroll-y class="content" :show-scrollbar="false" lower-threshold="140" @scrolltolower="loadMoreGroups">
+    <scroll-view
+      scroll-y
+      class="content"
+      :show-scrollbar="false"
+      lower-threshold="140"
+      :scroll-into-view="scrollInto"
+      @scrolltolower="loadMoreGroups"
+    >
       <view class="hero card">
         <view class="hero-icon">
           <AppIcon name="wind" :size="16" color="#2C6FD1" :stroke-width="2.4" />
         </view>
         <view class="hero-text">
           <text class="hero-title">速度种族值分档</text>
-          <text class="hero-sub">默认显示最高形态；不同形态速度不同时按形态分别入榜。</text>
+          <text class="hero-sub">不同形态速度不同时按形态分别入榜；默认面板速按 60级5星 · 速10 · 性格+计算。</text>
+        </view>
+      </view>
+
+      <view class="toolbar card">
+        <view class="stage-chips">
+          <view
+            class="stage-chip"
+            :class="{ active: stageFilter === 'final' }"
+            hover-class="press-down"
+            @click="setStageFilter('final')"
+          >只看最终形态</view>
+          <view
+            class="stage-chip"
+            :class="{ active: stageFilter === 'all' }"
+            hover-class="press-down"
+            @click="setStageFilter('all')"
+          >全部形态</view>
+        </view>
+        <view class="locate-row">
+          <input
+            v-model="searchKeyword"
+            class="locate-input"
+            placeholder="输入名字或编号，定位所在速档"
+            placeholder-class="locate-placeholder"
+            confirm-type="search"
+            @confirm="locatePet"
+          />
+          <view class="locate-btn" hover-class="press-down" @click="locatePet">
+            <AppIcon name="search" :size="12" color="#FFF9EC" :stroke-width="2.4" />
+            <text class="locate-btn-text">定位</text>
+          </view>
         </view>
       </view>
 
       <view class="group-list">
         <view
           v-for="(group, index) in visibleGroups"
+          :id="'speed-' + group.speed"
           :key="group.speed"
           class="group-card card"
-          :class="tierClass(index)"
+          :class="[tierClass(index), { 'locate-hit': group.speed === highlightSpeed }]"
         >
           <view class="group-head">
             <view class="speed-seal" :class="tierClass(index)">
@@ -56,7 +95,6 @@
               :key="pet.variantImage || `${pet.id}-${pet.name}`"
               :img="pet.img"
               :name="pet.name"
-              :code="'#' + String(pet.id).padStart(3, '0')"
               :badge="getPetBadge(pet)"
               :badge-tone="isLeaderPet(pet) ? 'gold' : 'gray'"
               compact
@@ -76,8 +114,11 @@
         </view>
       </view>
 
-      <view v-if="visibleGroups.length < speedGroups.length" class="loading-more">
+      <view v-if="visibleGroups.length < stageFilteredGroups.length" class="loading-more">
         <text>继续下滑加载更多速度档</text>
+      </view>
+      <view v-if="stageFilteredGroups.length === 0" class="loading-more">
+        <text>当前筛选下没有精灵</text>
       </view>
 
       <view class="bottom-space"></view>
@@ -91,12 +132,19 @@ import AppIcon from '@/components/AppIcon/AppIcon.vue'
 import PetCard from '@/components/PetCard/PetCard.vue'
 import TypeBadge from '@/components/TypeBadge/TypeBadge.vue'
 import { petTypes, petDetail } from '@/data/pet/pet_detail.js'
+import { petIndex } from '@/data/pet/pet_index.js'
 import { hasLeaderFormPetId } from '@/data/pet/leader_forms.js'
 import { petRaceSpeed } from '@/data/pet/pet_race_speed.js'
 import { getSpeedRankEntries, calculatePetPanel } from '@/data/config/game_math.js'
 import { buildBasePetList, getPetVariants, getPetVariantDetails } from '@/utils/petListBuilder.js'
 
 const GROUP_STEP = 12
+
+// seq → uiTag（最终形态判定用，规避写死编号）
+const _uiTagBySeq = {}
+for (const entry of Object.values(petIndex)) {
+  if (entry.seq !== undefined) _uiTagBySeq[entry.seq] = entry.uiTag || '其他'
+}
 
 const _pets = buildBasePetList()
 const _petVariantsCompat = (() => {
@@ -134,18 +182,74 @@ export default {
   data() {
     return {
       speedGroups: [],
-      renderCount: GROUP_STEP
+      renderCount: GROUP_STEP,
+      stageFilter: 'final',
+      searchKeyword: '',
+      scrollInto: '',
+      highlightSpeed: null
     }
   },
   computed: {
+    // 形态过滤：final = 只保留最终形态 seq 或多形态组（组内含首领/地区形态）
+    stageFilteredGroups() {
+      const finalOnly = this.stageFilter === 'final'
+      const groups = []
+      for (const group of this.speedGroups) {
+        const pets = finalOnly
+          ? group.pets.filter((pet) => this.isFinalCandidate(pet))
+          : group.pets
+        if (pets.length) {
+          groups.push({ ...group, pets })
+        }
+      }
+      return groups
+    },
     visibleGroups() {
-      return this.speedGroups.slice(0, this.renderCount)
+      return this.stageFilteredGroups.slice(0, this.renderCount)
     }
   },
   onLoad() {
     this.buildSpeedGroups()
   },
   methods: {
+    isFinalCandidate(pet) {
+      const variants = petDetail[String(pet.id)]
+      if (Array.isArray(variants) && variants.length > 1) return true
+      return (_uiTagBySeq[pet.id] || '其他') === '最终形态'
+    },
+    setStageFilter(mode) {
+      if (this.stageFilter === mode) return
+      this.stageFilter = mode
+      this.renderCount = GROUP_STEP
+      this.highlightSpeed = null
+    },
+    locatePet() {
+      const keyword = String(this.searchKeyword || '').trim().toLowerCase()
+      if (!keyword) return
+      const index = this.stageFilteredGroups.findIndex((group) =>
+        group.pets.some((pet) =>
+          String(pet.name || '').toLowerCase().includes(keyword) ||
+          String(pet.id) === keyword
+        )
+      )
+      if (index < 0) {
+        uni.showToast({ title: '榜单里没有找到该精灵', icon: 'none' })
+        return
+      }
+      // 目标档可能在懒加载未渲染区间，先把渲染窗口扩到位
+      if (index >= this.renderCount) {
+        this.renderCount = Math.min(index + 3, this.stageFilteredGroups.length)
+      }
+      const target = this.stageFilteredGroups[index]
+      this.scrollInto = ''
+      this.$nextTick(() => {
+        this.scrollInto = 'speed-' + target.speed
+        this.highlightSpeed = target.speed
+      })
+      setTimeout(() => {
+        if (this.highlightSpeed === target.speed) this.highlightSpeed = null
+      }, 2600)
+    },
     buildSpeedGroups() {
       const rankEntries = getSpeedRankEntries(_pets, petRaceSpeed, _petVariantsCompat, _petVariantDetailsCompat)
       const groupMap = new Map()
@@ -504,5 +608,95 @@ export default {
 
 .bottom-space {
   height: calc(28px + env(safe-area-inset-bottom));
+}
+
+/* ===== 筛选与定位工具 ===== */
+.toolbar {
+  margin: 12px 14px 0;
+  padding: 11px 12px;
+}
+
+.stage-chips {
+  display: flex;
+  gap: 7px;
+}
+
+.stage-chip {
+  flex: 1;
+  height: 30px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #6B7A6E;
+  background: #F2F6FB;
+  border: 1.5px solid #D8E2EC;
+  transition: all 0.12s ease;
+}
+
+.stage-chip.active {
+  color: #FFF9EC;
+  background: linear-gradient(135deg, #2C6FD1, #4A90D9);
+  border-color: #1E56A8;
+  box-shadow: 0 2px 0 rgba(30, 86, 168, 0.35);
+}
+
+.locate-row {
+  margin-top: 9px;
+  display: flex;
+  gap: 7px;
+}
+
+.locate-input {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  padding: 0 11px;
+  border-radius: 10px;
+  background: #F2F6FB;
+  border: 1.5px solid #D8E2EC;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2C3A2F;
+}
+
+.locate-placeholder {
+  color: #A3AE9F;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.locate-btn {
+  flex-shrink: 0;
+  height: 32px;
+  padding: 0 13px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #2C6FD1, #4A90D9);
+  border: 1.5px solid #1E56A8;
+  box-shadow: 0 2px 0 rgba(30, 86, 168, 0.35);
+}
+
+.locate-btn-text {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+/* 定位命中高亮 */
+.group-card.locate-hit {
+  border-color: #2C6FD1;
+  box-shadow: 0 0 0 2px rgba(44, 111, 209, 0.35), 0 3px 0 rgba(44, 58, 47, 0.10);
+  animation: locate-pulse 1.2s ease 2;
+}
+
+@keyframes locate-pulse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 }
 </style>

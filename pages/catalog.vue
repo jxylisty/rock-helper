@@ -1,6 +1,6 @@
 <template>
   <view class="page">
-    <AppHeader theme="green" title="图鉴" subtitle="本地收录全部精灵" leftAction="back">
+    <AppHeader theme="green" title="精灵图鉴" subtitle="全形态收录 · 离线全量速查" leftAction="back">
       <template #right>
         <view class="header-capsule">
           <AppIcon name="book" :size="12" color="#FFFFFF" :stroke-width="2.4" />
@@ -20,21 +20,19 @@
         />
       </view>
 
-      <scroll-view scroll-x class="ui-tag-tabs" :show-scrollbar="false">
-        <view class="tag-tabs-inner">
-          <view
-            v-for="tag in uiTagOptions"
-            :key="tag.key"
-            class="ui-tag-tab"
-            :class="{ active: selectedUiTag === tag.key }"
-            hover-class="press-down"
-            @click="selectedUiTag = tag.key"
-          >
-            <text class="ui-tag-text">{{ tag.label }}</text>
-            <text class="ui-tag-count">{{ tag.count }}</text>
-          </view>
+      <view class="ui-tag-tabs">
+        <view
+          v-for="tag in uiTagOptions"
+          :key="tag.key"
+          class="ui-tag-tab"
+          :class="{ active: selectedUiTag === tag.key }"
+          hover-class="press-down"
+          @click="selectedUiTag = tag.key"
+        >
+          <text class="ui-tag-text">{{ tag.label }}</text>
+          <text class="ui-tag-count">{{ tag.count }}</text>
         </view>
-      </scroll-view>
+      </view>
 
       <view class="filter-head" hover-class="press-down" @click="toggleFilterPanel">
         <view class="filter-title-row">
@@ -71,7 +69,7 @@
             hover-class="press-down"
             @click="toggleType(type.key)"
           >
-            <RemoteImage class="type-chip-icon" :src="getTypeIconPath(type.key)" mode="aspectFit" />
+            <image class="type-chip-icon" :src="getTypeIconPath(type.key)" mode="aspectFit" />
             <text class="type-chip-text" :style="selectedTypes.includes(type.key) ? { color: type.color } : null">{{ type.label }}</text>
           </view>
         </view>
@@ -103,7 +101,6 @@
           :img="pet.img"
           :name="pet.name"
           :accent-colors="getAccentColors(pet)"
-          :code="'#' + String(pet.id).padStart(3, '0')"
           :badge="getCornerBadge(pet)"
           :badge-tone="hasLeaderForm(pet.id) ? 'gold' : 'gray'"
           compact
@@ -147,6 +144,7 @@ import { petTypes, petDetail } from '@/data/pet/pet_detail.js'
 import { petIndex } from '@/data/pet/pet_index.js'
 import { hasLeaderFormPetId } from '@/data/pet/leader_forms.js'
 import { resolveAssetPath } from '@/utils/asset-path.js'
+import { goDetailPage } from '@/utils/nav.js'
 import { getAttrIconName } from '@/data/config/typeChart.js'
 import finalFormMap from '@/data/config/final_form_map.json'
 
@@ -324,7 +322,7 @@ export default {
       this.selectedTypes.push(type)
     },
     getTypeIconPath(type) {
-      return resolveAssetPath(`/static/icons/${getAttrIconName(type)}.webp`)
+      return `/static/icons/${getAttrIconName(type)}.png`
     },
     typeChipStyle(type) {
       if (this.selectedTypes.includes(type.key)) {
@@ -355,7 +353,7 @@ export default {
       return hasLeaderFormPetId(id)
     },
     goToDetail(id) {
-      uni.navigateTo({ url: '/pages/detail?id=' + id })
+      goDetailPage(id)
     }
   }
 }
@@ -425,14 +423,13 @@ export default {
 
 .ui-tag-tabs {
   margin-top: 10px;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
 }
 
-.tag-tabs-inner {
-  display: inline-flex;
-  gap: 7px;
-  padding-right: 4px;
+.ui-tag-tab {
+  white-space: nowrap;
 }
 
 .ui-tag-tab {

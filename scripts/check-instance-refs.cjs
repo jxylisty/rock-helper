@@ -62,7 +62,12 @@ for (const file of files) {
       if (ch === '{' || ch === '[' || ch === '(') depth++
       else if (ch === '}' || ch === ']' || ch === ')') depth--
       if (depth === 0 && ch === ',') {
-        const t = buf.trim()
+        // 剥离 // 行注释（注释后的首个键会被斜杠前缀破坏 key 提取，2026-09-16 修复）
+        const t = buf
+          .split('\n')
+          .map((line) => line.replace(/(^|[^:])\/\/[^'"`]*$/, '$1'))
+          .join('\n')
+          .trim()
         const m = t.match(/^['"]?([A-Za-z_$][\w$]*)['"]?\s*[:=]/)
         const short = t.match(/^[A-Za-z_$][\w$]*$/) // shorthand property petList,
         if (m) keys.push(m[1])

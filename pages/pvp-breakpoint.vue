@@ -2,119 +2,190 @@
   <view class="page">
     <AppHeader theme="red" title="伤害计算" subtitle="攻守对比 · 实时推演" leftAction="back">
       <template #right>
-        <view class="header-capsule" hover-class="press-down" @click="swapSides">
-          <AppIcon name="swap" :size="11" color="#FFFFFF" />
-          <text class="header-capsule-text">交换攻守</text>
+        <view class="header-actions">
+          <!-- #ifdef APP-PLUS -->
+          <view class="header-capsule float-capsule" hover-class="press-down" @click="openFloatWindow">
+            <AppIcon name="window" :size="11" color="#FFFFFF" />
+            <text class="header-capsule-text">悬浮窗</text>
+          </view>
+          <!-- #endif -->
+          <view class="header-capsule" hover-class="press-down" @click="swapSides">
+            <AppIcon name="swap" :size="11" color="#FFFFFF" />
+            <text class="header-capsule-text">交换攻守</text>
+          </view>
         </view>
       </template>
     </AppHeader>
 
     <scroll-view scroll-y class="content" :show-scrollbar="false">
-      <view class="hero card">
-        <view class="hero-main">
-          <view class="hero-icon">
-            <AppIcon name="swords" :size="16" color="#C64B38" />
-          </view>
-          <view class="hero-text">
-            <text class="hero-title">攻守断点推演</text>
-            <text class="hero-sub">选择双方精灵与技能，实时对比伤害与生存。</text>
-          </view>
-        </view>
-        <view class="hero-action" hover-class="press-down" @click="openFloatWindow">
-          <AppIcon name="window" :size="10" color="#A97F35" />
-          <text class="hero-action-text">悬浮窗</text>
-        </view>
-      </view>
-
+      <!-- 对战卡：攻守两行 -->
       <view class="battle card">
-        <view class="battle-grid">
-          <view class="side-card attack-side" hover-class="press-down" @click="openPetSelector('attack')">
-            <view class="side-head">
-              <view class="side-seal attack">
-                <AppIcon name="zap" :size="9" color="#FFF5EC" />
-                <text class="side-seal-text">攻方</text>
-              </view>
-              <view class="side-action" hover-class="press-down" @click.stop="openPetSelector('attack')">
-                <AppIcon name="search" :size="9" color="#1E7A46" />
-                <text class="side-action-text">更换</text>
-              </view>
-            </view>
-            <text class="pet-name">{{ attackPet.name || '未选择精灵' }}</text>
+        <view class="duel-row atk" hover-class="press-down" @click="openPetSelector('attack')">
+          <view class="duel-seal atk"><text class="duel-seal-text">攻</text></view>
+          <RemoteImage class="duel-art" :src="resolvePetImage(attackPet.img)" mode="aspectFit" />
+          <view class="duel-info">
+            <text class="duel-name">{{ attackPet.name || '未选择' }}</text>
             <view class="type-row">
-              <TypeBadge v-for="type in attackTypes" :key="'attack-' + type" :label="type" :color="getTypeColor(type)" compact />
-            </view>
-            <view class="pet-art-row">
-              <view class="pet-art attack-art">
-                <RemoteImage class="pet-image" :src="resolvePetImage(attackPet.img)" mode="aspectFit" />
-              </view>
-              <view class="side-params-link" hover-class="press-down" @click.stop="openParamSetting('attack')">
-                <AppIcon name="edit" :size="9" color="#1E7A46" />
-                <text class="side-params-text">配置</text>
-              </view>
+              <TypeBadge v-for="type in attackTypes" :key="'atk-' + type" :label="type" :color="getTypeColor(type)" compact />
             </view>
           </view>
-
-          <view class="vs-badge">
-            <AppIcon name="swords" :size="13" color="#FFF5EC" />
-            <text class="vs-text">VS</text>
+          <text class="duel-speed mono">{{ Math.round(Number(attackPanel.speed) || 0) }}</text>
+          <view class="duel-btn" hover-class="press-down" @click.stop="openParamSetting('attack')"><text>配</text></view>
+          <view class="duel-btn alt" hover-class="press-down" @click.stop="openPetSelector('attack')"><text>换</text></view>
+        </view>
+        <view class="duel-divider"><text class="duel-divider-text">VS</text></view>
+        <view class="duel-result">
+          <view class="hp-track">
+            <view class="hp-base"></view>
+            <view class="hp-fill" :style="{ width: stripPercent + '%' }"></view>
+            <text class="hp-mark mono">伤害 {{ resultState.damage }} / 生命 {{ resultState.hp }} · 占比 {{ stripPercent }}%</text>
           </view>
-
-          <view class="side-card defense-side" hover-class="press-down" @click="openPetSelector('defense')">
-            <view class="side-head">
-              <view class="side-seal defense">
-                <AppIcon name="shield" :size="9" color="#F0F7FF" />
-                <text class="side-seal-text">防守</text>
-              </view>
-              <view class="side-action" hover-class="press-down" @click.stop="openPetSelector('defense')">
-                <AppIcon name="search" :size="9" color="#2C6FD1" />
-                <text class="side-action-text">更换</text>
-              </view>
-            </view>
-            <text class="pet-name">{{ defensePet.name || '未选择精灵' }}</text>
+          <view class="duel-result-row">
+            <text class="duel-result-label">结果</text>
+            <text class="duel-result-verdict" :class="resultState.damage >= resultState.hp ? 'kill' : 'live'">
+              {{ resultState.damage >= resultState.hp ? '击杀' + (resultState.damage > resultState.hp ? '（溢出' + (resultState.damage - resultState.hp) + '）' : '') : '存活（差' + (resultState.hp - resultState.damage) + '）' }}
+            </text>
+            <text class="duel-result-note">{{ resultState.note }}</text>
+          </view>
+          <view v-if="resultState.starfall && resultState.starfall.triggered" class="sf-result-row">
+            <text class="sf-result-label">星陨引爆</text>
+            <text class="sf-result-value mono">+{{ resultState.starfall.damage }}（{{ resultState.starfall.stacks }}层 · 威力{{ resultState.starfall.power }} · 幻×{{ resultState.starfall.multLabel }}）</text>
+          </view>
+          <view v-else-if="resultState.starfall && resultState.starfall.blocked" class="sf-result-row dim">
+            <text class="sf-result-label">星陨印记</text>
+            <text class="sf-result-value">{{ resultState.starfall.note }}</text>
+          </view>
+          <view class="duel-order-row">
+            <text class="duel-order-label">先后手</text>
+            <text class="duel-order-value" :class="turnOrder.state">{{ turnOrder.text }}</text>
+          </view>
+        </view>
+        <view class="duel-row def" hover-class="press-down" @click="openPetSelector('defense')">
+          <view class="duel-seal def"><text class="duel-seal-text">守</text></view>
+          <RemoteImage class="duel-art" :src="resolvePetImage(defensePet.img)" mode="aspectFit" />
+          <view class="duel-info">
+            <text class="duel-name">{{ defensePet.name || '未选择' }}</text>
             <view class="type-row">
-              <TypeBadge v-for="type in defenseTypes" :key="'defense-' + type" :label="type" :color="getTypeColor(type)" compact />
-            </view>
-            <view class="pet-art-row">
-              <view class="pet-art defense-art">
-                <RemoteImage class="pet-image" :src="resolvePetImage(defensePet.img)" mode="aspectFit" />
-              </view>
-              <view class="side-params-link" hover-class="press-down" @click.stop="openParamSetting('defense')">
-                <AppIcon name="edit" :size="9" color="#2C6FD1" />
-                <text class="side-params-text">配置</text>
-              </view>
+              <TypeBadge v-for="type in defenseTypes" :key="'def-' + type" :label="type" :color="getTypeColor(type)" compact />
             </view>
           </view>
+          <text class="duel-speed mono">{{ Math.round(Number(defensePanel.speed) || 0) }}</text>
+          <view class="duel-btn" hover-class="press-down" @click.stop="openParamSetting('defense')"><text>配</text></view>
+          <view class="duel-btn alt" hover-class="press-down" @click.stop="openPetSelector('defense')"><text>换</text></view>
         </view>
       </view>
 
-      <view class="skill-section card">
-        <view class="section-head">
-          <view class="section-head-left">
-            <view class="section-icon gold">
-              <AppIcon name="sparkles" :size="11" color="#FFF9EC" />
+      <!-- S4 环境速选：点击设为守方，再点换到攻方 -->
+      <view v-if="s4MetaPets.length" class="meta-chips card">
+        <view class="meta-chips-head">
+          <text class="meta-chips-label">S4 环境速选</text>
+          <text class="meta-chips-hint">点击设为守方 · 再点换到攻方</text>
+        </view>
+        <scroll-view scroll-x class="meta-chips-scroll" :show-scrollbar="false">
+          <view class="meta-chips-row">
+            <view v-for="m in s4MetaPets" :key="m.key" class="meta-chip" hover-class="press-down" @click="applyMetaPet(m)">
+              <text class="meta-chip-name">{{ m.name }}</text>
+              <text class="meta-chip-tag">{{ metaTagOf(m) }}</text>
             </view>
-            <text class="section-title">攻击技能</text>
           </view>
-          <view class="section-action" hover-class="press-down" @click="openSkillSelector">
-            <AppIcon name="search" :size="9" color="#A97F35" />
-            <text class="section-action-text">更换</text>
+        </scroll-view>
+      </view>
+
+      <!-- Tab 条 -->
+      <view class="cond-tabs card">
+        <view class="cond-tab" :class="{ active: condTab === 'skill' }" hover-class="press-down" @click="condTab = 'skill'">
+          <text>技能</text>
+        </view>
+        <view class="cond-tab" :class="{ active: condTab === 'cond' }" hover-class="press-down" @click="condTab = 'cond'">
+          <text>战场条件</text>
+        </view>
+      </view>
+
+      <!-- 技能页 -->
+      <view v-show="condTab === 'skill'" class="skill-block card">
+        <view class="skill-info">
+        <view class="skill-strip">
+          <view v-if="quickSkillGroups.level.length" class="ss-group">
+            <text class="ss-group-label">常用技能</text>
+            <view class="ss-chip-row">
+              <view
+                v-for="skill in quickSkillGroups.level"
+                :key="'l-' + skill.name"
+                class="ss-chip"
+                :class="{ active: selectedSkill.name === skill.name }"
+                hover-class="press-down"
+                @click="selectSkill(skill)"
+              >
+                <RemoteImage class="ss-icon" :src="resolvePetImage(skill.icon || getSkillIcon(skill.name))" mode="aspectFit" />
+                <text class="ss-name">{{ skill.name }}</text>
+                <text class="ss-power mono">{{ skill.autoCalculatedPower || skill.power || 0 }}</text>
+              </view>
+            </view>
+          </view>
+          <view v-if="quickSkillGroups.blood.length" class="ss-group">
+            <text class="ss-group-label gold">血脉技能 · 限带1</text>
+            <view class="ss-chip-row">
+              <view
+                v-for="skill in quickSkillGroups.blood"
+                :key="'b-' + skill.name"
+                class="ss-chip"
+                :class="{ active: selectedSkill.name === skill.name }"
+                hover-class="press-down"
+                @click="selectSkill(skill)"
+              >
+                <RemoteImage class="ss-icon" :src="resolvePetImage(skill.icon || getSkillIcon(skill.name))" mode="aspectFit" />
+                <text class="ss-name">{{ skill.name }}</text>
+                <text class="ss-power mono">{{ skill.autoCalculatedPower || skill.power || 0 }}</text>
+              </view>
+            </view>
+          </view>
+          <view v-if="quickSkillGroups.stone.length" class="ss-group">
+            <text class="ss-group-label">技能石</text>
+            <view class="ss-chip-row">
+              <view
+                v-for="skill in quickSkillGroups.stone"
+                :key="'s-' + skill.name"
+                class="ss-chip"
+                :class="{ active: selectedSkill.name === skill.name }"
+                hover-class="press-down"
+                @click="selectSkill(skill)"
+              >
+                <RemoteImage class="ss-icon" :src="resolvePetImage(skill.icon || getSkillIcon(skill.name))" mode="aspectFit" />
+                <text class="ss-name">{{ skill.name }}</text>
+                <text class="ss-power mono">{{ skill.autoCalculatedPower || skill.power || 0 }}</text>
+              </view>
+            </view>
+          </view>
+          <view class="ss-group">
+            <text class="ss-group-label">更多</text>
+            <view class="ss-chip-row">
+              <view class="ss-chip ss-all" hover-class="press-down" @click="openSkillSelector">
+                <AppIcon name="search" :size="11" color="#A97F35" />
+                <text class="ss-name">技能库</text>
+              </view>
+            </view>
           </view>
         </view>
-        <view class="skill-card" hover-class="press-down" @click="openSkillSelector">
-          <view class="skill-icon-frame">
-            <RemoteImage class="skill-icon" :src="selectedSkillIcon" mode="aspectFit" />
+        <view class="skill-info">
+          <view class="si-top">
+            <RemoteImage class="si-icon" :src="selectedSkillIcon" mode="aspectFit" />
+            <view class="si-main">
+              <text class="si-name">{{ selectedSkill.name || '未选择技能' }}</text>
+              <view class="si-badges">
+                <text class="sl-chip">{{ selectedSkill.attr || '无' }}</text>
+                <text class="sl-chip">{{ selectedSkill.displayType || selectedSkill.type || '-' }}</text>
+                <text v-if="selectedSkill.baseHits > 1" class="sl-chip gold">{{ selectedSkill.baseHits }}连击</text>
+              </view>
+            </view>
+            <view class="detail-btn" hover-class="press-down" @click="openSkillDetail(selectedSkill)">
+              <AppIcon name="info" :size="9" color="#A97F35" />
+              <text class="detail-btn-text">详情</text>
+            </view>
           </view>
-          <view class="skill-main">
-            <view class="skill-main-head">
-              <text class="skill-name">{{ selectedSkill.name || '未选择技能' }}</text>
-            </view>
-            <view class="skill-chip-row">
-              <view class="skill-chip"><text class="skill-chip-text">{{ selectedSkill.attr || '无属性' }}</text></view>
-              <view class="skill-chip"><text class="skill-chip-text">{{ selectedSkill.displayType || selectedSkill.type || '-' }}</text></view>
-              <view class="skill-chip"><text class="skill-chip-text">能量 {{ selectedSkill.consume || 0 }}</text></view>
-              <view class="skill-chip tone-gold"><text class="skill-chip-text tone-gold-text">威力 {{ selectedSkill.power || 0 }}</text></view>
-            </view>
-            <view class="power-input-row">
+          <view class="si-bottom">
+            <text class="si-power mono">威力{{ selectedSkill.power || 0 }}</text>
+            <text class="si-power">能耗{{ selectedSkill.consume || 0 }}</text>
+            <view class="power-row">
               <text class="power-label">计算威力</text>
               <input
                 class="power-input"
@@ -125,108 +196,129 @@
                 placeholder="0"
               />
               <view class="auto-calc-btn" hover-class="press-down" @click.stop="autoCalcEffectivePower">
-                <AppIcon name="wand" :size="9" color="#FFF9EC" />
                 <text class="auto-calc-text">面板重算</text>
               </view>
             </view>
-            <view class="power-note-box">
-              <view class="note-line">
-                <AppIcon name="info" :size="9" color="#A97F35" />
-                <text class="note-text">初始值已包含：{{ selectedSkill.calculationNote || '无属性加成' }}</text>
-              </view>
-              <view class="note-line">
-                <AppIcon name="block" :size="9" color="#C64B38" />
-                <text class="note-text warn">手动填写时，请直接填【乘完克制与本系 1.25x 后】的最终威力，下方公式将不再重复叠算。</text>
-              </view>
+          </view>
+          <view v-if="dynamicPowerResolution" class="dyn-power">
+            <view class="dyn-head">
+              <text class="dyn-label">{{ dynamicPowerResolution.statLabel }}</text>
+              <text class="dyn-diff mono">{{ dynamicPowerResolution.own }} − {{ dynamicPowerResolution.enemy }} = {{ dynamicPowerResolution.diff }}</text>
+              <text class="dyn-tier">第{{ dynamicPowerResolution.tierIndex + 1 }}档 · 威力 {{ dynamicPowerResolution.power }}（基础{{ dynamicPowerResolution.rule.base }}+{{ dynamicPowerResolution.bonus }}）</text>
             </view>
-            <view v-if="selectedSkill.isDynamic" class="dynamic-hint">
-              <AppIcon name="block" :size="9" color="#C64B38" />
-              <text class="dynamic-hint-text">该技能实际威力可能随战斗状态变化，请手动调整计算威力</text>
-            </view>
-            <view class="skill-detail-row">
-              <text class="skill-desc">{{ skillShortDesc }}</text>
-              <view class="detail-btn" hover-class="press-down" @click.stop="openSkillDetail(selectedSkill)">
-                <AppIcon name="info" :size="9" color="#A97F35" />
-                <text class="detail-btn-text">详情</text>
+            <view class="dyn-tiers">
+              <view v-for="(tier, i) in dynamicPowerResolution.rule.tiers" :key="'dt-' + i" class="dyn-tier-cell" :class="{ active: i === dynamicPowerResolution.tierIndex }">
+                <text class="dyn-tier-range">{{ tierRangeText(tier) }}</text>
+                <text class="dyn-tier-power mono">{{ dynamicPowerResolution.rule.base + tier.bonus }}</text>
               </view>
             </view>
+            <text class="dyn-note">已自动按双方面板差查档填入计算威力（含克制/本系，可手动覆盖）；对局内以含 buff 的实时面板判定档位。分档来源：BWIKI S4 · roco-cal。</text>
+          </view>
+        </view>
+        <text v-if="selectedSkill.isDynamic && !dynamicPowerResolution" class="skill-warn">⚠ 该技能威力随战斗状态变化，请手动调整计算威力（初始值含：{{ selectedSkill.calculationNote || '无加成' }}）</text>
+        <text v-else class="skill-note">计算威力已含：{{ selectedSkill.calculationNote || '无属性加成' }}；手动填写时直接填乘完克制与本系的最终威力</text>
+      </view>
+      </view>
+
+      <view v-show="condTab === 'cond'" class="cond-block card">
+        <view class="cond-grid">
+          <view class="cond-item">
+            <text class="cond-label">增伤</text>
+            <input
+              v-model="damageBuff"
+              class="cond-input"
+              type="number"
+              @input="calculateDamage"
+              @click.stop
+              placeholder="0-990"
+            />
+            <text class="cond-unit">%</text>
+          </view>
+          <view class="cond-item">
+            <text class="cond-label">减伤</text>
+            <input
+              v-model="damageMitigation"
+              class="cond-input"
+              type="number"
+              @input="calculateDamage"
+              @click.stop
+              placeholder="0-100"
+            />
+            <text class="cond-unit">%</text>
+          </view>
+        </view>
+        <!-- 星陨印记（S4）：守方层数 → 非幻系攻击引爆附加幻伤 -->
+        <view class="starfall-card">
+          <view class="sf-head">
+            <text class="cond-label">星陨印记（守方）</text>
+            <view class="sf-stepper">
+              <view class="sf-btn" hover-class="press-down" @click="adjustStarfall(-1)"><text class="sf-btn-t">−</text></view>
+              <input class="sf-input mono" type="number" :value="starfallStacks" @input="onStarfallInput" @click.stop />
+              <view class="sf-btn" hover-class="press-down" @click="adjustStarfall(1)"><text class="sf-btn-t">+</text></view>
+            </view>
+          </view>
+          <view class="sf-quick">
+            <view
+              v-for="n in starfallPresets"
+              :key="'sfp-' + n.value"
+              class="sf-quick-btn"
+              :class="{ active: starfallStacks === n.value }"
+              hover-class="press-down"
+              @click="setStarfall(n.value)"
+            >
+              <text>{{ n.label }}</text>
+            </view>
+          </view>
+          <text class="sf-note">非幻系技能攻击守方时引爆全部层数：附加威力 = 层数² + 24×层数 − 24，按幻系独立结算克制、不吃本系加成。层数参考：玳塔受击 +3/次、超维投射 +4、心灵洞悉翻倍；实战口径 10 层秒脆皮、15 层杀肉盾。公式：roco-cal 拟合 · 规则：BWIKI S4。</text>
+        </view>
+        <view v-if="wishBlock" class="wish-compact">
+          <view class="wish-head-row">
+            <text class="cond-label">愿力</text>
+            <text class="wish-mini-note">威力80·应对后200·每场2次</text>
+          </view>
+          <view class="wish-icon-grid">
+            <view
+              v-for="opt in wishBlock.options"
+              :key="opt.attr"
+              class="wish-icon-cell"
+              :class="{ active: wishAttr === opt.attr }"
+              hover-class="press-down"
+              @click="wishAttr = opt.attr"
+            >
+              <image class="wish-icon-img" :src="attrIconSrc(opt.attr)" mode="aspectFit" />
+            </view>
+          </view>
+          <view class="wish-bottom-row">
+            <view class="wish-respond" hover-class="touch-active" @click="wishRespond = !wishRespond">
+              <text class="wish-respond-text">应对</text>
+              <view class="wish-switch" :class="{ on: wishRespond }"><view class="wish-switch-dot"></view></view>
+            </view>
+            <text class="wish-damage-mini mono">{{ wishBlock.skillType }} · {{ wishBlock.power }}威力 · 伤害{{ wishBlock.damage }}（{{ wishBlock.percent }}% HP）</text>
           </view>
         </view>
       </view>
 
-      <view class="buff-section card">
-        <view class="section-head">
-          <view class="section-head-left">
-            <view class="section-icon danger">
-              <AppIcon name="zap" :size="11" color="#FFF5EC" />
-            </view>
-            <text class="section-title">伤害修饰符</text>
+      <!-- S4 版本情报（2026-09-10 起的赛季环境，来源均 ≤2 个月内） -->
+      <view class="s4-brief card">
+        <view class="s4-brief-head" hover-class="press-down" @click="s4BriefOpen = !s4BriefOpen">
+          <view class="s4-brief-left">
+            <view class="s4-brief-icon"><AppIcon name="zap" :size="11" color="#FFF9EC" /></view>
+            <text class="s4-brief-title">S4 版本情报（月涌狂想 · 09-10 起）</text>
           </view>
+          <AppIcon :name="s4BriefOpen ? 'chevron-up' : 'chevron-down'" :size="13" color="#8A7B5C" />
         </view>
-        <view class="buff-grid">
-          <view class="buff-item tone-up">
-            <view class="buff-head">
-              <AppIcon name="zap" :size="10" color="#C64B38" />
-              <text class="buff-label">增伤加成</text>
-            </view>
-            <view class="buff-input-wrap">
-              <input
-                v-model="damageBuff"
-                class="buff-input"
-                type="number"
-                @input="calculateDamage"
-                @click.stop
-                placeholder="0-990"
-                min="0"
-                max="990"
-              />
-              <text class="buff-unit">%</text>
-            </view>
-            <text class="buff-note">范围 0 - 990%</text>
-          </view>
-          <view class="buff-item tone-down">
-            <view class="buff-head">
-              <AppIcon name="shield" :size="10" color="#2C6FD1" />
-              <text class="buff-label">减伤护盾</text>
-            </view>
-            <view class="buff-input-wrap">
-              <input
-                v-model="damageMitigation"
-                class="buff-input"
-                type="number"
-                @input="calculateDamage"
-                @click.stop
-                placeholder="0-100"
-                min="0"
-                max="100"
-              />
-              <text class="buff-unit">%</text>
-            </view>
-            <text class="buff-note">范围 0 - 100%</text>
-          </view>
+        <view v-if="s4BriefOpen" class="s4-brief-body">
+          <view class="s4-item"><text class="s4-item-t">同速随机</text><text class="s4-item-d">09-10 版本起双方速度相同时改为随机顺序出手，旧「堆同速抢先手」打法失效。</text></view>
+          <view class="s4-item"><text class="s4-item-t">09-10 平衡</text><text class="s4-item-d">削弱：音速犬 / 烈火守护 / 加油蟹 / 火羽 / 巨鼓象 / 教练；加强：布克棱岩 / 爵士鹿 / 独角兽 / 水蛇 / 缇塔 / 深蓝鲸 / 虫队。</text></view>
+          <view class="s4-item"><text class="s4-item-t">主流体系</text><text class="s4-item-d">星陨队（玳塔核心，2 层印记≈斩杀线）、银月狼王（高幻抗高物攻，星陨/幻系克星）、布灵平衡队（榜一阵容）、抗幻队、虫队、雨天/雪天队、火队黑马流明坎德拉。</text></view>
+          <view class="s4-item"><text class="s4-item-t">星陨博弈</text><text class="s4-item-d">印记无法被普通驱散，靠翅刃等技能驱散、拟寄生偷层；打星陨队优先高幻抗或带驱散位——「幻系越强，星陨越弱」。</text></view>
+          <text class="s4-src">来源：BWIKI nrc 站 S4 数据（09-09 编辑）、B站赛季平衡解读与洛克时报 41.0/42.0（09-02 ~ 09-17）、官方 09-10 版本公告</text>
         </view>
-      </view>
-
-      <view class="result-section card">
-        <view class="section-head">
-          <view class="section-head-left">
-            <view class="section-icon red">
-              <AppIcon name="star" :size="11" color="#FFF5EC" />
-            </view>
-            <text class="section-title">计算结果</text>
-          </view>
-          <view class="result-mode">{{ resultModeLabel }}</view>
-        </view>
-        <DamageHpCompareBar :damage="resultState.damage" :hp="resultState.hp" title="伤害对比" damage-label="伤害" hp-label="生命" :reverse-diff="true" />
-        <view class="result-bar">
-          <text class="result-value mono">{{ resultState.value }}</text>
-          <text class="result-subtitle">{{ resultState.subtitle }}</text>
-        </view>
-        <text class="result-note">{{ resultState.note }}</text>
       </view>
 
       <view class="bottom-space"></view>
     </scroll-view>
+
 
         <PetSelector
           :visible="petSelectorVisible"
@@ -252,6 +344,7 @@
           </view>
         </view>
 
+        <scroll-view scroll-y class="modal-body-scroll">
         <view class="selected-card">
           <view class="selected-image-frame">
             <RemoteImage class="selected-image" :src="resolvePetImage(paramPet.img)" mode="aspectFit" />
@@ -326,6 +419,7 @@
             <text class="modal-btn-text">确定</text>
           </view>
         </view>
+        </scroll-view>
       </view>
     </view>
 
@@ -400,14 +494,14 @@
           </view>
         </view>
         <view class="detail-list">
-          <view class="detail-row"><text class="detail-label">威力</text><text class="detail-value mono">{{ detailSkill.power || 0 }}</text></view>
+          <view v-if="detailSkill && Number(detailSkill.power) > 0" class="detail-row"><text class="detail-label">威力</text><text class="detail-value mono">{{ detailSkill.power }}</text></view>
           <view class="detail-row"><text class="detail-label">连击次数</text><text class="detail-value mono">{{ detailSkill.baseHits || 1 }}</text></view>
           <view class="detail-row"><text class="detail-label">技能来源</text><text class="detail-value">{{ detailSkillSource }}</text></view>
           <view class="detail-row detail-desc-row"><text class="detail-label">完整描述</text><text class="detail-value desc">{{ detailSkill.describe || '暂无描述' }}</text></view>
           <view class="detail-row detail-tags-row"><text class="detail-label">机制标签</text><view class="tag-wrap"><text v-for="tag in detailSkillTags" :key="tag" class="mini-tag">{{ tag }}</text></view></view>
           <view v-if="detailSkill.isDynamic" class="detail-dynamic-hint">
-            <AppIcon name="block" :size="9" color="#C64B38" />
-            <text class="detail-dynamic-text">该技能为动态威力技能，实际威力可能随战斗状态变化，请手动调整计算威力</text>
+            <AppIcon name="block" :size="9" :color="dynRuleOf(detailSkill.name) ? '#1E7A46' : '#C64B38'" />
+            <text class="detail-dynamic-text">{{ dynRuleHint(detailSkill.name) }}</text>
           </view>
         </view>
       </view>
@@ -427,10 +521,12 @@ import { skillsData } from '@/data/skill/skills.js'
 import { skillIcons } from '@/data/skill/skill_icons.js'
 import commonSkillPresets from '@/data/pvp/commonSkillPresets.json'
 import { calculatePetPanel } from '@/data/config/game_math.js'
-import { calculateDamageFull, getAttrMultiplier, normalizeAttr, normalizeBattleSkill, repairText } from '@/utils/pvpDamageEngine.js'
+import { calculateDamageFull, calculateStarfallDamage, getDynamicPowerRule, resolveStatDiffTierPower, canActBeforeEnemy, getAttrMultiplier, normalizeAttr, normalizeBattleSkill, repairText } from '@/utils/pvpDamageEngine.js'
+import metaTargetPetsRaw from '@/data/pvp/metaTargetPets.json'
 import { resolveAssetPath } from '@/utils/asset-path.js'
 import { buildSuggestedIvs } from '@/utils/buildSuggestedIvs.js'
 import { buildOpponentFullConfig } from '@/utils/buildOpponentFullConfig.js'
+import { analyzeWishOptions, estimateWishDamage } from '@/utils/wishPowerAdvisor.js'
 import { openDamageFloatWindow, isSystemOverlayAvailable, hasOverlayPermission } from '@/utils/floatWindow.js'
 import { savePetConfig, loadPetConfig } from '@/utils/petConfigCache.js'
 import { buildBasePetList, getPetVariants, getPetVariantDetails, getPetSkillNames } from '@/utils/petListBuilder.js'
@@ -696,6 +792,19 @@ export default {
       customSkillPower: 0,
       damageBuff: 0,
       damageMitigation: 0,
+      starfallStacks: 0,
+      starfallPresets: [
+        { value: 3, label: '3层' },
+        { value: 6, label: '6层' },
+        { value: 10, label: '10层' },
+        { value: 15, label: '15层' },
+        { value: 20, label: '20层' }
+      ],
+      s4BriefOpen: false,
+      wishAttr: '',
+      condTab: 'skill',
+      stripOpen: false,
+      wishRespond: false,
       resultState: { value: '0 伤害', subtitle: '', note: '' }
     }
   },
@@ -737,11 +846,24 @@ export default {
           if (attrMultiplier !== 1) noteParts.push(`克制 ${Number(attrMultiplier.toFixed(2))}倍`)
           if (sameTypeMultiplier !== 1) noteParts.push(`本系 ${sameTypeMultiplier.toFixed(1)}倍`)
           if (Number(skill.baseHits) > 1) noteParts.push(`${Math.round(skill.baseHits)}连击`)
+          // 标记技能类型，后续按物攻/魔攻高低过滤
+          skill._isPhysical = (skill.displayType || skill.type) === '物攻'
           return {
             ...skill,
             autoCalculatedPower,
             calculationNote: noteParts.join(' × ')
           }
+        })
+        .filter((skill) => {
+          // 物攻/魔攻面板差距过大时，隐藏不匹配类型的技能
+          const atk = Math.round(Number(this.attackPanel?.attack) || 0)
+          const matk = Math.round(Number(this.attackPanel?.mattack) || 0)
+          if (!atk || !matk) return true
+          if (atk === matk) return true // 双刀精灵全显示
+          const isPhysical = (skill.displayType || skill.type) === '物攻'
+          if (atk > matk && !isPhysical) return false // 物攻高，隐藏魔攻技能
+          if (matk > atk && isPhysical) return false // 魔攻高，隐藏物攻技能
+          return true
         })
     },
     skillFilterOptions() {
@@ -775,18 +897,150 @@ export default {
       if (tags.length) return Array.from(new Set(tags))
       return this.detailSkill.sourceType ? [this.detailSkill.sourceType] : ['暂无识别']
     },
-    resultModeLabel() { return '伤害计算' }
+    // 技能分组：血脉限带1 / 常用等级技能 / 技能石；长尾走"技能库"弹窗
+    quickSkillGroups() {
+      const all = this.attackSkillOptions || []
+      const attackTypes = this.attackTypes || []
+      const isDragon = attackTypes.some((t) => t === '龙')
+      // 所有来源统一过滤：威力 ≤ 60 的直接去掉（没人带）
+      const usable = all.filter((skill) => (Number(skill.power) || 0) > 60)
+      // 血脉：升龙咆哮仅龙系显示
+      const blood = usable
+        .filter((skill) => skill.sourceType === '血脉技能')
+        .filter((skill) => {
+          if (skill.name === '升龙咆哮' && !isDragon) return false
+          return true
+        })
+        .sort((a, b) => (b.autoCalculatedPower || 0) - (a.autoCalculatedPower || 0))
+      const bySource = (type) => usable
+        .filter((skill) => skill.sourceType === type)
+        .sort((a, b) => (b.autoCalculatedPower || 0) - (a.autoCalculatedPower || 0))
+      return {
+        // 技能石优先（不限数量且多为优质技能），展示更多
+        stone: bySource('可学技能石').slice(0, 6),
+        level: bySource('精灵技能').slice(0, 5),
+        blood
+      }
+    },
+    stripPercent() {
+      const hp = Math.max(1, Math.round(Number(this.resultState.hp) || 0))
+      const damage = Math.round(Number(this.resultState.damage) || 0)
+      return Math.min(999, Math.round((damage / hp) * 100))
+    },
+    resultModeLabel() { return '伤害计算' },
+    // 愿力冲击快捷计算：基于当前攻守双方，属性默认取推荐 Top1
+    wishBlock() {
+      const pet = this.attackPet
+      if (!pet || !this.attackTypes.length) return null
+      // 防守方面板必须有效（HP>0 且至少一项防御>0），否则跳过计算
+      const defHp = Number(this.defensePanel?.hp) || 0
+      const defDef = Math.max(Number(this.defensePanel?.defense) || 0, Number(this.defensePanel?.mdefense) || 0)
+      if (defHp <= 0 || defDef <= 0) return null
+      const options = analyzeWishOptions({ types: this.attackTypes }).slice(0, 6)
+      if (!options.length) return null
+      const attr = options.some((o) => o.attr === this.wishAttr) ? this.wishAttr : options[0].attr
+      if (attr !== this.wishAttr) this.wishAttr = attr
+      const estimate = estimateWishDamage({
+        wishAttr: attr,
+        respond: this.wishRespond,
+        myPet: { types: this.attackTypes },
+        myPanel: this.attackPanel,
+        defender: { types: this.defenseTypes },
+        defenderPanel: this.defensePanel
+      })
+      const hp = Math.max(1, Math.round(Number(this.defensePanel.hp) || 0))
+      const damage = Math.max(1, Math.round(estimate.damage))
+      return {
+        options,
+        damage,
+        percent: Math.min(999, Math.round((damage / hp) * 100)),
+        skillType: estimate.skillType,
+        power: estimate.power,
+        multLabel: estimate.attrMultiplier !== 1 ? Number(estimate.attrMultiplier.toFixed(2)) + 'x' : '1x'
+      }
+    },
+    // 动态威力分档（鸣沙陷阱/闪击等）：按双方面板差自动查档（S4 现行分档表）
+    dynamicPowerResolution() {
+      const skill = this.selectedSkill
+      if (!skill || !skill.name) return null
+      const rule = getDynamicPowerRule(skill.name)
+      if (!rule) return null
+      const statKey = rule.stat
+      const own = Math.round(Number(this.attackPanel[statKey]) || 0)
+      const enemy = Math.round(Number(this.defensePanel[statKey]) || 0)
+      const resolved = resolveStatDiffTierPower(rule, own - enemy)
+      if (!resolved) return null
+      const attrMultiplier = getAttrMultiplier(skill.attr, this.defenseTypes)
+      const normalizedSkillAttr = normalizeAttr(skill.attr) || ''
+      const sameTypeMultiplier = normalizedSkillAttr && this.attackTypes.includes(normalizedSkillAttr) ? 1.25 : 1.0
+      return {
+        rule,
+        statKey,
+        statLabel: rule.statLabel || '面板差',
+        own,
+        enemy,
+        diff: resolved.diff,
+        bonus: resolved.bonus,
+        power: resolved.power,
+        tierIndex: resolved.tierIndex,
+        attrMultiplier,
+        sameTypeMultiplier,
+        effectivePower: Math.round(resolved.power * attrMultiplier * sameTypeMultiplier)
+      }
+    },
+    // 先后手结论（S4：同速随机先后，2026-09-10 版本规则）
+    turnOrder() {
+      const res = canActBeforeEnemy({
+        myPanel: this.attackPanel,
+        enemyPanel: this.defensePanel,
+        selectedSkill: this.selectedSkill || {},
+        enemySelectedSkill: {}
+      })
+      if (res.result === true) return { text: '我方先手 · ' + res.reason, state: 'good' }
+      if (res.result === false) return { text: '敌方先手 · ' + res.reason, state: 'bad' }
+      return { text: res.reason, state: 'tie' }
+    },
+    // S4 环境热门（metaTargetPets 中带 S4 标签的宠物；S4热门优先，S4被削垫底）
+    s4MetaPets() {
+      const list = Array.isArray(metaTargetPetsRaw) ? metaTargetPetsRaw : []
+      const rank = (entry) => {
+        const tags = entry.targetTags.map(String)
+        if (tags.some((tag) => tag.includes('S4热门'))) return 0
+        if (tags.some((tag) => tag.includes('S4新宠'))) return 1
+        if (tags.some((tag) => tag.includes('S4加强'))) return 2
+        return 3
+      }
+      return list
+        .filter((entry) => entry && entry.id && Array.isArray(entry.targetTags) && entry.targetTags.some((tag) => /S4/.test(String(tag))))
+        .slice()
+        .sort((a, b) => rank(a) - rank(b))
+        .slice(0, 12)
+    }
+  },
+  watch: {
+    // 分档技能：面板/技能变化时自动重算威力填入（手动填的其他技能不受影响）
+    dynamicPowerResolution(res) {
+      if (res) {
+        this.customSkillPower = res.effectivePower
+        this.calculateDamage()
+      }
+    }
   },
   onLoad(options) {
     const routeId = Number(options && (options.id || options.petId) || 0)
+    // 深链参数（2026-09-16）：报告页/热门目标卡跳转 ?attacker=seq&defender=seq 双预填
+    const routeAttacker = Number(options && options.attacker || 0)
+    const routeDefender = Number(options && options.defender || 0)
+    const hasDeepLink = Boolean(routeAttacker || routeDefender)
     // 尝试恢复上次保存的状态
     const saved = loadPvpState()
-    if (saved && !routeId) {
+    if (saved && !routeId && !hasDeepLink) {
       if (saved.attackPetId) this.attackSide.petId = saved.attackPetId
       if (saved.defensePetId) this.defenseSide.petId = saved.defensePetId
       if (saved.selectedSkillName) this.selectedSkillName = saved.selectedSkillName
       if (saved.damageBuff !== undefined) this.damageBuff = saved.damageBuff
       if (saved.damageMitigation !== undefined) this.damageMitigation = saved.damageMitigation
+      if (saved.starfallStacks !== undefined) this.starfallStacks = Math.max(0, Math.min(99, Math.floor(Number(saved.starfallStacks)) || 0))
       // 验证恢复的 petId 是否有效
       if (!this.petOptions.find((p) => p.id === this.attackSide.petId)) {
         this.attackSide.petId = this.petList[0]?.id || null
@@ -801,6 +1055,27 @@ export default {
         this.defenseSide.petId = this.petOptions.find((item) => item.id !== matched.id)?.id || matched.id
       }
     }
+    if (hasDeepLink) {
+      // 深链优先于 routeId 单参与本地恢复：显式指定攻守双方
+      let atkMiss = false
+      let defMiss = false
+      if (routeAttacker) {
+        const atk = this.petOptions.find((item) => Number(item.id) === routeAttacker)
+        if (atk) this.attackSide.petId = atk.id
+        else atkMiss = true
+      }
+      if (routeDefender) {
+        const def = this.petOptions.find((item) => Number(item.id) === routeDefender)
+        if (def) this.defenseSide.petId = def.id
+        else defMiss = true
+      }
+      if (atkMiss || defMiss) {
+        uni.showToast({ title: '链接里的精灵已下架，已用默认精灵代替', icon: 'none' })
+      }
+      if (routeAttacker && routeDefender && routeAttacker === routeDefender) {
+        this.defenseSide.petId = this.petOptions.find((item) => item.id !== this.attackSide.petId)?.id || this.attackSide.petId
+      }
+    }
     this.applyPetConfig(this.attackSide)
     this.applyPetConfig(this.defenseSide)
     this.syncSelectedSkill()
@@ -813,7 +1088,8 @@ export default {
         defensePetId: this.defenseSide.petId,
         selectedSkillName: this.selectedSkillName,
         damageBuff: this.damageBuff,
-        damageMitigation: this.damageMitigation
+        damageMitigation: this.damageMitigation,
+        starfallStacks: this.starfallStacks
       })
     },
     swapSides() {
@@ -874,6 +1150,14 @@ export default {
         if (cached.level !== undefined) side.level = cached.level
       } else {
         const race = pet.detail?.race || pet.race || {}
+        // 性格预设：无用户设置时，按种族值物攻/魔攻高低自动建议
+        if (!side.natureUp || side.natureUp === '无') {
+          const atk = Number(race.attack) || 0
+          const matk = Number(race.mattack) || 0
+          if (atk > matk) { side.natureUp = '物攻'; side.natureDown = '魔攻' }
+          else if (matk > atk) { side.natureUp = '魔攻'; side.natureDown = '物攻' }
+          else { side.natureUp = '物攻'; side.natureDown = '魔攻' } // 相等时默认物攻
+        }
         side.ivs = buildSuggestedIvs(race, side.natureUp, side.natureDown)
       }
     },
@@ -955,7 +1239,9 @@ export default {
     selectSkill(skill) {
       if (!skill) return
       this.selectedSkillName = skill.name
-      this.customSkillPower = Number(skill.autoCalculatedPower) || 0
+      // 分档技能直接用查档威力，避免先落基础值再闪变成档位值
+      const res = this.dynamicPowerResolution
+      this.customSkillPower = res ? res.effectivePower : Number(skill.autoCalculatedPower) || 0
       this.closeSkillSelector()
       this.calculateDamage()
       this.persistPvpState()
@@ -965,15 +1251,75 @@ export default {
       this.customSkillPower = value
       this.calculateDamage()
     },
+    adjustStarfall(delta) {
+      this.starfallStacks = Math.max(0, Math.min(99, (Math.floor(Number(this.starfallStacks)) || 0) + delta))
+      this.calculateDamage()
+      this.persistPvpState()
+    },
+    onStarfallInput(e) {
+      const value = Math.floor(Number(e && e.detail ? e.detail.value : 0) || 0)
+      this.starfallStacks = Math.max(0, Math.min(99, Number.isFinite(value) ? value : 0))
+      this.calculateDamage()
+    },
+    setStarfall(value) {
+      this.starfallStacks = Math.max(0, Math.min(99, Math.floor(Number(value) || 0)))
+      this.calculateDamage()
+      this.persistPvpState()
+    },
+    tierRangeText(tier) {
+      if (tier.min === null || tier.min === undefined) return '≤0'
+      if (tier.max === null || tier.max === undefined) return '≥' + tier.min
+      return tier.min + '~' + tier.max
+    },
+    dynRuleOf(name) { return getDynamicPowerRule(name) },
+    dynRuleHint(name) {
+      const rule = getDynamicPowerRule(name)
+      if (!rule) return '该技能为动态威力技能，实际威力可能随战斗状态变化，请手动调整计算威力'
+      const tiers = Array.isArray(rule.tiers) ? rule.tiers : []
+      const maxBonus = tiers.length ? Number(tiers[tiers.length - 1].bonus) || 0 : 0
+      return '该技能已支持 S4 分档自动计算：按' + rule.statLabel + '自动查档威力（' + rule.base + '~' + (Number(rule.base) + maxBonus) + '），选中后自动填入计算威力'
+    },
+    metaTagOf(entry) {
+      const tags = Array.isArray(entry && entry.targetTags) ? entry.targetTags : []
+      const s4Tag = tags.find((tag) => /S4/.test(String(tag)))
+      return s4Tag || tags[0] || ''
+    },
+    applyMetaPet(entry) {
+      const id = Number(entry && entry.id)
+      if (!id) return
+      const pet = this.petOptions.find((item) => Number(item.id) === id)
+      if (!pet) {
+        uni.showToast({ title: '图鉴中未找到该精灵', icon: 'none' })
+        return
+      }
+      if (this.defenseSide.petId === pet.id) {
+        this.attackSide.petId = pet.id
+        this.applyPetConfig(this.attackSide)
+        this.syncSelectedSkill()
+        uni.showToast({ title: pet.name + ' 已设为攻方', icon: 'none' })
+      } else {
+        this.defenseSide.petId = pet.id
+        this.applyPetConfig(this.defenseSide)
+        uni.showToast({ title: pet.name + ' 已设为守方', icon: 'none' })
+      }
+      this.calculateDamage()
+      this.persistPvpState()
+    },
     autoCalcEffectivePower() {
       const skill = this.selectedSkill
       if (!skill) return
       const basePower = Number(skill.power) || 0
       if (!basePower) return
-      const attrMultiplier = getAttrMultiplier(skill.attr, this.defenseTypes)
-      const normalizedSkillAttr = normalizeAttr(skill.attr) || ''
-      const sameTypeMultiplier = normalizedSkillAttr && this.attackTypes.includes(normalizedSkillAttr) ? 1.25 : 1.0
-      this.customSkillPower = Math.round(basePower * attrMultiplier * sameTypeMultiplier)
+      // 分档技能（鸣沙陷阱/闪击）：面板重算 = 重新查档，而不是退回基础威力
+      const res = this.dynamicPowerResolution
+      if (res) {
+        this.customSkillPower = res.effectivePower
+      } else {
+        const attrMultiplier = getAttrMultiplier(skill.attr, this.defenseTypes)
+        const normalizedSkillAttr = normalizeAttr(skill.attr) || ''
+        const sameTypeMultiplier = normalizedSkillAttr && this.attackTypes.includes(normalizedSkillAttr) ? 1.25 : 1.0
+        this.customSkillPower = Math.round(basePower * attrMultiplier * sameTypeMultiplier)
+      }
       this.calculateDamage()
     },
     openSkillDetail(skill) { if (!skill) return; this.detailSkill = this.normalizeSkill(skill); this.skillDetailVisible = true },
@@ -1021,13 +1367,35 @@ export default {
         skipAttrAndStab: true
       })
 
-      const damage = Math.max(1, Math.round(result.damage || 0))
+      // 星陨印记引爆（S4）：非幻系技能攻击持有者时，按层数附加独立结算的幻系伤害
+      const starfall = calculateStarfallDamage({
+        attackerPanel: this.attackPanel,
+        defenderPanel: this.defensePanel,
+        skillType: skill.type,
+        skillAttr: skill.attr,
+        stacks: this.starfallStacks,
+        defenderAttrs: this.defenseTypes,
+        powerBuff,
+        defenseReduction: defenseReduction
+      })
+      const mainDamage = Math.max(1, Math.round(result.damage || 0))
+      const starfallDamage = starfall.triggered ? Math.max(1, Math.round(starfall.damage || 0)) : 0
+      const damage = mainDamage + starfallDamage
       const hp = Math.max(1, Math.round(Number(this.defensePanel.hp) || 0))
       const percent = Math.round((damage / hp) * 100)
       const diff = damage - hp
       const diffNote = diff >= 0 ? '溢出 ' + diff : '剩余 ' + Math.abs(diff)
-      const hitsNote = hits > 1 ? `；单发 ${Math.max(1, Math.round(damage / hits))} × ${hits} 连击` : ''
-      this.resultState = { value: damage + ' 伤害', subtitle: damage + ' / ' + hp + '，' + percent + '%', note: diffNote + hitsNote, damage, hp }
+      const hitsNote = hits > 1 ? `；单发 ${Math.max(1, Math.round(mainDamage / hits))} × ${hits} 连击` : ''
+      const starfallState = {
+        triggered: starfall.triggered,
+        blocked: starfall.blocked,
+        stacks: starfall.stacks,
+        power: starfall.power,
+        damage: starfallDamage,
+        multLabel: Number((starfall.attrMultiplier || 1).toFixed(2)) + 'x',
+        note: starfall.reason || ''
+      }
+      this.resultState = { value: damage + ' 伤害', subtitle: damage + ' / ' + hp + '，' + percent + '%', note: diffNote + hitsNote, damage, hp, starfall: starfallState }
     },
     syncSelectedSkill() {
       if (!this.attackSkillOptions.length) {
@@ -1036,15 +1404,16 @@ export default {
         return
       }
       const matched = this.attackSkillOptions.find((skill) => skill.name === this.selectedSkillName)
-      if (matched) {
-        this.selectedSkillName = matched.name
-        this.customSkillPower = Number(matched.autoCalculatedPower) || 0
-        return
-      }
       // 默认优先选择精灵技能（初始技能），避免自动选中血脉技能
-      const defaultSkill = this.attackSkillOptions.find((s) => s.sourceType === '精灵技能') || this.attackSkillOptions[0]
-      this.selectedSkillName = defaultSkill.name
-      this.customSkillPower = Number(defaultSkill.autoCalculatedPower) || 0
+      const chosen = matched || this.attackSkillOptions.find((s) => s.sourceType === '精灵技能') || this.attackSkillOptions[0]
+      const skillChanged = !matched
+      this.selectedSkillName = chosen.name
+      if (skillChanged) {
+        // 换了技能才重置威力：分档技能（鸣沙陷阱/闪击）用查档值，其余用「基础×克制×本系」
+        const res = this.dynamicPowerResolution
+        this.customSkillPower = res ? res.effectivePower : Number(chosen.autoCalculatedPower) || 0
+      }
+      // 同名技能保留用户手输威力（含切换守方场景），不再静默重置（提案 P1-4）
     },
     normalizeSkill(skill = {}) {
       const base = skillsData[skill && skill.name ? skill.name : ''] || {}
@@ -1075,6 +1444,18 @@ export default {
     },
     getPanelTotal(panel = {}) {
       return ['hp', 'attack', 'mattack', 'defense', 'mdefense', 'speed'].reduce((total, key) => total + Math.round(Number(panel[key]) || 0), 0)
+    },
+    attrIconSrc(attr) {
+      const key = String(attr || '').replace('系', '')
+      const map = {
+        '火': 'fire', '水': 'water', '草': 'grass', '电': 'electric',
+        '冰': 'ice', '虫': 'bug', '翼': 'flying', '地': 'ground',
+        '萌': 'fairy', '武': 'fighting', '毒': 'poison', '龙': 'dragon',
+        '幽': 'ghost', '恶': 'dark', '光': 'light', '普通': 'normal',
+        '机械': 'steel', '幻': 'psychic'
+      }
+      const file = map[key]
+      return file ? `/static/static-web/icons/${file}.webp` : ''
     },
     getTypeColor(type) { return petTypes.find((item) => item.key === type)?.color || '#5b7cff' },
     resolvePetImage(src) { return resolveAssetPath(src || '') },
@@ -1137,73 +1518,15 @@ export default {
   box-shadow: 0 3px 0 rgba(44, 58, 47, 0.10);
 }
 
-/* ===== 顶部说明卡 ===== */
-.hero {
-  margin: 12px 14px 0;
-  padding: 12px 13px;
+.header-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 }
 
-.hero-main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.hero-icon {
-  flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: #FBE9E4;
-  border: 1.5px solid #E0604E;
-  box-shadow: 0 2px 0 rgba(198, 75, 56, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero-text {
-  min-width: 0;
-}
-
-.hero-title {
-  display: block;
-  font-size: 14.5px;
-  font-weight: 800;
-  color: #2C3A2F;
-}
-
-.hero-sub {
-  display: block;
-  margin-top: 3px;
-  font-size: 11px;
-  color: #6B7A6E;
-  line-height: 1.5;
-}
-
-.hero-action {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  height: 32px;
-  padding: 0 12px;
-  border-radius: 999px;
-  background: #FBF3DD;
-  border: 1.5px solid #D9B96A;
-  box-shadow: 0 2px 0 rgba(138, 106, 44, 0.25);
-  transition: transform 0.12s ease;
-}
-
-.hero-action-text {
-  font-size: 11px;
-  font-weight: 700;
-  color: #8A6A2C;
+.float-capsule {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 /* ===== 攻守对战卡 ===== */
@@ -1212,16 +1535,19 @@ export default {
   padding: 14px;
 }
 
+.battle.first-card {
+  margin-top: 10px;
+}
+
 .battle-grid {
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
   gap: 10px;
 }
 
 .side-card {
-  flex: 1;
   min-width: 0;
-  padding: 13px;
+  padding: 11px 12px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -1500,20 +1826,30 @@ export default {
   line-height: 1;
 }
 
+.vs-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+}
+
+.vs-line {
+  flex: 1;
+  height: 1.5px;
+  background: #E3DCC8;
+}
+
 .vs-badge {
   flex-shrink: 0;
-  align-self: center;
-  width: 46px;
-  padding: 11px 0;
+  padding: 5px 14px;
   border-radius: 999px;
   background: linear-gradient(135deg, #C64B38 0%, #E0604E 100%);
   border: 1.5px solid #9C3A2B;
-  box-shadow: 0 2.5px 0 rgba(156, 58, 43, 0.4);
+  box-shadow: 0 2px 0 rgba(156, 58, 43, 0.4);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 4px;
 }
 
 .vs-text {
@@ -1522,6 +1858,36 @@ export default {
   font-style: italic;
   color: #FFF5EC;
   letter-spacing: 0.04em;
+}
+
+.pet-row {
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.pet-row-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.side-action,
+.side-params-link {
+  white-space: nowrap;
+}
+
+.pet-name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
 }
 
 /* ===== 区块通用 ===== */
@@ -1939,6 +2305,10 @@ export default {
   top: 0;
   bottom: 0;
   z-index: 999;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
   background: rgba(44, 58, 47, 0.45);
   display: flex;
   align-items: flex-end;
@@ -1946,8 +2316,8 @@ export default {
 }
 
 .modal-sheet {
-  width: 100%;
-  max-width: 640px;
+  width: calc(100% - 8px);
+  max-width: 632px;
   max-height: 86vh;
   background: #FAF6EC;
   border: 1.5px solid #E3DCC8;
@@ -1957,6 +2327,7 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-sizing: border-box;
   padding-bottom: calc(10px + env(safe-area-inset-bottom));
 }
 
@@ -2025,6 +2396,9 @@ export default {
   flex: 1;
   min-height: 0;
   padding: 0 14px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* 参数设置弹层 */
@@ -2507,5 +2881,1712 @@ export default {
 
 .stat-item-config .stat-value-mini {
   font-size: 16px;
+}
+
+/* ===== 愿力冲击快捷计算 ===== */
+.wish-section {
+  margin-top: 12px;
+}
+
+.wish-sub {
+  font-size: 9.5px;
+  color: #A3AE9F;
+  font-weight: 700;
+}
+
+.wish-attr-row {
+  margin-top: 10px;
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.wish-attr-row::-webkit-scrollbar {
+  display: none;
+}
+
+.wish-attr-chip {
+  flex-shrink: 0;
+  height: 24px;
+  padding: 0 11px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6B7A6E;
+  background: #F7F1E3;
+  border: 1.5px solid #E3DCC8;
+}
+
+.wish-attr-chip.active {
+  color: #FFF9EC;
+}
+
+.wish-respond-row {
+  margin-top: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.wish-respond-label {
+  font-size: 10.5px;
+  color: #6B7A6E;
+  font-weight: 700;
+}
+
+.wish-switch {
+  flex-shrink: 0;
+  width: 34px;
+  height: 19px;
+  border-radius: 999px;
+  background: #E3DCC8;
+  padding: 2px;
+  box-sizing: border-box;
+  transition: background 0.15s ease;
+}
+
+.wish-switch-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFDF7;
+  box-shadow: 0 1px 2px rgba(44, 58, 47, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.wish-switch.on {
+  background: #C64B38;
+}
+
+.wish-switch.on .wish-switch-dot {
+  transform: translateX(15px);
+}
+
+.wish-result-row {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border-radius: 12px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+}
+
+.wish-damage {
+  font-size: 22px;
+  font-weight: 800;
+  color: #C64B38;
+}
+
+.wish-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wish-meta-line {
+  font-size: 10px;
+  color: #6B7A6E;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* ===== 战况条 ===== */
+.battle-strip {
+  margin: 8px 14px 0;
+  padding: 9px 11px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.strip-pets {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.strip-side {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.strip-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: #FFFDF7;
+  border: 1px solid #E3DCC8;
+  flex-shrink: 0;
+}
+
+.strip-name {
+  font-size: 11px;
+  font-weight: 800;
+  color: #2C3A2F;
+  max-width: 56px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.strip-swords {
+  font-size: 12px;
+  color: #C64B38;
+  flex-shrink: 0;
+}
+
+.strip-result {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.strip-damage {
+  font-size: 24px;
+  font-weight: 800;
+  color: #C64B38;
+  line-height: 1;
+}
+
+.strip-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.strip-pct {
+  font-size: 10px;
+  font-weight: 800;
+  color: #2C6FD1;
+}
+
+.strip-verdict {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.strip-verdict.live {
+  background: #E4F3EA;
+  color: #1E7A46;
+}
+
+.strip-verdict.kill {
+  background: #FBE3DC;
+  color: #A02B1B;
+}
+
+.strip-detail {
+  margin: 8px 14px 0;
+  padding: 10px 11px;
+}
+
+.strip-detail-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.strip-detail-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2C3A2F;
+}
+
+.strip-detail-note {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+  color: #A3AE9F;
+}
+
+/* ===== 对战卡（两行式） ===== */
+.battle {
+  margin: 8px 14px 0;
+  padding: 9px 10px;
+}
+
+.duel-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 12px;
+}
+
+.duel-row.atk {
+  background: #EFF7EF;
+  border: 1.5px solid #BFDCC6;
+}
+
+.duel-row.def {
+  background: #EDF3FC;
+  border: 1.5px solid #C4D8F2;
+}
+
+.duel-seal {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.duel-seal.atk {
+  background: linear-gradient(135deg, #1E7A46, #2F9E5F);
+}
+
+.duel-seal.def {
+  background: linear-gradient(135deg, #2C6FD1, #4F9CFF);
+}
+
+.duel-seal-text {
+  font-size: 11px;
+  font-weight: 800;
+  color: #FFF9EC;
+}
+
+.duel-art {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.duel-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.duel-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #2C3A2F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.duel-speed {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 800;
+  color: #2C6FD1;
+}
+
+.duel-btn {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #6B7A6E;
+  background: #FFFDF7;
+  border: 1.5px solid #E3DCC8;
+}
+
+.duel-btn.alt {
+  color: #FFF9EC;
+  background: #1E7A46;
+  border-color: #166235;
+}
+
+.duel-row.def .duel-btn.alt {
+  background: #2C6FD1;
+  border-color: #1E56A8;
+}
+
+.duel-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+.duel-divider-text {
+  font-size: 10px;
+  font-weight: 800;
+  font-style: italic;
+  color: #C64B38;
+  letter-spacing: 0.1em;
+}
+
+/* ===== Tab 条 ===== */
+.cond-tabs {
+  margin: 8px 14px 0;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+}
+
+.cond-tab {
+  flex: 1;
+  height: 30px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6B7A6E;
+  background: transparent;
+}
+
+.cond-tab.active {
+  color: #FFF9EC;
+  background: linear-gradient(135deg, #C64B38, #E0604E);
+  box-shadow: 0 2px 0 rgba(156, 58, 43, 0.35);
+}
+
+/* ===== 技能页 ===== */
+.skill-block {
+  margin: 8px 14px 0;
+  padding: 10px;
+}
+
+.skill-strip-x {
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ss-chip {
+  display: inline-block;
+  vertical-align: top;
+  width: 54px;
+  margin-right: 6px;
+  padding: 5px 4px;
+  border-radius: 11px;
+  text-align: center;
+  background: #F7F1E3;
+  border: 1.5px solid #E3DCC8;
+  box-sizing: border-box;
+}
+
+.ss-chip.active {
+  background: #FFF6DE;
+  border-color: #C9A14E;
+  box-shadow: 0 2px 0 rgba(169, 127, 53, 0.3);
+}
+
+.ss-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+}
+
+.ss-name {
+  max-width: 46px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #2C3A2F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.skill-line {
+  margin-top: 9px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 9px;
+  border-radius: 11px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+}
+
+.skill-line-icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #FFFDF7;
+}
+
+.skill-line-name {
+  flex-shrink: 0;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #2C3A2F;
+  max-width: 88px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.skill-line-chips {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.sl-chip {
+  height: 16px;
+  padding: 0 6px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #6B7A6E;
+  background: #FFFDF7;
+  border: 1px solid #E3DCC8;
+  white-space: nowrap;
+}
+
+.sl-chip.gold {
+  color: #8A6A2C;
+  border-color: #D9B96A;
+  background: #FBF3DD;
+}
+
+.power-row {
+  margin-top: 9px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.power-label {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.power-input {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 10px;
+  background: #F7F1E3;
+  border: 1.5px solid #D9B96A;
+  box-sizing: border-box;
+  font-size: 13px;
+  font-weight: 800;
+  color: #2C3A2F;
+}
+
+.auto-calc-btn {
+  flex-shrink: 0;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #A97F35, #C9A14E);
+  border: 1.5px solid #8A6A2C;
+}
+
+.auto-calc-text {
+  font-size: 11px;
+  font-weight: 800;
+  color: #FFF9EC;
+}
+
+.skill-note {
+  display: block;
+  margin-top: 7px;
+  font-size: 9.5px;
+  line-height: 1.5;
+  color: #A3AE9F;
+}
+
+.skill-warn {
+  display: block;
+  margin-top: 7px;
+  font-size: 9.5px;
+  line-height: 1.5;
+  color: #C64B38;
+  font-weight: 700;
+}
+
+/* ===== 战场条件页 ===== */
+.cond-block {
+  margin: 8px 14px 0;
+  padding: 11px;
+}
+
+.cond-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.cond-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  border-radius: 11px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+}
+
+.cond-label {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.cond-input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: 26px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 800;
+  color: #2C3A2F;
+  outline: none;
+}
+
+.cond-unit {
+  flex-shrink: 0;
+  font-size: 10px;
+  color: #A3AE9F;
+  font-weight: 700;
+}
+
+.wish-compact {
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px dashed #E3DCC8;
+}
+
+.wish-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wish-mini-note {
+  font-size: 9px;
+  color: #A3AE9F;
+  font-weight: 600;
+}
+
+.wish-chips-x {
+  margin-top: 7px;
+  display: flex;
+  gap: 5px;
+}
+
+.wish-attr-chip {
+  flex-shrink: 0;
+  height: 24px;
+  padding: 0 11px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6B7A6E;
+  background: #F7F1E3;
+  border: 1.5px solid #E3DCC8;
+}
+
+.wish-bottom-row {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.wish-respond {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.wish-respond-text {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.wish-switch {
+  width: 32px;
+  height: 18px;
+  border-radius: 999px;
+  background: #E3DCC8;
+  padding: 2px;
+  box-sizing: border-box;
+  transition: background 0.15s ease;
+}
+
+.wish-switch-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #FFFDF7;
+  transition: transform 0.15s ease;
+}
+
+.wish-switch.on {
+  background: #C64B38;
+}
+
+.wish-switch.on .wish-switch-dot {
+  transform: translateX(14px);
+}
+
+.wish-damage-mini {
+  font-size: 11px;
+  font-weight: 800;
+  color: #C64B38;
+}
+
+.ss-group {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 14px;
+}
+
+.ss-group-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  color: #A3AE9F;
+  white-space: normal;
+}
+
+.ss-group-label.gold {
+  color: #A97F35;
+}
+
+.ss-group-row {
+  font-size: 0;
+}
+
+.ss-all {
+  width: auto;
+  min-width: 58px;
+  height: 44px;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.skill-info {
+  margin-top: 9px;
+  padding: 9px 10px;
+  border-radius: 11px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+}
+
+.si-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.si-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: #FFFDF7;
+}
+
+.si-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.si-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #2C3A2F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.si-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.si-bottom {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.si-power {
+  font-size: 11px;
+  font-weight: 800;
+  color: #2C3A2F;
+  background: #FFFDF7;
+  border: 1px solid #E3DCC8;
+  border-radius: 7px;
+  padding: 3px 8px;
+}
+
+/* ===== 战况条补全 ===== */
+.strip-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.strip-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.hp-track {
+  position: relative;
+  margin-top: 8px;
+  height: 18px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid #D8E2EC;
+}
+
+.hp-base {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #4A90D9, #7FB0E0);
+}
+
+.hp-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(90deg, #E0604E, #C64B38);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.hp-mark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.strip-wish-row {
+  margin-top: 7px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wish-icon-img {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.strip-wish-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.strip-wish-damage {
+  font-size: 12px;
+  font-weight: 800;
+  color: #A97F35;
+}
+
+.strip-wish-pct {
+  font-size: 10px;
+  font-weight: 700;
+  color: #A3AE9F;
+  margin-left: auto;
+}
+
+/* ===== 技能区 ===== */
+.skill-strip-x {
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ss-group {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 14px;
+}
+
+.ss-group-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  color: #A3AE9F;
+  white-space: normal;
+}
+
+.ss-group-label.gold {
+  color: #A97F35;
+}
+
+.ss-chip-row {
+  font-size: 0;
+}
+
+.ss-chip {
+  display: inline-block;
+  vertical-align: top;
+  width: 54px;
+  margin-right: 6px;
+  padding: 5px 4px;
+  border-radius: 11px;
+  text-align: center;
+  background: #F7F1E3;
+  border: 1.5px solid #E3DCC8;
+  box-sizing: border-box;
+}
+
+.ss-chip.active {
+  background: #FFF6DE;
+  border-color: #C9A14E;
+  box-shadow: 0 2px 0 rgba(169, 127, 53, 0.3);
+}
+
+.ss-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+}
+
+.ss-name {
+  display: block;
+  max-width: 46px;
+  margin: 0 auto;
+  font-size: 9px;
+  font-weight: 700;
+  color: #2C3A2F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ss-power {
+  display: block;
+  font-size: 8.5px;
+  font-weight: 800;
+  color: #A97F35;
+}
+
+.ss-all {
+  width: auto;
+  min-width: 58px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4px;
+}
+
+/* ===== Tab 条 ===== */
+.cond-tabs {
+  margin: 8px 14px 0;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+}
+
+.cond-tab {
+  flex: 1;
+  height: 30px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.cond-tab.active {
+  color: #FFF9EC;
+  background: linear-gradient(135deg, #C64B38, #E0604E);
+  box-shadow: 0 2px 0 rgba(156, 58, 43, 0.35);
+}
+
+/* ===== 条件页 ===== */
+.cond-block {
+  margin: 8px 14px 0;
+  padding: 11px;
+}
+
+.cond-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.cond-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  border-radius: 11px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+}
+
+.cond-label {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.cond-input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: 26px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 800;
+  color: #2C3A2F;
+  outline: none;
+}
+
+.cond-unit {
+  flex-shrink: 0;
+  font-size: 10px;
+  color: #A3AE9F;
+  font-weight: 700;
+}
+
+.wish-compact {
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px dashed #E3DCC8;
+}
+
+.wish-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wish-mini-note {
+  font-size: 9px;
+  color: #A3AE9F;
+  font-weight: 600;
+}
+
+.wish-chips-x {
+  margin-top: 7px;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.wish-bottom-row {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.wish-respond {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.wish-respond-text {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+
+.wish-switch {
+  width: 32px;
+  height: 18px;
+  border-radius: 999px;
+  background: #E3DCC8;
+  padding: 2px;
+  box-sizing: border-box;
+  transition: background 0.15s ease;
+}
+
+.wish-switch-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #FFFDF7;
+  transition: transform 0.15s ease;
+}
+
+.wish-switch.on {
+  background: #C64B38;
+}
+
+.wish-switch.on .wish-switch-dot {
+  transform: translateX(14px);
+}
+
+.wish-damage-mini {
+  font-size: 11px;
+  font-weight: 800;
+  color: #C64B38;
+}
+
+/* ===== 对战卡 ===== */
+.battle {
+  margin: 8px 14px 0;
+  padding: 9px 10px;
+}
+
+.duel-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 12px;
+}
+
+.duel-row.atk {
+  background: #EFF7EF;
+  border: 1.5px solid #BFDCC6;
+}
+
+.duel-row.def {
+  background: #EDF3FC;
+  border: 1.5px solid #C4D8F2;
+}
+
+.duel-seal {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.duel-seal.atk {
+  background: linear-gradient(135deg, #1E7A46, #2F9E5F);
+}
+
+.duel-seal.def {
+  background: linear-gradient(135deg, #2C6FD1, #4F9CFF);
+}
+
+.duel-seal-text {
+  font-size: 11px;
+  font-weight: 800;
+  color: #FFF9EC;
+}
+
+.duel-art {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.duel-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.duel-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #2C3A2F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.duel-speed {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 800;
+  color: #2C6FD1;
+}
+
+.duel-btn {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #6B7A6E;
+  background: #FFFDF7;
+  border: 1.5px solid #E3DCC8;
+}
+
+.duel-btn.alt {
+  color: #FFF9EC;
+  background: #1E7A46;
+  border-color: #166235;
+}
+
+.duel-row.def .duel-btn.alt {
+  background: #2C6FD1;
+  border-color: #1E56A8;
+}
+
+.duel-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+.duel-divider-text {
+  font-size: 10px;
+  font-weight: 800;
+  font-style: italic;
+  color: #C64B38;
+  letter-spacing: 0.1em;
+}
+
+/* ===== skill-info ===== */
+.skill-info {
+  margin-top: 9px;
+  padding: 9px 10px;
+  border-radius: 11px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+}
+
+.si-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.si-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: #FFFDF7;
+}
+
+.si-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.si-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #2C3A2F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.si-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.si-bottom {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.si-power {
+  font-size: 11px;
+  font-weight: 800;
+  color: #2C3A2F;
+  background: #FFFDF7;
+  border: 1px solid #E3DCC8;
+  border-radius: 7px;
+  padding: 3px 8px;
+}
+
+
+/* ===== 对战卡内血条+结果 ===== */
+.duel-result {
+  padding: 8px 8px 4px;
+}
+
+.hp-track {
+  position: relative;
+  height: 20px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid #D8E2EC;
+}
+
+.hp-base {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #4A90D9, #7FB0E0);
+}
+
+.hp-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(90deg, #E0604E, #C64B38);
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.hp-mark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.duel-result-row {
+  margin-top: 7px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.duel-result-label {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  color: #A3AE9F;
+}
+
+.duel-result-verdict {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.duel-result-verdict.live {
+  color: #1E7A46;
+}
+
+.duel-result-verdict.kill {
+  color: #C64B38;
+}
+
+.duel-result-note {
+  flex: 1;
+  min-width: 0;
+  font-size: 10px;
+  color: #A3AE9F;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== 愿力 icon 网格 ===== */
+.wish-icon-grid {
+  margin-top: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.wish-icon-cell {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F7F1E3;
+  border: 1.5px solid #E3DCC8;
+  cursor: pointer;
+}
+
+.wish-icon-cell.active {
+  border-color: #1E7A46;
+  background: #E4F3EA;
+  box-shadow: 0 2px 0 rgba(30, 122, 70, 0.25);
+}
+
+.wish-icon-img {
+  width: 22px;
+  height: 22px;
+}
+
+.modal-body-scroll {
+  max-height: 60vh;
+  padding: 0 14px 12px;
+}
+
+/* ============ S4 改造：先后手 / 星陨 / 分档 / 速选 / 情报 ============ */
+
+/* 先后手结论行 */
+.duel-order-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+.duel-order-label {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #8A7B5C;
+  flex-shrink: 0;
+}
+.duel-order-value {
+  font-size: 10px;
+  font-weight: 800;
+}
+.duel-order-value.good { color: #1E7A46; }
+.duel-order-value.bad { color: #C64B38; }
+.duel-order-value.tie { color: #A97F35; }
+
+/* 星陨引爆结果行 */
+.sf-result-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  padding: 3px 8px;
+  background: #F3EEFB;
+  border: 1px solid #C9A7F5;
+  border-radius: 6px;
+}
+.sf-result-row.dim {
+  background: #F2ECDC;
+  border-color: #E3DCC8;
+  opacity: 0.85;
+}
+.sf-result-label {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #7B3FC4;
+  flex-shrink: 0;
+}
+.sf-result-value {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #7B3FC4;
+}
+.sf-result-row.dim .sf-result-label,
+.sf-result-row.dim .sf-result-value {
+  color: #8A7B5C;
+}
+
+/* S4 环境速选 chips */
+.meta-chips {
+  padding: 8px 10px;
+}
+.meta-chips-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.meta-chips-label {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #2C3A2F;
+}
+.meta-chips-hint {
+  font-size: 9px;
+  color: #A3AE9F;
+}
+.meta-chips-scroll {
+  white-space: nowrap;
+}
+.meta-chips-row {
+  display: inline-flex;
+  gap: 6px;
+}
+.meta-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 4px 10px;
+  background: #FFF6DE;
+  border: 1px solid #C9A14E;
+  border-radius: 999px;
+}
+.meta-chip-name {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #8A6A2C;
+}
+.meta-chip-tag {
+  font-size: 8px;
+  font-weight: 700;
+  color: #A97F35;
+}
+
+/* 动态威力分档展示 */
+.dyn-power {
+  margin-top: 6px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+.dyn-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 5px;
+}
+.dyn-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #2C3A2F;
+}
+.dyn-diff {
+  font-size: 10px;
+  font-weight: 800;
+  color: #2C6FD1;
+}
+.dyn-tier {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #1E7A46;
+}
+.dyn-tiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.dyn-tier-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 40px;
+  padding: 2px 4px;
+  background: #FFFDF7;
+  border: 1px solid #E3DCC8;
+  border-radius: 5px;
+}
+.dyn-tier-cell.active {
+  background: #1E7A46;
+  border-color: #166235;
+}
+.dyn-tier-cell.active .dyn-tier-range,
+.dyn-tier-cell.active .dyn-tier-power {
+  color: #FFF9EC;
+}
+.dyn-tier-range {
+  font-size: 7.5px;
+  font-weight: 700;
+  color: #A3AE9F;
+}
+.dyn-tier-power {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #2C3A2F;
+}
+.dyn-note {
+  display: block;
+  margin-top: 5px;
+  font-size: 8.5px;
+  color: #8A7B5C;
+  line-height: 1.4;
+}
+
+/* 星陨印记输入卡 */
+.starfall-card {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #EAE3D2;
+}
+.sf-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.sf-stepper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sf-btn {
+  width: 26px;
+  height: 24px;
+  border-radius: 6px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sf-btn-t {
+  font-size: 14px;
+  font-weight: 800;
+  color: #64748B;
+  line-height: 1;
+}
+.sf-input {
+  width: 44px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1.5px solid #E3DCC8;
+  background: #FFFDF7;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: #7B3FC4;
+}
+.sf-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+.sf-quick-btn {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #F7F1E3;
+  border: 1px solid #E3DCC8;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #6B7A6E;
+}
+.sf-quick-btn.active {
+  background: #7B3FC4;
+  border-color: #5F2F99;
+}
+.sf-quick-btn.active text {
+  color: #FFF9EC;
+  font-weight: 800;
+}
+.sf-note {
+  display: block;
+  font-size: 8.5px;
+  color: #8A7B5C;
+  line-height: 1.5;
+}
+
+/* S4 版本情报卡 */
+.s4-brief {
+  padding: 10px 12px;
+}
+.s4-brief-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.s4-brief-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.s4-brief-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: #C64B38;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.s4-brief-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #2C3A2F;
+}
+.s4-brief-body {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.s4-item {
+  display: flex;
+  gap: 6px;
+}
+.s4-item-t {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 800;
+  color: #C64B38;
+}
+.s4-item-d {
+  flex: 1;
+  font-size: 10px;
+  color: #6B7A6E;
+  line-height: 1.5;
+}
+.s4-src {
+  display: block;
+  font-size: 8.5px;
+  color: #A3AE9F;
+  line-height: 1.4;
+  border-top: 1px solid #EAE3D2;
+  padding-top: 6px;
 }
 </style>

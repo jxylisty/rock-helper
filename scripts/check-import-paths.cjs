@@ -25,8 +25,12 @@ for (const file of files) {
     const spec = m[1]
     const resolved = path.resolve(dir, spec)
     const candidates = [resolved]
-    if (!path.extname(resolved)) {
+    const ext = path.extname(resolved)
+    if (!ext) {
       candidates.push(resolved + '.js', resolved + '.vue', path.join(resolved, 'index.js'))
+    } else if (!['.js', '.vue', '.json', '.ts', '.uts'].includes(ext)) {
+      // 伪扩展名（如 uni.promisify.adaptor 的 '.adaptor'）：真实文件可能是 name.ext.js
+      candidates.push(resolved + '.js', resolved + '.vue')
     }
     if (!candidates.some((c) => fs.existsSync(c))) {
       failures++

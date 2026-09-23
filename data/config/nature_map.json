@@ -1,0 +1,122 @@
+{
+ "大胆": {
+  "up": "attack",
+  "down": "defense"
+ },
+ "固执": {
+  "up": "attack",
+  "down": "mattack"
+ },
+ "调皮": {
+  "up": "attack",
+  "down": "mdefense"
+ },
+ "勇敢": {
+  "up": "attack",
+  "down": "speed"
+ },
+ "逞强": {
+  "up": "attack",
+  "down": "hp"
+ },
+ "稳重": {
+  "up": "defense",
+  "down": "attack"
+ },
+ "天真": {
+  "up": "defense",
+  "down": "mattack"
+ },
+ "懒散": {
+  "up": "defense",
+  "down": "mdefense"
+ },
+ "悠闲": {
+  "up": "defense",
+  "down": "speed"
+ },
+ "坦率": {
+  "up": "defense",
+  "down": "hp"
+ },
+ "聪明": {
+  "up": "mattack",
+  "down": "attack"
+ },
+ "专注": {
+  "up": "mattack",
+  "down": "defense"
+ },
+ "偏执": {
+  "up": "mattack",
+  "down": "mdefense"
+ },
+ "冷静": {
+  "up": "mattack",
+  "down": "speed"
+ },
+ "理性": {
+  "up": "mattack",
+  "down": "hp"
+ },
+ "警惕": {
+  "up": "mdefense",
+  "down": "attack"
+ },
+ "温顺": {
+  "up": "mdefense",
+  "down": "defense"
+ },
+ "害羞": {
+  "up": "mdefense",
+  "down": "mattack"
+ },
+ "慎重": {
+  "up": "mdefense",
+  "down": "speed"
+ },
+ "焦虑": {
+  "up": "mdefense",
+  "down": "hp"
+ },
+ "胆小": {
+  "up": "speed",
+  "down": "attack"
+ },
+ "急躁": {
+  "up": "speed",
+  "down": "defense"
+ },
+ "开朗": {
+  "up": "speed",
+  "down": "mattack"
+ },
+ "莽撞": {
+  "up": "speed",
+  "down": "mdefense"
+ },
+ "热情": {
+  "up": "speed",
+  "down": "hp"
+ },
+ "沉默": {
+  "up": "hp",
+  "down": "attack"
+ },
+ "忧郁": {
+  "up": "hp",
+  "down": "defense"
+ },
+ "平和": {
+  "up": "hp",
+  "down": "mattack"
+ },
+ "粗心": {
+  "up": "hp",
+  "down": "mdefense"
+ },
+ "踏实": {
+  "up": "hp",
+  "down": "speed"
+ }
+}

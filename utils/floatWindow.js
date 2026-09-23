@@ -15,7 +15,8 @@ import {
   startFloat,
   closeFloat,
   isOverlayPermissionGranted,
-  openOverlayPermissionSetting
+  openOverlayPermissionSetting,
+  getOverlayPermissionDebugInfo
 } from '@/uni_modules/roco-float-window'
 // #endif
 
@@ -23,10 +24,11 @@ export const FLOAT_WINDOW_TAG = 'roco-damage-float'
 export const FLOAT_WINDOW_ASSET_PATH = '/static/float/index.html'
 
 const SCREEN_KEY = 'roco_float_screen'
-const BALL_SIZE = 56
-const EDGE_GAP = 8
+const BALL_SIZE = 40
+const EDGE_GAP = 6
 
 let nativeImpl = null
+let implMode = 'inapp' // 'system'（UTS 系统级，可悬浮到其他应用）| 'inapp'（plus.webview 应用内）
 let topmostHooked = false
 
 /**
@@ -35,6 +37,7 @@ let topmostHooked = false
  */
 export function setFloatWindowImpl(impl) {
   nativeImpl = impl
+  implMode = 'system'
 }
 
 /** 悬浮能力是否可用（优先 UTS 系统级，否则应用内） */
@@ -42,10 +45,13 @@ export function isSystemOverlayAvailable() {
   // #ifdef APP-PLUS
   if (!nativeImpl) {
     const uts = createUtsFloatImpl()
-    nativeImpl = (uts && uts.available()) ? uts : createPlusWebviewImpl()
-    if (nativeImpl === uts) {
+    if (uts && uts.available()) {
+      nativeImpl = uts
+      implMode = 'system'
       console.log('[floatWindow] 使用 UTS 系统级悬浮窗')
     } else {
+      nativeImpl = createPlusWebviewImpl()
+      implMode = 'inapp'
       console.log('[floatWindow] UTS 不可用，回退应用内悬浮窗')
     }
   }
@@ -63,6 +69,18 @@ export function hasOverlayPermission() {
   }
 }
 
+/** 悬浮窗权限诊断信息（真机排查：各检测信号的真实状态） */
+export function getOverlayDebugInfo() {
+  // #ifdef APP-PLUS
+  try {
+    if (typeof getOverlayPermissionDebugInfo === 'function') {
+      return String(getOverlayPermissionDebugInfo() || '')
+    }
+  } catch (error) { /* 忽略 */ }
+  // #endif
+  return ''
+}
+
 /** 跳转系统悬浮窗权限设置页（应用内实现为占位） */
 export function openOverlayPermissionSettings() {
   if (!isSystemOverlayAvailable()) return false
@@ -75,7 +93,7 @@ export function openOverlayPermissionSettings() {
 
 /**
  * 打开实时伤害悬浮面板（已打开则置顶）
- * @returns {{ok: boolean, reason?: 'unsupported'|'error', message?: string}}
+ * @returns {{ok: boolean, mode?: 'system'|'inapp', reason?: 'unsupported'|'error', message?: string}}
  */
 export function openDamageFloatWindow() {
   if (!isSystemOverlayAvailable()) {
@@ -83,9 +101,13 @@ export function openDamageFloatWindow() {
   }
   try {
     nativeImpl.open()
-    return { ok: true }
+    return { ok: true, mode: implMode }
   } catch (error) {
-    return { ok: false, reason: 'error', message: String((error && error.message) || error) }
+    const message = String((error && error.message) || error)
+    if (/not found/i.test(message)) {
+      return { ok: false, reason: 'error', message: '当前基座未包含悬浮窗插件，请制作自定义调试基座' }
+    }
+    return { ok: false, reason: 'error', message }
   }
 }
 
@@ -110,6 +132,28 @@ function createUtsFloatImpl() {
     return typeof startFloat === 'function'
   }
 
+  /**
+   * 真实探活：标准基座/不含本插件的旧包里，编译产物仍保留 import 的函数包装
+   * （typeof 探测恒为 'function'，不可靠），只有真正调用才抛 "插件displayName not found"。
+   * 用从插件首版就存在的权限查询函数探，结果缓存。
+   */
+  let probeDone = false
+  let probeOk = false
+  function moduleReady() {
+    if (!hasUts()) return false
+    if (!probeDone) {
+      probeDone = true
+      try {
+        isOverlayPermissionGranted()
+        probeOk = true
+      } catch (error) {
+        probeOk = false
+        console.log('[floatWindow] UTS 模块不在当前基座中：' + ((error && error.message) || error))
+      }
+    }
+    return probeOk
+  }
+
   /** 悬浮窗页面地址：优先运行时真实资源路径，回退 android_asset */
   function pageUrl(query) {
     try {
@@ -129,7 +173,7 @@ function createUtsFloatImpl() {
 
   return {
     available() {
-      return hasUts() && typeof plus !== 'undefined'
+      return moduleReady() && typeof plus !== 'undefined'
     },
 
     hasOverlayPermission() {
@@ -142,7 +186,7 @@ function createUtsFloatImpl() {
     },
 
     open() {
-      if (!hasUts()) throw new Error('UTS 悬浮窗插件不可用（需自定义调试基座）')
+      if (!moduleReady()) throw new Error('UTS 悬浮窗插件不可用（当前基座未包含插件，需自定义调试基座）')
       const ballUrl = pageUrl('#mode=uts-ball')
       console.log('[floatWindow] ballUrl =', ballUrl)
       startFloat({
@@ -151,6 +195,9 @@ function createUtsFloatImpl() {
       }, (res) => {
         if (res && Number(res.code) !== 0) {
           console.error('[floatWindow] UTS startFloat 失败:', res.message)
+          try {
+            uni.showToast({ title: '悬浮窗启动失败：' + (res.message || ''), icon: 'none' })
+          } catch (error) { /* 非 uniapp 环境忽略 */ }
         } else {
           console.log('[floatWindow] UTS startFloat ok')
         }
@@ -158,7 +205,7 @@ function createUtsFloatImpl() {
     },
 
     close() {
-      if (!hasUts()) return
+      if (!moduleReady()) return
       closeFloat()
     }
   }
@@ -231,7 +278,7 @@ function createPlusWebviewImpl() {
       const info = uni.getSystemInfoSync()
       const w = Number(info.windowWidth) || 360
       const h = Number(info.windowHeight) || 640
-      // 屏幕尺寸预写入，页面窗口仅 56px 无法自行测得屏幕大小
+      // 屏幕尺寸预写入，页面窗口仅球大小无法自行测得屏幕
       try {
         plus.storage.setItem(SCREEN_KEY, JSON.stringify({ w, h }))
       } catch (error) { /* 页面会回退到 plus.screen 分辨率估算 */ }

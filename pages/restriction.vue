@@ -226,7 +226,6 @@
               </template>
               <template #extra>
                 <view class="pet-extra">
-                  <text class="pet-id">#{{ String(pet.id).padStart(3, '0') }}</text>
                   <text
                     v-if="pet.relationMultiplier !== 1"
                     class="pet-relation"
